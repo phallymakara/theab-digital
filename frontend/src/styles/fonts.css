@@ -1,0 +1,52 @@
+/* ==========================================================================
+   DIGITAL THEAB - TYPOGRAPHY & CUSTOM KHMER FONTS
+   Organized font-face declarations and designer credits
+   ========================================================================== */
+
+/* 1. KH PhalLuch 002 by Designer Yeun PhalLuch (យឺន ផល្លុច - AKbalthom)
+   Ref: https://www.khmerfonts.info/designer.php?id=148
+   Used for: Angkorian Grandeur Heritage (កេរដំណែលប្រាសាទអង្គរ)
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'KH PhalLuch 002';
+  src: url('/fonts/KH PhalLuch 002.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-phalluch {
+  font-family: 'KH PhalLuch 002', 'Kantumruy Pro', sans-serif;
+}
+
+/* 2. Kh Ang Komutt B by Designer Yong Yeang (យ៉ុង យាង - អង្គ ពានរេន្ទ្រ)
+   Ref: https://www.khmerfonts.info/designer.php?id=79
+   Used for: Modern Luxury / Minimalist Chic (អភិជនទំនើប)
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Kh Ang Komutt B';
+  src: url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-komutt {
+  font-family: 'Kh Ang Komutt B', 'Kantumruy Pro', sans-serif;
+}
+
+/* 3. Kh Ang Kouteok by Designer Yong Yeang (យ៉ុង យាង - អង្គ ពានរេន្ទ្រ)
+   Ref: https://www.khmerfonts.info/designer.php?id=79
+   Used for: Romantic Floral Romance (មនោសញ្ចេតនាផ្កាស្រស់)
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Kh Ang Kouteok';
+  src: url('/fonts/Kh Ang Kouteok.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-kouteok {
+  font-family: 'Kh Ang Kouteok', 'Kantumruy Pro', sans-serif;
+}

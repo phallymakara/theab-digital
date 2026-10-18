@@ -6,11 +6,12 @@
     <meta name="description" content="Digital Theab (ធៀបឌីជីថល) - វេទិកាបង្កើតលិខិតអញ្ជើញឌីជីថលប្រពៃណីខ្មែរទំនើប ប្រណិតភាព គ្រប់គ្រងភ្ញៀវ និង RSVP កាន់តែងាយស្រួល" />
     <title>Digital Theab (ធៀបឌីជីថល) - Khmer Traditional Digital Invitation Platform</title>
 
-    <!-- Google Fonts: Battambang, Moul, Kantumruy Pro, & Cinzel -->
+    <!-- Google Fonts: Battambang, Moul, Kantumruy Pro, Koulen, Moulpali & Cinzel -->
+    <!-- Google Fonts: Battambang, Moul, Kantumruy Pro, Moulpali, Preahvihear, Suwannaphum & Cinzel -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Cinzel:wght@600;700;800&family=Kantumruy+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Moul&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Cinzel:wght@600;700;800&family=Kantumruy+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Moul&family=Moulpali&family=Preahvihear&family=Suwannaphum:wght@400;700&display=swap"
       rel="stylesheet"
     />
 
@@ -21,7 +22,13 @@
         theme: {
           extend: {
             fontFamily: {
+              phalluch: ['"KH PhalLuch 002"', '"Kantumruy Pro"', 'sans-serif'],
+              komutt: ['"Kh Ang Komutt B"', '"Kantumruy Pro"', 'sans-serif'],
+              kouteok: ['"Kh Ang Kouteok"', '"Kantumruy Pro"', 'sans-serif'],
               moul: ['Moul', 'serif'],
+              moulpali: ['Moulpali', 'serif'],
+              preahvihear: ['Preahvihear', 'cursive', 'sans-serif'],
+              suwannaphum: ['Suwannaphum', 'serif'],
               kantumruy: ['"Kantumruy Pro"', 'sans-serif'],
               battambang: ['Battambang', 'sans-serif'],
               serifTrad: ['Cinzel', 'serif'],
@@ -59,22 +66,8 @@
     <link rel="stylesheet" href="/src/styles/main.css" />
   </head>
   <body class="bg-stone-100 text-stone-800 antialiased min-h-screen flex flex-col font-kantumruy">
-    <div id="app" class="flex flex-col min-h-screen">
-      <!-- Top Header Mount Point -->
-      <header id="header-container"></header>
+    <div id="app" class="flex flex-col min-h-screen"></div>
 
-      <!-- Main Content Views Mount Point -->
-      <main id="main-content" class="flex-1 flex flex-col"></main>
-
-      <!-- Toast Container -->
-      <div id="toast-container" class="toast-container"></div>
-
-      <!-- QR Modal Mount Point -->
-      <div id="modal-container"></div>
-
-
-    </div>
-
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

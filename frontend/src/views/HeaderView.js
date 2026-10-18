@@ -11,8 +11,8 @@ export class HeaderView extends BaseView {
   render(currentStep = 1) {
     if (!this.container) return;
 
-    // Do not show header on Step 1
-    if (currentStep === 1) {
+    // Do not show header on Step 1 and Step 2
+    if (currentStep === 1 || currentStep === 2) {
       this.container.innerHTML = '';
       this.container.className = 'hidden';
       return;
@@ -39,7 +39,7 @@ export class HeaderView extends BaseView {
             </button>
             <span class="text-stone-300">/</span>
             <button id="nav-step-2" class="step-nav-btn ${currentStep === 2 ? 'active' : ''}">
-              ២. រចនា & មើលផ្ទាល់
+              ២. គំរូធៀបមង្គលការ
             </button>
             <span class="text-stone-300">/</span>
             <button id="nav-step-3" class="step-nav-btn ${currentStep === 3 ? 'active' : ''}">
@@ -67,7 +67,7 @@ export class HeaderView extends BaseView {
         <!-- Mobile Steps Bar -->
         <div class="md:hidden flex items-center justify-around border-t border-stone-100 py-1.5 bg-stone-50 text-xs">
           <button id="m-nav-step-1" class="px-2 py-1 ${currentStep === 1 ? 'text-theabCrimson font-bold' : 'text-stone-500'}">១. កម្មវិធី</button>
-          <button id="m-nav-step-2" class="px-2 py-1 ${currentStep === 2 ? 'text-theabCrimson font-bold' : 'text-stone-500'}">២. រចនា</button>
+          <button id="m-nav-step-2" class="px-2 py-1 ${currentStep === 2 ? 'text-theabCrimson font-bold' : 'text-stone-500'}">២. គំរូធៀប</button>
           <button id="m-nav-step-3" class="px-2 py-1 ${currentStep === 3 ? 'text-theabCrimson font-bold' : 'text-stone-500'}">៣. RSVP</button>
           <button id="m-nav-step-4" class="px-2 py-1 ${currentStep === 4 ? 'text-theabCrimson font-bold' : 'text-stone-500'}">៤. ស្ថិតិ</button>
         </div>

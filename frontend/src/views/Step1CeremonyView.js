@@ -22,7 +22,7 @@ export class Step1CeremonyView extends BaseView {
           <div class="mb-4 sm:mb-6 flex items-center justify-center space-x-2 sm:space-x-3 text-theabGold-600 max-w-full">
             <i data-lucide="flower2" class="w-6 h-6 sm:w-8 sm:h-8 text-theabGold flex-shrink-0"></i>
             <div class="h-[1.5px] w-6 sm:w-12 bg-theabGold-400"></div>
-            <span class="font-kantumruy font-bold text-sm sm:text-base md:text-lg tracking-wide text-stone-700 whitespace-nowrap">
+            <span class="font-moul text-sm sm:text-base md:text-lg tracking-wide text-theabCrimson whitespace-nowrap leading-normal">
               លិខិតអញ្ជើញឌីជីថល
             </span>
             <div class="h-[1.5px] w-6 sm:w-12 bg-theabGold-400"></div>

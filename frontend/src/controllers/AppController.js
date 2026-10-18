@@ -5,7 +5,7 @@ import { DashboardModel } from '../models/DashboardModel.js';
 
 import { HeaderView } from '../views/HeaderView.js';
 import { Step1CeremonyView } from '../views/Step1CeremonyView.js';
-import { Step2EditorView } from '../views/Step2EditorView.js';
+import { Step2WeddingTemplatesView } from '../views/Step2WeddingTemplatesView.js';
 import { Step3GuestView } from '../views/Step3GuestView.js';
 import { Step4DashboardView } from '../views/Step4DashboardView.js';
 import { QrModalView } from '../views/QrModalView.js';
@@ -56,11 +56,14 @@ export class AppController {
       this.invitationController.handleSelectCeremony(type)
     );
 
-    this.step2View = new Step2EditorView('main-content', {
-      onInputChange: (k, v) => this.invitationController.handleInputChange(k, v),
-      onThemeSelect: (theme) => this.invitationController.handleThemeSelect(theme),
-      onSave: () => this.invitationController.handleSave(),
-      onNext: () => this.goToStep(3),
+    this.step2View = new Step2WeddingTemplatesView('main-content', {
+      onSelectTemplate: (template) => {
+        this.invitationModel.updateField('templateId', template.id);
+        this.invitationModel.updateField('themeColor', template.themeColor);
+        this.appModel.setTheme(template.themeColor);
+        this.appModel.addToast(`បានជ្រើសរើសគំរូ "${template.name}" រួចរាល់!`, 'success');
+        this.goToStep(3);
+      },
       onPrev: () => this.goToStep(1),
       onToggleAudio: () => this.toggleAudio(),
     });

@@ -30,9 +30,9 @@ export class Step3GuestView extends BaseView {
       <section class="container-max py-6 md:py-10 max-w-3xl mx-auto">
         <!-- Top Toolbar for host -->
         <div class="flex items-center justify-between mb-6 bg-white px-4 py-3 rounded-xl border border-stone-200 shadow-sm text-xs">
-          <button id="guest-back-btn" class="btn-secondary !py-1.5 !px-3 flex items-center gap-1">
+          <button id="guest-back-btn" class="btn-secondary !py-1.5 !px-3 flex items-center gap-1 cursor-pointer">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
-            <span>ត្រឡប់ទៅការកែសម្រួល</span>
+            <span>ត្រឡប់ទៅជ្រើសរើសគំរូធៀប</span>
           </button>
 
           <div class="flex items-center gap-2">
