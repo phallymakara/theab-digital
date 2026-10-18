@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Theab (ធៀបឌីជីថល) - UI/UX Prototype</title>
+    <!-- Google Fonts: Battambang, Moul, & Kantumruy Pro for authentic Khmer typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Kantumruy+Pro:ital,wght@0,300;0,500;0,600;0,700;1,400&family=Moul&family=Cinzel:wght@600;800&display=swap"
+        rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        moul: ['Moul', 'serif'],
+                        kantumruy: ['"Kantumruy Pro"', 'sans-serif'],
+                        battambang: ['Battambang', 'sans-serif'],
+                        serifTrad: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        theabGold: {
+                            DEFAULT: '#D4AF37',
+                            50: '#FDFBF4',
+                            100: '#FAF4E3',
+                            200: '#F2E4BA',
+                            300: '#E9D28F',
+                            400: '#DFC066',
+                            500: '#D4AF37',
+                            600: '#B69225',
+                            700: '#8C6F19',
+                            800: '#624D11',
+                            900: '#3D3008',
+                        },
+                        theabCrimson: {
+                            DEFAULT: '#881337',
+                            50: '#FFF1F2',
+                            100: '#FFE4E6',
+                            600: '#BE123C',
+                            800: '#881337',
+                            900: '#4C0519',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Kantumruy Pro', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-moul {
+            font-family: 'Moul', serif;
+        }
+
+        /* Elegant subtle gold shimmer */
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #FFFDF8 0%, #FAF5E8 50%, #F5ECDA 100%);
+        }
+
+        .gold-border {
+            border: 1px solid rgba(212, 175, 55, 0.35);
+        }
+
+        .shadow-luxury {
+            box-shadow: 0 10px 30px -5px rgba(136, 19, 55, 0.08), 0 4px 10px -2px rgba(212, 175, 55, 0.05);
+        }
+
+        /* Pattern decorations */
+        .khmer-pattern {
+            background-color: #fbf9f4;
+            background-image: radial-gradient(#d4af37 0.75px, transparent 0.75px), radial-gradient(#d4af37 0.75px, #fbf9f4 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            opacity: 0.85;
+        }
+    </style>
+</head>
+
+<body class="bg-stone-100 text-stone-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Top Navigation Header -->
+    <header class="bg-white border-b border-stone-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="goToStep(1)">
+                <div
+                    class="w-10 h-10 rounded-xl bg-theabCrimson text-theabGold flex items-center justify-center font-moul text-lg shadow-sm border border-theabGold/30">
+                    ធ
+                </div>
+                <div>
+                    <span class="font-moul text-base tracking-wide text-theabCrimson">ឌីជីថលធៀប</span>
+                    <span class="text-xs text-stone-600 block -mt-1 font-sans">Digital Theab Platform</span>
+                </div>
+            </div>
+
+            <!-- Progress Indicator Tabs -->
+            <nav class="hidden md:flex items-center space-x-1 text-sm">
+                <button id="nav-btn-1" onclick="goToStep(1)"
+                    class="px-3 py-1.5 rounded-lg font-medium text-theabCrimson bg-rose-50 border border-theabCrimson/20">
+                    ១. ជ្រើសរើសកម្មវិធី
+                </button>
+                <span class="text-stone-300">/</span>
+                <button id="nav-btn-2" onclick="goToStep(2)"
+                    class="px-3 py-1.5 rounded-lg font-medium text-stone-600 hover:text-theabCrimson transition">
+                    ២. ព័ត៌មាន និងរចនា
+                </button>
+                <span class="text-stone-300">/</span>
+                <button id="nav-btn-3" onclick="goToStep(3)"
+                    class="px-3 py-1.5 rounded-lg font-medium text-stone-600 hover:text-theabCrimson transition">
+                    ៣. មើលសំបុត្រ (Guest RSVP)
+                </button>
+                <span class="text-stone-300">/</span>
+                <button id="nav-btn-4" onclick="goToStep(4)"
+                    class="px-3 py-1.5 rounded-lg font-medium text-stone-600 hover:text-theabCrimson transition">
+                    ៤. ផ្ទាំងគ្រប់គ្រងភ្ញៀវ (Dashboard)
+                </button>
+            </nav>
+
+            <div class="flex items-center space-x-2">
+                <span
+                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>
+                    MVP v1.0
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Multi-Step Interactive Canvas -->
+    <main class="flex-1 flex flex-col justify-center items-center py-6 px-4">
+
+        <!-- ========================================================================= -->
+        <!-- STEP 1: INITIAL SELECTION INTERFACE (THE REQUESTED BUTTONS)               -->
+        <!-- ========================================================================= -->
+        <section id="step-1" class="w-full max-w-2xl mx-auto my-auto text-center py-8">
+            <!-- Traditional Floral Header Motif -->
+            <div class="mb-5 flex items-center justify-center space-x-2 text-theabGold-600">
+                <i data-lucide="flower2" class="w-6 h-6"></i>
+                <div class="h-[1px] w-12 bg-theabGold-400"></div>
+                <span class="font-serifTrad uppercase tracking-widest text-xs font-semibold text-stone-600">Digital
+                    Invitation System</span>
+                <div class="h-[1px] w-12 bg-theabGold-400"></div>
+                <i data-lucide="flower2" class="w-6 h-6"></i>
+            </div>
+
+            <h1 class="font-moul text-2xl sm:text-3xl text-theabCrimson mb-3 tracking-wide">
+                ជ្រើសរើសប្រភេទកម្មវិធីរបស់អ្នក
+            </h1>
+            <p class="text-stone-600 text-sm sm:text-base max-w-md mx-auto mb-8 font-light">
+                សូមចុចជ្រើសរើសប្រភេទកម្មវិធីប្រពៃណី ដើម្បីចាប់ផ្តើមបង្កើត និងរចនាលិខិតអញ្ជើញឌីជីថល (ធៀប) ដោយឥតគិតថ្លៃ
+            </p>
+
+            <!-- The 3 Requested Buttons with Khmer Aesthetic & Clear Action -->
+            <div class="space-y-4 max-w-md mx-auto">
+                <!-- 1. កម្មវិធីមង្គលការ -->
+                <button onclick="selectEventType('wedding')"
+                    class="group w-full min-h-[76px] sm:min-h-[84px] relative overflow-hidden bg-white hover:bg-theabGold-50 border-2 border-theabGold/40 hover:border-theabCrimson text-left py-3.5 px-4.5 sm:py-5 sm:px-7 rounded-full shadow-sm hover:shadow-luxury transition-all duration-300 flex items-center justify-between">
+                    <div class="flex items-center space-x-3 sm:space-x-4 min-w-0 pr-1">
+                        <div
+                            class="w-10 h-10 sm:w-12 sm:h-12 p-2 sm:p-2.5 rounded-full bg-rose-50 text-theabCrimson group-hover:scale-105 transition-transform flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="heart-handshake" class="w-6 h-6 sm:w-7.5 sm:h-7.5"></i>
+                        </div>
+                        <div class="min-w-0 pt-1.5 sm:pt-2">
+                            <div class="font-moul text-sm sm:text-lg text-theabCrimson leading-normal">កម្មវិធីមង្គលការ</div>
+                            <p class="text-[11px] sm:text-xs text-stone-500 mt-0.5 sm:mt-1 font-light truncate">ពិធីអាពាហ៍ពិពាហ៍បែបប្រពៃណីខ្មែរ (Khmer
+                                Wedding)</p>
+                        </div>
+                    </div>
+                    <div
+                        class="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-stone-100 group-hover:bg-theabCrimson group-hover:text-white flex items-center justify-center text-stone-400 transition-colors flex-shrink-0 ml-2">
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                    </div>
+                </button>
+
+                <!-- 2. កម្មវិធីភ្ជាប់ពាក្យ -->
+                <button onclick="selectEventType('engagement')"
+                    class="group w-full min-h-[76px] sm:min-h-[84px] relative overflow-hidden bg-white hover:bg-theabGold-50 border-2 border-theabGold/40 hover:border-theabCrimson text-left py-3.5 px-4.5 sm:py-5 sm:px-7 rounded-full shadow-sm hover:shadow-luxury transition-all duration-300 flex items-center justify-between">
+                    <div class="flex items-center space-x-3 sm:space-x-4 min-w-0 pr-1">
+                        <div
+                            class="w-10 h-10 sm:w-12 sm:h-12 p-2 sm:p-2.5 rounded-full bg-amber-50 text-theabGold-700 group-hover:scale-105 transition-transform flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="gem" class="w-6 h-6 sm:w-7.5 sm:h-7.5"></i>
+                        </div>
+                        <div class="min-w-0 pt-1.5 sm:pt-2">
+                            <div class="font-moul text-sm sm:text-lg text-theabCrimson leading-normal">កម្មវិធីភ្ជាប់ពាក្យ</div>
+                            <p class="text-[11px] sm:text-xs text-stone-500 mt-0.5 sm:mt-1 font-light truncate">ពិធីស្តីដណ្តឹង និងសែនព្រេន (Engagement
+                                Ceremony)</p>
+                        </div>
+                    </div>
+                    <div
+                        class="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-stone-100 group-hover:bg-theabCrimson group-hover:text-white flex items-center justify-center text-stone-400 transition-colors flex-shrink-0 ml-2">
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                    </div>
+                </button>
+
+                <!-- 3. កម្មវិធីឡើងកេហដ្ឋាន -->
+                <button onclick="selectEventType('housewarming')"
+                    class="group w-full min-h-[76px] sm:min-h-[84px] relative overflow-hidden bg-white hover:bg-theabGold-50 border-2 border-theabGold/40 hover:border-theabCrimson text-left py-3.5 px-4.5 sm:py-5 sm:px-7 rounded-full shadow-sm hover:shadow-luxury transition-all duration-300 flex items-center justify-between">
+                    <div class="flex items-center space-x-3 sm:space-x-4 min-w-0 pr-1">
+                        <div
+                            class="w-10 h-10 sm:w-12 sm:h-12 p-2 sm:p-2.5 rounded-full bg-emerald-50 text-emerald-700 group-hover:scale-105 transition-transform flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="home" class="w-6 h-6 sm:w-7.5 sm:h-7.5"></i>
+                        </div>
+                        <div class="min-w-0 pt-1.5 sm:pt-2">
+                            <div class="font-moul text-sm sm:text-lg text-theabCrimson leading-normal">កម្មវិធីឡើងគេហដ្ឋាន</div>
+                            <p class="text-[11px] sm:text-xs text-stone-500 mt-0.5 sm:mt-1 font-light truncate">ពិធីសម្ពោធផ្ទះថ្មី និងសូត្រមន្តឡើងផ្ទះ
+                                (Housewarming)</p>
+                        </div>
+                    </div>
+                    <div
+                        class="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-stone-100 group-hover:bg-theabCrimson group-hover:text-white flex items-center justify-center text-stone-400 transition-colors flex-shrink-0 ml-2">
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                    </div>
+                </button>
+            </div>
+
+            <div class="mt-8 text-xs text-stone-600 flex items-center justify-center gap-2">
+                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+                <span>គាំទ្រទាំងស្រុងលើទូរស័ព្ទដៃ និងអាចចែករំលែកតាម Telegram បានភ្លាមៗ</span>
+            </div>
+        </section>
+
+
+        <!-- ========================================================================= -->
+        <!-- STEP 2: CREATION & CUSTOMIZATION INTERFACE                                -->
+        <!-- ========================================================================= -->
+        <section id="step-2" class="w-full max-w-5xl mx-auto hidden">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <button onclick="goToStep(1)"
+                        class="text-xs font-semibold text-theabCrimson flex items-center gap-1 hover:underline mb-1">
+                        <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> ត្រឡប់ជ្រើសរើសកម្មវិធីឡើងវិញ
+                    </button>
+                    <h2 class="font-moul text-xl text-stone-800 flex items-center gap-2">
+                        <span id="step-2-badge"
+                            class="text-sm font-sans font-normal px-2.5 py-0.5 rounded bg-theabGold-100 text-theabGold-800 border border-theabGold/30">
+                            មង្គលការ
+                        </span>
+                        <span>កំណត់ព័ត៌មានលិខិតអញ្ជើញ</span>
+                    </h2>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="goToStep(3)"
+                        class="bg-theabCrimson hover:bg-theabCrimson-900 text-white px-4 py-2 rounded-xl text-sm font-semibold flex items-center space-x-1.5 shadow transition">
+                        <span>បង្កើតធៀប & មើលជាមុន</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+                <!-- Left Column: Form Controls (Event Owner Data) -->
+                <div class="lg:col-span-7 bg-white p-6 rounded-2xl border border-stone-200 shadow-sm space-y-6">
+                    <div class="border-b border-stone-100 pb-3">
+                        <h3 class="font-bold text-stone-800 text-sm flex items-center gap-2">
+                            <i data-lucide="feather" class="w-4 h-4 text-theabGold-600"></i>
+                            ព័ត៌មានកូនកំលោះ និងកូនក្រមុំ
+                        </h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-stone-600 mb-1">ឈ្មោះកូនកំលោះ (Groom)</label>
+                            <input type="text" id="input-groom" value="សុខ វិបុល" oninput="updatePreviewData()"
+                                class="w-full text-sm px-3.5 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-theabGold focus:border-theabGold outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-stone-600 mb-1">ឈ្មោះកូនក្រមុំ
+                                (Bride)</label>
+                            <input type="text" id="input-bride" value="ជា សុជាតា" oninput="updatePreviewData()"
+                                class="w-full text-sm px-3.5 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-theabGold focus:border-theabGold outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-stone-600 mb-1">មាតាបិតាខាងប្រុស</label>
+                            <input type="text" id="input-groom-parents" value="លោក សុខ គឹមហុង & លោកស្រី គង់ សុភី"
+                                oninput="updatePreviewData()"
+                                class="w-full text-xs px-3.5 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-theabGold outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-stone-600 mb-1">មាតាបិតាខាងស្រី</label>
+                            <input type="text" id="input-bride-parents" value="លោក ជា ចាន់ថន & លោកស្រី ម៉ៅ សុខា"
+                                oninput="updatePreviewData()"
+                                class="w-full text-xs px-3.5 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-theabGold outline-none">
+                        </div>
+                    </div>
+
+                    <div class="border-b border-stone-100 pb-3 pt-2">
+                        <h3 class="font-bold text-stone-800 text-sm flex items-center gap-2">
+                            <i data-lucide="calendar-clock" class="w-4 h-4 text-theabGold-600"></i>
+                            កាលបរិច្ឆេទ និងទីកន្លែងពិធី
+                        </h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-stone-600 mb-1">កាលបរិច្ឆេទ</label>
+                            <input type="text" id="input-date" value="ថ្ងៃអាទិត្យ ទី១៨ ខែវិច្ឆិកា ឆ្នាំ២០២៦"
+                                oninput="updatePreviewData()"
+                                class="w-full text-sm px-3.5 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-theabGold outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-stone-600 mb-1">ពេលវេលាពិសារភោជនាហារ</label>
+                            <input type="text" id="input-time" value="វេលាម៉ោង ៥:០០ ល្ងាច" oninput="updatePreviewData()"
+                                class="w-full text-sm px-3.5 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-theabGold outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-stone-600 mb-1">ទីតាំងរៀបចំពិធី (Location /
+                            Hotel)</label>
+                        <input type="text" id="input-location"
+                            value="មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អាគារ C)"
+                            oninput="updatePreviewData()"
+                            class="w-full text-sm px-3.5 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-theabGold outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-stone-600 mb-1">Google Maps Link
+                            (សម្រាប់ភ្ញៀវចុចមើល)</label>
+                        <input type="text" id="input-map" value="https://maps.google.com/?q=The+Premier+Center+Sen+Sok"
+                            class="w-full text-xs px-3.5 py-2.5 border border-stone-300 rounded-xl text-blue-600 focus:ring-2 focus:ring-theabGold outline-none">
+                    </div>
+
+                    <!-- Color Theme Selection -->
+                    <div>
+                        <label class="block text-xs font-semibold text-stone-600 mb-2">រចនាបថពណ៌ធៀប (Theme
+                            Palette)</label>
+                        <div class="flex items-center space-x-3">
+                            <button onclick="setTheme('crimson')"
+                                class="w-8 h-8 rounded-full bg-theabCrimson border-2 border-stone-300 ring-2 ring-offset-2 ring-theabCrimson focus:outline-none"
+                                title="ក្រហមមង្គល"></button>
+                            <button onclick="setTheme('gold')"
+                                class="w-8 h-8 rounded-full bg-theabGold border-2 border-stone-300 hover:ring-2 ring-offset-2 ring-theabGold focus:outline-none"
+                                title="មាសប្រណិត"></button>
+                            <button onclick="setTheme('emerald')"
+                                class="w-8 h-8 rounded-full bg-emerald-800 border-2 border-stone-300 hover:ring-2 ring-offset-2 ring-emerald-800 focus:outline-none"
+                                title="បៃតងរាជវាំង"></button>
+                            <span class="text-xs text-stone-500 ml-2"
+                                id="current-theme-label">ពណ៌ក្រហមមង្គលបែបបុរាណ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Live Mini Preview (Mobile Mockup Frame) -->
+                <div class="lg:col-span-5 flex flex-col items-center">
+                    <div class="text-xs font-medium text-stone-500 mb-2 flex items-center gap-1.5">
+                        <i data-lucide="smartphone" class="w-4 h-4"></i>
+                        ទិដ្ឋភាពផ្សាយបន្តផ្ទាល់ (Live Phone Screen)
+                    </div>
+
+                    <!-- Phone Chassis Simulator -->
+                    <div
+                        class="w-full max-w-[340px] bg-stone-900 p-3 rounded-[38px] shadow-2xl border-4 border-stone-800">
+                        <!-- Dynamic Island / Speaker -->
+                        <div class="w-24 h-4 bg-black mx-auto rounded-full mb-2"></div>
+
+                        <!-- Phone Screen Area -->
+                        <div id="phone-preview-card"
+                            class="bg-white rounded-[28px] overflow-hidden border border-theabGold/30 p-4 text-center text-stone-800 min-h-[500px] flex flex-col justify-between khmer-pattern">
+
+                            <div
+                                class="border-2 border-theabGold/30 p-4 rounded-2xl h-full flex flex-col justify-between bg-white/90">
+                                <!-- Motif Top -->
+                                <div>
+                                    <div class="text-theabGold text-xs font-serifTrad tracking-widest uppercase mb-1">
+                                        ៚ សិរីសួស្តី អាពាហ៍ពិពាហ៍ ៚
+                                    </div>
+                                    <div class="text-[11px] text-stone-500 leading-tight" id="live-parents-preview">
+                                        លោក សុខ គឹមហុង & លោកស្រី គង់ សុភី<br>
+                                        និង លោក ជា ចាន់ថន & លោកស្រី ម៉ៅ សុខា
+                                    </div>
+                                </div>
+
+                                <!-- Bride & Groom Display -->
+                                <div class="my-4 py-2 border-y border-theabGold/20">
+                                    <p class="text-[10px] text-stone-400">សូមគោរពអញ្ជើញចូលរួមមង្គលការ</p>
+                                    <h4 class="font-moul text-sm text-theabCrimson mt-1" id="live-groom-preview">សុខ
+                                        វិបុល</h4>
+                                    <div class="text-theabGold text-xs font-serifTrad my-0.5">&</div>
+                                    <h4 class="font-moul text-sm text-theabCrimson" id="live-bride-preview">ជា សុជាតា
+                                    </h4>
+                                </div>
+
+                                <!-- Time & Location -->
+                                <div class="text-[11px] space-y-1 text-stone-700">
+                                    <div class="font-medium text-theabGold-800" id="live-date-preview">ថ្ងៃអាទិត្យ ទី១៨
+                                        ខែវិច្ឆិកា ឆ្នាំ២០២៦</div>
+                                    <div class="text-[10px] text-stone-500" id="live-time-preview">វេលាម៉ោង ៥:០០ ល្ងាច
+                                    </div>
+                                    <div class="text-[10px] bg-stone-50 p-1.5 rounded-lg border border-stone-200 mt-2 text-stone-600"
+                                        id="live-location-preview">
+                                        ឌឹ ព្រេមៀ សែនសុខ (អាគារ C)
+                                    </div>
+                                </div>
+
+                                <!-- Simulated RSVP Action inside Mobile -->
+                                <div class="mt-4 pt-2">
+                                    <div
+                                        class="w-full py-2 bg-theabCrimson text-white rounded-xl text-xs font-semibold shadow">
+                                        ឆ្លើយតបការចូលរួម (RSVP)
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-stone-400 mt-2">ភ្ញៀវនឹងទទួលបានទិដ្ឋភាពដូចនេះពេលចុចបើកតាម
+                        Telegram/Facebook</p>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ========================================================================= -->
+        <!-- STEP 3: GUEST EXPERIENCE & RSVP INTERACTION (THE WEBPAGE GUEST SEES)       -->
+        <!-- ========================================================================= -->
+        <section id="step-3" class="w-full max-w-xl mx-auto hidden">
+            <div class="flex items-center justify-between mb-4">
+                <button onclick="goToStep(2)"
+                    class="text-xs font-semibold text-stone-600 flex items-center gap-1 hover:text-theabCrimson">
+                    <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> ត្រឡប់ទៅកែសម្រួល
+                </button>
+                <span class="text-xs font-medium bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full">
+                    Guest RSVP View
+                </span>
+                <button onclick="goToStep(4)"
+                    class="text-xs font-bold text-theabCrimson flex items-center gap-1 hover:underline">
+                    ទៅមើល Dashboard ភ្ញៀវ <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+            </div>
+
+            <!-- The Real Invitation Page (What guests receive on mobile) -->
+            <div class="bg-white rounded-3xl border border-theabGold/40 shadow-xl overflow-hidden khmer-pattern">
+
+                <!-- Header Banner Ornament -->
+                <div
+                    class="bg-gradient-to-r from-theabCrimson via-rose-900 to-theabCrimson text-white text-center py-6 px-4">
+                    <p class="text-xs text-theabGold uppercase tracking-widest font-serifTrad">Official Wedding
+                        Invitation</p>
+                    <h2 class="font-moul text-xl mt-1 text-theabGold">លិខិតអញ្ជើញអាពាហ៍ពិពាហ៍</h2>
+                </div>
+
+                <div class="p-6 text-center space-y-6 bg-white/95 backdrop-blur-sm">
+
+                    <!-- Parents Card -->
+                    <div class="border border-theabGold/30 rounded-2xl p-4 bg-theabGold-50/50">
+                        <p class="text-xs text-stone-500 mb-1">យើងខ្ញុំជាមាតាបិតាទាំងសងខាង</p>
+                        <p class="text-xs font-semibold text-stone-800 leading-relaxed" id="guest-view-parents">
+                            លោក សុខ គឹមហុង & លោកស្រី គង់ សុភី<br>
+                            និង លោក ជា ចាន់ថន & លោកស្រី ម៉ៅ សុខា
+                        </p>
+                        <p class="text-xs text-stone-500 mt-2">មានកិត្តិយសសូមគោរពអញ្ជើញ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី
+                            អ្នកនាងកញ្ញា ចូលរួមជាអធិបតី និងភ្ញៀវកិត្តិយសក្នុងពិធីអាពាហ៍ពិពាហ៍កូនប្រុស
+                            កូនស្រីរបស់យើងខ្ញុំ</p>
+                    </div>
+
+                    <!-- Couple Highlight -->
+                    <div class="py-2">
+                        <div class="flex items-center justify-center space-x-6">
+                            <div class="text-center">
+                                <span class="text-[11px] text-stone-400 block mb-0.5">កូនប្រុសនាម</span>
+                                <span class="font-moul text-lg text-theabCrimson" id="guest-view-groom">សុខ វិបុល</span>
+                            </div>
+                            <div
+                                class="w-8 h-8 rounded-full bg-theabGold/20 text-theabGold-700 flex items-center justify-center font-serifTrad text-sm font-bold">
+                                &
+                            </div>
+                            <div class="text-center">
+                                <span class="text-[11px] text-stone-400 block mb-0.5">កូនស្រីនាម</span>
+                                <span class="font-moul text-lg text-theabCrimson" id="guest-view-bride">ជា សុជាតា</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Date & Venue info -->
+                    <div class="grid grid-cols-2 gap-3 text-left">
+                        <div class="bg-stone-50 p-3 rounded-xl border border-stone-200">
+                            <span class="text-[11px] text-stone-400 block">កាលបរិច្ឆេទ & ម៉ោង</span>
+                            <span class="text-xs font-bold text-stone-800 block mt-1" id="guest-view-date">១៨ វិច្ឆិកា
+                                ២០២៦</span>
+                            <span class="text-[11px] text-theabCrimson font-medium" id="guest-view-time">វេលាម៉ោង ៥:០០
+                                ល្ងាច</span>
+                        </div>
+                        <div class="bg-stone-50 p-3 rounded-xl border border-stone-200">
+                            <span class="text-[11px] text-stone-400 block">ទីតាំងប្រារព្ធពិធី</span>
+                            <span class="text-xs font-bold text-stone-800 block mt-1 truncate"
+                                id="guest-view-location">ឌឹ ព្រេមៀ សែនសុខ</span>
+                            <a href="#"
+                                class="text-[11px] text-blue-600 font-medium flex items-center gap-0.5 mt-0.5 hover:underline">
+                                <i data-lucide="map-pin" class="w-3 h-3"></i> បើកមើលផែនទី
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Guest RSVP Form Area (FR-28 to FR-33) -->
+                    <div class="border-t-2 border-dashed border-stone-200 pt-5 text-left">
+                        <h4 class="font-bold text-stone-800 text-sm flex items-center gap-2 mb-3">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+                            ការឆ្លើយតបការចូលរួម (RSVP Form)
+                        </h4>
+
+                        <form id="rsvp-interactive-form" onsubmit="handleGuestRSVP(event)" class="space-y-3">
+                            <div>
+                                <label class="block text-xs font-medium text-stone-600 mb-1">ឈ្មោះរបស់អ្នក
+                                    ឬគ្រួសារ</label>
+                                <input type="text" id="rsvp-guest-name" placeholder="ឧ. ហេង វណ្ណា និងភរិយា" required
+                                    class="w-full text-xs px-3 py-2 border border-stone-300 rounded-lg outline-none focus:ring-1 focus:ring-theabCrimson">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-medium text-stone-600 mb-1">ស្ថានភាពចូលរួម</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <label
+                                        class="cursor-pointer border border-stone-300 p-2.5 rounded-lg flex items-center space-x-2 has-[:checked]:bg-emerald-50 has-[:checked]:border-emerald-600">
+                                        <input type="radio" name="rsvp-status" value="attending" checked
+                                            class="text-emerald-600">
+                                        <span class="text-xs font-semibold text-stone-700">នឹងចូលរួម (Attending)</span>
+                                    </label>
+                                    <label
+                                        class="cursor-pointer border border-stone-300 p-2.5 rounded-lg flex items-center space-x-2 has-[:checked]:bg-rose-50 has-[:checked]:border-rose-600">
+                                        <input type="radio" name="rsvp-status" value="not-attending"
+                                            class="text-rose-600">
+                                        <span class="text-xs font-semibold text-stone-700">មិនអាចចូលរួមបាន</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-medium text-stone-600 mb-1">ចំនួនអ្នកចូលរួមសរុប
+                                    (នាក់)</label>
+                                <select id="rsvp-guest-count"
+                                    class="w-full text-xs px-3 py-2 border border-stone-300 rounded-lg outline-none">
+                                    <option value="1">១ នាក់ (ម្នាក់ឯង)</option>
+                                    <option value="2" selected>២ នាក់ (ប្តីប្រពន្ធ ឬគូកន)</option>
+                                    <option value="3">៣ នាក់</option>
+                                    <option value="4">៤ នាក់ (គ្រួសារ)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-medium text-stone-600 mb-1">ពាក្យជូនពរ
+                                    (សេចក្តីជូនពរដល់គូស្វាមីភរិយាថ្មី)</label>
+                                <input type="text" id="rsvp-wishes"
+                                    placeholder="សូមជូនពរឱ្យមានសុភមង្គល និងស្រឡាញ់គ្នារហូតដល់ចាស់កោងខ្នង..."
+                                    class="w-full text-xs px-3 py-2 border border-stone-300 rounded-lg outline-none">
+                            </div>
+
+                            <button type="submit"
+                                class="w-full py-2.5 bg-theabCrimson hover:bg-theabCrimson-900 text-white rounded-xl text-xs font-bold shadow-md transition">
+                                បញ្ជាក់ការឆ្លើយតប (Submit RSVP)
+                            </button>
+                        </form>
+
+                        <!-- Success Alert after RSVP -->
+                        <div id="rsvp-success-alert"
+                            class="hidden mt-3 p-3 bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-xl text-xs">
+                            <div class="font-bold flex items-center gap-1.5">
+                                <i data-lucide="check" class="w-4 h-4"></i>
+                                ការឆ្លើយតបត្រូវបានរក្សាទុកដោយជោគជ័យ!
+                            </div>
+                            <p class="mt-1 text-[11px] text-emerald-700">ម្ចាស់កម្មវិធីបានទទួលព័ត៌មានរបស់អ្នករួចរាល់ហើយ។
+                                អរគុណសម្រាប់ការចូលរួម!</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================================= -->
+        <!-- STEP 4: EVENT OWNER DASHBOARD (GUEST MANAGEMENT & METRICS)                -->
+        <!-- ========================================================================= -->
+        <section id="step-4" class="w-full max-w-5xl mx-auto hidden">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div>
+                    <h2 class="font-moul text-xl text-stone-800">ផ្ទាំងគ្រប់គ្រងភ្ញៀវ និងស្ថិតិ RSVP</h2>
+                    <p class="text-xs text-stone-500">កម្មវិធីមង្គលការ៖ សុខ វិបុល & ជា សុជាតា</p>
+                </div>
+
+                <!-- Share Options Box -->
+                <div class="flex items-center space-x-2">
+                    <button onclick="copyShareLink()"
+                        class="px-3 py-2 bg-stone-100 hover:bg-stone-200 border border-stone-300 text-stone-700 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition">
+                        <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                        <span id="copy-btn-text">ចម្លង Link ធៀប</span>
+                    </button>
+
+                    <button onclick="showQrModal()"
+                        class="px-3 py-2 bg-theabGold-100 hover:bg-theabGold-200 border border-theabGold/40 text-theabGold-900 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition">
+                        <i data-lucide="qr-code" class="w-3.5 h-3.5"></i>
+                        <span>ទាញយក QR Code</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Metrics Summary Cards -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white p-4 rounded-2xl border border-stone-200 shadow-sm">
+                    <span class="text-xs text-stone-500 font-medium">ចំនួនភ្ញៀវសរុបក្នុងបញ្ជី</span>
+                    <div class="text-2xl font-bold text-stone-800 mt-1" id="stat-total">180 នាក់</div>
+                    <span class="text-[10px] text-stone-400">តាមការគ្រោងទុក</span>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl border border-emerald-200 bg-emerald-50/20 shadow-sm">
+                    <span class="text-xs text-emerald-700 font-medium">នឹងចូលរួម (Attending)</span>
+                    <div class="text-2xl font-bold text-emerald-700 mt-1" id="stat-attending">142 នាក់</div>
+                    <span class="text-[10px] text-emerald-600 font-medium">ស្មើនឹង ~ 14 តុ</span>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl border border-rose-200 bg-rose-50/20 shadow-sm">
+                    <span class="text-xs text-rose-700 font-medium">មិនអាចចូលរួម</span>
+                    <div class="text-2xl font-bold text-rose-700 mt-1" id="stat-declined">12 នាក់</div>
+                    <span class="text-[10px] text-rose-500">បានឆ្លើយតបសុំអភ័យទោស</span>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl border border-amber-200 bg-amber-50/20 shadow-sm">
+                    <span class="text-xs text-amber-700 font-medium">មិនទាន់ឆ្លើយតប</span>
+                    <div class="text-2xl font-bold text-amber-700 mt-1" id="stat-pending">26 នាក់</div>
+                    <span class="text-[10px] text-amber-600">ត្រូវការផ្ញើរំលឹកបន្ថែម</span>
+                </div>
+            </div>
+
+            <!-- Guest Table & Filter Actions -->
+            <div class="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
+                <div
+                    class="p-4 border-b border-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold text-sm text-stone-800">បញ្ជីឈ្មោះភ្ញៀវកិត្តិយស</span>
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-stone-100 text-stone-600 font-medium"
+                            id="guest-count-pill">6 នាក់ចុងក្រោយ</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <div class="relative">
+                            <input type="text" placeholder="ស្វែងរកឈ្មោះភ្ញៀវ..."
+                                class="text-xs pl-8 pr-3 py-1.5 border border-stone-300 rounded-lg outline-none focus:ring-1 focus:ring-theabGold w-44">
+                            <i data-lucide="search" class="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5"></i>
+                        </div>
+                        <button onclick="promptAddGuest()"
+                            class="bg-theabCrimson hover:bg-theabCrimson-900 text-white px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 shadow-sm transition">
+                            <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+                            <span>បន្ថែមភ្ញៀវ</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Table View of Guests -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-stone-700">
+                        <thead class="bg-stone-50 border-b border-stone-200 text-stone-500 uppercase tracking-wider">
+                            <tr>
+                                <th class="py-3 px-4">ឈ្មោះភ្ញៀវ</th>
+                                <th class="py-3 px-4">ទំនាក់ទំនង</th>
+                                <th class="py-3 px-4 text-center">ចំនួនមនុស្ស</th>
+                                <th class="py-3 px-4 text-center">ស្ថានភាព RSVP</th>
+                                <th class="py-3 px-4">ពាក្យជូនពរ</th>
+                                <th class="py-3 px-4 text-right">សកម្មភាព</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-100" id="guest-table-body">
+                            <!-- Default sample guests -->
+                            <tr class="hover:bg-stone-50/50">
+                                <td class="py-3 px-4 font-semibold text-stone-800">ឯកឧត្តម លឹម ហួរ និងលោកជំទាវ</td>
+                                <td class="py-3 px-4 text-stone-500">012 889 900</td>
+                                <td class="py-3 px-4 text-center font-medium">២ នាក់</td>
+                                <td class="py-3 px-4 text-center">
+                                    <span
+                                        class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-100 text-emerald-800">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1"></span>
+                                        ចូលរួម
+                                    </span>
+                                </td>
+                                <td class="py-3 px-4 text-stone-500 italic max-w-xs truncate">
+                                    សូមឱ្យស្រឡាញ់គ្នាដល់ចាស់កោងខ្នង</td>
+                                <td class="py-3 px-4 text-right">
+                                    <button class="text-stone-400 hover:text-theabCrimson"><i
+                                            data-lucide="more-vertical" class="w-4 h-4"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-stone-50/50">
+                                <td class="py-3 px-4 font-semibold text-stone-800">លោក គង់ ពិសិដ្ឋ</td>
+                                <td class="py-3 px-4 text-stone-500">Telegram (@piseth_k)</td>
+                                <td class="py-3 px-4 text-center font-medium">១ នាក់</td>
+                                <td class="py-3 px-4 text-center">
+                                    <span
+                                        class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-100 text-emerald-800">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1"></span>
+                                        ចូលរួម
+                                    </span>
+                                </td>
+                                <td class="py-3 px-4 text-stone-500 italic max-w-xs truncate">Congratulations to both of
+                                    you!</td>
+                                <td class="py-3 px-4 text-right">
+                                    <button class="text-stone-400 hover:text-theabCrimson"><i
+                                            data-lucide="more-vertical" class="w-4 h-4"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-stone-50/50">
+                                <td class="py-3 px-4 font-semibold text-stone-800">កញ្ញា អ៊ុំ ចិន្តា</td>
+                                <td class="py-3 px-4 text-stone-500">098 776 543</td>
+                                <td class="py-3 px-4 text-center font-medium">0 នាក់</td>
+                                <td class="py-3 px-4 text-center">
+                                    <span
+                                        class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-rose-100 text-rose-800">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1"></span>
+                                        មិនអាចចូលរួម
+                                    </span>
+                                </td>
+                                <td class="py-3 px-4 text-stone-500 italic max-w-xs truncate">ជាប់បេសកកម្មនៅខេត្ត
+                                    សុំអភ័យទោសផងណា</td>
+                                <td class="py-3 px-4 text-right">
+                                    <button class="text-stone-400 hover:text-theabCrimson"><i
+                                            data-lucide="more-vertical" class="w-4 h-4"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-stone-50/50">
+                                <td class="py-3 px-4 font-semibold text-stone-800">លោក ហេង រតនា</td>
+                                <td class="py-3 px-4 text-stone-500">017 334 221</td>
+                                <td class="py-3 px-4 text-center font-medium">-</td>
+                                <td class="py-3 px-4 text-center">
+                                    <span
+                                        class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-amber-100 text-amber-800">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1"></span>
+                                        មិនទាន់ឆ្លើយតប
+                                    </span>
+                                </td>
+                                <td class="py-3 px-4 text-stone-400 italic max-w-xs truncate">-</td>
+                                <td class="py-3 px-4 text-right">
+                                    <button class="text-stone-400 hover:text-theabCrimson"><i
+                                            data-lucide="more-vertical" class="w-4 h-4"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- QR Code Modal Dialog -->
+    <div id="qr-modal"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl border border-theabGold/30">
+            <h3 class="font-moul text-base text-theabCrimson mb-1">QR Code សម្រាប់ចែករំលែក</h3>
+            <p class="text-xs text-stone-500 mb-4">ភ្ញៀវអាចស្កេនដើម្បីបើកមើលធៀបឌីជីថលភ្លាមៗ</p>
+
+            <!-- Simulated High-Quality QR Frame -->
+            <div class="bg-stone-50 p-6 rounded-2xl border border-stone-200 inline-block shadow-inner mb-4">
+                <svg class="w-44 h-44 mx-auto" viewBox="0 0 100 100" fill="none">
+                    <rect width="100" height="100" fill="white" />
+                    <!-- Position Detection Patterns -->
+                    <rect x="5" y="5" width="25" height="25" stroke="#881337" stroke-width="4" fill="none" />
+                    <rect x="11" y="11" width="13" height="13" fill="#881337" />
+                    <rect x="70" y="5" width="25" height="25" stroke="#881337" stroke-width="4" fill="none" />
+                    <rect x="76" y="11" width="13" height="13" fill="#881337" />
+                    <rect x="5" y="70" width="25" height="25" stroke="#881337" stroke-width="4" fill="none" />
+                    <rect x="11" y="76" width="13" height="13" fill="#881337" />
+                    <!-- Data dots simulated -->
+                    <rect x="36" y="10" width="6" height="6" fill="#D4AF37" />
+                    <rect x="46" y="18" width="6" height="6" fill="#881337" />
+                    <rect x="56" y="10" width="6" height="6" fill="#881337" />
+                    <rect x="36" y="26" width="6" height="6" fill="#881337" />
+                    <rect x="46" y="34" width="6" height="6" fill="#D4AF37" />
+                    <rect x="10" y="42" width="6" height="6" fill="#881337" />
+                    <rect x="20" y="48" width="6" height="6" fill="#D4AF37" />
+                    <rect x="36" y="44" width="24" height="24" fill="#881337" />
+                    <rect x="68" y="42" width="6" height="6" fill="#881337" />
+                    <rect x="78" y="48" width="6" height="6" fill="#D4AF37" />
+                    <rect x="68" y="60" width="6" height="6" fill="#881337" />
+                    <rect x="78" y="72" width="6" height="6" fill="#881337" />
+                    <rect x="44" y="74" width="6" height="6" fill="#881337" />
+                    <rect x="54" y="82" width="6" height="6" fill="#D4AF37" />
+                </svg>
+            </div>
+
+            <div class="space-y-2">
+                <button onclick="closeQrModal()"
+                    class="w-full py-2 bg-theabCrimson hover:bg-theabCrimson-900 text-white rounded-xl text-xs font-bold transition">
+                    បិទផ្ទាំងនេះ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Info -->
+    <footer class="bg-white border-t border-stone-200 py-3 text-center text-xs text-stone-500">
+        Digital Theab — ប្រព័ន្ធបង្កើតលិខិតអញ្ជើញឌីជីថលបែបប្រពៃណីខ្មែរ (Cambodia MVP Initiative)
+    </footer>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // App State
+        let currentStep = 1;
+        let selectedEvent = 'wedding';
+        let currentTheme = 'crimson';
+
+        // Step Navigation Function
+        function goToStep(stepNumber) {
+            currentStep = stepNumber;
+
+            // Hide all steps
+            document.getElementById('step-1').classList.add('hidden');
+            document.getElementById('step-2').classList.add('hidden');
+            document.getElementById('step-3').classList.add('hidden');
+            document.getElementById('step-4').classList.add('hidden');
+
+            // Show selected step
+            document.getElementById('step-' + stepNumber).classList.remove('hidden');
+
+            // Update Nav Button Styles
+            for (let i = 1; i <= 4; i++) {
+                const btn = document.getElementById('nav-btn-' + i);
+                if (btn) {
+                    if (i === stepNumber) {
+                        btn.className = "px-3 py-1.5 rounded-lg font-medium text-theabCrimson bg-rose-50 border border-theabCrimson/20";
+                    } else {
+                        btn.className = "px-3 py-1.5 rounded-lg font-medium text-stone-600 hover:text-theabCrimson transition";
+                    }
+                }
+            }
+
+            // Re-trigger icon rendering for dynamically exposed elements
+            setTimeout(() => lucide.createIcons(), 50);
+        }
+
+        // Select Ceremony Type from Step 1
+        function selectEventType(type) {
+            selectedEvent = type;
+            const badge = document.getElementById('step-2-badge');
+
+            if (type === 'wedding') {
+                badge.innerText = 'កម្មវិធីមង្គលការ';
+                document.getElementById('input-groom').value = "សុខ វិបុល";
+                document.getElementById('input-bride').value = "ជា សុជាតា";
+            } else if (type === 'engagement') {
+                badge.innerText = 'កម្មវិធីភ្ជាប់ពាក្យ';
+                document.getElementById('input-groom').value = "គង់ ចាន់រិទ្ធ";
+                document.getElementById('input-bride').value = "ម៉ៅ ស្រីពៅ";
+            } else if (type === 'housewarming') {
+                badge.innerText = 'កម្មវិធីឡើងគេហដ្ឋាន';
+                document.getElementById('input-groom').value = "ម្ចាស់គេហដ្ឋាន (ស្វាមី)";
+                document.getElementById('input-bride').value = "ម្ចាស់គេហដ្ឋាន (ភរិយា)";
+            }
+
+            updatePreviewData();
+            goToStep(2);
+        }
+
+        // Sync input fields with live mockup and guest view
+        function updatePreviewData() {
+            const groom = document.getElementById('input-groom').value || "កូនកំលោះ";
+            const bride = document.getElementById('input-bride').value || "កូនក្រមុំ";
+            const groomParents = document.getElementById('input-groom-parents').value;
+            const brideParents = document.getElementById('input-bride-parents').value;
+            const date = document.getElementById('input-date').value;
+            const time = document.getElementById('input-time').value;
+            const location = document.getElementById('input-location').value;
+
+            // Phone preview updates
+            document.getElementById('live-groom-preview').innerText = groom;
+            document.getElementById('live-bride-preview').innerText = bride;
+            document.getElementById('live-parents-preview').innerHTML = `${groomParents}<br>និង ${brideParents}`;
+            document.getElementById('live-date-preview').innerText = date;
+            document.getElementById('live-time-preview').innerText = time;
+            document.getElementById('live-location-preview').innerText = location;
+
+            // Guest view updates
+            document.getElementById('guest-view-groom').innerText = groom;
+            document.getElementById('guest-view-bride').innerText = bride;
+            document.getElementById('guest-view-parents').innerHTML = `${groomParents}<br>និង ${brideParents}`;
+            document.getElementById('guest-view-date').innerText = date;
+            document.getElementById('guest-view-time').innerText = time;
+            document.getElementById('guest-view-location').innerText = location;
+        }
+
+        // Handle Theme Color Shift
+        function setTheme(theme) {
+            currentTheme = theme;
+            const card = document.getElementById('phone-preview-card');
+            const label = document.getElementById('current-theme-label');
+
+            if (theme === 'crimson') {
+                label.innerText = 'ពណ៌ក្រហមមង្គលបែបបុរាណ';
+                card.style.borderColor = 'rgba(136, 19, 55, 0.4)';
+            } else if (theme === 'gold') {
+                label.innerText = 'ពណ៌មាសប្រណិតរាជវាំង';
+                card.style.borderColor = 'rgba(212, 175, 55, 0.6)';
+            } else if (theme === 'emerald') {
+                label.innerText = 'ពណ៌បៃតងត្បូងមរកត';
+                card.style.borderColor = 'rgba(6, 78, 59, 0.4)';
+            }
+        }
+
+        // Handle Guest RSVP Submission in Step 3
+        function handleGuestRSVP(e) {
+            e.preventDefault();
+            const guestName = document.getElementById('rsvp-guest-name').value;
+            const guestCount = document.getElementById('rsvp-guest-count').value;
+            const wishes = document.getElementById('rsvp-wishes').value || "-";
+            const statusInput = document.querySelector('input[name="rsvp-status"]:checked').value;
+            const isAttending = statusInput === 'attending';
+
+            // Show Confirmation Alert
+            const alertBox = document.getElementById('rsvp-success-alert');
+            alertBox.classList.remove('hidden');
+
+            // Append new entry to the Dashboard table in Step 4
+            const tableBody = document.getElementById('guest-table-body');
+            const newRow = document.createElement('tr');
+            newRow.className = "hover:bg-stone-50/50 bg-emerald-50/30";
+            newRow.innerHTML = `
+        <td class="py-3 px-4 font-semibold text-stone-800">${guestName} (ទើបឆ្លើយតប)</td>
+        <td class="py-3 px-4 text-stone-500">តំណភ្ជាប់ផ្ទាល់</td>
+        <td class="py-3 px-4 text-center font-medium">${isAttending ? guestCount + ' នាក់' : '0 នាក់'}</td>
+        <td class="py-3 px-4 text-center">
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium ${isAttending ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+            <span class="w-1.5 h-1.5 rounded-full ${isAttending ? 'bg-emerald-500' : 'bg-rose-500'} mr-1"></span>
+            ${isAttending ? 'ចូលរួម' : 'មិនអាចចូលរួម'}
+          </span>
+        </td>
+        <td class="py-3 px-4 text-stone-500 italic max-w-xs truncate">${wishes}</td>
+        <td class="py-3 px-4 text-right">
+          <button class="text-stone-400 hover:text-theabCrimson"><i data-lucide="more-vertical" class="w-4 h-4"></i></button>
+        </td>
+      `;
+            tableBody.insertBefore(newRow, tableBody.firstChild);
+
+            // Update counters in Step 4
+            if (isAttending) {
+                const attendingEl = document.getElementById('stat-attending');
+                attendingEl.innerText = (parseInt(attendingEl.innerText) + parseInt(guestCount)) + ' នាក់';
+            }
+
+            // Re-initialize icons
+            setTimeout(() => lucide.createIcons(), 50);
+        }
+
+        // Modal & Clipboard Actions
+        function copyShareLink() {
+            const btnText = document.getElementById('copy-btn-text');
+            navigator.clipboard.writeText("https://digitaltheab.com/invitation/vibol-sovanndy");
+            btnText.innerText = "បានចម្លងរួចរាល់!";
+            setTimeout(() => {
+                btnText.innerText = "ចម្លង Link ធៀប";
+            }, 2000);
+        }
+
+        function showQrModal() {
+            document.getElementById('qr-modal').classList.remove('hidden');
+        }
+
+        function closeQrModal() {
+            document.getElementById('qr-modal').classList.add('hidden');
+        }
+
+        function promptAddGuest() {
+            const name = prompt("សូមបញ្ចូលឈ្មោះភ្ញៀវថ្មី៖");
+            if (name) {
+                alert("បានបញ្ចូលឈ្មោះ " + name + " ទៅក្នុងបញ្ជី!");
+            }
+        }
+    </script>
+</body>
+
+</html>
+```eof
+
+### ចំណុចសំខាន់ៗនៃ UI/UX Prototype ដែលបានរៀបចំជូន៖
+
+1. **ទំព័រដំបូង (Initial Landing Interface):**
+- បង្ហាញប៊ូតុងធំៗចំនួន ៣ ស្របតាមសំណូមពរ៖ **កម្មវិធីមង្គលការ**, **កម្មវិធីភ្ជាប់ពាក្យ**, និង **កម្មវិធីឡើងគេហដ្ឋាន**
+ដោយប្រើរូបតំណាង (Icons) និងពុម្ពអក្សរខ្មែរ (Moul & Kantumruy Pro) យ៉ាងប្រណិត។
+2. **ទំព័រកំណត់ព័ត៌មាន (Customization & Live Mobile Mockup):**
+- ម្ចាស់កម្មវិធីអាចបញ្ចូលឈ្មោះកូនកំលោះ-កូនក្រមុំ, ឈ្មោះមាតាបិតាទាំងសងខាង, កាលបរិច្ឆេទ, ទីតាំង, Google Maps
+និងជ្រើសរើសពណ៌ធៀប (Crimson Red, Royal Gold, Emerald Green) ដោយមានផ្ទាំងទូរស័ព្ទឆ្លុះបញ្ចាំង (Live Phone Preview) ភ្លាមៗ។
+3. **ទំព័រលិខិតអញ្ជើញសម្រាប់ភ្ញៀវ (Guest RSVP View):**
+- ទម្រង់ធៀបឌីជីថលដែលភ្ញៀវនឹងឃើញពេលបើកតាម Telegram/Facebook រួមជាមួយទម្រង់បែបបទឆ្លើយតប **RSVP** (នឹងចូលរួម ឬមិនអាចចូលរួម,
+ចំនួនអ្នកមកជាមួយ, និងពាក្យជូនពរ)។
+4. **ផ្ទាំងគ្រប់គ្រងភ្ញៀវ (Event Owner Dashboard):**
+- ស្ថិតិពេលវេលាជាក់ស្តែង (ចំនួនអ្នកចូលរួមសរុប គិតជាចំនួនតុ, អ្នកមិនបានមក, អ្នកមិនទាន់ឆ្លើយតប) និងមុខងារទាញយក **QR Code**
+ឬចម្លងតំណភ្ជាប់ (Link) សម្រាប់ផ្ញើទៅកាន់ភ្ញៀវ។
+
+អ្នកអាចទាញយក ឬបើកមើលឯកសារ `digital_theab_prototype.html` ដោយផ្ទាល់នៅលើ Web Browser ឬទូរស័ព្ទដៃបានភ្លាមៗ!
