@@ -50,3 +50,41 @@
 .font-kouteok {
   font-family: 'Kh Ang Kouteok', 'Kantumruy Pro', sans-serif;
 }
+
+/* 4. Kh Ang Komutt A by Designer Yong Yeang (យ៉ុង យាង - អង្គ ពានរេន្ទ្រ)
+   Ref: https://www.khmerfonts.info/designer.php?id=79
+   Used for: Classic Khmer Crimson (មង្គលក្រហមប្រពៃណី)
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Kh Ang Komutt A';
+  src: local('Kh Ang Komutt A'),
+       url('/fonts/Kh Ang Komutt A.ttf') format('truetype'),
+       url('/fonts/Kh-Ang-Komutt-A.ttf') format('truetype'),
+       url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-komutt-a {
+  font-family: 'Kh Ang Komutt A', 'Kh Ang Komutt B', 'Moul', 'Kantumruy Pro', serif;
+}
+
+/* 5. Kh Ang Toathmor Kbach by Designer Yong Yeang (យ៉ុង យាង - អង្គ ពានរេន្ទ្រ)
+   Ref: https://www.khmerfonts.info/designer.php?id=79
+   Used for: Classic Khmer Crimson (មង្គលក្រហមប្រពៃណី)
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Kh Ang Toathmor Kbach';
+  src: local('Kh Ang Toathmor Kbach'),
+       url('/fonts/Kh Ang Toathmor Kbach.ttf') format('truetype'),
+       url('/fonts/Kh-Ang-Toathmor-Kbach.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-toathmor {
+  font-family: 'Kh Ang Toathmor Kbach', 'Moul', 'Kantumruy Pro', serif;
+}
+

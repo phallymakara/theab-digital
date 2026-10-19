@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
 import { Flower2, HeartHandshake, Gem, Building2, ArrowRight } from 'lucide-react';
 
 export function CeremonySelectionPage() {
   const navigate = useNavigate();
-  const { selectCeremony } = useApp();
+  const { selectCeremony, pauseAudio } = useApp();
+
+  useEffect(() => {
+    pauseAudio?.();
+  }, []);
 
   const handleSelect = (type, path) => {
     selectCeremony(type);

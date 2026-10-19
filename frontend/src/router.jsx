@@ -12,12 +12,12 @@ import { CeremonySelectionPage } from './pages/CeremonySelectionPage';
 import { TemplatesPage } from './pages/TemplatesPage';
 import { InvitationPreviewPage } from './pages/InvitationPreviewPage';
 import { DashboardPage } from './pages/DashboardPage';
+import { TemplateDetailPage } from './pages/TemplateDetailPage';
 
 // Root Route layout
 const rootRoute = createRootRoute({
   component: () => (
     <div className="flex flex-col min-h-screen">
-      <Header />
       <main className="flex-1 flex flex-col">
         <Outlet />
       </main>
@@ -69,6 +69,27 @@ const dashboardRoute = createRoute({
   component: DashboardPage,
 });
 
+// Route: /$templateId/preview (Template Detail & Preview by Card ID)
+const templatePreviewRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/$templateId/preview',
+  component: TemplateDetailPage,
+});
+
+// Route: /preview/$templateId
+const previewTemplateRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/preview/$templateId',
+  component: TemplateDetailPage,
+});
+
+// Route: /preview (General preview default)
+const previewRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/preview',
+  component: TemplateDetailPage,
+});
+
 // Build route tree
 const routeTree = rootRoute.addChildren([
   indexRoute,
@@ -77,6 +98,9 @@ const routeTree = rootRoute.addChildren([
   housewarmingRoute,
   invitationRoute,
   dashboardRoute,
+  templatePreviewRoute,
+  previewTemplateRoute,
+  previewRoute,
 ]);
 
 // Create TanStack Router instance

@@ -3,6 +3,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
 import { CEREMONY_DATA } from '../data/templates';
 import confetti from 'canvas-confetti';
+import { FlyingHeartsAndFlowers } from '../components/FlyingHeartsAndFlowers';
 import {
   ArrowLeft,
   Volume2,
@@ -178,6 +179,8 @@ export function InvitationPreviewPage() {
 
       {/* The Luxury Digital Theab Card */}
       <div className="animate-scale-up bg-white rounded-3xl overflow-hidden shadow-2xl border-2 border-amber-400/50 mb-8 khmer-pattern relative">
+        {/* Flying Hearts & Flying Flowers Animation Layer */}
+        <FlyingHeartsAndFlowers count={8} />
         {/* Top Royal Khmer Banner */}
         <div className={`${accentBg} text-amber-300 py-6 px-4 text-center relative overflow-hidden`}>
           <div className="absolute -right-8 -bottom-8 w-28 h-28 rounded-full bg-white/10 pointer-events-none animate-float-slow"></div>

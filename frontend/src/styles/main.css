@@ -723,6 +723,164 @@ body {
   animation: heartFloatUp3 6.2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
 }
 
+/* Smooth Multi-Directional Random Flying Hearts and Flowers */
+@keyframes smoothFloatAmbient1 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.85);
+    opacity: 0.2;
+  }
+  25% {
+    transform: translate3d(16px, -22px, 0) rotate(14deg) scale(1.05);
+    opacity: 0.95;
+  }
+  50% {
+    transform: translate3d(-12px, -40px, 0) rotate(-10deg) scale(0.92);
+    opacity: 0.9;
+  }
+  75% {
+    transform: translate3d(-22px, -18px, 0) rotate(8deg) scale(1.02);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.85);
+    opacity: 0.2;
+  }
+}
+
+@keyframes smoothFloatAmbient2 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.9);
+    opacity: 0.25;
+  }
+  25% {
+    transform: translate3d(-18px, 20px, 0) rotate(-16deg) scale(1.08);
+    opacity: 0.95;
+  }
+  50% {
+    transform: translate3d(14px, 36px, 0) rotate(12deg) scale(0.88);
+    opacity: 0.88;
+  }
+  75% {
+    transform: translate3d(20px, 12px, 0) rotate(-8deg) scale(1.03);
+    opacity: 0.92;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.9);
+    opacity: 0.25;
+  }
+}
+
+@keyframes smoothFlyUpDiagonal {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-12deg) scale(0.6);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.95;
+    transform: translate3d(18px, -45px, 0) rotate(10deg) scale(0.95);
+  }
+  50% {
+    transform: translate3d(-14px, -120px, 0) rotate(-15deg) scale(1.1);
+    opacity: 0.9;
+  }
+  80% {
+    transform: translate3d(22px, -200px, 0) rotate(20deg) scale(0.9);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate3d(35px, -270px, 0) rotate(35deg) scale(0.55);
+    opacity: 0;
+  }
+}
+
+@keyframes smoothFlyDownFlutter {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(15deg) scale(0.6);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.95;
+    transform: translate3d(-20px, 45px, 0) rotate(-12deg) scale(0.95);
+  }
+  50% {
+    transform: translate3d(16px, 115px, 0) rotate(18deg) scale(1.05);
+    opacity: 0.9;
+  }
+  80% {
+    transform: translate3d(-18px, 190px, 0) rotate(-15deg) scale(0.85);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate3d(-30px, 260px, 0) rotate(-30deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes smoothFlyCrossRight {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-10deg) scale(0.65);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.95;
+    transform: translate3d(40px, -18px, 0) rotate(15deg) scale(0.95);
+  }
+  50% {
+    transform: translate3d(110px, 20px, 0) rotate(-8deg) scale(1.08);
+    opacity: 0.92;
+  }
+  82% {
+    transform: translate3d(190px, -15px, 0) rotate(22deg) scale(0.9);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate3d(250px, 10px, 0) rotate(35deg) scale(0.55);
+    opacity: 0;
+  }
+}
+
+@keyframes smoothFlyCrossLeft {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(12deg) scale(0.65);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.95;
+    transform: translate3d(-40px, 18px, 0) rotate(-14deg) scale(0.95);
+  }
+  50% {
+    transform: translate3d(-110px, -20px, 0) rotate(10deg) scale(1.08);
+    opacity: 0.92;
+  }
+  82% {
+    transform: translate3d(-190px, 16px, 0) rotate(-20deg) scale(0.9);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate3d(-250px, -10px, 0) rotate(-32deg) scale(0.55);
+    opacity: 0;
+  }
+}
+
+.animate-smooth-ambient-1 {
+  animation: smoothFloatAmbient1 ease-in-out infinite;
+}
+.animate-smooth-ambient-2 {
+  animation: smoothFloatAmbient2 ease-in-out infinite;
+}
+.animate-smooth-fly-up {
+  animation: smoothFlyUpDiagonal cubic-bezier(0.35, 0, 0.25, 1) infinite;
+}
+.animate-smooth-fly-down {
+  animation: smoothFlyDownFlutter cubic-bezier(0.35, 0, 0.25, 1) infinite;
+}
+.animate-smooth-cross-right {
+  animation: smoothFlyCrossRight cubic-bezier(0.35, 0, 0.25, 1) infinite;
+}
+.animate-smooth-cross-left {
+  animation: smoothFlyCrossLeft cubic-bezier(0.35, 0, 0.25, 1) infinite;
+}
+
 /* Floating Emerald Lotus & Jade Leaf Animation for Imperial Emerald Jade */
 @keyframes emeraldLotusFloat1 {
   0% {
@@ -842,3 +1000,13 @@ button:active:not(:disabled) {
 .dashboard-table tr:hover td {
   background-color: rgba(254, 243, 199, 0.25);
 }
+
+/* Hide scrollbar for Chrome, Safari, Opera, Edge and Firefox */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

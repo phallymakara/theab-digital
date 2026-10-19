@@ -1,3 +1,18 @@
+export const TEMPLATE_CATEGORIES = [
+  { id: 'all', name: 'ទាំងអស់', num: 1 },
+  { id: 'traditional', name: 'ប្រពៃណីបុរាណ', num: 2 },
+  { id: 'floral', name: 'ផ្កាស្រស់រ៉ូមែនទិក', num: 3 },
+  { id: 'emerald', name: 'ត្បូងមរកតសិរី', num: 4 },
+  { id: 'modern', name: 'អភិជនទំនើប', num: 5 },
+  { id: 'heritage', name: 'កេរដំណែលវប្បធម៌', num: 6 },
+  { id: 'diamond', name: 'ពេជ្រប្រណីត', num: 7 },
+  { id: 'artistic', name: 'សិល្បៈច្នៃប្រឌិត', num: 9 },
+  { id: 'vintage', name: 'វីនតេជ៍អមតៈ', num: 10 },
+  { id: 'royal-gem', name: 'ត្បូងរាជវង្ស', num: 11 },
+  { id: 'bridal', name: 'សម្រស់កូនក្រមុំ', num: 13 },
+  { id: 'nature', name: 'សម្រស់ធម្មជាតិ', num: 15 }
+];
+
 export const CEREMONY_DATA = {
   wedding: {
     title: 'ជ្រើសរើសគំរូធៀបមង្គលការ',
@@ -142,9 +157,14 @@ export const CEREMONY_DATA = {
         themeColor: 'crimson',
         primaryGradient: 'bg-gradient-to-r from-rose-950 via-rose-900 to-rose-950',
         borderColor: '#881337',
+        titleColor: '#881337',
         badgeBg: 'bg-rose-800',
         description: 'រចនាបថប្រពៃណីខ្មែរសុទ្ធសាធ ដោយប្រើប្រាស់ពណ៌ក្រហមឈាមជ្រូក និងអក្សរមូលធំៗ ស្របតាមក្បួនខ្នាតលិខិតអញ្ជើញមង្គលការខ្មែរតាំងពីបុរាណ។',
         previewBg: 'bg-[#FFFDFB]',
+        bgImage: '/images/templates/crimson_classic_prewedding.jpg',
+        hasFlyingFlowers: true,
+        flyEffect: 'crimson-petals',
+        cardStyle: 'crimson-classic',
         cardBorder: 'border-rose-300/80 hover:border-theabCrimson',
         demoGroom: 'ឈួន សម្បត្តិ',
         demoBride: 'កែវ រចនា',

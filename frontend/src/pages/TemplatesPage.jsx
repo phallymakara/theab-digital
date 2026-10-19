@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
-import { CEREMONY_DATA } from '../data/templates';
+import { CEREMONY_DATA, TEMPLATE_CATEGORIES } from '../data/templates';
+import { FlyingHeartsAndFlowers } from '../components/FlyingHeartsAndFlowers';
 import {
   ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
   Maximize2,
   CheckCircle,
   X,
@@ -21,16 +24,49 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
     setSelectedTemplate,
     setCurrentTheme,
     invitationData,
-    addToast
+    addToast,
+    playAudio,
+    pauseAudio
   } = useApp();
 
   const [activeCategory, setActiveCategory] = useState('all');
   const [previewTemplate, setPreviewTemplate] = useState(null);
+  const categoryScrollRef = useRef(null);
 
-  // Synchronize ceremony selection with route
+  const scrollCategories = (direction) => {
+    if (categoryScrollRef.current) {
+      categoryScrollRef.current.scrollBy({
+        left: direction === 'left' ? -240 : 240,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const handleCategorySelect = (catId, e) => {
+    setActiveCategory(catId);
+    if (e?.currentTarget?.scrollIntoView) {
+      e.currentTarget.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest'
+      });
+    }
+  };
+
+  // Synchronize ceremony selection with route & stop audio when browsing templates
   useEffect(() => {
     selectCeremony(ceremonyType);
+    pauseAudio?.();
   }, [ceremonyType]);
+
+  // Play audio when modal preview is opened, stop when modal preview is closed
+  useEffect(() => {
+    if (previewTemplate) {
+      playAudio?.();
+    } else {
+      pauseAudio?.();
+    }
+  }, [previewTemplate]);
 
   const ceremonyInfo = CEREMONY_DATA[ceremonyType] || CEREMONY_DATA.wedding;
   const templates = ceremonyInfo.templates || [];
@@ -110,57 +146,54 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
           {/* Luxury Gold Divider Strip */}
           <div className="khmer-gold-strip max-w-xs mx-auto mb-3 opacity-70"></div>
 
-          {/* Category Filter Tabs */}
-          <div className="flex items-center justify-start sm:justify-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scrollbar-none text-xs">
+          {/* Category Filter Horizontal Scroll Bar with Left/Right Navigation */}
+          <div className="relative max-w-5xl mx-auto flex items-center gap-1.5 sm:gap-2 px-1">
+            {/* Scroll Left Button (Visible on sm+ screens) */}
             <button
-              onClick={() => setActiveCategory('all')}
-              className={`px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
-                activeCategory === 'all'
-                  ? 'bg-theabCrimson text-white shadow-sm'
-                  : 'bg-white/80 text-stone-700 hover:bg-white border border-stone-200/80 shadow-2xs'
-              }`}
+              type="button"
+              onClick={() => scrollCategories('left')}
+              aria-label="Scroll left"
+              className="p-1.5 sm:p-2 rounded-full bg-white/90 hover:bg-white border border-stone-200/90 text-stone-600 hover:text-theabCrimson shadow-xs transition cursor-pointer shrink-0 hidden sm:flex items-center justify-center hover:scale-105 active:scale-95"
             >
-              ទាំងអស់
+              <ChevronLeft className="w-4 h-4" />
             </button>
-            <button
-              onClick={() => setActiveCategory('traditional')}
-              className={`px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
-                activeCategory === 'traditional'
-                  ? 'bg-theabCrimson text-white shadow-sm'
-                  : 'bg-white/80 text-stone-700 hover:bg-white border border-stone-200/80 shadow-2xs'
-              }`}
+
+            {/* Horizontal Scroll Track */}
+            <div
+              ref={categoryScrollRef}
+              className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto py-1 px-1 scroll-smooth no-scrollbar flex-nowrap w-full"
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+                WebkitOverflowScrolling: 'touch'
+              }}
             >
-              ប្រពៃណីបុរាណ
-            </button>
+              {TEMPLATE_CATEGORIES.map((cat) => {
+                const isActive = activeCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={(e) => handleCategorySelect(cat.id, e)}
+                    className={`px-3.5 sm:px-4 py-1.5 rounded-full font-bold whitespace-nowrap text-xs transition-all duration-200 shrink-0 cursor-pointer select-none ${
+                      isActive
+                        ? 'bg-theabCrimson text-white shadow-md shadow-rose-950/25 ring-2 ring-rose-300/60 scale-[1.02]'
+                        : 'bg-white/85 text-stone-700 hover:bg-white hover:text-theabCrimson border border-stone-200/90 shadow-2xs hover:shadow-xs'
+                    }`}
+                  >
+                    {cat.name}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Scroll Right Button (Visible on sm+ screens) */}
             <button
-              onClick={() => setActiveCategory('floral')}
-              className={`px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
-                activeCategory === 'floral'
-                  ? 'bg-theabCrimson text-white shadow-sm'
-                  : 'bg-white/80 text-stone-700 hover:bg-white border border-stone-200/80 shadow-2xs'
-              }`}
+              type="button"
+              onClick={() => scrollCategories('right')}
+              aria-label="Scroll right"
+              className="p-1.5 sm:p-2 rounded-full bg-white/90 hover:bg-white border border-stone-200/90 text-stone-600 hover:text-theabCrimson shadow-xs transition cursor-pointer shrink-0 hidden sm:flex items-center justify-center hover:scale-105 active:scale-95"
             >
-              ផ្កាស្រស់រ៉ូមែនទិក
-            </button>
-            <button
-              onClick={() => setActiveCategory('emerald')}
-              className={`px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
-                activeCategory === 'emerald'
-                  ? 'bg-theabCrimson text-white shadow-md shadow-rose-950/20'
-                  : 'bg-white/80 text-stone-700 hover:bg-white border border-stone-200/80 shadow-2xs'
-              }`}
-            >
-              ត្បូងមរកតសិរី
-            </button>
-            <button
-              onClick={() => setActiveCategory('modern')}
-              className={`px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
-                activeCategory === 'modern'
-                  ? 'bg-theabCrimson text-white shadow-md shadow-rose-950/20'
-                  : 'bg-white/80 text-stone-700 hover:bg-white border border-stone-200/80 shadow-2xs'
-              }`}
-            >
-              អភិជនទំនើប
+              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -170,8 +203,27 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
       <main className="flex-1 overflow-y-auto relative z-10 px-3 sm:px-6 pt-4 sm:pt-6 pb-16 scroll-smooth [mask-image:linear-gradient(to_bottom,transparent_0px,black_24px,black_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0px,black_24px,black_100%)]">
         <div className="container-max">
           {/* Templates Gallery Grid (Modern Sleek Cards) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-5xl mx-auto">
-          {filteredTemplates.map((tpl, idx) => {
+          {filteredTemplates.length === 0 ? (
+            <div className="py-16 text-center max-w-md mx-auto bg-white/80 backdrop-blur-xs rounded-3xl border border-stone-200/80 p-8 shadow-sm">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-rose-50 border border-rose-200/80 flex items-center justify-center text-theabCrimson shadow-xs">
+                <Flower2 className="w-8 h-8 opacity-80" />
+              </div>
+              <h3 className="font-moul text-base text-stone-800 mb-2">
+                កំពុងរៀបចំគំរូរចនាថ្មីៗ
+              </h3>
+              <p className="text-xs text-stone-500 mb-5 leading-relaxed font-suwannaphum">
+                គំរូធៀបក្នុងប្រភេទនេះកំពុងស្ថិតក្នុងការច្នៃប្រឌិត និងដាក់ឱ្យប្រើប្រាស់ឆាប់ៗនេះ។ លោកអ្នកអាចជ្រើសរើសប្រភេទផ្សេងទៀតបាន។
+              </p>
+              <button
+                onClick={() => setActiveCategory('all')}
+                className="px-5 py-2 rounded-full bg-theabCrimson text-white text-xs font-bold shadow-sm hover:brightness-110 active:scale-95 cursor-pointer transition-all"
+              >
+                មើលគំរូទាំងអស់
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-5xl mx-auto">
+              {filteredTemplates.map((tpl, idx) => {
             const cardGroom = tpl.demoGroom || invitationData.groomName || ceremonyInfo.defaultGroom;
             const cardBride = tpl.demoBride || invitationData.brideName || ceremonyInfo.defaultBride;
             const cardDate = tpl.demoDate || invitationData.ceremonyDate || ceremonyInfo.defaultDate;
@@ -192,162 +244,17 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                         style={{ backgroundImage: `url(${tpl.bgImage})` }}
                       />
                       <div className={`absolute inset-0 ${
-                        tpl.cardStyle === 'romantic-frosted'
+                        tpl.cardStyle === 'crimson-classic'
+                          ? 'bg-gradient-to-t from-rose-950/90 via-rose-950/45 to-black/30'
+                          : tpl.cardStyle === 'romantic-frosted'
                           ? 'bg-gradient-to-t from-black/75 via-black/35 to-black/20'
                           : 'bg-gradient-to-t from-black/80 via-black/40 to-black/25'
                       }`} />
                     </>
                   )}
 
-                  {/* Flying Hearts / Petals Animation Layer */}
-                  {tpl.hasFlyingFlowers && (
-                    <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
-                      {tpl.flyEffect === 'hearts' || tpl.cardStyle === 'romantic-frosted' ? (
-                        /* Romantic Floating Glowing Flying Hearts */
-                        <>
-                          {/* Heart 1 */}
-                          <div className="absolute bottom-0 left-[14%] w-4.5 h-4.5 text-rose-400 fill-rose-500 animate-heart-fly-1">
-                            <Heart className="w-full h-full drop-shadow-[0_2px_6px_rgba(225,29,72,0.85)]" />
-                          </div>
-                          {/* Heart 2 */}
-                          <div className="absolute bottom-0 left-[76%] w-5.5 h-5.5 text-pink-300 fill-pink-500 animate-heart-fly-2" style={{ animationDelay: '1.4s' }}>
-                            <Heart className="w-full h-full drop-shadow-[0_2px_6px_rgba(244,63,94,0.85)]" />
-                          </div>
-                          {/* Heart 3 */}
-                          <div className="absolute bottom-0 left-[42%] w-3.5 h-3.5 text-amber-200 fill-amber-300 animate-heart-fly-3" style={{ animationDelay: '2.8s' }}>
-                            <Heart className="w-full h-full drop-shadow-[0_2px_5px_rgba(251,191,36,0.9)]" />
-                          </div>
-                          {/* Heart 4 */}
-                          <div className="absolute bottom-0 left-[86%] w-4 h-4 text-rose-300 fill-rose-400 animate-heart-fly-1" style={{ animationDelay: '3.7s' }}>
-                            <Heart className="w-full h-full drop-shadow-[0_2px_6px_rgba(244,63,94,0.85)]" />
-                          </div>
-                          {/* Heart 5 */}
-                          <div className="absolute bottom-0 left-[26%] w-5 h-5 text-rose-400 fill-rose-600 animate-heart-fly-2" style={{ animationDelay: '4.6s' }}>
-                            <Heart className="w-full h-full drop-shadow-[0_2px_6px_rgba(225,29,72,0.85)]" />
-                          </div>
-                          {/* Heart 6 */}
-                          <div className="absolute bottom-0 left-[58%] w-3.5 h-3.5 text-pink-200 fill-pink-400 animate-heart-fly-3" style={{ animationDelay: '5.4s' }}>
-                            <Heart className="w-full h-full drop-shadow-[0_2px_5px_rgba(244,63,94,0.75)]" />
-                          </div>
-                        </>
-                      ) : tpl.flyEffect === 'emerald-lotus' || tpl.cardStyle === 'emerald-jade' ? (
-                        /* Imperial Emerald Lotus Petals & Jade Sparkles */
-                        <>
-                          <div className="absolute top-0 left-[18%] w-4 h-5 text-emerald-300/90 animate-emerald-lotus-1">
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_2px_4px_rgba(5,150,105,0.7)]">
-                              <path d="M12 2C9 7 6 12 6 16a6 6 0 0 0 12 0c0-4-3-9-6-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[72%] w-4.5 h-5.5 text-emerald-200/90 animate-emerald-lotus-2" style={{ animationDelay: '1.7s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_2px_4px_rgba(5,150,105,0.7)]">
-                              <path d="M12 2C9 7 6 12 6 16a6 6 0 0 0 12 0c0-4-3-9-6-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[45%] w-3.5 h-4.5 text-teal-200/90 animate-emerald-lotus-3" style={{ animationDelay: '3.3s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_2px_4px_rgba(13,148,136,0.7)]">
-                              <path d="M12 2C9 7 6 12 6 16a6 6 0 0 0 12 0c0-4-3-9-6-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[84%] w-3.5 h-4 text-amber-300/80 animate-emerald-lotus-1" style={{ animationDelay: '2.4s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[30%] w-4 h-4 text-emerald-400/85 animate-emerald-lotus-2" style={{ animationDelay: '4.8s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_2px_4px_rgba(5,150,105,0.7)]">
-                              <path d="M12 2C9 7 6 12 6 16a6 6 0 0 0 12 0c0-4-3-9-6-14z" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : tpl.flyEffect === 'gold-sparkles' || tpl.cardStyle === 'modern-luxury' ? (
-                        /* Modern Luxury Golden Sparkles & Floating Diamonds */
-                        <>
-                          <div className="absolute top-0 left-[20%] w-3.5 h-3.5 text-amber-300/90 animate-petal-1">
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_8px_rgba(245,158,11,0.8)]">
-                              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[75%] w-4.5 h-4.5 text-amber-200/95 animate-petal-2" style={{ animationDelay: '1.6s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_10px_rgba(251,191,36,0.9)]">
-                              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[48%] w-3 h-3 text-white/90 animate-petal-3" style={{ animationDelay: '3.1s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_6px_#fff]">
-                              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[82%] w-3.5 h-3.5 text-amber-300/80 animate-petal-1" style={{ animationDelay: '2.4s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[28%] w-4 h-4 text-amber-400/85 animate-petal-2" style={{ animationDelay: '4.5s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_8px_rgba(245,158,11,0.8)]">
-                              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : tpl.flyEffect === 'angkor-gold-petals' || tpl.cardStyle === 'angkor-heritage' ? (
-                        /* Angkorian Heritage Flying Golden Lotus Petals */
-                        <>
-                          <div className="absolute top-0 left-[22%] w-4 h-4.5 text-amber-300/85 animate-petal-1">
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_2px_6px_rgba(245,158,11,0.8)]">
-                              <path d="M12 2C9 7 6 12 6 16a6 6 0 0 0 12 0c0-4-3-9-6-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[72%] w-4.5 h-5 text-amber-200/90 animate-petal-2" style={{ animationDelay: '1.8s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_2px_6px_rgba(245,158,11,0.8)]">
-                              <path d="M12 2C9 7 6 12 6 16a6 6 0 0 0 12 0c0-4-3-9-6-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[45%] w-3.5 h-4 text-amber-400/80 animate-petal-3" style={{ animationDelay: '3.4s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[84%] w-3.5 h-4 text-amber-100/85 animate-petal-1" style={{ animationDelay: '2.5s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2C9 7 6 12 6 16a6 6 0 0 0 12 0c0-4-3-9-6-14z" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        /* Classic Royal Gold Petals */
-                        <>
-                          <div className="absolute top-0 left-[15%] w-3.5 h-4.5 text-amber-200/80 animate-petal-1">
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2C8.5 7 5 12 5 16a7 7 0 0 0 14 0c0-4-3.5-9-7-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[68%] w-4 h-5 text-rose-200/80 animate-petal-2" style={{ animationDelay: '1.8s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2C8.5 7 5 12 5 16a7 7 0 0 0 14 0c0-4-3.5-9-7-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[42%] w-3 h-4 text-amber-100/90 animate-petal-3" style={{ animationDelay: '3.2s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2C8.5 7 5 12 5 16a7 7 0 0 0 14 0c0-4-3.5-9-7-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[82%] w-3.5 h-4 text-amber-300/85 animate-petal-1" style={{ animationDelay: '2.5s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2C8.5 7 5 12 5 16a7 7 0 0 0 14 0c0-4-3.5-9-7-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[26%] w-3.5 h-3.5 text-amber-200/75 animate-petal-2" style={{ animationDelay: '4.2s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <circle cx="12" cy="12" r="3" />
-                              <path d="M12 2a4 4 0 0 1 4 4c0 2-2 3-4 6-2-3-4-4-4-6a4 4 0 0 1 4-4z" />
-                              <path d="M22 12a4 4 0 0 1-4 4c-2 0-3-2-6-4 3-2 4-4 6-4a4 4 0 0 1 4 4z" />
-                              <path d="M12 22a4 4 0 0 1-4-4c0-2 2-3 4-6 2 3 4 4 4 6a4 4 0 0 1-4 4z" />
-                              <path d="M2 12a4 4 0 0 1 4-4c2 0 3 2 6 4-3 2-4 4-6 4a4 4 0 0 1-4-4z" />
-                            </svg>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  )}
+                  {/* Flying Hearts & Flying Flowers Animation Layer for All Card Containers */}
+                  <FlyingHeartsAndFlowers count={6} />
 
                   {/* Couple Names - Modern Khmer Typographic Text Directly Floating on Photo */}
                   {tpl.cardStyle === 'romantic-frosted' ? (
@@ -519,6 +426,46 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                         <div className="w-1.5 h-1.5 rounded-full bg-amber-300"></div>
                       </div>
                     </div>
+                  ) : tpl.cardStyle === 'crimson-classic' ? (
+                    /* Pure Traditional Khmer Crimson Style with Kh Ang Komutt A Font */
+                    <div className="text-center w-full relative z-20 my-auto px-4 py-3 flex flex-col justify-center items-center">
+                      {/* Traditional Khmer Ornate Inner Border Frame (ស៊ុមឌិនមាសក្បាច់បុរាណ) */}
+                      <div className="absolute inset-1 sm:inset-1.5 rounded-[22px] border border-amber-400/40 pointer-events-none -z-10 shadow-[inset_0_0_12px_rgba(136,19,55,0.4)]">
+                        <div className="absolute -top-1 -left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-amber-300"></div>
+                        <div className="absolute -top-1 -right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-amber-300"></div>
+                        <div className="absolute -bottom-1 -left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-amber-300"></div>
+                        <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-amber-300"></div>
+                      </div>
+
+                      {/* 1. កូនប្រុសនាម */}
+                      <div className="font-komutt-a text-sm sm:text-base text-amber-200 tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] mb-1">
+                        កូនប្រុសនាម
+                      </div>
+
+                      {/* 2. ឈួន សម្បត្តិ */}
+                      <div className="font-komutt-a text-2xl sm:text-[28px] text-white leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-100 transition-colors truncate mb-1">
+                        {cardGroom}
+                      </div>
+
+                      {/* 3. និង */}
+                      <div className="flex items-center justify-center gap-3 my-1">
+                        <div className="h-[1px] w-12 bg-gradient-to-r from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
+                        <span className="font-komutt-a text-sm sm:text-base text-amber-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+                          និង
+                        </span>
+                        <div className="h-[1px] w-12 bg-gradient-to-l from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
+                      </div>
+
+                      {/* 4. កូនស្រីនាម */}
+                      <div className="font-komutt-a text-sm sm:text-base text-amber-200 tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] mb-1">
+                        កូនស្រីនាម
+                      </div>
+
+                      {/* 5. កែវ រចនា */}
+                      <div className="font-komutt-a text-2xl sm:text-[28px] text-white leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-100 transition-colors truncate">
+                        {cardBride}
+                      </div>
+                    </div>
                   ) : (
                     /* Classic Direct-on-Photo Style for Royal Gold */
                     <div className="space-y-1.5 my-auto w-full relative z-20">
@@ -567,14 +514,18 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                   {/* Action Buttons */}
                   <div className="grid grid-cols-2 gap-2 pt-2 border-t border-stone-100">
                     <button
-                      onClick={() => setPreviewTemplate(tpl)}
-                      className="btn-secondary !rounded-full !py-1.5 text-xs flex items-center justify-center gap-1.5 cursor-pointer font-bold"
+                      onClick={() => navigate({ to: `/${tpl.id}/preview` })}
+                      className="btn-secondary !rounded-full !py-1.5 text-xs flex items-center justify-center gap-1.5 cursor-pointer font-bold hover:bg-stone-100 active:scale-95 transition-all"
                     >
                       <Maximize2 className="w-3.5 h-3.5 text-stone-600" />
                       <span>មើលគំរូផ្ទាល់</span>
                     </button>
                     <button
-                      onClick={() => handleSelectTemplate(tpl)}
+                      onClick={() => {
+                        setSelectedTemplate(tpl);
+                        setCurrentTheme(tpl.themeColor || 'crimson');
+                        navigate({ to: `/${tpl.id}/preview` });
+                      }}
                       style={{
                         backgroundColor: tpl.titleColor || (tpl.themeColor === 'gold' ? '#B69225' : tpl.borderColor),
                       }}
@@ -589,6 +540,7 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
             );
           })}
           </div>
+        )}
         </div>
       </main>
 
@@ -634,138 +586,16 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                         className="absolute inset-0 bg-cover bg-center"
                         style={{ backgroundImage: `url(${previewTemplate.bgImage})` }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/25" />
+                      <div className={`absolute inset-0 ${
+                        previewTemplate.cardStyle === 'crimson-classic'
+                          ? 'bg-gradient-to-t from-rose-950/90 via-rose-950/45 to-black/30'
+                          : 'bg-gradient-to-t from-black/80 via-black/40 to-black/25'
+                      }`} />
                     </>
                   )}
 
-                  {/* Flying Flower Petals / Hearts Animation Layer */}
-                  {previewTemplate.hasFlyingFlowers && (
-                    <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
-                      {previewTemplate.flyEffect === 'hearts' || previewTemplate.cardStyle === 'romantic-frosted' ? (
-                        /* Romantic Floating Glowing Flying Hearts in Modal */
-                        <>
-                          <div className="absolute bottom-0 left-[14%] w-4.5 h-4.5 text-rose-400 fill-rose-500 animate-heart-fly-1">
-                            <Heart className="w-full h-full drop-shadow-[0_2px_6px_rgba(225,29,72,0.85)]" />
-                          </div>
-                          <div className="absolute bottom-0 left-[76%] w-5.5 h-5.5 text-pink-300 fill-pink-500 animate-heart-fly-2" style={{ animationDelay: '1.4s' }}>
-                            <Heart className="w-full h-full drop-shadow-[0_2px_6px_rgba(244,63,94,0.85)]" />
-                          </div>
-                          <div className="absolute bottom-0 left-[42%] w-3.5 h-3.5 text-amber-200 fill-amber-300 animate-heart-fly-3" style={{ animationDelay: '2.8s' }}>
-                            <Heart className="w-full h-full drop-shadow-[0_2px_5px_rgba(251,191,36,0.9)]" />
-                          </div>
-                          <div className="absolute bottom-0 left-[86%] w-4 h-4 text-rose-300 fill-rose-400 animate-heart-fly-1" style={{ animationDelay: '3.7s' }}>
-                            <Heart className="w-full h-full drop-shadow-[0_2px_6px_rgba(244,63,94,0.85)]" />
-                          </div>
-                          <div className="absolute bottom-0 left-[26%] w-5 h-5 text-rose-400 fill-rose-600 animate-heart-fly-2" style={{ animationDelay: '4.6s' }}>
-                            <Heart className="w-full h-full drop-shadow-[0_2px_6px_rgba(225,29,72,0.85)]" />
-                          </div>
-                          <div className="absolute bottom-0 left-[58%] w-3.5 h-3.5 text-pink-200 fill-pink-400 animate-heart-fly-3" style={{ animationDelay: '5.4s' }}>
-                            <Heart className="w-full h-full drop-shadow-[0_2px_5px_rgba(244,63,94,0.75)]" />
-                          </div>
-                        </>
-                      ) : previewTemplate.flyEffect === 'emerald-lotus' || previewTemplate.cardStyle === 'emerald-jade' ? (
-                        /* Imperial Emerald Lotus Petals & Jade Sparkles in Modal */
-                        <>
-                          <div className="absolute top-0 left-[18%] w-4.5 h-5.5 text-emerald-300/90 animate-emerald-lotus-1">
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_2px_4px_rgba(5,150,105,0.7)]">
-                              <path d="M12 2C9 7 6 12 6 16a6 6 0 0 0 12 0c0-4-3-9-6-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[75%] w-5 h-6 text-emerald-200/90 animate-emerald-lotus-2" style={{ animationDelay: '1.6s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_2px_4px_rgba(5,150,105,0.7)]">
-                              <path d="M12 2C9 7 6 12 6 16a6 6 0 0 0 12 0c0-4-3-9-6-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[44%] w-4 h-5 text-teal-200/90 animate-emerald-lotus-3" style={{ animationDelay: '3.1s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_2px_4px_rgba(13,148,136,0.7)]">
-                              <path d="M12 2C9 7 6 12 6 16a6 6 0 0 0 12 0c0-4-3-9-6-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[84%] w-4 h-4.5 text-amber-300/80 animate-emerald-lotus-1" style={{ animationDelay: '2.2s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[28%] w-4.5 h-4.5 text-emerald-400/85 animate-emerald-lotus-2" style={{ animationDelay: '4.5s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_2px_4px_rgba(5,150,105,0.7)]">
-                              <path d="M12 2C9 7 6 12 6 16a6 6 0 0 0 12 0c0-4-3-9-6-14z" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : previewTemplate.flyEffect === 'gold-sparkles' || previewTemplate.cardStyle === 'modern-luxury' ? (
-                        /* Modern Luxury Golden Sparkles & Floating Diamonds */
-                        <>
-                          <div className="absolute top-0 left-[20%] w-3.5 h-3.5 text-amber-300/90 animate-petal-1">
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_8px_rgba(245,158,11,0.8)]">
-                              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[75%] w-4.5 h-4.5 text-amber-200/95 animate-petal-2" style={{ animationDelay: '1.6s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_10px_rgba(251,191,36,0.9)]">
-                              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[48%] w-3 h-3 text-white/90 animate-petal-3" style={{ animationDelay: '3.1s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_6px_#fff]">
-                              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[82%] w-3.5 h-3.5 text-amber-300/80 animate-petal-1" style={{ animationDelay: '2.4s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[28%] w-4 h-4 text-amber-400/85 animate-petal-2" style={{ animationDelay: '4.5s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_8px_rgba(245,158,11,0.8)]">
-                              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : previewTemplate.flyEffect === 'angkor-gold-petals' || previewTemplate.cardStyle === 'angkor-heritage' ? (
-                        /* Angkorian Heritage Flying Golden Lotus Petals */
-                        <>
-                          <div className="absolute top-0 left-[22%] w-4 h-4.5 text-amber-300/85 animate-petal-1">
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_2px_6px_rgba(245,158,11,0.8)]">
-                              <path d="M12 2C9 7 6 12 6 16a6 6 0 0 0 12 0c0-4-3-9-6-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[72%] w-4.5 h-5 text-amber-200/90 animate-petal-2" style={{ animationDelay: '1.8s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_2px_6px_rgba(245,158,11,0.8)]">
-                              <path d="M12 2C9 7 6 12 6 16a6 6 0 0 0 12 0c0-4-3-9-6-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[45%] w-3.5 h-4 text-amber-400/80 animate-petal-3" style={{ animationDelay: '3.4s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9L12 2Z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[84%] w-3.5 h-4 text-amber-100/85 animate-petal-1" style={{ animationDelay: '2.5s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2C9 7 6 12 6 16a6 6 0 0 0 12 0c0-4-3-9-6-14z" />
-                            </svg>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="absolute top-0 left-[15%] w-4 h-5 text-amber-200/80 animate-petal-1">
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2C8.5 7 5 12 5 16a7 7 0 0 0 14 0c0-4-3.5-9-7-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[70%] w-4 h-5 text-rose-200/80 animate-petal-2" style={{ animationDelay: '1.5s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2C8.5 7 5 12 5 16a7 7 0 0 0 14 0c0-4-3.5-9-7-14z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-0 left-[45%] w-3.5 h-4.5 text-amber-100/90 animate-petal-3" style={{ animationDelay: '2.8s' }}>
-                            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow">
-                              <path d="M12 2C8.5 7 5 12 5 16a7 7 0 0 0 14 0c0-4-3.5-9-7-14z" />
-                            </svg>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  )}
+                  {/* Flying Hearts & Flying Flowers Animation Layer for Modal Card Container */}
+                  <FlyingHeartsAndFlowers count={8} />
 
                   {/* Only show banner box if template does NOT have full-bleed bgImage */}
                   {!previewTemplate.bgImage && (
@@ -936,6 +766,46 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                         <div className="w-1.5 h-1.5 rounded-full bg-amber-300"></div>
                       </div>
                     </div>
+                  ) : previewTemplate.cardStyle === 'crimson-classic' ? (
+                    /* Pure Traditional Khmer Crimson Style in Modal with Kh Ang Komutt A Font */
+                    <div className="text-center w-full relative z-20 my-4 px-4 py-4 flex flex-col justify-center items-center">
+                      {/* Traditional Khmer Ornate Inner Border Frame (ស៊ុមឌិនមាសក្បាច់បុរាណ) */}
+                      <div className="absolute inset-1.5 sm:inset-2.5 rounded-[22px] border border-amber-400/40 pointer-events-none -z-10 shadow-[inset_0_0_14px_rgba(136,19,55,0.4)]">
+                        <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-amber-300"></div>
+                        <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-amber-300"></div>
+                        <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-amber-300"></div>
+                        <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-amber-300"></div>
+                      </div>
+
+                      {/* 1. កូនប្រុសនាម */}
+                      <div className="font-komutt-a text-base sm:text-lg text-amber-200 tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] mb-1">
+                        កូនប្រុសនាម
+                      </div>
+
+                      {/* 2. ឈួន សម្បត្តិ */}
+                      <div className="font-komutt-a text-2xl sm:text-3xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-100 transition-colors mb-1.5">
+                        {modalGroom}
+                      </div>
+
+                      {/* 3. និង */}
+                      <div className="flex items-center justify-center gap-3.5 my-1.5">
+                        <div className="h-[1.5px] w-14 bg-gradient-to-r from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
+                        <span className="font-komutt-a text-base sm:text-lg text-amber-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+                          និង
+                        </span>
+                        <div className="h-[1.5px] w-14 bg-gradient-to-l from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
+                      </div>
+
+                      {/* 4. កូនស្រីនាម */}
+                      <div className="font-komutt-a text-base sm:text-lg text-amber-200 tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] mb-1">
+                        កូនស្រីនាម
+                      </div>
+
+                      {/* 5. កែវ រចនា */}
+                      <div className="font-komutt-a text-2xl sm:text-3xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-100 transition-colors">
+                        {modalBride}
+                      </div>
+                    </div>
                   ) : (
                     <div className="space-y-2 my-4 relative z-20">
                       <p className={`text-xs ${previewTemplate.bgImage ? 'text-amber-200' : 'text-stone-500'}`}>ដោយក្តីគោរព និងស្រឡាញ់</p>
@@ -978,7 +848,9 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                     onClick={() => {
                       const t = previewTemplate;
                       setPreviewTemplate(null);
-                      handleSelectTemplate(t);
+                      setSelectedTemplate(t);
+                      setCurrentTheme(t.themeColor || 'crimson');
+                      navigate({ to: `/${t.id}/preview` });
                     }}
                     style={{
                       backgroundColor: previewTemplate.titleColor || (previewTemplate.themeColor === 'gold' ? '#B69225' : previewTemplate.borderColor),

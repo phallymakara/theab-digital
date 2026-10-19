@@ -45,14 +45,37 @@ export function AppProvider({ children }) {
     }));
   };
 
+  const playAudio = () => {
+    audio.play().then(() => {
+      setIsAudioPlaying(true);
+    }).catch((err) => {
+      console.warn('Autoplay restricted by browser, awaiting user click:', err);
+      // If browser blocks autoplay, start on next click/touch anywhere on the page
+      const enableOnGesture = () => {
+        audio.play().then(() => {
+          setIsAudioPlaying(true);
+        }).catch(() => {});
+        window.removeEventListener('click', enableOnGesture);
+        window.removeEventListener('touchstart', enableOnGesture);
+      };
+      window.addEventListener('click', enableOnGesture, { once: true });
+      window.addEventListener('touchstart', enableOnGesture, { once: true });
+    });
+  };
+
+  const pauseAudio = () => {
+    try {
+      audio.pause();
+    } catch (e) {}
+    setIsAudioPlaying(false);
+  };
+
   const toggleAudio = () => {
     if (!isAudioPlaying) {
-      audio.play().catch((err) => console.warn('Audio play restricted:', err));
-      setIsAudioPlaying(true);
+      playAudio();
       addToast('កំពុងចាក់ភ្លេងមង្គលបែបប្រពៃណី', 'info');
     } else {
-      audio.pause();
-      setIsAudioPlaying(false);
+      pauseAudio();
       addToast('បានបិទភ្លេង', 'info');
     }
   };
@@ -80,6 +103,8 @@ export function AppProvider({ children }) {
         setCurrentTheme,
         isAudioPlaying,
         toggleAudio,
+        playAudio,
+        pauseAudio,
         toasts,
         addToast,
         removeToast,

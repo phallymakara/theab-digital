@@ -92,10 +92,18 @@ export const CEREMONY_TEMPLATES = {
       themeColor: 'crimson',
       primaryGradient: 'bg-gradient-to-r from-rose-950 via-rose-900 to-rose-950',
       borderColor: '#881337',
+      titleColor: '#881337',
       badgeBg: 'bg-rose-800',
       description: 'រចនាបថប្រពៃណីខ្មែរសុទ្ធសាធ ដោយប្រើប្រាស់ពណ៌ក្រហមឈាមជ្រូក និងអក្សរមូលធំៗ ស្របតាមក្បួនខ្នាតលិខិតអញ្ជើញមង្គលការខ្មែរតាំងពីបុរាណ។',
       previewBg: 'bg-[#FFFDFB]',
+      bgImage: '/images/templates/crimson_classic_prewedding.jpg',
+      hasFlyingFlowers: true,
+      flyEffect: 'crimson-petals',
+      cardStyle: 'crimson-classic',
       cardBorder: 'border-rose-300/80 hover:border-theabCrimson',
+      demoGroom: 'ឈួន សម្បត្តិ',
+      demoBride: 'កែវ រចនា',
+      demoDate: 'ថ្ងៃសៅរ៍ ទី២៣ ខែមករា ឆ្នាំ២០២៧',
       features: ['អក្សរមូលប្រពៃណីខ្មែរ', 'ពាក្យពេចន៍មាតាបិតា', 'គ្រប់គ្រងភ្ញៀវឆ្លើយតប', 'ស្កេនចូលរួម']
     }
   ],
