@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
 import { CEREMONY_DATA } from '../data/templates';
@@ -6,8 +6,6 @@ import confetti from 'canvas-confetti';
 import { FlyingHeartsAndFlowers } from '../components/FlyingHeartsAndFlowers';
 import {
   ArrowLeft,
-  Volume2,
-  VolumeX,
   Calendar,
   Clock,
   MapPin,
@@ -18,16 +16,120 @@ import {
   Heart,
   Share2,
   Copy,
-  Download,
   Phone,
   MessageCircle,
   QrCode,
   Image as ImageIcon,
   Sparkles,
   X,
-  Music,
-  ChevronDown
+  Music
 } from 'lucide-react';
+
+// Compact Traditional Khmer Gold Kbach Divider Component
+function KhmerDivider({ className = '', color = 'text-amber-600' }) {
+  return (
+    <div className={`flex items-center justify-center gap-2.5 my-1.5 sm:my-2 select-none ${className}`}>
+      <span className="h-[1px] w-12 sm:w-20 bg-gradient-to-r from-transparent via-amber-400 to-amber-500"></span>
+      <div className={`flex items-center gap-1 ${color}`}>
+        <span className="text-[9px] opacity-70">✦</span>
+        <span className="text-sm sm:text-base font-serif">❖</span>
+        <span className="text-[9px] opacity-70">✦</span>
+      </div>
+      <span className="h-[1px] w-12 sm:w-20 bg-gradient-to-l from-transparent via-amber-400 to-amber-500"></span>
+    </div>
+  );
+}
+
+// Royal Wedding Golden Floating Motifs (Jasmine Petal, Royal Heart, Sparkle Star, Kbach Floret)
+function GoldWeddingMotif({ type, size = 20, id }) {
+  if (type === 'petal') {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        style={{ width: size, height: size }}
+        className="drop-shadow-[0_2px_6px_rgba(212,175,55,0.45)]"
+      >
+        <defs>
+          <linearGradient id={`gold-p-${id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFF8DB" stopOpacity="0.9" />
+            <stop offset="45%" stopColor="#D4AF37" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#9A7B1C" stopOpacity="0.75" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M12 2 C8 6.5 4.5 11.5 5.5 16.5 A6.5 6.5 0 0 0 18.5 16.5 C19.5 11.5 16 6.5 12 2 Z"
+          fill={`url(#gold-p-${id})`}
+        />
+      </svg>
+    );
+  }
+
+  if (type === 'heart') {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        style={{ width: size, height: size }}
+        className="drop-shadow-[0_2px_6px_rgba(212,175,55,0.45)]"
+      >
+        <defs>
+          <linearGradient id={`gold-h-${id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FEF3C7" stopOpacity="0.9" />
+            <stop offset="50%" stopColor="#D4AF37" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#B45309" stopOpacity="0.75" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+          fill={`url(#gold-h-${id})`}
+        />
+      </svg>
+    );
+  }
+
+  if (type === 'sparkle') {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        style={{ width: size, height: size }}
+        className="drop-shadow-[0_2px_8px_rgba(245,158,11,0.55)]"
+      >
+        <defs>
+          <linearGradient id={`gold-s-${id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFFBEB" stopOpacity="0.95" />
+            <stop offset="50%" stopColor="#F59E0B" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#B45309" stopOpacity="0.75" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M12 1L14.2 9.8L23 12L14.2 14.2L12 23L9.8 14.2L1 12L9.8 9.8L12 1Z"
+          fill={`url(#gold-s-${id})`}
+        />
+      </svg>
+    );
+  }
+
+  // Cambodian Golden Floral Kbach (default)
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      style={{ width: size, height: size }}
+      className="drop-shadow-[0_2px_6px_rgba(212,175,55,0.45)]"
+    >
+      <defs>
+        <linearGradient id={`gold-f-${id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FFFBEB" stopOpacity="0.9" />
+          <stop offset="45%" stopColor="#EAB308" stopOpacity="0.85" />
+          <stop offset="100%" stopColor="#854D0E" stopOpacity="0.75" />
+        </linearGradient>
+      </defs>
+      <circle cx="12" cy="12" r="2.8" fill="#FFFBEB" />
+      <circle cx="12" cy="5.2" r="3" fill={`url(#gold-f-${id})`} />
+      <circle cx="12" cy="18.8" r="3" fill={`url(#gold-f-${id})`} />
+      <circle cx="5.2" cy="12" r="3" fill={`url(#gold-f-${id})`} />
+      <circle cx="18.8" cy="12" r="3" fill={`url(#gold-f-${id})`} />
+    </svg>
+  );
+}
 
 export function TemplateDetailPage() {
   const navigate = useNavigate();
@@ -40,7 +142,6 @@ export function TemplateDetailPage() {
     playAudio,
     pauseAudio,
     addToast,
-    invitationData,
     setSelectedTemplate,
     setCurrentTheme
   } = useApp();
@@ -51,12 +152,46 @@ export function TemplateDetailPage() {
     weddingTemplates.find((t) => t.id === templateId) ||
     weddingTemplates[0];
 
+  // Check if this is the customized template (royal-gold) vs other standalone templates
+  const isCustomized = activeTemplate.id === 'royal-gold';
+
+  // Independent template data: each template preserves its own demo content unless viewing the customized template
+  const groomName = isCustomized ? 'ចាន់ សីហា' : (activeTemplate.demoGroom || 'សុខ វិបុល');
+  const brideName = isCustomized ? 'ហ៊ាង សុជាតា' : (activeTemplate.demoBride || 'ជា សុជាតា');
+  const weddingDate = isCustomized ? '១៨ - ឧសភា - ២០២៦' : (activeTemplate.demoDate || 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦');
+  const weddingLocation = isCustomized
+    ? 'ពិធីនេះរៀបចំឡើងនៅសាលមង្គល ឌឹ ព្រេមៀ សែនសុខ (អគារ A) រាជធានីភ្នំពេញ'
+    : 'ពិធីនេះរៀបចំឡើងនៅសាលមង្គល ឌឹ ព្រេមៀ សែនសុខ (អគារ A) រាជធានីភ្នំពេញ';
+
+  const groomFather = isCustomized ? 'លោក ស៊ីណា ចាន់' : 'លោក ស៊ុន ហេង';
+  const groomMother = isCustomized ? 'អ្នកស្រី មឿន ម៉ាឡៃ' : 'អ្នកស្រី គីម ស្រ៊ុន';
+  const brideFather = isCustomized ? 'លោក ហ៊ិន ហ៊ាង' : 'លោក ជា សម្បត្តិ';
+  const brideMother = isCustomized ? 'អ្នកស្រី ភា សោភ័ណ្ឌ' : 'អ្នកស្រី អ៊ុក ផល្លី';
+
+  // Typography font designated specifically per template
+  const groomBrideFont =
+    activeTemplate.cardStyle === 'crimson-classic' || activeTemplate.id === 'crimson-classic'
+      ? 'font-komutt-a'
+      : activeTemplate.cardStyle === 'emerald-jade' || activeTemplate.id === 'emerald-jade'
+      ? 'font-moulpali'
+      : activeTemplate.cardStyle === 'romantic-frosted' || activeTemplate.id === 'floral-romance'
+      ? 'font-kouteok'
+      : activeTemplate.id === 'angkor-heritage'
+      ? 'font-phalluch'
+      : activeTemplate.cardStyle === 'modern-luxury' || activeTemplate.id === 'modern-luxury'
+      ? 'font-komutt'
+      : 'font-moul';
+
+  // Theme accent colors
+  const themeBorder = activeTemplate.borderColor || '#D4AF37';
+  const themeTitleColor = activeTemplate.titleColor || '#881337';
+  const isEmerald = activeTemplate.themeColor === 'emerald' || activeTemplate.id === 'emerald-jade';
+
   // Play audio on preview entrance, stop song when leaving preview
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     playAudio();
 
-    // When user leaves the preview (navigates away), STOP the song
     return () => {
       pauseAudio();
     };
@@ -75,7 +210,7 @@ export function TemplateDetailPage() {
     days: 790,
     hours: 19,
     minutes: 2,
-    seconds: 24
+    seconds: 18
   });
 
   useEffect(() => {
@@ -93,6 +228,43 @@ export function TemplateDetailPage() {
 
   // Lightbox Modal Image Preview
   const [activePhoto, setActivePhoto] = useState(null);
+
+  // Dedicated Preview Background Style ('romantic' | 'stage')
+  const [previewBg, setPreviewBg] = useState('romantic');
+
+  // Royal Wedding Golden Floating Petals & Sparkles (Continuous & randomized)
+  const [particles, setParticles] = useState([]);
+
+  const generateGoldParticles = () => {
+    const MOTIF_TYPES = ['petal', 'heart', 'sparkle', 'kbach', 'petal', 'sparkle'];
+    const count = 22;
+    const items = Array.from({ length: count }).map((_, i) => {
+      const type = MOTIF_TYPES[i % MOTIF_TYPES.length];
+      // Random duration from 8.5s to 18.0s
+      const duration = (8.5 + (i * 0.45) + (Math.random() * 3.5));
+      // Staggered negative delays spread evenly across full cycle
+      // Ensures petals are already mid-flight at random heights on load, never all at once
+      const delay = -((i / count) * 16 + (Math.random() * 2.5));
+      const left = Math.min(92, Math.max(6, (i / count) * 86 + 6 + (Math.random() - 0.5) * 8));
+      const size = type === 'sparkle' ? 14 + Math.floor(Math.random() * 8) : 18 + Math.floor(Math.random() * 10);
+      const drift = `${(Math.random() - 0.5) * 75}px`;
+
+      return {
+        id: `gp-${i}-${Date.now()}`,
+        type,
+        left: `${left.toFixed(1)}%`,
+        duration: `${duration.toFixed(2)}s`,
+        delay: `${delay.toFixed(2)}s`,
+        size,
+        drift,
+      };
+    });
+    setParticles(items);
+  };
+
+  useEffect(() => {
+    generateGoldParticles();
+  }, []);
 
   // Gallery Photos
   const galleryPhotos = [
@@ -135,22 +307,7 @@ export function TemplateDetailPage() {
     guestCount: '1 នាក់'
   });
 
-  const [rsvpList, setRsvpList] = useState([
-    {
-      id: 1,
-      name: 'លោក ចន្ទ សុផល',
-      status: 'attending',
-      guestCount: '1 នាក់',
-      time: '១០ នាទីមុន'
-    },
-    {
-      id: 2,
-      name: 'អ្នកនាង សុខ គន្ធា',
-      status: 'attending',
-      guestCount: '2 នាក់',
-      time: '២៥ នាទីមុន'
-    }
-  ]);
+  const [rsvpList, setRsvpList] = useState([]);
 
   const handleRsvpSubmit = (e) => {
     e.preventDefault();
@@ -172,9 +329,9 @@ export function TemplateDetailPage() {
 
     try {
       confetti({
-        particleCount: 75,
-        spread: 60,
-        origin: { y: 0.7 },
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.65 },
         colors: ['#D4AF37', '#881337', '#BE123C', '#F59E0B']
       });
     } catch (err) {}
@@ -188,20 +345,7 @@ export function TemplateDetailPage() {
     message: ''
   });
 
-  const [wishesList, setWishesList] = useState([
-    {
-      id: 1,
-      name: 'លោក ចន្ទ សុផល',
-      message: 'Congratulations! សូមជូនពរឱ្យអ្នកទាំងពីរមានសុភមង្គល និងស្រឡាញ់គ្នារហូតដល់ចាស់កោងខ្នង។',
-      date: '13-10-2025 | 23:36 PM'
-    },
-    {
-      id: 2,
-      name: 'កញ្ញា ម៉ៅ សុខា',
-      message: 'រីករាយថ្ងៃមង្គលការ! ជូនពរគូស្វាមីភរិយាថ្មីមានទ្រព្យសម្បត្តិហូរហៀរ និងជោគជ័យគ្រប់ភារកិច្ច។',
-      date: '14-10-2025 | 08:15 AM'
-    }
-  ]);
+  const [wishesList, setWishesList] = useState([]);
 
   const handleWishSubmit = (e) => {
     e.preventDefault();
@@ -237,9 +381,9 @@ export function TemplateDetailPage() {
 
   // Add to Calendar helper
   const handleAddToCalendar = () => {
-    const title = encodeURIComponent('ពិធីមង្គលការ ចាន់ សីហា & ហ៊ាង សុជាតា');
-    const details = encodeURIComponent('សិរីមង្គលអាពាហ៍ពិពាហ៍ រៀបចំឡើងនៅសាលមង្គល ឌឹ ព្រេមៀ សែនសុខ (អគារ A)');
-    const location = encodeURIComponent('ឌឹ ព្រេមៀ សែនសុខ, រាជធានីភ្នំពេញ');
+    const title = encodeURIComponent(`ពិធីមង្គលការ ${groomName} & ${brideName}`);
+    const details = encodeURIComponent(`សិរីមង្គលអាពាហ៍ពិពាហ៍ ${weddingLocation}`);
+    const location = encodeURIComponent('មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A), រាជធានីភ្នំពេញ');
     const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=20260518T013000Z/20260518T150000Z`;
     window.open(googleCalUrl, '_blank');
     addToast('បានបើក Google Calendar', 'info');
@@ -261,229 +405,305 @@ export function TemplateDetailPage() {
     });
   };
 
-  // Theme Accent Variables
-  const isCrimson = activeTemplate.id === 'crimson-classic' || activeTemplate.themeColor === 'crimson';
-  const isEmerald = activeTemplate.id === 'emerald-jade' || activeTemplate.themeColor === 'emerald';
-  const isModern = activeTemplate.id === 'modern-luxury';
-
-  const themeBorder = activeTemplate.borderColor || '#D4AF37';
-  const themeTitleColor = activeTemplate.titleColor || '#881337';
-
-  // Specific Typography styling for Crimson Classic
-  const groomBrideFont = isCrimson
-    ? 'font-komutt-a'
-    : isEmerald
-    ? 'font-moulpali'
-    : isModern
-    ? 'font-komutt-b'
-    : 'font-moul';
-
   return (
-    <div className="w-full min-h-screen bg-[#FAF8F5] text-stone-800 relative selection:bg-rose-900 selection:text-white pb-24">
-      {/* Background Decorative Khmer Vignettes & Petals */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-40">
-        <div className="absolute top-10 left-10 w-96 h-96 rounded-full bg-amber-400/10 blur-3xl"></div>
-        <div className="absolute top-1/2 right-10 w-96 h-96 rounded-full bg-rose-500/10 blur-3xl"></div>
-        <div className="absolute bottom-10 left-1/3 w-96 h-96 rounded-full bg-amber-300/15 blur-3xl"></div>
-      </div>
+    <div className={`w-full min-h-screen ${
+      previewBg === 'stage' ? 'bg-preview-stage text-stone-100' : 'bg-preview-romantic text-stone-800'
+    } relative selection:bg-rose-900 selection:text-white pb-16 pt-2.5 sm:pt-5 px-3 sm:px-6 transition-colors duration-500`}>
+      
+
+      {/* Decorative Subtle Ambient Stage Lighting */}
+      <div
+        className={`fixed -top-16 -left-16 w-80 h-80 rounded-full blur-3xl pointer-events-none select-none z-0 transition-opacity duration-700 ${
+          previewBg === 'stage' ? 'bg-amber-400/10' : 'bg-rose-300/25'
+        }`}
+      />
+      <div
+        className={`fixed -bottom-16 -right-16 w-80 h-80 rounded-full blur-3xl pointer-events-none select-none z-0 transition-opacity duration-700 ${
+          previewBg === 'stage' ? 'bg-rose-900/15' : 'bg-amber-300/20'
+        }`}
+      />
 
       {/* Floating Audio Play/Pause Button */}
-      <div className="fixed bottom-6 right-5 z-50 flex flex-col items-end gap-2">
+      <div className="fixed bottom-5 right-4 sm:right-6 z-40 flex flex-col items-end gap-2">
         <button
           onClick={toggleAudio}
-          className="group flex items-center gap-2.5 px-3.5 py-2.5 rounded-full bg-white/95 hover:bg-white text-stone-800 border-2 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer active:scale-95"
+          className={`group flex items-center gap-2 px-3 py-2 rounded-full border-2 transition-all duration-300 cursor-pointer active:scale-95 shadow-sm ${
+            previewBg === 'stage'
+              ? 'bg-stone-900/90 hover:bg-stone-800 text-stone-100 backdrop-blur-md'
+              : 'bg-white/95 hover:bg-stone-50 text-stone-800'
+          }`}
           style={{ borderColor: themeBorder }}
           title={isAudioPlaying ? 'ចុចដើម្បីបិទភ្លេង' : 'ចុចដើម្បីចាក់ភ្លេងមង្គល'}
         >
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white shadow-md ${
+          <div className={`w-7 h-7 rounded-full flex items-center justify-center text-white ${
             isAudioPlaying
               ? 'bg-gradient-to-tr from-amber-600 to-amber-500 animate-[spin_4s_linear_infinite]'
               : 'bg-stone-500'
           }`}>
-            <Music className="w-4 h-4" />
+            <Music className="w-3.5 h-3.5 text-white" />
           </div>
           <div className="text-left hidden sm:block pr-1">
-            <span className="block text-[11px] font-bold text-stone-700 leading-tight">
+            <span className={`block text-[11px] font-bold leading-tight ${
+              previewBg === 'stage' ? 'text-stone-100' : 'text-stone-800'
+            }`}>
               {isAudioPlaying ? 'កំពុងចាក់ភ្លេងមង្គល' : 'ភ្លេងមង្គលបុរាណ'}
             </span>
-            <span className="block text-[10px] text-amber-700 font-medium">
+            <span className="block text-[10px] text-amber-600 font-medium">
               {isAudioPlaying ? 'ចុចដើម្បីបិទ' : 'ចុចដើម្បីចាក់'}
             </span>
           </div>
         </button>
       </div>
 
-
-      {/* Back Button Row (Same position and styling as other pages) */}
-      <div className="max-w-3xl mx-auto px-4 pt-4 sm:pt-6 relative z-20">
+      {/* Top Floating Control Bar - Matches Container Width */}
+      <header className="max-w-xl sm:max-w-2xl mx-auto mb-3 flex items-center justify-between gap-1.5 sm:gap-2 relative z-20">
         <button
           onClick={() => navigate({ to: '/wedding' })}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white border border-stone-200/90 text-stone-700 hover:text-theabCrimson text-xs font-bold transition shadow-2xs cursor-pointer shrink-0"
+          className={`inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full border text-xs font-bold transition cursor-pointer active:scale-95 shadow-xs ${
+            previewBg === 'stage'
+              ? 'bg-stone-900/85 hover:bg-stone-800 border-amber-400/30 text-stone-200 hover:text-amber-300 backdrop-blur-md'
+              : 'bg-white/90 hover:bg-stone-50 border-stone-300 text-stone-700 hover:text-theabCrimson'
+          }`}
         >
-          <ArrowLeft className="w-4 h-4 text-theabCrimson" />
+          <ArrowLeft className="w-4 h-4 text-theabCrimson shrink-0" />
           <span>ថយក្រោយ</span>
         </button>
-      </div>
 
-      {/* Main Content Container */}
-      <main className="max-w-3xl mx-auto px-4 pt-3 sm:pt-4 space-y-10 relative z-10">
+        {/* Center Controls: Flower Shower & Background Switcher */}
+        <div className="flex items-center gap-1.5">
+          {/* Re-trigger Flying Golden Wedding Petals & Motifs */}
+          <button
+            onClick={generateGoldParticles}
+            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-50 hover:bg-amber-100 border border-amber-300/80 text-amber-800 text-[10.5px] sm:text-[11px] font-bold transition active:scale-95 cursor-pointer shadow-xs"
+            title="ចុចដើម្បីបង្ហោះផ្កាមាសឡើងវិញ"
+          >
+            <span>✨</span>
+            <span className="hidden xs:inline">បង្ហោះផ្កាមាស</span>
+          </button>
 
-        {/* 1. Hero & Groom/Bride Section */}
-        <section className="bg-white rounded-3xl overflow-hidden shadow-xl border-2 border-amber-400/40 khmer-pattern relative animate-fade">
-          {/* Header Strip with Prewedding Photo & Vignette */}
-          <div className="relative min-h-[380px] sm:min-h-[440px] flex flex-col justify-between p-6 sm:p-8 text-center overflow-hidden">
-            {/* Background Prewedding Photo */}
+          {/* Ambient Preview Background Mode Switcher */}
+          <div className={`flex items-center gap-0.5 p-0.5 rounded-full border shadow-xs ${
+            previewBg === 'stage'
+              ? 'bg-stone-950/70 border-white/10 backdrop-blur-md'
+              : 'bg-white/90 border-stone-300 backdrop-blur-md'
+          }`}>
+            <button
+              onClick={() => setPreviewBg('romantic')}
+              className={`px-2.5 sm:px-3 py-1 rounded-full text-[10.5px] sm:text-[11px] font-bold transition-all cursor-pointer ${
+                previewBg === 'romantic'
+                  ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-stone-950 shadow-xs'
+                  : 'text-stone-500 hover:text-stone-800'
+              }`}
+              title="ផ្ទៃមាសរ៉ូមែនទិក (Romantic Wedding Silk)"
+            >
+              🌸 <span className="hidden sm:inline">រ៉ូមែនទិក</span>
+            </button>
+            <button
+              onClick={() => setPreviewBg('stage')}
+              className={`px-2.5 sm:px-3 py-1 rounded-full text-[10.5px] sm:text-[11px] font-bold transition-all cursor-pointer ${
+                previewBg === 'stage'
+                  ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-stone-950 shadow-xs'
+                  : 'text-stone-400 hover:text-stone-200'
+              }`}
+              title="ផ្ទៃរាជវាំងងងឹត (Luxury Dark Stage)"
+            >
+              🌙 <span className="hidden sm:inline">រាជវាំង</span>
+            </button>
+          </div>
+        </div>
+
+        <button
+          onClick={handleShareLink}
+          className={`inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full border text-xs font-bold transition cursor-pointer active:scale-95 shadow-xs ${
+            previewBg === 'stage'
+              ? 'bg-stone-900/85 hover:bg-stone-800 border-amber-400/30 text-stone-200 hover:text-amber-300 backdrop-blur-md'
+              : 'bg-white/90 hover:bg-stone-50 border-stone-300 text-stone-700 hover:text-theabCrimson'
+          }`}
+        >
+          <Share2 className="w-4 h-4 text-theabCrimson shrink-0" />
+          <span className="hidden xs:inline">ចែករំលែកធៀប</span>
+          <span className="xs:hidden">ចែករំលែក</span>
+        </button>
+      </header>
+
+      {/* =========================================================================
+          THE UNIFIED WEDDING INVITATION CONTAINER (RESPECTS INDIVIDUAL TEMPLATE)
+          ========================================================================= */}
+      <main
+        className="max-w-xl sm:max-w-2xl mx-auto bg-white rounded-[24px] sm:rounded-[30px] border-2 overflow-hidden relative z-10 animate-fade"
+        style={{ borderColor: themeBorder }}
+      >
+        {/* Flying Royal Wedding Gold Petals & Sparkles (Continuous random drift inside container) */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-30 select-none">
+          {particles.map((p) => (
             <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${activeTemplate.bgImage || '/images/templates/royal_gold_prewedding.jpg'})` }}
-            />
-            {/* Elegant Gradient Vignette */}
-            <div className={`absolute inset-0 ${
-              isCrimson
-                ? 'bg-gradient-to-t from-rose-950/95 via-rose-950/60 to-black/40'
-                : isEmerald
-                ? 'bg-gradient-to-t from-emerald-950/95 via-emerald-950/60 to-black/40'
-                : 'bg-gradient-to-t from-black/90 via-black/55 to-black/35'
-            }`} />
-
-            {/* Flying Hearts & Flying Flowers Animation Layer */}
-            <FlyingHeartsAndFlowers count={8} />
-
-            {/* Inner Gold Frame Border */}
-            <div className="absolute inset-3 sm:inset-4 rounded-[24px] border border-amber-300/40 pointer-events-none shadow-[inset_0_0_16px_rgba(212,175,55,0.25)]">
-              <div className="absolute -top-1.5 -left-1.5 w-3.5 h-3.5 border-t-2 border-l-2 border-amber-300"></div>
-              <div className="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 border-t-2 border-r-2 border-amber-300"></div>
-              <div className="absolute -bottom-1.5 -left-1.5 w-3.5 h-3.5 border-b-2 border-l-2 border-amber-300"></div>
-              <div className="absolute -bottom-1.5 -right-1.5 w-3.5 h-3.5 border-b-2 border-r-2 border-amber-300"></div>
+              key={p.id}
+              className="absolute animate-gold-wedding-petal select-none pointer-events-none"
+              style={{
+                left: p.left,
+                top: '-50px',
+                animationDuration: p.duration,
+                animationDelay: p.delay,
+                '--drift': p.drift
+              }}
+            >
+              <GoldWeddingMotif type={p.type} size={p.size} id={p.id} />
             </div>
+          ))}
+        </div>
 
-            {/* Top Monogram */}
-            <div className="relative z-10">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full mx-auto bg-amber-400/20 text-amber-300 flex items-center justify-center font-moul text-2xl border-2 border-amber-300/50 shadow-lg backdrop-blur-xs mb-2">
-                {activeTemplate.monogram || 'ធ'}
-              </div>
-              <h1 className="font-moul text-xl sm:text-2xl text-amber-200 tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-                សិរីមង្គលអាពាហ៍ពិពាហ៍
+        {/* 1. HERO COVER & COUPLE TITLE */}
+        <section className="relative w-full aspect-[896/1200] min-h-[560px] sm:min-h-[720px] md:min-h-[820px] flex flex-col justify-center items-center p-4 sm:p-8 text-center overflow-hidden border-b" style={{ borderColor: themeBorder }}>
+          {/* Background Prewedding Photo - Full Image Display */}
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${activeTemplate.bgImage || '/images/templates/royal_gold_prewedding.jpg'})` }}
+          />
+          {/* Cinematic Balanced Vignette to Highlight Centered Text */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/65" />
+
+          {/* Flying Hearts & Flying Flowers Animation Layer */}
+          <FlyingHeartsAndFlowers count={8} />
+
+          {/* Inner Golden Filigree Border Frame */}
+          <div className="absolute inset-2.5 sm:inset-4 rounded-[18px] sm:rounded-[24px] border pointer-events-none" style={{ borderColor: `${themeBorder}80` }}>
+            <div className="absolute -top-1.5 -left-1.5 w-3.5 h-3.5 border-t-2 border-l-2" style={{ borderColor: themeBorder }}></div>
+            <div className="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 border-t-2 border-r-2" style={{ borderColor: themeBorder }}></div>
+            <div className="absolute -bottom-1.5 -left-1.5 w-3.5 h-3.5 border-b-2 border-l-2" style={{ borderColor: themeBorder }}></div>
+            <div className="absolute -bottom-1.5 -right-1.5 w-3.5 h-3.5 border-b-2 border-r-2" style={{ borderColor: themeBorder }}></div>
+          </div>
+
+          {/* GROUPED WEDDING TEXT (Centered in the Middle of Image) */}
+          <div className="relative z-10 space-y-2.5 sm:space-y-3.5 max-w-lg mx-auto w-full my-auto px-2">
+            {/* Title: សិរីមង្គលអាពាហ៍ពិពាហ៍ */}
+            <div>
+              <h1 className="font-moul text-xl sm:text-2xl md:text-3xl text-amber-200 tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                {activeTemplate.id === 'emerald-jade' ? 'សិរីសួស្តីអាពាហ៍ពិពាហ៍' : 'សិរីមង្គលអាពាហ៍ពិពាហ៍'}
               </h1>
-              <p className="text-xs sm:text-sm text-amber-100 font-sans tracking-widest uppercase font-semibold mt-0.5">
-                Wedding Celebration
-              </p>
             </div>
 
-            {/* Center Couple Names in designated font */}
-            <div className="relative z-10 my-4 sm:my-6">
-              {isCrimson ? (
-                /* Pure Traditional 5-line Structure in Kh Ang Komutt A */
-                <div className="space-y-1">
-                  <div className="font-komutt-a text-sm sm:text-base text-amber-200 drop-shadow">
-                    កូនប្រុសនាម
-                  </div>
-                  <div className="font-komutt-a text-3xl sm:text-4xl text-white tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
-                    ចាន់ សីហា
-                  </div>
-                  <div className="font-komutt-a text-base sm:text-lg text-amber-300 my-1 drop-shadow">
-                    &bull; និង &bull;
-                  </div>
-                  <div className="font-komutt-a text-sm sm:text-base text-amber-200 drop-shadow">
-                    កូនស្រីនាម
-                  </div>
-                  <div className="font-komutt-a text-3xl sm:text-4xl text-white tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
-                    ហ៊ាង សុជាតា
-                  </div>
-                </div>
-              ) : (
-                /* General Royal / Emerald / Modern Style */
-                <div className="space-y-1">
-                  <div className={`${groomBrideFont} text-3xl sm:text-4xl text-white tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]`}>
-                    ចាន់ សីហា
-                  </div>
-                  <div className="flex items-center justify-center gap-3 my-1">
-                    <span className="h-[1px] w-12 bg-gradient-to-r from-transparent via-amber-300 to-amber-400"></span>
-                    <span className="font-serif italic text-lg text-amber-300 font-bold">&</span>
-                    <span className="h-[1px] w-12 bg-gradient-to-l from-transparent via-amber-300 to-amber-400"></span>
-                  </div>
-                  <div className={`${groomBrideFont} text-3xl sm:text-4xl text-white tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]`}>
-                    ហ៊ាង សុជាតា
-                  </div>
-                </div>
-              )}
+            {/* Center Couple Names: Styled in each template's unique font (scaled smaller a bit) */}
+            <div className="py-0.5">
+              <div className={`${groomBrideFont} text-xl sm:text-2xl md:text-3xl text-white tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]`}>
+                {groomName}
+              </div>
+              <div className="flex items-center justify-center gap-2 my-0.5">
+                <span className="h-[1.2px] w-8 sm:w-12 bg-gradient-to-r from-transparent via-amber-300 to-amber-400 drop-shadow"></span>
+                <span className="font-serif italic text-base sm:text-lg text-amber-300 font-bold drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">&</span>
+                <span className="h-[1.2px] w-8 sm:w-12 bg-gradient-to-l from-transparent via-amber-300 to-amber-400 drop-shadow"></span>
+              </div>
+              <div className={`${groomBrideFont} text-xl sm:text-2xl md:text-3xl text-white tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]`}>
+                {brideName}
+              </div>
             </div>
 
-            {/* Bottom Date & Venue Badge */}
-            <div className="relative z-10 pt-2 border-t border-amber-300/30 max-w-md mx-auto w-full">
-              <p className="text-xs text-amber-200 font-medium">ប្រព្រឹត្តទៅនៅ</p>
-              <p className="font-moul text-sm sm:text-base text-white tracking-wide my-1 drop-shadow">
-                ១៨ - ឧសភា - ២០២៦
+            {/* Date & Venue Badge - Enlarged Text Sizes */}
+            <div className="pt-2.5 sm:pt-3.5 border-t border-amber-300/50 space-y-1">
+              <p className="text-sm sm:text-base text-amber-200 font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
+                ប្រព្រឹត្តទៅនៅ
               </p>
-              <p className="text-xs text-amber-100/90 leading-relaxed font-suwannaphum">
-                ពិធីនេះរៀបចំឡើងនៅសាលមង្គល ឌឹ ព្រេមៀ សែនសុខ (អគារ A) រាជធានីភ្នំពេញ
+              <p className="font-moul text-xl sm:text-2xl md:text-3xl text-white tracking-wide my-1 drop-shadow-[0_3px_8px_rgba(0,0,0,0.95)]">
+                {weddingDate}
+              </p>
+              <p className="text-xs sm:text-sm md:text-base text-amber-100 font-suwannaphum leading-relaxed drop-shadow-[0_1px_6px_rgba(0,0,0,0.95)] max-w-md mx-auto">
+                {weddingLocation}
               </p>
             </div>
           </div>
+        </section>
 
-          {/* Parents Section Body */}
-          <div className="p-6 sm:p-8 bg-gradient-to-b from-stone-50 to-white text-center">
-            <div className="khmer-gold-strip max-w-xs mx-auto mb-6 opacity-75"></div>
+        {/* 2. PARENTS BLESSING SECTION (ឪពុកម្ដាយទាំងសងខាង) */}
+        <section className="px-3.5 py-3 sm:px-5 sm:py-3.5 bg-[#FAF7F2] text-center border-b" style={{ borderColor: `${themeBorder}60` }}>
+          <h3 className="font-moul text-sm sm:text-base" style={{ color: themeTitleColor }}>
+            ឪពុកម្ដាយកូនកំលោះ & ឪពុកម្ដាយកូនក្រមុំ
+          </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-2xl mx-auto">
+          <KhmerDivider />
+
+          {/* Unified Luxury Khmer Wedding Blessing Card */}
+          <div
+            className="max-w-xl mx-auto rounded-2xl bg-gradient-to-b from-white via-[#FCF9F4] to-[#FBF5EB] border p-3 sm:p-4 relative shadow-xs"
+            style={{ borderColor: `${themeBorder}` }}
+          >
+            {/* Subtle Gold Filigree Corner Accents */}
+            <div className="absolute top-1.5 left-1.5 w-3 h-3 border-t-2 border-l-2 pointer-events-none" style={{ borderColor: themeBorder }}></div>
+            <div className="absolute top-1.5 right-1.5 w-3 h-3 border-t-2 border-r-2 pointer-events-none" style={{ borderColor: themeBorder }}></div>
+            <div className="absolute bottom-1.5 left-1.5 w-3 h-3 border-b-2 border-l-2 pointer-events-none" style={{ borderColor: themeBorder }}></div>
+            <div className="absolute bottom-1.5 right-1.5 w-3 h-3 border-b-2 border-r-2 pointer-events-none" style={{ borderColor: themeBorder }}></div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 relative py-0.5">
               {/* Groom's Parents */}
-              <div className="bg-white p-5 rounded-2xl border border-amber-200/80 shadow-xs relative">
-                <div className="w-8 h-8 rounded-full bg-amber-100 text-amber-900 mx-auto flex items-center justify-center text-xs font-bold mb-2">
-                  កំលោះ
+              <div className="space-y-1 text-center">
+                <div className="inline-flex items-center justify-center gap-1.5 pb-0.5 border-b border-amber-300/50 mb-0.5">
+                  <span className="text-[10px] text-amber-500">✦</span>
+                  <h4 className="font-moul text-xs sm:text-[13px] tracking-wide" style={{ color: themeTitleColor }}>
+                    ឪពុកម្ដាយខាងកូនកំលោះ
+                  </h4>
+                  <span className="text-[10px] text-amber-500">✦</span>
                 </div>
-                <h4 className="font-moul text-sm text-theabCrimson mb-2.5">
-                  ឪពុកម្ដាយខាងកូនកំលោះ
-                </h4>
-                <p className="text-stone-700 text-sm font-semibold leading-relaxed">
-                  លោក ស៊ីណា ចាន់
-                </p>
-                <p className="text-stone-700 text-sm font-semibold leading-relaxed">
-                  អ្នកស្រី មឿន ម៉ាឡៃ
-                </p>
+                <div className="space-y-0.5">
+                  <p className="text-stone-800 text-xs sm:text-sm font-bold leading-snug">
+                    {groomFather}
+                  </p>
+                  <p className="text-stone-800 text-xs sm:text-sm font-bold leading-snug">
+                    {groomMother}
+                  </p>
+                </div>
+              </div>
+
+              {/* Center Divider Ornament (Vertical on sm+, horizontal on mobile) */}
+              <div className="hidden sm:flex absolute left-1/2 top-0 bottom-0 -translate-x-1/2 flex-col items-center justify-center pointer-events-none">
+                <div className="w-[1px] flex-1 bg-gradient-to-b from-transparent via-amber-300/70 to-transparent"></div>
+                <span className="text-xs text-amber-600/80 my-1 select-none">❖</span>
+                <div className="w-[1px] flex-1 bg-gradient-to-b from-transparent via-amber-300/70 to-transparent"></div>
+              </div>
+              <div className="sm:hidden flex items-center justify-center gap-2 my-0.5">
+                <span className="h-[1px] w-10 bg-gradient-to-r from-transparent via-amber-300/60 to-transparent"></span>
+                <span className="text-[9px] text-amber-600/80 select-none">❖</span>
+                <span className="h-[1px] w-10 bg-gradient-to-l from-transparent via-amber-300/60 to-transparent"></span>
               </div>
 
               {/* Bride's Parents */}
-              <div className="bg-white p-5 rounded-2xl border border-amber-200/80 shadow-xs relative">
-                <div className="w-8 h-8 rounded-full bg-rose-100 text-rose-900 mx-auto flex items-center justify-center text-xs font-bold mb-2">
-                  ក្រមុំ
+              <div className="space-y-1 text-center">
+                <div className="inline-flex items-center justify-center gap-1.5 pb-0.5 border-b border-amber-300/50 mb-0.5">
+                  <span className="text-[10px] text-amber-500">✦</span>
+                  <h4 className="font-moul text-xs sm:text-[13px] tracking-wide" style={{ color: themeTitleColor }}>
+                    ឪពុកម្ដាយខាងកូនក្រមុំ
+                  </h4>
+                  <span className="text-[10px] text-amber-500">✦</span>
                 </div>
-                <h4 className="font-moul text-sm text-theabCrimson mb-2.5">
-                  ឪពុកម្ដាយខាងកូនក្រមុំ
-                </h4>
-                <p className="text-stone-700 text-sm font-semibold leading-relaxed">
-                  លោក ហ៊ិន ហ៊ាង
-                </p>
-                <p className="text-stone-700 text-sm font-semibold leading-relaxed">
-                  អ្នកស្រី ភា សោភ័ណ្ឌ
-                </p>
+                <div className="space-y-0.5">
+                  <p className="text-stone-800 text-xs sm:text-sm font-bold leading-snug">
+                    {brideFather}
+                  </p>
+                  <p className="text-stone-800 text-xs sm:text-sm font-bold leading-snug">
+                    {brideMother}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 2. Event Calendar (ប្រតិទិន) */}
-        <section className="bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-stone-200/80 text-center">
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <Calendar className="w-5 h-5 text-theabCrimson" />
-            <h2 className="font-moul text-lg text-theabCrimson">
+        {/* 3. EVENT CALENDAR & COUNTDOWN HUB (ប្រតិទិន & រាប់ថយក្រោយ) */}
+        <section className="px-3.5 py-3 sm:px-5 sm:py-3.5 bg-white border-b text-center" style={{ borderColor: `${themeBorder}60` }}>
+          <div className="flex items-center justify-center gap-1.5">
+            <Calendar className="w-4 h-4" style={{ color: themeTitleColor }} />
+            <h3 className="font-moul text-sm sm:text-base" style={{ color: themeTitleColor }}>
               ប្រតិទិន
-            </h2>
+            </h3>
           </div>
-          <span className="text-xs uppercase font-sans tracking-widest text-stone-500 font-bold block mb-4">
-            Event Calendar &bull; December 2028
-          </span>
 
-          {/* Khmer Gold Strip Divider */}
-          <div className="khmer-gold-strip max-w-xs mx-auto mb-6 opacity-60"></div>
+          <KhmerDivider />
 
-          {/* Calendar Grid Box */}
-          <div className="max-w-md mx-auto bg-stone-50 rounded-2xl border border-stone-200 p-4 sm:p-6 shadow-inner">
-            <div className="text-center font-bold text-stone-800 text-sm mb-4">
+          {/* Transparent Luxury Calendar Box */}
+          <div className="max-w-md mx-auto bg-transparent rounded-2xl border p-3 sm:p-3.5 mb-3" style={{ borderColor: `${themeBorder}50` }}>
+            <div className="text-center font-bold text-stone-800 text-xs sm:text-sm mb-2">
               December 2028
             </div>
 
             {/* Days Header S M T W T F S */}
-            <div className="grid grid-cols-7 gap-1 sm:gap-2 text-xs font-bold text-stone-500 pb-2 border-b border-stone-200 mb-2">
+            <div className="grid grid-cols-7 gap-1 text-[11px] font-bold text-stone-500 pb-1 border-b border-stone-200/60 mb-1">
               <span className="text-rose-600">S</span>
               <span>M</span>
               <span>T</span>
@@ -494,15 +714,14 @@ export function TemplateDetailPage() {
             </div>
 
             {/* Days Grid 1..31 */}
-            <div className="grid grid-cols-7 gap-1 sm:gap-2 text-xs sm:text-sm font-medium">
-              {/* Day 1 starts on Friday (5 empty cells for S, M, T, W, T) */}
+            <div className="grid grid-cols-7 gap-1 text-xs font-medium">
               <span></span>
               <span></span>
               <span></span>
               <span></span>
               <span></span>
-              <span className="p-2 rounded-lg hover:bg-stone-200 transition">1</span>
-              <span className="p-2 rounded-lg text-rose-600 hover:bg-stone-200 transition">2</span>
+              <span className="p-1 rounded-md hover:bg-stone-100 transition">1</span>
+              <span className="p-1 rounded-md text-rose-600 hover:bg-stone-100 transition">2</span>
 
               {[...Array(29)].map((_, idx) => {
                 const dayNum = idx + 3;
@@ -510,167 +729,166 @@ export function TemplateDetailPage() {
                 return (
                   <div
                     key={dayNum}
-                    className={`p-2 rounded-xl flex items-center justify-center relative transition-all ${
+                    className={`p-1 rounded-lg flex items-center justify-center relative transition-all ${
                       isWeddingDay
-                        ? 'bg-theabCrimson text-white font-bold shadow-md ring-2 ring-amber-300 scale-105'
-                        : 'hover:bg-stone-200 text-stone-700'
+                        ? 'text-white font-bold ring-2 ring-amber-300 scale-105'
+                        : 'hover:bg-amber-100/60 text-stone-700'
                     }`}
+                    style={isWeddingDay ? { backgroundColor: themeTitleColor } : {}}
                   >
                     <span>{dayNum}</span>
                     {isWeddingDay && (
-                      <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-400 rounded-full animate-ping"></span>
+                      <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-amber-400 rounded-full animate-ping"></span>
                     )}
                   </div>
                 );
               })}
             </div>
+
           </div>
 
-          <div className="mt-5">
+          {/* Modern Elegant Wedding Countdown */}
+          <div className="max-w-md mx-auto pt-1 text-center">
+            <div className="flex items-center justify-center gap-1.5 mb-2">
+              <Clock className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
+              <h4 className="font-moul text-xs sm:text-[13px]" style={{ color: themeTitleColor }}>
+                រាប់ថយក្រោយ
+              </h4>
+            </div>
+
+            {/* 4 Soft Floating Luxury Squircle Counters */}
+            <div className="grid grid-cols-4 gap-2 max-w-xs mx-auto mb-3">
+              {[
+                { val: countdown.days, label: 'ថ្ងៃ' },
+                { val: String(countdown.hours).padStart(2, '0'), label: 'ម៉ោង' },
+                { val: String(countdown.minutes).padStart(2, '0'), label: 'នាទី' },
+                { val: String(countdown.seconds).padStart(2, '0'), label: 'វិនាទី' }
+              ].map((item, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-2xl p-2 bg-gradient-to-b from-[#FFFDF9] to-[#FAF5EC] border shadow-xs text-center transition-all hover:scale-105"
+                  style={{ borderColor: `${themeBorder}80` }}
+                >
+                  <span
+                    className="font-moul text-base sm:text-lg block leading-tight drop-shadow-xs"
+                    style={{ color: themeTitleColor }}
+                  >
+                    {item.val}
+                  </span>
+                  <span className="text-[10px] sm:text-[10.5px] font-bold text-stone-600 mt-0.5 block">
+                    {item.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+
             <button
               onClick={handleAddToCalendar}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-theabCrimson hover:bg-rose-900 text-white text-xs font-bold shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-white text-xs font-bold hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-sm hover:shadow-md"
+              style={{ backgroundColor: themeTitleColor }}
             >
-              <Calendar className="w-4 h-4 text-amber-300" />
+              <Calendar className="w-3.5 h-3.5 text-amber-300" />
               <span>Add to Calendar (បញ្ចូលក្នុងប្រតិទិន)</span>
             </button>
           </div>
         </section>
 
-        {/* 3. Event Countdown (រាប់ថយក្រោយ) */}
-        <section className="bg-gradient-to-r from-rose-950 via-rose-900 to-rose-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl text-center relative overflow-hidden">
-          <div className="relative z-10">
-            <div className="flex items-center justify-center gap-2 mb-1">
-              <Clock className="w-5 h-5 text-amber-300 animate-pulse" />
-              <h2 className="font-moul text-lg text-amber-200">
-                រាប់ថយក្រោយ
-              </h2>
-            </div>
-            <span className="text-xs uppercase font-sans tracking-widest text-amber-100/80 font-bold block mb-6">
-              Event Countdown
-            </span>
-
-            {/* Countdown Grid (790 ថ្ងៃ • 19 ម៉ោង • 02 នាទី • 24 វិនាទី) */}
-            <div className="grid grid-cols-4 gap-2 sm:gap-4 max-w-lg mx-auto mb-6">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-amber-300/30 shadow-inner">
-                <span className="font-moul text-2xl sm:text-3xl text-amber-300 block">
-                  {countdown.days}
-                </span>
-                <span className="text-xs text-amber-100 font-medium">ថ្ងៃ</span>
-              </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-amber-300/30 shadow-inner">
-                <span className="font-moul text-2xl sm:text-3xl text-amber-300 block">
-                  {String(countdown.hours).padStart(2, '0')}
-                </span>
-                <span className="text-xs text-amber-100 font-medium">ម៉ោង</span>
-              </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-amber-300/30 shadow-inner">
-                <span className="font-moul text-2xl sm:text-3xl text-amber-300 block">
-                  {String(countdown.minutes).padStart(2, '0')}
-                </span>
-                <span className="text-xs text-amber-100 font-medium">នាទី</span>
-              </div>
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-amber-300/30 shadow-inner">
-                <span className="font-moul text-2xl sm:text-3xl text-amber-300 block">
-                  {String(countdown.seconds).padStart(2, '0')}
-                </span>
-                <span className="text-xs text-amber-100 font-medium">វិនាទី</span>
-              </div>
-            </div>
-
-            <button
-              onClick={handleAddToCalendar}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-400 hover:bg-amber-300 text-stone-900 text-xs font-bold shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
-            >
-              <ExternalLink className="w-3.5 h-3.5" />
-              <span>Add to Calendar</span>
-            </button>
-          </div>
-        </section>
-
-        {/* 4. Wedding Program (កម្មពិធីសិរីសួស្ដី) */}
-        <section className="bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-stone-200/80">
-          <div className="text-center mb-6">
-            <h2 className="font-moul text-lg text-theabCrimson mb-1">
+        {/* 4. WEDDING PROGRAM (កម្មពិធីសិរីសួស្ដី) */}
+        <section className="px-3.5 py-3 sm:px-5 sm:py-3.5 bg-[#FAF7F2] border-b" style={{ borderColor: `${themeBorder}60` }}>
+          <div className="text-center">
+            <h3 className="font-moul text-sm sm:text-base" style={{ color: themeTitleColor }}>
               កម្មពិធីសិរីសួស្ដី
-            </h2>
-            <span className="text-xs uppercase font-sans tracking-widest text-stone-500 font-bold">
-              Wedding Program
-            </span>
-            <div className="khmer-gold-strip max-w-xs mx-auto mt-3 opacity-60"></div>
+            </h3>
           </div>
 
-          {/* Timeline List */}
-          <div className="space-y-4 max-w-xl mx-auto">
-            {[
-              { time: 'វេលាម៉ោង ០៦:៣០ ព្រឹក', event: 'ជួបជុំភ្ញៀវកិត្តិយសដើម្បីរៀបចំហែចំនូន' },
-              { time: 'វេលាម៉ោង ០៧:០០ ព្រឹក', event: 'ពិធីហែចំនូនចូលរោងជ័យ' },
-              { time: 'វេលាម៉ោង ០៨:០០ ព្រឹក', event: 'ពិធីចុះសំបុត្រអាពាហ៍ពិពាហ៍' },
-              { time: 'វេលាម៉ោង ០៨:៣០ ព្រឹក', event: 'ពិធីកាត់សក់បង្កក់សិរី' },
-              { time: 'វេលាម៉ោង ១០:០០ ព្រឹក', event: 'ពិធីសំពះផ្ទឹម សែនចងដៃ ព្រះថោងនាងនាគ' },
-              { time: 'វេលាម៉ោង ១២:០០ ថ្ងៃត្រង់', event: 'អញ្ជើញភ្ញៀវកិត្តិយសពិសារអាហារថ្ងៃត្រង់' },
-              { time: 'វេលាម៉ោង ០៥:០០ ល្ងាច', event: 'ទទួលបដិសណ្ឋារកិច្ចភ្ញៀវកិត្តិយស' }
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-stone-50 border border-stone-200/70 hover:border-amber-300 transition-all hover:bg-amber-50/30"
-              >
-                <div className="w-8 h-8 rounded-full bg-theabCrimson text-amber-300 flex items-center justify-center shrink-0 font-bold text-xs mt-0.5 shadow-xs">
-                  {idx + 1}
-                </div>
-                <div>
-                  <div className="font-bold text-amber-800 text-xs sm:text-sm">
-                    {item.time}
+          <KhmerDivider />
+
+          {/* Modern Luxury Wedding Program Timeline */}
+          <div className="max-w-md mx-auto relative px-1 sm:px-2">
+            {/* Subtle Vertical Timeline Track */}
+            <div
+              className="absolute left-[26px] sm:left-[30px] top-4 bottom-4 w-[2px] opacity-40 rounded-full"
+              style={{ backgroundColor: themeBorder }}
+            />
+
+            <div className="space-y-2 relative">
+              {[
+                { num: '1', time: '០៦:៣០ ព្រឹក', event: 'ជួបជុំភ្ញៀវកិត្តិយសដើម្បីរៀបចំហែចំនូន' },
+                { num: '2', time: '០៧:០០ ព្រឹក', event: 'ពិធីហែចំនូនចូលរោងជ័យ' },
+                { num: '3', time: '០៨:០០ ព្រឹក', event: 'ពិធីចុះសំបុត្រអាពាហ៍ពិពាហ៍' },
+                { num: '4', time: '០៨:៣០ ព្រឹក', event: 'ពិធីកាត់សក់បង្កក់សិរី' },
+                { num: '5', time: '១០:០០ ព្រឹក', event: 'ពិធីសំពះផ្ទឹម សែនចងដៃ ព្រះថោងនាងនាគ' },
+                { num: '6', time: '១២:០០ ថ្ងៃត្រង់', event: 'អញ្ជើញភ្ញៀវកិត្តិយសពិសារអាហារថ្ងៃត្រង់' },
+                { num: '7', time: '០៥:០០ ល្ងាច', event: 'ទទួលបដិសណ្ឋារកិច្ចភ្ញៀវកិត្តិយស' }
+              ].map((item, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 sm:gap-3.5 bg-white/95 hover:bg-white rounded-xl p-2.5 sm:p-3 border border-stone-200/70 shadow-2xs transition-all hover:border-amber-300 hover:shadow-xs relative group"
+                >
+                  {/* Step Numeral Badge */}
+                  <div
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shrink-0 font-serif font-bold text-xs sm:text-sm text-white shadow-xs border transition-transform group-hover:scale-105"
+                    style={{ backgroundColor: themeTitleColor, borderColor: themeBorder }}
+                  >
+                    {item.num}
                   </div>
-                  <div className="text-stone-700 text-xs sm:text-[13px] font-medium mt-0.5">
-                    {item.event}
+
+                  {/* Program Title & Time */}
+                  <div className="flex-1 min-w-0 text-left">
+                    <p className="text-stone-800 text-xs sm:text-[13px] font-semibold leading-snug">
+                      {item.event}
+                    </p>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <Clock className="w-3 h-3 text-amber-600/80 shrink-0" />
+                      <span className="text-[11px] sm:text-[11.5px] font-bold text-amber-800 font-mono">
+                        {item.time}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Subtle Gold Filigree Star Accent */}
+                  <div className="text-amber-400/60 text-[10px] pr-1 select-none">
+                    ✦
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* 5. Thank You & Sorry (អរគុណ & អធ្យាស្រ័យ) */}
-        <section className="bg-gradient-to-b from-stone-50 to-white rounded-3xl p-6 sm:p-8 shadow-sm border border-amber-300/40 text-center">
-          <div className="w-12 h-12 rounded-full mx-auto bg-rose-50 text-theabCrimson flex items-center justify-center mb-3 border border-rose-200">
-            <Heart className="w-6 h-6 fill-theabCrimson" />
+        {/* 5. THANK YOU & SORRY (អរគុណ & អធ្យាស្រ័យ) */}
+        <section className="px-3.5 py-3 sm:px-5 sm:py-3.5 bg-white border-b text-center" style={{ borderColor: `${themeBorder}60` }}>
+          <div className="w-8 h-8 rounded-full mx-auto bg-rose-50 flex items-center justify-center mb-1 border border-rose-200">
+            <Heart className="w-3.5 h-3.5 fill-theabCrimson text-theabCrimson" />
           </div>
-          <h2 className="font-moul text-lg text-theabCrimson mb-1">
+          <h3 className="font-moul text-sm sm:text-base" style={{ color: themeTitleColor }}>
             អរគុណ & អធ្យាស្រ័យ
-          </h2>
-          <span className="text-xs uppercase font-sans tracking-widest text-stone-500 font-bold block mb-4">
-            Thank You & Sorry
-          </span>
-          <div className="khmer-gold-strip max-w-xs mx-auto mb-5 opacity-60"></div>
+          </h3>
 
-          <p className="max-w-xl mx-auto text-stone-700 text-xs sm:text-sm leading-relaxed font-suwannaphum bg-white/80 p-5 rounded-2xl border border-stone-200 shadow-2xs italic">
-            "យើងខ្ញុំ សូមថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅ ចំពោះវត្តមាន ភ្ញៀវកិត្តិយសទាំងអស់ ដែលបានចំណាយពេលវេលាដ៏មានតម្លៃអញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយសក្នុងពិធីនេះ។ ប្រសិនបើមានការខ្វះខាត ឬទទួលភ្ញៀវមិនបានដិតដល់ត្រង់ចំណុចណាមួយ សូមមេត្តាខន្តី និងអធ្យាស្រ័យដោយក្តីអនុគ្រោះ។"
-          </p>
+          <KhmerDivider />
+
+          <div className="max-w-xl mx-auto bg-[#FAF8F5] p-3 sm:p-4 rounded-xl border relative" style={{ borderColor: `${themeBorder}60` }}>
+            <span className="font-serif text-2xl text-amber-500 absolute top-0.5 left-2.5 select-none opacity-40">“</span>
+            <p className="text-stone-700 text-xs sm:text-[12.5px] leading-relaxed font-suwannaphum italic px-2 pt-0.5">
+              "យើងខ្ញុំ សូមថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅ ចំពោះវត្តមាន ភ្ញៀវកិត្តិយសទាំងអស់ ដែលបានចំណាយពេលវេលាដ៏មានតម្លៃអញ្ជើញចូលរួមជាអធិបតី និងជាភ្ញៀវកិត្តិយសក្នុងពិធីនេះ។ ប្រសិនបើមានការខ្វះខាត ឬទទួលភ្ញៀវមិនបានដិតដល់ត្រង់ចំណុចណាមួយ សូមមេត្តាខន្តី និងអធ្យាស្រ័យដោយក្តីអនុគ្រោះ។"
+            </p>
+            <span className="font-serif text-2xl text-amber-500 absolute bottom-0.5 right-2.5 select-none opacity-40">”</span>
+          </div>
         </section>
 
-        {/* 6. Location & Google Maps (ទីតាំងពិធី) */}
-        <section className="bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-stone-200/80 text-center">
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <MapPin className="w-5 h-5 text-theabCrimson" />
-            <h2 className="font-moul text-lg text-theabCrimson">
+        {/* 6. VENUE & GOOGLE MAPS (ទីតាំងពិធី) */}
+        <section className="px-3.5 py-3 sm:px-5 sm:py-3.5 bg-[#FAF7F2] border-b text-center" style={{ borderColor: `${themeBorder}60` }}>
+          <div className="flex items-center justify-center gap-1.5">
+            <MapPin className="w-4 h-4" style={{ color: themeTitleColor }} />
+            <h3 className="font-moul text-sm sm:text-base" style={{ color: themeTitleColor }}>
               ទីតាំងពិធី
-            </h2>
+            </h3>
           </div>
-          <span className="text-xs uppercase font-sans tracking-widest text-stone-500 font-bold block mb-4">
-            Google Maps
-          </span>
-          <div className="khmer-gold-strip max-w-xs mx-auto mb-5 opacity-60"></div>
 
-          <p className="text-sm font-bold text-stone-800 mb-1">
-            មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)
-          </p>
-          <p className="text-xs text-stone-500 mb-5">
-            ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ
-          </p>
+          <KhmerDivider />
 
-          {/* Embedded Google Maps Preview Frame */}
-          <div className="rounded-2xl overflow-hidden border border-stone-300 shadow-sm mb-4 max-w-xl mx-auto h-64 sm:h-72 bg-stone-100">
+          {/* Embedded Google Maps Preview Frame - First */}
+          <div className="rounded-xl overflow-hidden border-2 mb-2 max-w-xl mx-auto h-40 sm:h-48 bg-stone-100" style={{ borderColor: themeBorder }}>
             <iframe
               title="Venue Location Map"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3908.7753177659496!2d104.87760987595568!3d11.567936188632668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310951a029c78829%3A0xb304726bf6025bc0!2sThe%20Premier%20Centre%20Sen%20Sok!5e0!3m2!1sen!2skh!4v1700000000000!5m2!1sen!2skh"
@@ -680,118 +898,128 @@ export function TemplateDetailPage() {
             />
           </div>
 
+          {/* Venue & Street Address - Moved Below Map */}
+          <div className="max-w-md mx-auto mb-2.5 text-center">
+            <p className="text-xs sm:text-sm font-bold text-stone-800">
+              មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)
+            </p>
+            <p className="text-[11px] sm:text-xs text-stone-600 leading-snug mt-0.5">
+              ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ
+            </p>
+          </div>
+
           <a
             href="https://maps.app.goo.gl/gmxb8VaN78xgkFiu5"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-theabCrimson hover:bg-rose-900 text-white text-xs font-bold shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-white text-xs font-bold hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            style={{ backgroundColor: themeTitleColor }}
           >
-            <ExternalLink className="w-4 h-4 text-amber-300" />
+            <ExternalLink className="w-3.5 h-3.5 text-amber-300" />
             <span>Link ទៅកាន់ Google Maps</span>
           </a>
         </section>
 
-        {/* 7. Photo Gallery (រូបថតអនុស្សារីយ៍) */}
-        <section className="bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-stone-200/80 text-center">
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <ImageIcon className="w-5 h-5 text-theabCrimson" />
-            <h2 className="font-moul text-lg text-theabCrimson">
+        {/* 7. PHOTO GALLERY (រូបថតអនុស្សារីយ៍) */}
+        <section className="px-3.5 py-3 sm:px-5 sm:py-3.5 bg-white border-b text-center" style={{ borderColor: `${themeBorder}60` }}>
+          <div className="flex items-center justify-center gap-1.5">
+            <ImageIcon className="w-4 h-4" style={{ color: themeTitleColor }} />
+            <h3 className="font-moul text-sm sm:text-base" style={{ color: themeTitleColor }}>
               រូបថតអនុស្សារីយ៍
-            </h2>
+            </h3>
           </div>
-          <span className="text-xs uppercase font-sans tracking-widest text-stone-500 font-bold block mb-4">
-            Photo Gallery
-          </span>
-          <div className="khmer-gold-strip max-w-xs mx-auto mb-6 opacity-60"></div>
 
-          {/* Photo Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-2xl mx-auto">
-            {galleryPhotos.map((photo) => (
-              <div
-                key={photo.id}
-                onClick={() => setActivePhoto(photo)}
-                className="group relative h-40 sm:h-48 rounded-2xl overflow-hidden cursor-pointer shadow-xs border border-stone-200"
-              >
-                <img
-                  src={photo.src}
-                  alt={photo.caption}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white p-2 text-center text-xs font-bold">
-                  <span>ចុចដើម្បីមើលរូបធំ</span>
+          <KhmerDivider />
+
+          {/* Modern Editorial Photo Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5 max-w-xl mx-auto">
+            {galleryPhotos.map((photo, idx) => {
+              const isHero = idx === 0;
+              return (
+                <div
+                  key={photo.id}
+                  onClick={() => setActivePhoto(photo)}
+                  className={`group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer border transition-all hover:brightness-105 ${
+                    isHero
+                      ? 'col-span-2 row-span-2 h-56 sm:h-80'
+                      : 'h-28 sm:h-38'
+                  }`}
+                  style={{ borderColor: `${themeBorder}70` }}
+                >
+                  <img
+                    src={photo.src}
+                    alt={photo.caption}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-2 text-white text-center text-[10.5px] sm:text-[11px] font-medium leading-tight">
+                    <span>{photo.caption || 'ចុចដើម្បីមើលរូបធំ'}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
-        {/* 8. Scan to Gift (ជូនចំណងដៃ) */}
-        <section className="bg-gradient-to-b from-amber-50/60 to-white rounded-3xl p-6 sm:p-8 shadow-md border border-amber-300/60 text-center">
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <QrCode className="w-5 h-5 text-theabCrimson" />
-            <h2 className="font-moul text-lg text-theabCrimson">
+        {/* 8. SCAN TO GIFT (ជូនចំណងដៃ) */}
+        <section className="px-3.5 py-3 sm:px-5 sm:py-3.5 bg-[#FAF7F2] border-b text-center" style={{ borderColor: `${themeBorder}60` }}>
+          <div className="flex items-center justify-center gap-1.5">
+            <QrCode className="w-4 h-4" style={{ color: themeTitleColor }} />
+            <h3 className="font-moul text-sm sm:text-base" style={{ color: themeTitleColor }}>
               ជូនចំណងដៃ
-            </h2>
+            </h3>
           </div>
-          <span className="text-xs uppercase font-sans tracking-widest text-amber-900 font-bold block mb-1">
-            Scan QR Code &bull; Scan to Gift
-          </span>
-          <p className="font-moul text-sm text-stone-800 mb-4">
-            ចាន់ សីហា & ហ៊ាង សុជាតា
+          <p className="font-moul text-xs sm:text-sm text-stone-800 mt-0.5 mb-1">
+            {groomName} & {brideName}
           </p>
-          <div className="khmer-gold-strip max-w-xs mx-auto mb-6 opacity-75"></div>
 
-          {/* Bank QR Code Card */}
-          <div className="bg-white max-w-xs mx-auto rounded-3xl p-6 border-2 border-amber-300 shadow-xl text-center relative khmer-pattern">
-            <div className="w-10 h-10 rounded-full bg-theabCrimson text-amber-300 flex items-center justify-center font-moul text-sm mx-auto mb-2 shadow">
-              ធ
-            </div>
-            <span className="text-[11px] font-bold text-stone-400 uppercase tracking-widest block mb-3">
+          <KhmerDivider />
+
+          {/* Bank QR Code Luxury Card - Reduced Margins, Circle QR Removed */}
+          <div className="bg-white max-w-[270px] sm:max-w-xs mx-auto rounded-2xl p-3 sm:p-4 border-2 text-center relative khmer-pattern shadow-xs" style={{ borderColor: themeBorder }}>
+            <span className="text-[10px] font-bold text-stone-600 uppercase tracking-widest block mb-1 font-mono">
               ABA PAY / BAKONG
             </span>
 
             {/* QR Image */}
-            <div className="p-3 bg-stone-50 rounded-2xl border border-stone-200 inline-block mb-3 shadow-inner">
+            <div className="p-2 bg-stone-50 rounded-xl border border-stone-200 inline-block mb-1.5">
               <img
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent('https://theab-digital.app/gift/seyha-socheata')}`}
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`https://theab-digital.app/gift/${activeTemplate.id}`)}`}
                 alt="Scan to Gift QR Code"
-                className="w-44 h-44 object-contain rounded-lg"
+                className="w-32 h-32 sm:w-36 sm:h-36 object-contain rounded-lg"
               />
             </div>
 
-            <p className="text-xs font-bold text-stone-800">
-              CHAN SEYHA & HEANG SOCHEATA
+            <p className="text-xs font-bold text-stone-800 leading-tight">
+              {isCustomized ? 'CHAN SEYHA & HEANG SOCHEATA' : `${groomName} & ${brideName}`}
             </p>
-            <p className="text-xs text-stone-500 font-mono mt-0.5">
+            <p className="text-[11px] text-stone-500 font-mono mt-0.5">
               012 345 678 (USD / KHR)
             </p>
 
             <button
               onClick={() => handleCopyAccount('012 345 678')}
-              className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition cursor-pointer"
+              className="mt-2 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-stone-100 hover:bg-amber-100 text-stone-700 hover:text-amber-900 text-xs font-bold transition cursor-pointer border border-stone-200"
             >
-              <Copy className="w-3.5 h-3.5 text-theabCrimson" />
+              <Copy className="w-3 h-3 text-theabCrimson" />
               <span>ចម្លងលេខគណនី</span>
             </button>
           </div>
         </section>
 
-        {/* 9. RSVP (ការចូលរួម) */}
-        <section id="rsvp-section" className="bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-stone-200/80">
-          <div className="text-center mb-6">
-            <h2 className="font-moul text-lg text-theabCrimson mb-1">
+        {/* 9. RSVP ATTENDANCE FORM (ការចូលរួម) */}
+        <section id="rsvp-section" className="px-3.5 py-3 sm:px-5 sm:py-3.5 bg-white border-b" style={{ borderColor: `${themeBorder}60` }}>
+          <div className="text-center">
+            <h3 className="font-moul text-sm sm:text-base" style={{ color: themeTitleColor }}>
               ការចូលរួម
-            </h2>
-            <span className="text-xs uppercase font-sans tracking-widest text-stone-500 font-bold">
-              RSVP
-            </span>
-            <div className="khmer-gold-strip max-w-xs mx-auto mt-3 opacity-60"></div>
+            </h3>
           </div>
 
-          <form onSubmit={handleRsvpSubmit} className="max-w-md mx-auto space-y-4">
+          <KhmerDivider />
+
+          <form onSubmit={handleRsvpSubmit} className="max-w-md mx-auto space-y-2.5">
             {/* Guest Name */}
             <div>
-              <label className="block text-xs font-bold text-stone-700 mb-1.5">
+              <label className="block text-xs font-bold text-stone-700 mb-1">
                 ឈ្មោះរបស់អ្នក (Your Name) <span className="text-rose-600">*</span>
               </label>
               <input
@@ -799,23 +1027,24 @@ export function TemplateDetailPage() {
                 placeholder="សូមបញ្ចូលឈ្មោះ..."
                 value={rsvpForm.name}
                 onChange={(e) => setRsvpForm({ ...rsvpForm, name: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:border-theabCrimson focus:ring-1 focus:ring-theabCrimson text-xs sm:text-sm bg-stone-50/50"
+                className="w-full px-3.5 py-1.5 sm:py-2 rounded-xl border border-stone-300 focus:ring-1 text-xs sm:text-sm bg-white"
+                style={{ outlineColor: themeTitleColor }}
               />
             </div>
 
-            {/* Attendance Radio */}
+            {/* Attendance Status */}
             <div>
-              <label className="block text-xs font-bold text-stone-700 mb-1.5">
+              <label className="block text-xs font-bold text-stone-700 mb-1">
                 តើអ្នកនឹងអញ្ជើញចូលរួមដែរឬទេ?
               </label>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
                   onClick={() => setRsvpForm({ ...rsvpForm, status: 'attending' })}
-                  className={`py-2 px-3 rounded-xl border text-xs font-bold transition cursor-pointer ${
+                  className={`py-1.5 px-3 rounded-xl border text-xs font-bold transition cursor-pointer ${
                     rsvpForm.status === 'attending'
-                      ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
-                      : 'bg-stone-50 text-stone-700 border-stone-200 hover:bg-stone-100'
+                      ? 'bg-emerald-600 text-white border-emerald-600'
+                      : 'bg-white text-stone-700 border-stone-200 hover:bg-stone-50'
                   }`}
                 >
                   ចូលរួម (Attending)
@@ -823,10 +1052,10 @@ export function TemplateDetailPage() {
                 <button
                   type="button"
                   onClick={() => setRsvpForm({ ...rsvpForm, status: 'not_attending' })}
-                  className={`py-2 px-3 rounded-xl border text-xs font-bold transition cursor-pointer ${
+                  className={`py-1.5 px-3 rounded-xl border text-xs font-bold transition cursor-pointer ${
                     rsvpForm.status === 'not_attending'
-                      ? 'bg-rose-700 text-white border-rose-700 shadow-sm'
-                      : 'bg-stone-50 text-stone-700 border-stone-200 hover:bg-stone-100'
+                      ? 'bg-rose-700 text-white border-rose-700'
+                      : 'bg-white text-stone-700 border-stone-200 hover:bg-stone-50'
                   }`}
                 >
                   មិនបានចូលរួម
@@ -837,7 +1066,7 @@ export function TemplateDetailPage() {
             {/* Guest Count */}
             {rsvpForm.status === 'attending' && (
               <div>
-                <label className="block text-xs font-bold text-stone-700 mb-1.5">
+                <label className="block text-xs font-bold text-stone-700 mb-1">
                   ចំនួនអ្នកចូលរួម (Number of Guests)
                 </label>
                 <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
@@ -846,10 +1075,10 @@ export function TemplateDetailPage() {
                       key={count}
                       type="button"
                       onClick={() => setRsvpForm({ ...rsvpForm, guestCount: count })}
-                      className={`px-3 py-1.5 rounded-xl border text-xs font-bold whitespace-nowrap transition cursor-pointer ${
+                      className={`px-2.5 py-1 rounded-xl border text-xs font-bold whitespace-nowrap transition cursor-pointer ${
                         rsvpForm.guestCount === count
-                          ? 'bg-amber-500 text-white border-amber-500 shadow-xs'
-                          : 'bg-stone-50 text-stone-700 border-stone-200 hover:bg-stone-100'
+                          ? 'bg-amber-500 text-white border-amber-500'
+                          : 'bg-white text-stone-700 border-stone-200 hover:bg-stone-50'
                       }`}
                     >
                       {count}
@@ -862,7 +1091,8 @@ export function TemplateDetailPage() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-theabCrimson hover:bg-rose-900 text-white text-xs sm:text-sm font-bold shadow-md hover:scale-[1.01] active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
+              className="w-full py-2 sm:py-2.5 rounded-xl text-white text-xs sm:text-sm font-bold hover:scale-[1.01] active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5 mt-1"
+              style={{ backgroundColor: themeTitleColor }}
             >
               <Check className="w-4 h-4 text-amber-300" />
               <span>យល់ព្រម (Confirm)</span>
@@ -870,50 +1100,50 @@ export function TemplateDetailPage() {
           </form>
 
           {/* Live RSVP Response List */}
-          <div className="mt-8 pt-6 border-t border-stone-200 max-w-md mx-auto">
-            <h4 className="text-xs font-bold text-stone-500 mb-3 uppercase tracking-wider">
-              ភ្ញៀវដែលបានឆ្លើយតបថ្មីៗ
-            </h4>
-            <div className="space-y-2">
-              {rsvpList.map((item) => (
-                <div
-                  key={item.id}
-                  className="p-3 rounded-xl bg-stone-50 border border-stone-200/80 flex items-center justify-between text-xs"
-                >
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <div>
-                      <span className="font-bold text-stone-800">{item.name}</span>
-                      <span className="text-stone-500 ml-1">
-                        បានឆ្លើយតប៖{' '}
-                        <strong className="text-emerald-700">
-                          {item.status === 'attending' ? `ចូលរួម (${item.guestCount})` : 'មិនបានចូលរួម'}
-                        </strong>
-                      </span>
+          {rsvpList.length > 0 && (
+            <div className="mt-4 pt-3 border-t max-w-md mx-auto" style={{ borderColor: `${themeBorder}60` }}>
+              <h4 className="text-[11px] font-bold text-stone-500 mb-2 uppercase tracking-wider text-center">
+                ភ្ញៀវដែលបានឆ្លើយតបថ្មីៗ
+              </h4>
+              <div className="space-y-1.5">
+                {rsvpList.map((item) => (
+                  <div
+                    key={item.id}
+                    className="p-2.5 rounded-xl bg-stone-50 border border-stone-200 flex items-center justify-between text-xs"
+                  >
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                      <div>
+                        <span className="font-bold text-stone-800">{item.name}</span>
+                        <span className="text-stone-500 ml-1">
+                          បានឆ្លើយតប៖{' '}
+                          <strong className="text-emerald-700">
+                            {item.status === 'attending' ? `ចូលរួម (${item.guestCount})` : 'មិនបានចូលរួម'}
+                          </strong>
+                        </span>
+                      </div>
                     </div>
+                    <span className="text-[10px] text-stone-400">{item.time}</span>
                   </div>
-                  <span className="text-[10px] text-stone-400">{item.time}</span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </section>
 
-        {/* 10. Best Wishes (សារជូនពរ) */}
-        <section className="bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-stone-200/80">
-          <div className="text-center mb-6">
-            <h2 className="font-moul text-lg text-theabCrimson mb-1">
+        {/* 10. BEST WISHES (សារជូនពរ) */}
+        <section className="px-3.5 py-3 sm:px-5 sm:py-3.5 bg-[#FAF7F2] border-b" style={{ borderColor: `${themeBorder}60` }}>
+          <div className="text-center">
+            <h3 className="font-moul text-sm sm:text-base" style={{ color: themeTitleColor }}>
               សារជូនពរ
-            </h2>
-            <span className="text-xs uppercase font-sans tracking-widest text-stone-500 font-bold">
-              Best Wishes
-            </span>
-            <div className="khmer-gold-strip max-w-xs mx-auto mt-3 opacity-60"></div>
+            </h3>
           </div>
 
-          <form onSubmit={handleWishSubmit} className="max-w-md mx-auto space-y-4 mb-8">
+          <KhmerDivider />
+
+          <form onSubmit={handleWishSubmit} className="max-w-md mx-auto space-y-2.5 mb-3">
             <div>
-              <label className="block text-xs font-bold text-stone-700 mb-1.5">
+              <label className="block text-xs font-bold text-stone-700 mb-1">
                 ឈ្មោះរបស់អ្នក (Your Name) <span className="text-rose-600">*</span>
               </label>
               <input
@@ -921,83 +1151,96 @@ export function TemplateDetailPage() {
                 placeholder="សូមបញ្ចូលឈ្មោះ..."
                 value={wishForm.name}
                 onChange={(e) => setWishForm({ ...wishForm, name: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:border-theabCrimson focus:ring-1 focus:ring-theabCrimson text-xs sm:text-sm bg-stone-50/50"
+                className="w-full px-3.5 py-1.5 sm:py-2 rounded-xl border border-stone-300 text-xs sm:text-sm bg-white"
+                style={{ outlineColor: themeTitleColor }}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-stone-700 mb-1.5">
+              <label className="block text-xs font-bold text-stone-700 mb-1">
                 សារជូនពររបស់អ្នក (Your Message) <span className="text-rose-600">*</span>
               </label>
               <textarea
-                rows={3}
+                rows={2}
                 placeholder="សូមសរសេរសារជូនពរ..."
                 value={wishForm.message}
                 onChange={(e) => setWishForm({ ...wishForm, message: e.target.value })}
-                className="w-full px-4 py-2.5 rounded-xl border border-stone-300 focus:border-theabCrimson focus:ring-1 focus:ring-theabCrimson text-xs sm:text-sm bg-stone-50/50"
+                className="w-full px-3.5 py-1.5 sm:py-2 rounded-xl border border-stone-300 text-xs sm:text-sm bg-white"
+                style={{ outlineColor: themeTitleColor }}
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-900 text-xs sm:text-sm font-bold shadow-md hover:scale-[1.01] active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
+              className="w-full py-2 sm:py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-stone-900 text-xs sm:text-sm font-bold hover:scale-[1.01] active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5"
             >
-              <Send className="w-4 h-4 text-stone-900" />
+              <Send className="w-3.5 h-3.5 text-stone-900" />
               <span>ផ្ញើរសារជូនពរ</span>
             </button>
           </form>
 
           {/* Wishes List */}
-          <div className="max-w-md mx-auto space-y-3">
-            {wishesList.map((wish) => (
-              <div
-                key={wish.id}
-                className="p-4 rounded-2xl bg-amber-50/50 border border-amber-200/70 text-left relative"
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="font-bold text-stone-900 text-xs sm:text-sm">
-                    {wish.name}
-                  </span>
-                  <span className="text-[10px] text-stone-400 font-mono">
-                    {wish.date}
-                  </span>
+          {wishesList.length > 0 && (
+            <div className="max-w-md mx-auto space-y-2">
+              {wishesList.map((wish) => (
+                <div
+                  key={wish.id}
+                  className="p-2.5 rounded-xl bg-white border text-left relative hover:border-amber-400 transition"
+                  style={{ borderColor: `${themeBorder}60` }}
+                >
+                  <div className="flex items-center justify-between mb-0.5">
+                    <span className="font-bold text-stone-900 text-xs sm:text-[13px]">
+                      {wish.name}
+                    </span>
+                    <span className="text-[10px] text-stone-400 font-mono">
+                      {wish.date}
+                    </span>
+                  </div>
+                  <p className="text-xs text-stone-700 leading-snug font-suwannaphum">
+                    "{wish.message}"
+                  </p>
                 </div>
-                <p className="text-xs sm:text-[13px] text-stone-700 leading-relaxed font-suwannaphum">
-                  "{wish.message}"
-                </p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </section>
 
-        {/* 11. Contact Host (ទំនាក់ទំនងម្ចាស់ពិធីមង្គល) */}
-        <section className="bg-stone-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl text-center relative overflow-hidden">
-          <h2 className="font-moul text-base sm:text-lg text-amber-300 mb-1">
+        {/* 11. CONTACT HOST & DIGITAL THEAB FOOTER */}
+        <section className="p-4 sm:p-5 bg-stone-900 text-white text-center relative overflow-hidden">
+          <h3 className="font-moul text-sm sm:text-base text-amber-300">
             ទំនាក់ទំនងម្ចាស់ពិធីមង្គល
-          </h2>
-          <div className="khmer-gold-strip max-w-xs mx-auto my-3 opacity-60"></div>
-
-          <p className="text-xs text-stone-300 mb-4 leading-relaxed font-suwannaphum">
+          </h3>
+          <p className="text-[11px] text-stone-300 max-w-md mx-auto my-2 leading-relaxed font-suwannaphum">
             ប្រសិនបើលោកអ្នកមានចម្ងល់ ឬត្រូវការការណែនាំផ្លូវ សូមទាក់ទងមកកាន់យើងខ្ញុំ៖
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-2.5 mt-2.5 mb-4">
             <a
               href="https://t.me/+85512345678"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold shadow-md hover:scale-105 active:scale-95 transition cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold hover:scale-105 active:scale-95 transition cursor-pointer"
             >
-              <MessageCircle className="w-4 h-4" />
+              <MessageCircle className="w-3.5 h-3.5" />
               <span>Telegram: 012 345 678</span>
             </a>
             <a
               href="tel:012345678"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md hover:scale-105 active:scale-95 transition cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold hover:scale-105 active:scale-95 transition cursor-pointer"
             >
-              <Phone className="w-4 h-4" />
+              <Phone className="w-3.5 h-3.5" />
               <span>ទូរស័ព្ទ: 012 345 678</span>
             </a>
+          </div>
+
+          <div className="pt-4 border-t border-amber-300/20 text-center">
+            <div className="flex items-center justify-center gap-1.5 text-amber-300/80 text-[11px] font-semibold">
+              <Sparkles className="w-3 h-3 text-amber-400" />
+              <span>Theab Digital • ធៀបអាពាហ៍ពិពាហ៍ឌីជីថល</span>
+            </div>
+            <p className="text-[10px] text-stone-400 mt-0.5">
+              សូមប្រសិទ្ធពរជ័យ សិរីសួស្តី ជ័យមង្គល វិបុលសុខគ្រប់ប្រការ
+            </p>
           </div>
         </section>
 
@@ -1021,8 +1264,8 @@ export function TemplateDetailPage() {
             </button>
             <img
               src={activePhoto.src}
-              alt={activePhoto.caption}
-              className="max-h-[75vh] w-auto object-contain rounded-2xl shadow-2xl border border-stone-700"
+              alt={activePhoto.caption || 'រូបថតអនុស្សារីយ៍'}
+              className="max-h-[75vh] w-auto object-contain rounded-2xl border border-stone-700"
             />
             <p className="text-white text-xs sm:text-sm font-semibold mt-3">
               {activePhoto.caption}

@@ -145,6 +145,65 @@ body {
   position: relative;
 }
 
+/* Template Detail / Preview Dedicated Luxury Showcase Stages */
+.bg-preview-stage {
+  background-color: #12100E;
+  background-image: 
+    radial-gradient(circle at 50% 18%, rgba(212, 175, 55, 0.16) 0%, transparent 55%),
+    radial-gradient(circle at 12% 65%, rgba(136, 19, 55, 0.10) 0%, transparent 45%),
+    radial-gradient(circle at 88% 75%, rgba(212, 175, 55, 0.12) 0%, transparent 50%),
+    linear-gradient(180deg, #171412 0%, #0E0D0B 100%);
+  background-attachment: fixed;
+  position: relative;
+}
+
+.bg-preview-romantic {
+  background-color: #F8F4EE;
+  background-image: 
+    radial-gradient(circle at 50% 15%, rgba(254, 237, 222, 0.95) 0%, transparent 55%),
+    radial-gradient(circle at 10% 40%, rgba(254, 205, 211, 0.28) 0%, transparent 45%),
+    radial-gradient(circle at 90% 70%, rgba(253, 230, 138, 0.28) 0%, transparent 50%),
+    linear-gradient(180deg, #FDFBF8 0%, #F5EDE2 50%, #ECE1D5 100%);
+  background-attachment: fixed;
+  position: relative;
+}
+
+/* Royal Wedding Golden Petals & Sparkles Floating Animation */
+@keyframes floatGoldWeddingPetal {
+  0% {
+    transform: translate3d(0, -60px, 0) rotate(0deg) rotateY(0deg) scale(0.7);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.65;
+  }
+  35% {
+    transform: translate3d(calc(var(--drift, 30px) * 0.5), 32vh, 0) rotate(110deg) rotateY(180deg) scale(0.95);
+    opacity: 0.72;
+  }
+  65% {
+    transform: translate3d(calc(var(--drift, 30px) * -0.4), 68vh, 0) rotate(230deg) rotateY(360deg) scale(0.85);
+    opacity: 0.65;
+  }
+  90% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate3d(var(--drift, 30px), 105vh, 0) rotate(360deg) rotateY(540deg) scale(0.7);
+    opacity: 0;
+  }
+}
+
+.animate-gold-wedding-petal {
+  animation: floatGoldWeddingPetal ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-floating-particle {
+  animation: floatGoldWeddingPetal ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
 .khmer-gold-strip {
   height: 4px;
   background: linear-gradient(90deg, transparent, #D4AF37, #F2E4BA, #D4AF37, transparent);
