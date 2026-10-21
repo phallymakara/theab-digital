@@ -5,10 +5,10 @@ import { Flower2, HeartHandshake, Gem, Building2, ArrowRight } from 'lucide-reac
 
 export function CeremonySelectionPage() {
   const navigate = useNavigate();
-  const { selectCeremony, pauseAudio } = useApp();
+  const { selectCeremony, stopAudio } = useApp();
 
   useEffect(() => {
-    pauseAudio?.();
+    stopAudio?.();
   }, []);
 
   const handleSelect = (type, path) => {

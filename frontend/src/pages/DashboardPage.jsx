@@ -18,10 +18,10 @@ import {
 
 export function DashboardPage() {
   const navigate = useNavigate();
-  const { invitationData, setIsQrModalOpen, addToast, ceremonyType, pauseAudio } = useApp();
+  const { invitationData, setIsQrModalOpen, addToast, ceremonyType, stopAudio } = useApp();
 
   useEffect(() => {
-    pauseAudio?.();
+    stopAudio?.();
   }, []);
 
   const [rsvps, setRsvps] = useState([

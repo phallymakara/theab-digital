@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { CEREMONY_DATA } from '../data/templates.js';
 
 const AppContext = createContext(null);
@@ -13,7 +13,7 @@ export function AppProvider({ children }) {
 
   // Audio reference
   const [audio] = useState(() => {
-    const a = new Audio('https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=traditional-asian-instrumental-wedding-112191.mp3');
+    const a = new Audio('/audio/nisai_wedding_song.mp3');
     a.loop = true;
     return a;
   });
@@ -45,25 +45,108 @@ export function AppProvider({ children }) {
     }));
   };
 
+  const shouldPlayRef = useRef(false);
+  const pendingGestureRef = useRef(null);
+
+  const clearPendingGesture = () => {
+    if (pendingGestureRef.current) {
+      window.removeEventListener('click', pendingGestureRef.current);
+      window.removeEventListener('touchstart', pendingGestureRef.current);
+      pendingGestureRef.current = null;
+    }
+  };
+
   const playAudio = () => {
+    shouldPlayRef.current = true;
+    clearPendingGesture();
     audio.play().then(() => {
+      if (!shouldPlayRef.current) {
+        audio.pause();
+        audio.currentTime = 0;
+        setIsAudioPlaying(false);
+        return;
+      }
       setIsAudioPlaying(true);
     }).catch((err) => {
       console.warn('Autoplay restricted by browser, awaiting user click:', err);
-      // If browser blocks autoplay, start on next click/touch anywhere on the page
       const enableOnGesture = () => {
+        if (!shouldPlayRef.current) {
+          clearPendingGesture();
+          return;
+        }
         audio.play().then(() => {
+          if (!shouldPlayRef.current) {
+            audio.pause();
+            audio.currentTime = 0;
+            setIsAudioPlaying(false);
+            return;
+          }
           setIsAudioPlaying(true);
         }).catch(() => {});
-        window.removeEventListener('click', enableOnGesture);
-        window.removeEventListener('touchstart', enableOnGesture);
+        clearPendingGesture();
       };
+      pendingGestureRef.current = enableOnGesture;
       window.addEventListener('click', enableOnGesture, { once: true });
       window.addEventListener('touchstart', enableOnGesture, { once: true });
     });
   };
 
+  const restartAndPlayAudio = () => {
+    shouldPlayRef.current = true;
+    clearPendingGesture();
+    try {
+      audio.pause();
+      audio.currentTime = 0;
+    } catch (e) {}
+
+    audio.play().then(() => {
+      if (!shouldPlayRef.current) {
+        audio.pause();
+        audio.currentTime = 0;
+        setIsAudioPlaying(false);
+        return;
+      }
+      setIsAudioPlaying(true);
+    }).catch((err) => {
+      console.warn('Autoplay restricted by browser, awaiting user gesture:', err);
+      const enableOnGesture = () => {
+        if (!shouldPlayRef.current) {
+          clearPendingGesture();
+          return;
+        }
+        try {
+          audio.currentTime = 0;
+        } catch (e) {}
+        audio.play().then(() => {
+          if (!shouldPlayRef.current) {
+            audio.pause();
+            audio.currentTime = 0;
+            setIsAudioPlaying(false);
+            return;
+          }
+          setIsAudioPlaying(true);
+        }).catch(() => {});
+        clearPendingGesture();
+      };
+      pendingGestureRef.current = enableOnGesture;
+      window.addEventListener('click', enableOnGesture, { once: true });
+      window.addEventListener('touchstart', enableOnGesture, { once: true });
+    });
+  };
+
+  const stopAudio = () => {
+    shouldPlayRef.current = false;
+    clearPendingGesture();
+    try {
+      audio.pause();
+      audio.currentTime = 0;
+    } catch (e) {}
+    setIsAudioPlaying(false);
+  };
+
   const pauseAudio = () => {
+    shouldPlayRef.current = false;
+    clearPendingGesture();
     try {
       audio.pause();
     } catch (e) {}
@@ -73,7 +156,7 @@ export function AppProvider({ children }) {
   const toggleAudio = () => {
     if (!isAudioPlaying) {
       playAudio();
-      addToast('កំពុងចាក់ភ្លេងមង្គលបែបប្រពៃណី', 'info');
+      addToast('កំពុងចាក់បទ «ភ្ជាប់និស្ស័យ» - NISAI', 'info');
     } else {
       pauseAudio();
       addToast('បានបិទភ្លេង', 'info');
@@ -104,6 +187,8 @@ export function AppProvider({ children }) {
         isAudioPlaying,
         toggleAudio,
         playAudio,
+        restartAndPlayAudio,
+        stopAudio,
         pauseAudio,
         toasts,
         addToast,

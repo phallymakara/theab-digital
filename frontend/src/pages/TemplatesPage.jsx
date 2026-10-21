@@ -26,6 +26,8 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
     invitationData,
     addToast,
     playAudio,
+    restartAndPlayAudio,
+    stopAudio,
     pauseAudio
   } = useApp();
 
@@ -56,15 +58,15 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
   // Synchronize ceremony selection with route & stop audio when browsing templates
   useEffect(() => {
     selectCeremony(ceremonyType);
-    pauseAudio?.();
+    stopAudio?.();
   }, [ceremonyType]);
 
-  // Play audio when modal preview is opened, stop when modal preview is closed
+  // Play audio from beginning when modal preview is opened or changed, stop when closed
   useEffect(() => {
     if (previewTemplate) {
-      playAudio?.();
+      restartAndPlayAudio?.();
     } else {
-      pauseAudio?.();
+      stopAudio?.();
     }
   }, [previewTemplate]);
 
@@ -467,21 +469,17 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                       </div>
                     </div>
                   ) : (
-                    /* Classic Direct-on-Photo Style for Royal Gold */
+                    /* Classic Direct-on-Photo Style for Royal Gold in Kh Ang Komutt A Font */
                     <div className="space-y-1.5 my-auto w-full relative z-20">
-                      <div className={`font-moul text-base sm:text-lg leading-snug truncate ${
-                        tpl.bgImage ? 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]' : 'text-stone-800'
-                      }`}>
+                      <div className={`font-komutt-a text-2xl sm:text-[28px] leading-relaxed tracking-wide text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-100 transition-colors truncate`}>
                         {cardGroom}
                       </div>
                       <div className="flex items-center justify-center gap-2 my-1">
-                        <span className={`h-[1px] w-10 ${tpl.bgImage ? 'bg-amber-200/80 shadow' : 'bg-stone-300/80'}`}></span>
-                        <Heart className={`w-3.5 h-3.5 ${tpl.bgImage ? 'text-amber-400 fill-amber-400 drop-shadow' : 'text-theabCrimson fill-theabCrimson'}`} />
-                        <span className={`h-[1px] w-10 ${tpl.bgImage ? 'bg-amber-200/80 shadow' : 'bg-stone-300/80'}`}></span>
+                        <span className="h-[1px] w-12 bg-gradient-to-r from-transparent via-amber-300 to-amber-400 drop-shadow"></span>
+                        <span className="font-serifTrad italic text-xs font-bold text-amber-300">&</span>
+                        <span className="h-[1px] w-12 bg-gradient-to-l from-transparent via-amber-300 to-amber-400 drop-shadow"></span>
                       </div>
-                      <div className={`font-moul text-base sm:text-lg leading-snug truncate ${
-                        tpl.bgImage ? 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]' : 'text-stone-800'
-                      }`}>
+                      <div className={`font-komutt-a text-2xl sm:text-[28px] leading-relaxed tracking-wide text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-100 transition-colors truncate`}>
                         {cardBride}
                       </div>
                     </div>
@@ -808,10 +806,14 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                     </div>
                   ) : (
                     <div className="space-y-2 my-4 relative z-20">
-                      <p className={`text-xs ${previewTemplate.bgImage ? 'text-amber-200' : 'text-stone-500'}`}>ដោយក្តីគោរព និងស្រឡាញ់</p>
-                      <div className={`font-moul text-lg ${previewTemplate.bgImage ? 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]' : 'text-rose-900'}`}>{modalGroom}</div>
-                      <div className={`text-xs font-bold ${previewTemplate.bgImage ? 'text-amber-300' : 'text-amber-700'}`}>&bull; និង &bull;</div>
-                      <div className={`font-moul text-lg ${previewTemplate.bgImage ? 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]' : 'text-rose-900'}`}>{modalBride}</div>
+                      <p className="text-xs text-amber-200">ដោយក្តីគោរព និងស្រឡាញ់</p>
+                      <div className="font-komutt-a text-2xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-100 transition-colors">{modalGroom}</div>
+                      <div className="flex items-center justify-center gap-2 my-1">
+                        <span className="h-[1px] w-12 bg-gradient-to-r from-transparent via-amber-300 to-amber-400 drop-shadow"></span>
+                        <span className="font-serifTrad italic text-xs font-bold text-amber-300">&</span>
+                        <span className="h-[1px] w-12 bg-gradient-to-l from-transparent via-amber-300 to-amber-400 drop-shadow"></span>
+                      </div>
+                      <div className="font-komutt-a text-2xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-100 transition-colors">{modalBride}</div>
                     </div>
                   )}
 

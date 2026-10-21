@@ -49,7 +49,23 @@ export const CEREMONY_DATA = {
         demoBride: 'ជា សុជាតា',
         demoDate: 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
         cardBorder: 'border-amber-300/80 hover:border-amber-500',
-        features: ['ក្បាច់ភ្ញីទេសមាស', 'ភ្លេងមង្គលបុរាណ', 'ប្រព័ន្ធ RSVP ឆ្លាតវៃ', 'Google Maps']
+        features: ['ក្បាច់ភ្ញីទេសមាស', 'ភ្លេងមង្គលបុរាណ', 'ប្រព័ន្ធ RSVP ឆ្លាតវៃ', 'Google Maps'],
+        heroImages: [
+          '/images/templates/royal-gold/gold_1.jpg',
+          '/images/templates/royal-gold/gold_2.jpg',
+          '/images/templates/royal-gold/gold_3.jpg',
+          '/images/templates/royal-gold/gold_4.jpg',
+          '/images/templates/royal-gold/gold_5.jpg',
+          '/images/templates/royal-gold/gold_6.jpg'
+        ],
+        galleryPhotos: [
+          { id: 1, src: '/images/templates/royal-gold/gold_1.jpg', caption: 'ស្នេហ៍ផ្អែមល្ហែមរវាងគូស្នេហ៍' },
+          { id: 2, src: '/images/templates/royal-gold/gold_2.jpg', caption: 'មង្គលសិរីមាសប្រណិត' },
+          { id: 3, src: '/images/templates/royal-gold/gold_3.jpg', caption: 'អនុស្សាវរីយ៍ផ្កាស្រស់រ៉ូមែនទិក' },
+          { id: 4, src: '/images/templates/royal-gold/gold_4.jpg', caption: 'ភាពថ្លៃថ្នូរ និងសេចក្តីសុខក្សេមក្សាន្ត' },
+          { id: 5, src: '/images/templates/royal-gold/gold_5.jpg', caption: 'កេរដំណែលប្រពៃណីខ្មែរអង្គរ' },
+          { id: 6, src: '/images/templates/royal-gold/gold_6.jpg', caption: 'ភាពទាន់សម័យ និងស៊ីវិល័យ' }
+        ]
       },
       {
         id: 'floral-romance',
@@ -73,7 +89,23 @@ export const CEREMONY_DATA = {
         demoBride: 'ចាន់ ធីតា',
         demoDate: 'ថ្ងៃសៅរ៍ ទី២៨ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
         cardBorder: 'border-rose-200 hover:border-rose-400',
-        features: ['ក្បាច់ផ្ការំដួល & ម្លិះ', 'កាលវិភាគពិធីមង្គល', 'រាប់ថយក្រោយ (Countdown)', 'ចែករំលែក Telegram']
+        features: ['ក្បាច់ផ្ការំដួល & ម្លិះ', 'កាលវិភាគពិធីមង្គល', 'រាប់ថយក្រោយ (Countdown)', 'ចែករំលែក Telegram'],
+        heroImages: [
+          '/images/templates/floral-romance/floral_1.jpg',
+          '/images/templates/floral-romance/floral_2.jpg',
+          '/images/templates/floral-romance/floral_3.jpg',
+          '/images/templates/floral-romance/floral_4.jpg',
+          '/images/templates/floral-romance/floral_5.jpg',
+          '/images/templates/floral-romance/floral_6.jpg'
+        ],
+        galleryPhotos: [
+          { id: 1, src: '/images/templates/floral-romance/floral_1.jpg', caption: 'ផ្កាស្រស់រំលេចស្នេហ៍ផ្អែមល្ហែម' },
+          { id: 2, src: '/images/templates/floral-romance/floral_2.jpg', caption: 'ស្នាមញញឹមពោរពេញដោយក្តីស្រឡាញ់' },
+          { id: 3, src: '/images/templates/floral-romance/floral_3.jpg', caption: 'អនុស្សាវរីយ៍សួនផ្កាអមតៈ' },
+          { id: 4, src: '/images/templates/floral-romance/floral_4.jpg', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
+          { id: 5, src: '/images/templates/floral-romance/floral_5.jpg', caption: 'ផ្កាម្លិះក្រអូបសិរីសួស្តី' },
+          { id: 6, src: '/images/templates/floral-romance/floral_6.jpg', caption: 'ក្តីសុខក្សេមក្សាន្តគូស្វាមីភរិយា' }
+        ]
       },
       {
         id: 'emerald-jade',
@@ -97,7 +129,21 @@ export const CEREMONY_DATA = {
         demoGroom: 'អ៊ឹង ប៊ុនរ៉ុង',
         demoBride: 'គង់ មុនីរ័ត្ន',
         demoDate: 'ថ្ងៃអាទិត្យ ទី០៦ ខែធ្នូ ឆ្នាំ២០២៦',
-        features: ['ក្បាច់ឈូកមង្គល', 'តារាងកម្មវិធីព្រឹក-ល្ងាច', 'RSVP & ជូនពរឌីជីថល', 'គាំទ្រគ្រប់ទូរស័ព្ទ']
+        features: ['ក្បាច់ឈូកមង្គល', 'តារាងកម្មវិធីព្រឹក-ល្ងាច', 'RSVP & ជូនពរឌីជីថល', 'គាំទ្រគ្រប់ទូរស័ព្ទ'],
+        heroImages: [
+          '/images/templates/emerald-jade/emerald_1.jpg',
+          '/images/templates/emerald-jade/emerald_2.jpg',
+          '/images/templates/emerald-jade/emerald_3.jpg',
+          '/images/templates/emerald-jade/emerald_4.jpg',
+          '/images/templates/emerald-jade/emerald_5.jpg'
+        ],
+        galleryPhotos: [
+          { id: 1, src: '/images/templates/emerald-jade/emerald_1.jpg', caption: 'ត្បូងមរកតសិរីសួស្តីរុងរឿង' },
+          { id: 2, src: '/images/templates/emerald-jade/emerald_2.jpg', caption: 'សេចក្តីសុខក្សេមក្សាន្តត្រជាក់ត្រជុំ' },
+          { id: 3, src: '/images/templates/emerald-jade/emerald_3.jpg', caption: 'រាជវាំងមង្គលសិរី' },
+          { id: 4, src: '/images/templates/emerald-jade/emerald_4.jpg', caption: 'មកុដមាសត្បូងមរកត' },
+          { id: 5, src: '/images/templates/emerald-jade/emerald_5.jpg', caption: 'ម្លប់ត្រជាក់បឹងឈូកមង្គល' }
+        ]
       },
       {
         id: 'modern-luxury',
@@ -121,7 +167,21 @@ export const CEREMONY_DATA = {
         demoGroom: 'វ៉ាន់ សុភ័ក្ត្រ',
         demoBride: 'ម៉ៅ ពិសី',
         demoDate: 'ថ្ងៃសៅរ៍ ទី១៩ ខែធ្នូ ឆ្នាំ២០២៦',
-        features: ['រចនាបថ Minimalist', 'QR Code ផ្ទាល់ខ្លួន', 'ផែនទីពិធីការ', 'ចំណុចប្រទាក់លឿន']
+        features: ['រចនាបថ Minimalist', 'QR Code ផ្ទាល់ខ្លួន', 'ផែនទីពិធីការ', 'ចំណុចប្រទាក់លឿន'],
+        heroImages: [
+          '/images/templates/modern-luxury/modern_1.jpg',
+          '/images/templates/modern-luxury/modern_2.jpg',
+          '/images/templates/modern-luxury/modern_3.jpg',
+          '/images/templates/modern-luxury/modern_4.jpg',
+          '/images/templates/modern-luxury/modern_5.jpg'
+        ],
+        galleryPhotos: [
+          { id: 1, src: '/images/templates/modern-luxury/modern_1.jpg', caption: 'ភាពស៊ីវិល័យ និងទាន់សម័យ' },
+          { id: 2, src: '/images/templates/modern-luxury/modern_2.jpg', caption: 'រចនាបថអភិជនប្រណីត' },
+          { id: 3, src: '/images/templates/modern-luxury/modern_3.jpg', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់' },
+          { id: 4, src: '/images/templates/modern-luxury/modern_4.jpg', caption: 'ភាពស្រស់បំព្រង និងថ្លៃថ្នូរ' },
+          { id: 5, src: '/images/templates/modern-luxury/modern_5.jpg', caption: 'និស្ស័យស្នេហ៍អមតៈ' }
+        ]
       },
       {
         id: 'angkor-heritage',
@@ -145,7 +205,21 @@ export const CEREMONY_DATA = {
         demoGroom: 'ហេង វិសាល',
         demoBride: 'ឌៀប សុវណ្ណារី',
         demoDate: 'ថ្ងៃអាទិត្យ ទី១០ ខែមករា ឆ្នាំ២០២៧',
-        features: ['ក្បាច់អង្គរវត្តបុរាណ', 'ភ្លេងពិណពាទ្យប្រពៃណី', 'ពាក្យប្រសិទ្ធពរជ័យ', 'ទាញយក QR ព្រីន']
+        features: ['ក្បាច់អង្គរវត្តបុរាណ', 'ភ្លេងពិណពាទ្យប្រពៃណី', 'ពាក្យប្រសិទ្ធពរជ័យ', 'ទាញយក QR ព្រីន'],
+        heroImages: [
+          '/images/templates/angkor-heritage/angkor_1.jpg',
+          '/images/templates/angkor-heritage/angkor_2.jpg',
+          '/images/templates/angkor-heritage/angkor_3.jpg',
+          '/images/templates/angkor-heritage/angkor_4.jpg',
+          '/images/templates/angkor-heritage/angkor_5.jpg'
+        ],
+        galleryPhotos: [
+          { id: 1, src: '/images/templates/angkor-heritage/angkor_1.jpg', caption: 'កេរដំណែលប្រាសាទអង្គរដ៏មហិមា' },
+          { id: 2, src: '/images/templates/angkor-heritage/angkor_2.jpg', caption: 'មោទនភាពវប្បធម៌ខ្មែរបុរាណ' },
+          { id: 3, src: '/images/templates/angkor-heritage/angkor_3.jpg', caption: 'សិរីមង្គលមហានគរ' },
+          { id: 4, src: '/images/templates/angkor-heritage/angkor_4.jpg', caption: 'ក្បាច់ចម្លាក់អង្គរដ៏ពិសិដ្ឋ' },
+          { id: 5, src: '/images/templates/angkor-heritage/angkor_5.jpg', caption: 'សច្ចាប្រណិធានស្នេហ៍មុខប្រាសាទ' }
+        ]
       },
       {
         id: 'crimson-classic',
@@ -169,7 +243,21 @@ export const CEREMONY_DATA = {
         demoGroom: 'ឈួន សម្បត្តិ',
         demoBride: 'កែវ រចនា',
         demoDate: 'ថ្ងៃសៅរ៍ ទី២៣ ខែមករា ឆ្នាំ២០២៧',
-        features: ['អក្សរមូលប្រពៃណីខ្មែរ', 'ពាក្យពេចន៍មាតាបិតា', 'គ្រប់គ្រងភ្ញៀវឆ្លើយតប', 'ស្កេនចូលរួម']
+        features: ['អក្សរមូលប្រពៃណីខ្មែរ', 'ពាក្យពេចន៍មាតាបិតា', 'គ្រប់គ្រងភ្ញៀវឆ្លើយតប', 'ស្កេនចូលរួម'],
+        heroImages: [
+          '/images/templates/crimson-classic/crimson_1.jpg',
+          '/images/templates/crimson-classic/crimson_2.jpg',
+          '/images/templates/crimson-classic/crimson_3.jpg',
+          '/images/templates/crimson-classic/crimson_4.jpg',
+          '/images/templates/crimson-classic/crimson_5.jpg'
+        ],
+        galleryPhotos: [
+          { id: 1, src: '/images/templates/crimson-classic/crimson_1.jpg', caption: 'មង្គលក្រហមប្រពៃណីខ្មែរសុទ្ធ' },
+          { id: 2, src: '/images/templates/crimson-classic/crimson_2.jpg', caption: 'ជ័យមង្គលសិរីសួស្តីវិបុលសុខ' },
+          { id: 3, src: '/images/templates/crimson-classic/crimson_3.jpg', caption: 'សូត្រក្រហមមង្គលការ' },
+          { id: 4, src: '/images/templates/crimson-classic/crimson_4.jpg', caption: 'ក្បាច់ភ្ញីទេសមាសបុរាណ' },
+          { id: 5, src: '/images/templates/crimson-classic/crimson_5.jpg', caption: 'សុភមង្គលគូស្វាមីភរិយាថ្មី' }
+        ]
       }
     ]
   },
