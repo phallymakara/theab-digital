@@ -47,7 +47,9 @@
 }
 
 /* Box Sizing */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -60,10 +62,21 @@ body {
 }
 
 /* Typography Utility Classes */
-.font-moul { font-family: var(--font-moul); }
-.font-kantumruy { font-family: var(--font-kantumruy); }
-.font-battambang { font-family: var(--font-battambang); }
-.font-cinzel { font-family: var(--font-cinzel); }
+.font-moul {
+  font-family: var(--font-moul);
+}
+
+.font-kantumruy {
+  font-family: var(--font-kantumruy);
+}
+
+.font-battambang {
+  font-family: var(--font-battambang);
+}
+
+.font-cinzel {
+  font-family: var(--font-cinzel);
+}
 
 /* Luxury Decorative Backgrounds & Borders */
 .gold-gradient-bg {
@@ -97,7 +110,7 @@ body {
 /* Luxury Dot Pattern Background with Ambient Gold Lighting */
 .dot-bg-luxury {
   background-color: #FCFAF6;
-  background-image: 
+  background-image:
     radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.16) 0%, transparent 65%),
     radial-gradient(circle at 12% 85%, rgba(136, 19, 55, 0.07) 0%, transparent 55%),
     radial-gradient(circle at 88% 70%, rgba(212, 175, 55, 0.12) 0%, transparent 50%),
@@ -110,7 +123,7 @@ body {
 /* Modern Luxury Ceremony Selected Page Backgrounds */
 .bg-ceremony-wedding {
   background-color: #FCFAF7;
-  background-image: 
+  background-image:
     radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.22) 0%, transparent 55%),
     radial-gradient(circle at 5% 40%, rgba(136, 19, 55, 0.08) 0%, transparent 45%),
     radial-gradient(circle at 95% 65%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
@@ -123,7 +136,7 @@ body {
 
 .bg-ceremony-engagement {
   background-color: #FDF9F9;
-  background-image: 
+  background-image:
     radial-gradient(circle at 50% 0%, rgba(244, 63, 94, 0.14) 0%, transparent 55%),
     radial-gradient(circle at 90% 25%, rgba(212, 175, 55, 0.18) 0%, transparent 45%),
     radial-gradient(circle at 10% 75%, rgba(225, 29, 72, 0.07) 0%, transparent 50%),
@@ -135,7 +148,7 @@ body {
 
 .bg-ceremony-housewarming {
   background-color: #F8FAF8;
-  background-image: 
+  background-image:
     radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.12) 0%, transparent 55%),
     radial-gradient(circle at 85% 35%, rgba(212, 175, 55, 0.18) 0%, transparent 45%),
     radial-gradient(circle at 15% 80%, rgba(5, 150, 105, 0.07) 0%, transparent 50%),
@@ -148,7 +161,7 @@ body {
 /* Template Detail / Preview Dedicated Luxury Showcase Stages */
 .bg-preview-stage {
   background-color: #12100E;
-  background-image: 
+  background-image:
     radial-gradient(circle at 50% 18%, rgba(212, 175, 55, 0.16) 0%, transparent 55%),
     radial-gradient(circle at 12% 65%, rgba(136, 19, 55, 0.10) 0%, transparent 45%),
     radial-gradient(circle at 88% 75%, rgba(212, 175, 55, 0.12) 0%, transparent 50%),
@@ -159,7 +172,7 @@ body {
 
 .bg-preview-romantic {
   background-color: #F8F4EE;
-  background-image: 
+  background-image:
     radial-gradient(circle at 50% 15%, rgba(254, 237, 222, 0.95) 0%, transparent 55%),
     radial-gradient(circle at 10% 40%, rgba(254, 205, 211, 0.28) 0%, transparent 45%),
     radial-gradient(circle at 90% 70%, rgba(253, 230, 138, 0.28) 0%, transparent 50%),
@@ -174,20 +187,25 @@ body {
     transform: translate3d(0, -60px, 0) rotate(0deg) rotateY(0deg) scale(0.7);
     opacity: 0;
   }
+
   15% {
     opacity: 0.65;
   }
+
   35% {
     transform: translate3d(calc(var(--drift, 30px) * 0.5), 32vh, 0) rotate(110deg) rotateY(180deg) scale(0.95);
     opacity: 0.72;
   }
+
   65% {
     transform: translate3d(calc(var(--drift, 30px) * -0.4), 68vh, 0) rotate(230deg) rotateY(360deg) scale(0.85);
     opacity: 0.65;
   }
+
   90% {
     opacity: 0.45;
   }
+
   100% {
     transform: translate3d(var(--drift, 30px), 105vh, 0) rotate(360deg) rotateY(540deg) scale(0.7);
     opacity: 0;
@@ -343,6 +361,7 @@ body {
 .phone-screen::-webkit-scrollbar {
   width: 4px;
 }
+
 .phone-screen::-webkit-scrollbar-thumb {
   background: rgba(212, 175, 55, 0.4);
   border-radius: 4px;
@@ -361,7 +380,9 @@ body {
   margin-bottom: 6px;
 }
 
-.form-input, .form-textarea, .form-select {
+.form-input,
+.form-textarea,
+.form-select {
   width: 100%;
   padding: 10px 14px;
   border-radius: var(--radius-sm);
@@ -373,7 +394,9 @@ body {
   transition: all 0.2s ease;
 }
 
-.form-input:focus, .form-textarea:focus, .form-select:focus {
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
   outline: none;
   border-color: #D4AF37;
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
@@ -443,6 +466,7 @@ body {
     transform: translateX(100%);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -464,8 +488,13 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 /* ==========================================================================
@@ -478,6 +507,7 @@ body {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -489,6 +519,7 @@ body {
     opacity: 0;
     transform: scale(0.95) translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -500,6 +531,7 @@ body {
     opacity: 0;
     transform: translateY(20px) scale(0.97);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -507,18 +539,24 @@ body {
 }
 
 @keyframes floatSlow {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
   }
+
   50% {
     transform: translateY(-8px) rotate(2deg);
   }
 }
 
 @keyframes pulseGoldGlow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
   }
+
   50% {
     box-shadow: 0 0 30px rgba(212, 175, 55, 0.45);
   }
@@ -528,6 +566,7 @@ body {
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -557,10 +596,13 @@ body {
 }
 
 @keyframes ambientGlowPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.55;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.85;
     transform: scale(1.06);
@@ -577,12 +619,15 @@ body {
     transform: translate3d(0, -25px, 0) rotate(0deg) scale(0.7);
     opacity: 0;
   }
+
   15% {
     opacity: 0.95;
   }
+
   85% {
     opacity: 0.95;
   }
+
   100% {
     transform: translate3d(55px, 240px, 0) rotate(340deg) scale(0.95);
     opacity: 0;
@@ -594,12 +639,15 @@ body {
     transform: translate3d(0, -30px, 0) rotate(45deg) scale(0.9);
     opacity: 0;
   }
+
   20% {
     opacity: 0.9;
   }
+
   80% {
     opacity: 0.9;
   }
+
   100% {
     transform: translate3d(-50px, 250px, 0) rotate(-280deg) scale(0.75);
     opacity: 0;
@@ -611,12 +659,15 @@ body {
     transform: translate3d(0, -20px, 0) rotate(15deg) scale(0.8);
     opacity: 0;
   }
+
   25% {
     opacity: 0.85;
   }
+
   75% {
     opacity: 0.85;
   }
+
   100% {
     transform: translate3d(40px, 230px, 0) rotate(210deg) scale(0.85);
     opacity: 0;
@@ -641,18 +692,22 @@ body {
     transform: translate3d(0, 220px, 0) rotate(0deg) scale(0.65);
     opacity: 0;
   }
+
   20% {
     opacity: 0.95;
     transform: translate3d(24px, 160px, 0) rotate(60deg) scale(0.85);
   }
+
   50% {
     transform: translate3d(-18px, 90px, 0) rotate(150deg) scale(0.95);
     opacity: 0.95;
   }
+
   80% {
     transform: translate3d(22px, 30px, 0) rotate(240deg) scale(0.85);
     opacity: 0.85;
   }
+
   100% {
     transform: translate3d(-10px, -30px, 0) rotate(330deg) scale(0.65);
     opacity: 0;
@@ -664,14 +719,17 @@ body {
     transform: translate3d(0, 230px, 0) rotate(45deg) scale(0.75);
     opacity: 0;
   }
+
   25% {
     opacity: 0.9;
     transform: translate3d(-25px, 150px, 0) rotate(-45deg) scale(0.9);
   }
+
   65% {
     transform: translate3d(20px, 60px, 0) rotate(-135deg) scale(1);
     opacity: 0.95;
   }
+
   100% {
     transform: translate3d(-15px, -35px, 0) rotate(-240deg) scale(0.7);
     opacity: 0;
@@ -683,14 +741,17 @@ body {
     transform: translate3d(0, 210px, 0) rotate(-20deg) scale(0.6);
     opacity: 0;
   }
+
   20% {
     opacity: 0.9;
     transform: translate3d(18px, 140px, 0) rotate(40deg) scale(0.8);
   }
+
   70% {
     transform: translate3d(-20px, 50px, 0) rotate(180deg) scale(0.9);
     opacity: 0.85;
   }
+
   100% {
     transform: translate3d(10px, -25px, 0) rotate(300deg) scale(0.6);
     opacity: 0;
@@ -715,16 +776,20 @@ body {
     transform: translate3d(0, 30px, 0) scale(0.65) rotate(-15deg);
     opacity: 0;
   }
+
   20% {
     opacity: 0.95;
   }
+
   50% {
     transform: translate3d(18px, -110px, 0) scale(1) rotate(12deg);
     opacity: 0.9;
   }
+
   80% {
     opacity: 0.75;
   }
+
   100% {
     transform: translate3d(-10px, -260px, 0) scale(0.8) rotate(-22deg);
     opacity: 0;
@@ -736,16 +801,20 @@ body {
     transform: translate3d(0, 30px, 0) scale(0.55) rotate(12deg);
     opacity: 0;
   }
+
   25% {
     opacity: 0.92;
   }
+
   55% {
     transform: translate3d(-22px, -125px, 0) scale(1.05) rotate(-16deg);
     opacity: 0.85;
   }
+
   85% {
     opacity: 0.65;
   }
+
   100% {
     transform: translate3d(15px, -270px, 0) scale(0.7) rotate(26deg);
     opacity: 0;
@@ -757,13 +826,16 @@ body {
     transform: translate3d(0, 30px, 0) scale(0.6) rotate(0deg);
     opacity: 0;
   }
+
   30% {
     opacity: 1;
   }
+
   60% {
     transform: translate3d(16px, -130px, 0) scale(1.1) rotate(18deg);
     opacity: 0.8;
   }
+
   100% {
     transform: translate3d(-8px, -280px, 0) scale(0.75) rotate(-12deg);
     opacity: 0;
@@ -788,18 +860,22 @@ body {
     transform: translate3d(0, 0, 0) rotate(0deg) scale(0.85);
     opacity: 0.2;
   }
+
   25% {
     transform: translate3d(16px, -22px, 0) rotate(14deg) scale(1.05);
     opacity: 0.95;
   }
+
   50% {
     transform: translate3d(-12px, -40px, 0) rotate(-10deg) scale(0.92);
     opacity: 0.9;
   }
+
   75% {
     transform: translate3d(-22px, -18px, 0) rotate(8deg) scale(1.02);
     opacity: 0.85;
   }
+
   100% {
     transform: translate3d(0, 0, 0) rotate(0deg) scale(0.85);
     opacity: 0.2;
@@ -811,18 +887,22 @@ body {
     transform: translate3d(0, 0, 0) rotate(0deg) scale(0.9);
     opacity: 0.25;
   }
+
   25% {
     transform: translate3d(-18px, 20px, 0) rotate(-16deg) scale(1.08);
     opacity: 0.95;
   }
+
   50% {
     transform: translate3d(14px, 36px, 0) rotate(12deg) scale(0.88);
     opacity: 0.88;
   }
+
   75% {
     transform: translate3d(20px, 12px, 0) rotate(-8deg) scale(1.03);
     opacity: 0.92;
   }
+
   100% {
     transform: translate3d(0, 0, 0) rotate(0deg) scale(0.9);
     opacity: 0.25;
@@ -834,18 +914,22 @@ body {
     transform: translate3d(0, 0, 0) rotate(-12deg) scale(0.6);
     opacity: 0;
   }
+
   18% {
     opacity: 0.95;
     transform: translate3d(18px, -45px, 0) rotate(10deg) scale(0.95);
   }
+
   50% {
     transform: translate3d(-14px, -120px, 0) rotate(-15deg) scale(1.1);
     opacity: 0.9;
   }
+
   80% {
     transform: translate3d(22px, -200px, 0) rotate(20deg) scale(0.9);
     opacity: 0.75;
   }
+
   100% {
     transform: translate3d(35px, -270px, 0) rotate(35deg) scale(0.55);
     opacity: 0;
@@ -857,18 +941,22 @@ body {
     transform: translate3d(0, 0, 0) rotate(15deg) scale(0.6);
     opacity: 0;
   }
+
   18% {
     opacity: 0.95;
     transform: translate3d(-20px, 45px, 0) rotate(-12deg) scale(0.95);
   }
+
   50% {
     transform: translate3d(16px, 115px, 0) rotate(18deg) scale(1.05);
     opacity: 0.9;
   }
+
   80% {
     transform: translate3d(-18px, 190px, 0) rotate(-15deg) scale(0.85);
     opacity: 0.75;
   }
+
   100% {
     transform: translate3d(-30px, 260px, 0) rotate(-30deg) scale(0.5);
     opacity: 0;
@@ -880,18 +968,22 @@ body {
     transform: translate3d(0, 0, 0) rotate(-10deg) scale(0.65);
     opacity: 0;
   }
+
   15% {
     opacity: 0.95;
     transform: translate3d(40px, -18px, 0) rotate(15deg) scale(0.95);
   }
+
   50% {
     transform: translate3d(110px, 20px, 0) rotate(-8deg) scale(1.08);
     opacity: 0.92;
   }
+
   82% {
     transform: translate3d(190px, -15px, 0) rotate(22deg) scale(0.9);
     opacity: 0.7;
   }
+
   100% {
     transform: translate3d(250px, 10px, 0) rotate(35deg) scale(0.55);
     opacity: 0;
@@ -903,18 +995,22 @@ body {
     transform: translate3d(0, 0, 0) rotate(12deg) scale(0.65);
     opacity: 0;
   }
+
   15% {
     opacity: 0.95;
     transform: translate3d(-40px, 18px, 0) rotate(-14deg) scale(0.95);
   }
+
   50% {
     transform: translate3d(-110px, -20px, 0) rotate(10deg) scale(1.08);
     opacity: 0.92;
   }
+
   82% {
     transform: translate3d(-190px, 16px, 0) rotate(-20deg) scale(0.9);
     opacity: 0.7;
   }
+
   100% {
     transform: translate3d(-250px, -10px, 0) rotate(-32deg) scale(0.55);
     opacity: 0;
@@ -924,18 +1020,23 @@ body {
 .animate-smooth-ambient-1 {
   animation: smoothFloatAmbient1 ease-in-out infinite;
 }
+
 .animate-smooth-ambient-2 {
   animation: smoothFloatAmbient2 ease-in-out infinite;
 }
+
 .animate-smooth-fly-up {
   animation: smoothFlyUpDiagonal cubic-bezier(0.35, 0, 0.25, 1) infinite;
 }
+
 .animate-smooth-fly-down {
   animation: smoothFlyDownFlutter cubic-bezier(0.35, 0, 0.25, 1) infinite;
 }
+
 .animate-smooth-cross-right {
   animation: smoothFlyCrossRight cubic-bezier(0.35, 0, 0.25, 1) infinite;
 }
+
 .animate-smooth-cross-left {
   animation: smoothFlyCrossLeft cubic-bezier(0.35, 0, 0.25, 1) infinite;
 }
@@ -946,13 +1047,16 @@ body {
     transform: translate3d(0, -20px, 0) rotate(0deg) scale(0.7);
     opacity: 0;
   }
+
   20% {
     opacity: 0.9;
   }
+
   60% {
     transform: translate3d(24px, 120px, 0) rotate(160deg) scale(0.95);
     opacity: 0.85;
   }
+
   100% {
     transform: translate3d(-15px, 260px, 0) rotate(320deg) scale(0.75);
     opacity: 0;
@@ -964,13 +1068,16 @@ body {
     transform: translate3d(0, -20px, 0) rotate(45deg) scale(0.6);
     opacity: 0;
   }
+
   25% {
     opacity: 0.92;
   }
+
   65% {
     transform: translate3d(-26px, 130px, 0) rotate(-120deg) scale(1);
     opacity: 0.8;
   }
+
   100% {
     transform: translate3d(18px, 270px, 0) rotate(-280deg) scale(0.7);
     opacity: 0;
@@ -982,13 +1089,16 @@ body {
     transform: translate3d(0, -20px, 0) rotate(-20deg) scale(0.65);
     opacity: 0;
   }
+
   20% {
     opacity: 0.88;
   }
+
   55% {
     transform: translate3d(18px, 115px, 0) rotate(110deg) scale(0.9);
     opacity: 0.75;
   }
+
   100% {
     transform: translate3d(-10px, 255px, 0) rotate(240deg) scale(0.65);
     opacity: 0;
@@ -1008,7 +1118,11 @@ body {
 }
 
 /* Smooth Interactive Micro-animations */
-button, a, input, select, textarea {
+button,
+a,
+input,
+select,
+textarea {
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1064,8 +1178,239 @@ button:active:not(:disabled) {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
+/* Custom sleek scrollbar for Template Components Scroll Container */
+.luxury-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.luxury-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.luxury-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.4);
+  border-radius: 9999px;
+}
+
+.luxury-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.7);
+}
+
+/* =========================================================================
+   KHMER ROYAL WEDDING BACKGROUND MOTIFS (FLOWERS & HEARTS) - SILKY SMOOTH ANIMATIONS
+   ========================================================================= */
+@keyframes khmerFloatSway1 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.94);
+    opacity: 0.55;
+  }
+  35% {
+    transform: translate3d(22px, -30px, 0) rotate(14deg) scale(1.06);
+    opacity: 0.92;
+  }
+  70% {
+    transform: translate3d(-16px, -58px, 0) rotate(-10deg) scale(0.98);
+    opacity: 0.88;
+  }
+  100% {
+    transform: translate3d(14px, -84px, 0) rotate(18deg) scale(1.04);
+    opacity: 0.65;
+  }
+}
+
+@keyframes khmerFloatSway2 {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    opacity: 0.6;
+  }
+  35% {
+    transform: translate3d(-24px, 32px, 0) rotate(-16deg) scale(1.08);
+    opacity: 0.92;
+  }
+  70% {
+    transform: translate3d(20px, 62px, 0) rotate(14deg) scale(0.96);
+    opacity: 0.82;
+  }
+  100% {
+    transform: translate3d(-10px, 90px, 0) rotate(-8deg) scale(1.02);
+    opacity: 0.6;
+  }
+}
+
+@keyframes khmerFloatGentlePulse {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.92);
+    opacity: 0.52;
+  }
+  50% {
+    transform: translate3d(16px, -26px, 0) rotate(14deg) scale(1.1);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.92);
+    opacity: 0.52;
+  }
+}
+
+@keyframes khmerFloatDiagonalLeft {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.94);
+    opacity: 0.52;
+  }
+  50% {
+    transform: translate3d(-26px, -40px, 0) rotate(-15deg) scale(1.06);
+    opacity: 0.92;
+  }
+  100% {
+    transform: translate3d(-46px, -78px, 0) rotate(-26deg) scale(0.96);
+    opacity: 0.58;
+  }
+}
+
+@keyframes khmerFloatDiagonalRight {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.94);
+    opacity: 0.52;
+  }
+  50% {
+    transform: translate3d(26px, -40px, 0) rotate(15deg) scale(1.06);
+    opacity: 0.92;
+  }
+  100% {
+    transform: translate3d(46px, -78px, 0) rotate(26deg) scale(0.96);
+    opacity: 0.58;
+  }
+}
+
+.animate-khmer-sway-1 {
+  animation-name: khmerFloatSway1;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  will-change: transform, opacity;
+}
+
+.animate-khmer-sway-2 {
+  animation-name: khmerFloatSway2;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  will-change: transform, opacity;
+}
+
+.animate-khmer-sway-pulse {
+  animation-name: khmerFloatGentlePulse;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+.animate-khmer-diag-left {
+  animation-name: khmerFloatDiagonalLeft;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  will-change: transform, opacity;
+}
+
+.animate-khmer-diag-right {
+  animation-name: khmerFloatDiagonalRight;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  will-change: transform, opacity;
+}
+
+/* Flying Heart Upward Trajectories for Ambient Stage Background */
+@keyframes khmerFlyHeartUp1 {
+  0% {
+    transform: translate3d(0, 60px, 0) scale(0.65) rotate(-12deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.65;
+  }
+  45% {
+    transform: translate3d(24px, -110px, 0) scale(1.05) rotate(14deg);
+    opacity: 0.75;
+  }
+  75% {
+    transform: translate3d(-18px, -230px, 0) scale(0.95) rotate(-10deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate3d(15px, -360px, 0) scale(0.6) rotate(16deg);
+    opacity: 0;
+  }
+}
+
+@keyframes khmerFlyHeartUp2 {
+  0% {
+    transform: translate3d(0, 60px, 0) scale(0.6) rotate(15deg);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate3d(-26px, -130px, 0) scale(1.08) rotate(-16deg);
+    opacity: 0.8;
+  }
+  80% {
+    transform: translate3d(20px, -250px, 0) scale(0.92) rotate(12deg);
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate3d(-15px, -380px, 0) scale(0.55) rotate(-22deg);
+    opacity: 0;
+  }
+}
+
+@keyframes khmerFlyHeartUp3 {
+  0% {
+    transform: translate3d(0, 60px, 0) scale(0.7) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.65;
+  }
+  50% {
+    transform: translate3d(18px, -120px, 0) scale(1.04) rotate(12deg);
+    opacity: 0.75;
+  }
+  80% {
+    transform: translate3d(-14px, -240px, 0) scale(0.9) rotate(-12deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate3d(10px, -350px, 0) scale(0.6) rotate(15deg);
+    opacity: 0;
+  }
+}
+
+.animate-khmer-heart-fly-1 {
+  animation-name: khmerFlyHeartUp1;
+  animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+.animate-khmer-heart-fly-2 {
+  animation-name: khmerFlyHeartUp2;
+  animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+.animate-khmer-heart-fly-3 {
+  animation-name: khmerFlyHeartUp3;
+  animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}

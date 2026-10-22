@@ -84,7 +84,31 @@
   font-display: swap;
 }
 
+.font-moul {
+  font-family: 'Moul', 'Moulpali', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.font-moulpali {
+  font-family: 'Moulpali', 'Moul', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
 .font-toathmor {
-  font-family: 'Kh Ang Toathmor Kbach', 'Moul', 'Kantumruy Pro', serif;
+  font-family: 'Moul', 'Moulpali', 'Kh Ang Komutt B', 'Preahvihear', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.font-angkor {
+  font-family: 'Moul', 'Moulpali', 'Preahvihear', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 

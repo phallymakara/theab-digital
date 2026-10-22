@@ -258,6 +258,45 @@ export const CEREMONY_DATA = {
           { id: 4, src: '/images/templates/crimson-classic/crimson_4.jpg', caption: 'ក្បាច់ភ្ញីទេសមាសបុរាណ' },
           { id: 5, src: '/images/templates/crimson-classic/crimson_5.jpg', caption: 'សុភមង្គលគូស្វាមីភរិយាថ្មី' }
         ]
+      },
+      {
+        id: 'angkor-ancient-royalty',
+        name: 'បុរាណមហានគរ',
+        subtitle: 'Angkor Ancient Royalty',
+        category: 'traditional',
+        tag: 'ប្រពៃណីបុរាណ',
+        tagColor: 'bg-amber-100 text-amber-950 border-amber-400',
+        themeColor: 'gold',
+        primaryGradient: 'bg-gradient-to-r from-[#4A1E14] via-[#8C6F19] to-[#C5A059]',
+        borderColor: '#C5A059',
+        titleColor: '#8C6F19',
+        badgeBg: 'bg-[#8C6F19]',
+        description: 'រចនាបថប្រពៃណីបុរាណសម័យអង្គរដ៏រុងរឿង រំលេចក្បាច់ចម្លាក់ថ្មប្រាសាទបុរាណ អមដោយសម្លៀកបំពាក់ក្សត្រខ្មែរ ម្កុដមាស និងស្បៃមាស ស័ក្តិសមបំផុតសម្រាប់មង្គលការប្រពៃណីខ្មែរបុរាណពិតៗ។',
+        previewBg: 'bg-[#FAF4E8]',
+        bgImage: '/images/templates/angkor_ancient_royalty_prewedding.jpg',
+        bgBackdrop: '/images/templates/angkor_wat_scenery.jpg',
+        hasFlyingFlowers: true,
+        flyEffect: 'angkor-ancient-petals',
+        cardStyle: 'angkor-ancient-royalty',
+        cardBorder: 'border-[#C5A059]/80 hover:border-[#D4AF37]',
+        demoGroom: 'កែវ វិបុលរាជ',
+        demoBride: 'ទេព ធីតាសួគ៌',
+        demoDate: 'ថ្ងៃអាទិត្យ ទី១៤ ខែកុម្ភៈ ឆ្នាំ២០២៧',
+        features: ['អក្សរក្បាច់បុរាណអង្គរ', 'ក្បាច់ចម្លាក់ថ្មបុរាណ', 'កាលវិភាគពិធីបុរាណ', 'RSVP & ផែនទី'],
+        heroImages: [
+          '/images/templates/angkor-ancient-royalty/ancient_1.jpg',
+          '/images/templates/angkor-ancient-royalty/ancient_2.jpg',
+          '/images/templates/angkor-ancient-royalty/ancient_3.jpg',
+          '/images/templates/angkor-ancient-royalty/ancient_4.jpg',
+          '/images/templates/angkor-ancient-royalty/ancient_5.jpg'
+        ],
+        galleryPhotos: [
+          { id: 1, src: '/images/templates/angkor-ancient-royalty/ancient_1.jpg', caption: 'មហានគរសិរីមង្គលក្សត្របុរាណ' },
+          { id: 2, src: '/images/templates/angkor-ancient-royalty/ancient_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីស្រឡាញ់មុខចម្លាក់អប្សរា' },
+          { id: 3, src: '/images/templates/angkor-ancient-royalty/ancient_3.jpg', caption: 'កិច្ចសំពះប្រសិទ្ធពរជ័យបុរាណ' },
+          { id: 4, src: '/images/templates/angkor-ancient-royalty/ancient_4.jpg', caption: 'ដំណើរគូស្នេហ៍លើស្ពានបុរាណអង្គរវត្ត' },
+          { id: 5, src: '/images/templates/angkor-ancient-royalty/ancient_5.jpg', caption: 'ពន្លឺមាសជះឆ្លងកាត់សរសរថ្មប្រាសាទបុរាណ' }
+        ]
       }
     ]
   },
