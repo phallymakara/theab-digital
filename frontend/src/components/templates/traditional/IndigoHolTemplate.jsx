@@ -76,26 +76,17 @@ export function IndigoHolTemplate({ data = {} }) {
 
   return (
     <div
-      className="w-full relative pb-20 text-[#E7E2D4] font-kantumruy antialiased selection:bg-[#B88926] selection:text-white"
-      style={{
-        backgroundColor: '#070B18',
-        backgroundImage: `
-          radial-gradient(ellipse at 50% 0%, rgba(26, 42, 94, 0.45) 0%, transparent 75%),
-          radial-gradient(circle at 100% 50%, rgba(184, 137, 38, 0.08) 0%, transparent 50%),
-          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='%23B88926' fill-opacity='0.08'%3E%3Cpath d='M24 0l12 24-12 24L12 24z' stroke='%23D4AF37' stroke-opacity='0.12' stroke-width='0.7'/%3E%3Cpath d='M24 8l8 16-8 16-8-16z' fill='none' stroke='%23FCF6BA' stroke-opacity='0.08' stroke-width='0.5'/%3E%3Ccircle cx='24' cy='24' r='2' fill='%23FFDF79' fill-opacity='0.16'/%3E%3Ccircle cx='0' cy='24' r='1.5'/%3E%3Ccircle cx='48' cy='24' r='1.5'/%3E%3Ccircle cx='24' cy='0' r='1.5'/%3E%3Ccircle cx='24' cy='48' r='1.5'/%3E%3C/g%3E%3C/svg%3E")
-        `,
-        backgroundAttachment: 'fixed'
-      }}
+      className="w-full relative pb-20 text-stone-800 font-kantumruy antialiased selection:bg-[#3B82F6] selection:text-white bg-pattern-indigo-hol"
     >
       <button
         onClick={toggleMusic}
-        className="fixed bottom-5 right-5 z-40 flex items-center gap-2 px-3.5 py-2 rounded-full bg-gradient-to-r from-[#B88926] via-[#FBF2B7] to-[#B88926] text-black font-bold text-xs shadow-2xl cursor-pointer active:scale-95 transition"
+        className="fixed bottom-5 right-5 z-40 flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/95 hover:bg-white text-stone-800 font-bold text-xs shadow-lg border-2 border-[#E3BA55]/60 cursor-pointer active:scale-95 transition"
       >
-        <Music className={`w-4 h-4 ${isPlaying ? 'animate-bounce' : ''}`} />
+        <Music className={`w-4 h-4 text-[#1D4ED8] ${isPlaying ? 'animate-bounce' : ''}`} />
         <span>{isPlaying ? 'ភ្លេងការ (កំពុងចាក់)' : 'តន្ត្រីភ្លេងការ'}</span>
       </button>
 
-      <div className="w-full relative bg-gradient-to-b from-[#101834]/95 via-[#090E21]/95 to-[#070B18]">
+      <div className="w-full relative">
         {/* Top Hero Section with Multiple Images Carousel */}
         <TraditionalHeroSection
           groom={groom}
@@ -108,68 +99,68 @@ export function IndigoHolTemplate({ data = {} }) {
 
         {/* Header */}
         <header className="text-center pt-8 pb-8 px-6 relative">
-          <div className="text-[#E3BA55] text-xl mb-2">❖ ❖ ❖</div>
-          <p className="text-xs tracking-widest text-[#FBF2B7] uppercase mb-1 font-semibold">សិរីសួស្តី អាពាហ៍ពិពាហ៍</p>
-          <h1 className="font-moul text-2xl sm:text-3xl bg-gradient-to-r from-[#FBF2B7] via-[#E3BA55] to-[#B88926] bg-clip-text text-transparent leading-relaxed tracking-wider mb-2">
+          <div className="text-[#1D4ED8] text-xl mb-2">❖ ❖ ❖</div>
+          <p className="text-xs tracking-widest text-[#1D4ED8] uppercase mb-1 font-semibold">សិរីសួស្តី អាពាហ៍ពិពាហ៍</p>
+          <h1 className="font-moul text-2xl sm:text-3xl text-[#1E3A8A] leading-relaxed tracking-wider mb-2">
             សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍
           </h1>
-          <p className="text-xs text-[#C7B591] italic mb-6">រចនាបថហូលពពិលឥន្ទ្រនីលមាស</p>
+          <p className="text-xs text-stone-600 italic mb-6">រចនាបថហូលពពិលឥន្ទ្រនីលមាស</p>
 
           {/* Couple Box */}
-          <div className="my-6 p-6 rounded-2xl bg-[#101834] border-2 border-[#B88926]/70 shadow-[0_0_30px_rgba(227,186,85,0.15)] relative">
-            <div className="text-2xl sm:text-3xl font-moul text-[#FBF2B7] tracking-wide mb-1">{groom}</div>
-            <div className="my-2 text-[#E3BA55] font-semibold text-xs tracking-widest font-moul">✦ ជួបប្រសព្វនឹង ✦</div>
-            <div className="text-2xl sm:text-3xl font-moul text-[#FBF2B7] tracking-wide">{bride}</div>
+          <div className="my-6 p-6 rounded-2xl bg-white/90 backdrop-blur-md border-2 border-[#3B82F6]/35 shadow-md relative">
+            <div className="text-2xl sm:text-3xl font-moul text-stone-900 tracking-wide mb-1">{groom}</div>
+            <div className="my-2 text-[#B88926] font-semibold text-xs tracking-widest font-moul">✦ ជួបប្រសព្វនឹង ✦</div>
+            <div className="text-2xl sm:text-3xl font-moul text-stone-900 tracking-wide">{bride}</div>
           </div>
 
           {/* Prewedding Photo */}
-          <div className="my-6 max-w-sm mx-auto rounded-2xl overflow-hidden border-2 border-[#E3BA55]/60 shadow-2xl relative group">
+          <div className="my-6 max-w-sm mx-auto rounded-2xl overflow-hidden border-2 border-[#E3BA55]/60 shadow-lg relative group">
             <img src={preweddingImg} alt={`${groom} & ${bride}`} className="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-700" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#070B18] via-transparent to-transparent opacity-60"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
           </div>
 
           {/* Countdown */}
-          <div className="my-8 p-4 rounded-xl bg-[#0F1731] border border-[#B88926]/40 max-w-sm mx-auto">
-            <p className="text-xs text-[#FBF2B7] font-moul mb-3">រាប់ថយក្រោយដល់ថ្ងៃសិរីមង្គល</p>
+          <div className="my-8 p-4 rounded-xl bg-white/90 backdrop-blur-md border border-[#E3BA55]/40 max-w-sm mx-auto shadow-xs">
+            <p className="text-xs text-[#1E3A8A] font-moul mb-3">រាប់ថយក្រោយដល់ថ្ងៃសិរីមង្គល</p>
             <div className="grid grid-cols-4 gap-2 text-center">
-              <div className="p-2 rounded-lg bg-[#1A2548] border border-[#B88926]/30">
-                <span className="text-lg font-bold text-[#FBF2B7] font-mono">{timeLeft.days}</span>
-                <span className="block text-[10px] text-[#E3BA55]">ថ្ងៃ</span>
+              <div className="p-2 rounded-lg bg-[#EFF6FF] border border-blue-200 shadow-2xs">
+                <span className="text-lg font-bold text-[#1D4ED8] font-mono">{timeLeft.days}</span>
+                <span className="block text-[10px] text-stone-600 font-medium">ថ្ងៃ</span>
               </div>
-              <div className="p-2 rounded-lg bg-[#1A2548] border border-[#B88926]/30">
-                <span className="text-lg font-bold text-[#FBF2B7] font-mono">{timeLeft.hours}</span>
-                <span className="block text-[10px] text-[#E3BA55]">ម៉ោង</span>
+              <div className="p-2 rounded-lg bg-[#EFF6FF] border border-blue-200 shadow-2xs">
+                <span className="text-lg font-bold text-[#1D4ED8] font-mono">{timeLeft.hours}</span>
+                <span className="block text-[10px] text-stone-600 font-medium">ម៉ោង</span>
               </div>
-              <div className="p-2 rounded-lg bg-[#1A2548] border border-[#B88926]/30">
-                <span className="text-lg font-bold text-[#FBF2B7] font-mono">{timeLeft.minutes}</span>
-                <span className="block text-[10px] text-[#E3BA55]">នាទី</span>
+              <div className="p-2 rounded-lg bg-[#EFF6FF] border border-blue-200 shadow-2xs">
+                <span className="text-lg font-bold text-[#1D4ED8] font-mono">{timeLeft.minutes}</span>
+                <span className="block text-[10px] text-stone-600 font-medium">នាទី</span>
               </div>
-              <div className="p-2 rounded-lg bg-[#1A2548] border border-[#B88926]/30">
-                <span className="text-lg font-bold text-[#FBF2B7] font-mono">{timeLeft.seconds}</span>
-                <span className="block text-[10px] text-[#E3BA55]">វិនាទី</span>
+              <div className="p-2 rounded-lg bg-[#EFF6FF] border border-blue-200 shadow-2xs">
+                <span className="text-lg font-bold text-[#1D4ED8] font-mono">{timeLeft.seconds}</span>
+                <span className="block text-[10px] text-stone-600 font-medium">វិនាទី</span>
               </div>
             </div>
           </div>
         </header>
 
         {/* Parents */}
-        <section className="px-6 py-6 border-t border-[#B88926]/30">
-          <h2 className="font-moul text-center text-[#E3BA55] text-base mb-6">មាតាបិតាទាំងសងខាង</h2>
+        <section className="px-6 py-6 border-t border-[#E3BA55]/30">
+          <h2 className="font-moul text-center text-[#1E3A8A] text-base mb-6">មាតាបិតាទាំងសងខាង</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
-            <div className="p-4 rounded-xl bg-[#101834] border border-[#B88926]/40">
-              <p className="text-xs text-[#E3BA55] font-semibold mb-2">ឪពុកម្តាយខាងកូនកំលោះ</p>
-              <p className="font-semibold text-sm text-[#E7E2D4] leading-relaxed">{groomParents}</p>
+            <div className="p-4 rounded-xl bg-white/90 backdrop-blur-md border border-[#E3BA55]/35 shadow-xs">
+              <p className="text-xs text-[#1D4ED8] font-semibold mb-2">ឪពុកម្តាយខាងកូនកំលោះ</p>
+              <p className="font-semibold text-sm text-stone-800 leading-relaxed">{groomParents}</p>
             </div>
-            <div className="p-4 rounded-xl bg-[#101834] border border-[#B88926]/40">
-              <p className="text-xs text-[#E3BA55] font-semibold mb-2">ឪពុកម្តាយខាងកូនក្រមុំ</p>
-              <p className="font-semibold text-sm text-[#E7E2D4] leading-relaxed">{brideParents}</p>
+            <div className="p-4 rounded-xl bg-white/90 backdrop-blur-md border border-[#E3BA55]/35 shadow-xs">
+              <p className="text-xs text-[#1D4ED8] font-semibold mb-2">ឪពុកម្តាយខាងកូនក្រមុំ</p>
+              <p className="font-semibold text-sm text-stone-800 leading-relaxed">{brideParents}</p>
             </div>
           </div>
         </section>
 
         {/* Timeline */}
-        <section className="px-6 py-8 border-t border-[#B88926]/30">
-          <h2 className="font-moul text-center text-[#E3BA55] text-base mb-6">កាលវិភាគពិធីមង្គល</h2>
+        <section className="px-6 py-8 border-t border-[#E3BA55]/30">
+          <h2 className="font-moul text-center text-[#1E3A8A] text-base mb-6">កាលវិភាគពិធីមង្គល</h2>
           <div className="space-y-3">
             {[
               { time: '០៦:៣០ ព្រឹក', text: 'ពិធីជួបជុំភ្ញៀវកិត្តិយស និងរៀបចំហែចំនូន' },
@@ -178,27 +169,27 @@ export function IndigoHolTemplate({ data = {} }) {
               { time: '១០:០០ ព្រឹក', text: 'ពិធីសំពះផ្ទឹម សែនចងដៃ ព្រះថោងនាងនាគ' },
               { time: '០៥:០០ ល្ងាច', text: 'ពិសារភោជនាហារ និងបដិសណ្ឋារកិច្ចភ្ញៀវកិត្តិយស' }
             ].map((ev, i) => (
-              <div key={i} className="flex items-center gap-4 p-3 rounded-xl bg-[#101834] border border-[#B88926]/30">
-                <span className="text-xs font-bold text-[#070B18] bg-[#E3BA55] px-2.5 py-1 rounded shrink-0">{ev.time}</span>
-                <span className="text-xs sm:text-sm text-[#E7E2D4]">{ev.text}</span>
+              <div key={i} className="flex items-center gap-4 p-3 rounded-xl bg-white/90 backdrop-blur-md border border-stone-200 shadow-2xs">
+                <span className="text-xs font-bold text-[#1D4ED8] bg-[#EFF6FF] px-2.5 py-1 rounded shrink-0 border border-blue-200">{ev.time}</span>
+                <span className="text-xs sm:text-sm text-stone-700">{ev.text}</span>
               </div>
             ))}
           </div>
         </section>
 
         {/* Gallery */}
-        <section className="px-6 py-8 border-t border-[#B88926]/30">
-          <h2 className="font-moul text-center text-[#E3BA55] text-base mb-6">រូបថតអនុស្សាវរីយ៍</h2>
+        <section className="px-6 py-8 border-t border-[#E3BA55]/30">
+          <h2 className="font-moul text-center text-[#1E3A8A] text-base mb-6">រូបថតអនុស្សាវរីយ៍</h2>
           <div className="grid grid-cols-2 gap-3">
             {gallery.map((p) => (
               <div
                 key={p.id}
                 onClick={() => setActivePhoto(p.src)}
-                className="group rounded-2xl overflow-hidden border border-[#B88926]/40 bg-[#070B18] cursor-pointer hover:border-[#FBF2B7] transition relative aspect-square"
+                className="group rounded-2xl overflow-hidden border border-[#E3BA55]/40 bg-stone-100 cursor-pointer hover:border-[#3B82F6] transition relative aspect-square shadow-2xs"
               >
                 <img src={p.src} alt={p.caption} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2 justify-center">
-                  <span className="text-[11px] font-semibold text-[#FBF2B7] truncate">{p.caption}</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2 justify-center">
+                  <span className="text-[11px] font-semibold text-white truncate">{p.caption}</span>
                 </div>
               </div>
             ))}
@@ -206,15 +197,15 @@ export function IndigoHolTemplate({ data = {} }) {
         </section>
 
         {/* Location */}
-        <section className="px-6 py-8 border-t border-[#B88926]/30 text-center">
-          <h2 className="font-moul text-[#E3BA55] text-base mb-2">ទីតាំងប្រារព្ធពិធី</h2>
-          <p className="text-sm font-semibold text-[#FBF2B7] mb-1">{locationName}</p>
-          <p className="text-xs text-[#C7B591] mb-5">{address}</p>
+        <section className="px-6 py-8 border-t border-[#E3BA55]/30 text-center">
+          <h2 className="font-moul text-[#1E3A8A] text-base mb-2">ទីតាំងប្រារព្ធពិធី</h2>
+          <p className="text-sm font-semibold text-stone-900 mb-1">{locationName}</p>
+          <p className="text-xs text-stone-600 mb-5">{address}</p>
           <a
             href="https://maps.google.com"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#B88926] to-[#E3BA55] text-black font-semibold text-xs shadow-lg hover:brightness-110 active:scale-95 transition cursor-pointer"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#1D4ED8] to-[#1E40AF] text-white font-semibold text-xs shadow-md hover:brightness-110 active:scale-95 transition cursor-pointer"
           >
             <MapPin className="w-4 h-4" />
             <span>បើកមើលក្នុង Google Maps</span>
@@ -222,49 +213,49 @@ export function IndigoHolTemplate({ data = {} }) {
         </section>
 
         {/* Digital Gift */}
-        <section className="px-6 py-8 border-t border-[#B88926]/30 text-center">
-          <h2 className="font-moul text-[#E3BA55] text-base mb-2">ជូនចំណងដៃតាមប្រព័ន្ធឌីជីថល</h2>
-          <p className="text-xs text-[#C7B591] mb-6">ABA PAY / BAKONG</p>
-          <div className="p-5 rounded-2xl bg-[#101834] border border-[#B88926]/50 max-w-sm mx-auto shadow-xl">
-            <p className="font-bold text-sm text-[#FBF2B7] uppercase">{groom} & {bride}</p>
-            <p className="text-lg font-mono tracking-widest text-[#E3BA55] my-3">012 345 678</p>
+        <section className="px-6 py-8 border-t border-[#E3BA55]/30 text-center">
+          <h2 className="font-moul text-[#1E3A8A] text-base mb-2">ជូនចំណងដៃតាមប្រព័ន្ធឌីជីថល</h2>
+          <p className="text-xs text-stone-600 mb-6 font-semibold">ABA PAY / BAKONG</p>
+          <div className="p-5 rounded-2xl bg-white/95 border border-[#E3BA55]/40 max-w-sm mx-auto shadow-md">
+            <p className="font-bold text-sm text-stone-900 uppercase">{groom} & {bride}</p>
+            <p className="text-lg font-mono tracking-widest text-[#1D4ED8] font-bold my-3">012 345 678</p>
             <button
               onClick={() => copyAccount('012 345 678')}
-              className="text-xs bg-[#1A2548] hover:bg-[#233261] text-[#FBF2B7] border border-[#B88926]/60 px-4 py-1.5 rounded-md transition cursor-pointer flex items-center gap-1.5 mx-auto"
+              className="text-xs bg-[#EFF6FF] hover:bg-[#DBEAFE] text-[#1D4ED8] border border-blue-200 px-4 py-1.5 rounded-md transition cursor-pointer flex items-center gap-1.5 mx-auto font-medium"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copied ? 'បានចម្លងរួចរាល់' : 'ចម្លងលេខគណនី'}</span>
             </button>
           </div>
         </section>
 
         {/* RSVP */}
-        <section className="px-6 py-8 border-t border-[#B88926]/30">
-          <h2 className="font-moul text-center text-[#E3BA55] text-base mb-6">ការបញ្ជាក់វត្តមានចូលរួម</h2>
+        <section className="px-6 py-8 border-t border-[#E3BA55]/30">
+          <h2 className="font-moul text-center text-[#1E3A8A] text-base mb-6">ការបញ្ជាក់វត្តមានចូលរួម</h2>
           {rsvpDone ? (
-            <div className="p-5 rounded-xl bg-[#101834] border border-[#B88926] text-center">
-              <p className="font-moul text-sm text-[#FBF2B7] mb-1">សូមអរគុណ!</p>
-              <p className="text-xs text-[#C7B591]">ការបញ្ជាក់វត្តមានរបស់អ្នកត្រូវបានកត់ត្រាជោគជ័យ។</p>
+            <div className="p-5 rounded-xl bg-white/90 border border-emerald-500/50 text-center shadow-xs">
+              <p className="font-moul text-sm text-emerald-700 mb-1">សូមអរគុណ!</p>
+              <p className="text-xs text-stone-600">ការបញ្ជាក់វត្តមានរបស់អ្នកត្រូវបានកត់ត្រាជោគជ័យ។</p>
             </div>
           ) : (
             <form onSubmit={handleRsvp} className="space-y-4 max-w-sm mx-auto">
               <div>
-                <label className="block text-xs text-[#E3BA55] mb-1">ឈ្មោះរបស់អ្នក *</label>
+                <label className="block text-xs text-stone-700 mb-1 font-medium">ឈ្មោះរបស់អ្នក *</label>
                 <input
                   type="text"
                   required
                   value={rsvp.name}
                   onChange={(e) => setRsvp({ ...rsvp, name: e.target.value })}
                   placeholder="សូមបញ្ចូលឈ្មោះ"
-                  className="w-full bg-[#101834] border border-[#B88926]/40 rounded-lg px-3 py-2 text-sm text-[#E7E2D4] focus:outline-none focus:border-[#E3BA55]"
+                  className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-800 focus:outline-none focus:border-[#1D4ED8]"
                 />
               </div>
               <div>
-                <label className="block text-xs text-[#E3BA55] mb-1">ការចូលរួម</label>
+                <label className="block text-xs text-stone-700 mb-1 font-medium">ការចូលរួម</label>
                 <select
                   value={rsvp.attendance}
                   onChange={(e) => setRsvp({ ...rsvp, attendance: e.target.value })}
-                  className="w-full bg-[#101834] border border-[#B88926]/40 rounded-lg px-3 py-2 text-sm text-[#E7E2D4] focus:outline-none focus:border-[#E3BA55]"
+                  className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-stone-800 focus:outline-none focus:border-[#1D4ED8]"
                 >
                   <option value="attending">ចូលរួម (Attending)</option>
                   <option value="not_attending">មិនបានចូលរួម (Decline)</option>
@@ -272,7 +263,7 @@ export function IndigoHolTemplate({ data = {} }) {
               </div>
               <button
                 type="submit"
-                className="w-full py-2.5 rounded-lg bg-gradient-to-r from-[#B88926] to-[#E3BA55] text-black font-semibold text-sm hover:brightness-110 shadow-lg cursor-pointer active:scale-95 transition"
+                className="w-full py-2.5 rounded-lg bg-gradient-to-r from-[#1D4ED8] to-[#1E40AF] text-white font-semibold text-sm hover:brightness-110 shadow-md cursor-pointer active:scale-95 transition"
               >
                 បញ្ជាក់ការចូលរួម
               </button>
@@ -281,26 +272,26 @@ export function IndigoHolTemplate({ data = {} }) {
         </section>
 
         {/* Wishes */}
-        <section className="px-6 py-8 border-t border-[#B88926]/30">
-          <h2 className="font-moul text-center text-[#E3BA55] text-base mb-6">ពាក្យប្រសិទ្ធពរជ័យ</h2>
+        <section className="px-6 py-8 border-t border-[#E3BA55]/30">
+          <h2 className="font-moul text-center text-[#1E3A8A] text-base mb-6">ពាក្យប្រសិទ្ធពរជ័យ</h2>
           <form onSubmit={handleWish} className="space-y-3 max-w-sm mx-auto mb-6">
             <input
               type="text"
               placeholder="ឈ្មោះរបស់អ្នក"
               value={wish.name}
               onChange={(e) => setWish({ ...wish, name: e.target.value })}
-              className="w-full bg-[#101834] border border-[#B88926]/40 rounded-lg px-3 py-2 text-xs text-[#E7E2D4] focus:outline-none focus:border-[#E3BA55]"
+              className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-800 focus:outline-none focus:border-[#1D4ED8]"
             />
             <textarea
               rows="2"
               placeholder="សារជូនពរ..."
               value={wish.text}
               onChange={(e) => setWish({ ...wish, text: e.target.value })}
-              className="w-full bg-[#101834] border border-[#B88926]/40 rounded-lg px-3 py-2 text-xs text-[#E7E2D4] focus:outline-none focus:border-[#E3BA55]"
+              className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-800 focus:outline-none focus:border-[#1D4ED8]"
             />
             <button
               type="submit"
-              className="w-full py-2 rounded-lg bg-[#1A2548] hover:bg-[#233261] border border-[#B88926]/60 text-[#FBF2B7] font-semibold text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+              className="w-full py-2 rounded-lg bg-[#EFF6FF] hover:bg-[#DBEAFE] border border-blue-200 text-[#1D4ED8] font-semibold text-xs flex items-center justify-center gap-1.5 cursor-pointer transition active:scale-95"
             >
               <Send className="w-3.5 h-3.5" />
               <span>ផ្ញើសារជូនពរ</span>
@@ -309,18 +300,18 @@ export function IndigoHolTemplate({ data = {} }) {
 
           <div className="space-y-3 max-w-sm mx-auto">
             {wishesList.map((w) => (
-              <div key={w.id} className="p-3 rounded-lg bg-[#101834] border border-[#B88926]/30 text-xs">
-                <p className="font-bold text-[#FBF2B7] mb-1">{w.name}</p>
-                <p className="text-[#C7B591]">{w.text}</p>
+              <div key={w.id} className="p-3 rounded-lg bg-white/90 backdrop-blur-md border border-stone-200 text-xs shadow-2xs">
+                <p className="font-bold text-[#1E3A8A] mb-1">{w.name}</p>
+                <p className="text-stone-700">{w.text}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="text-center py-8 px-4 border-t border-[#B88926]/30 bg-[#050812]">
-          <p className="font-moul text-xs text-[#E3BA55] mb-2">Theab Digital • ធៀបអាពាហ៍ពិពាហ៍ឌីជីថល</p>
-          <p className="text-xs text-[#8A795A]">សូមប្រសិទ្ធពរជ័យ សិរីសួស្តី ជ័យមង្គល វិបុលសុខគ្រប់ប្រការ</p>
+        <footer className="text-center py-8 px-4 border-t border-[#E3BA55]/30 bg-white/70">
+          <p className="font-moul text-xs text-[#1E3A8A] mb-2">Theab Digital • ធៀបអាពាហ៍ពិពាហ៍ឌីជីថល</p>
+          <p className="text-xs text-stone-500">សូមប្រសិទ្ធពរជ័យ សិរីសួស្តី ជ័យមង្គល វិបុលសុខគ្រប់ប្រការ</p>
         </footer>
       </div>
 

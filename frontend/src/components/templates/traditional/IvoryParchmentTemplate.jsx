@@ -76,16 +76,7 @@ export function IvoryParchmentTemplate({ data = {} }) {
 
   return (
     <div
-      className="w-full relative pb-20 text-[#2A1F1D] font-kantumruy antialiased selection:bg-[#B38728] selection:text-white"
-      style={{
-        backgroundColor: '#FBF7EE',
-        backgroundImage: `
-          radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.22) 0%, transparent 55%),
-          radial-gradient(circle at 50% 100%, rgba(179, 135, 40, 0.18) 0%, transparent 60%),
-          url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23b38728' fill-opacity='0.055'%3E%3Cpath d='M40 0 L80 40 L40 80 L0 40 Z M40 8 L72 40 L40 72 L8 40 Z'/%3E%3Ccircle cx='40' cy='40' r='5' fill='%238c6813' fill-opacity='0.06'/%3E%3Ccircle cx='0' cy='0' r='3' fill='%238c6813' fill-opacity='0.06'/%3E%3Ccircle cx='80' cy='0' r='3' fill='%238c6813' fill-opacity='0.06'/%3E%3Ccircle cx='0' cy='80' r='3' fill='%238c6813' fill-opacity='0.06'/%3E%3Ccircle cx='80' cy='80' r='3' fill='%238c6813' fill-opacity='0.06'/%3E%3C/g%3E%3C/svg%3E")
-        `,
-        backgroundAttachment: 'fixed'
-      }}
+      className="w-full relative pb-20 text-[#2A1F1D] font-kantumruy antialiased selection:bg-[#B38728] selection:text-white bg-pattern-ivory-parchment"
     >
       {/* Floating Audio Controller */}
       <button
@@ -96,7 +87,7 @@ export function IvoryParchmentTemplate({ data = {} }) {
         <span>{isPlaying ? 'ភ្លេងការ (កំពុងចាក់)' : 'តន្ត្រីភ្លេងការ'}</span>
       </button>
 
-      <div className="w-full relative bg-[#FFFDF9]/95">
+      <div className="w-full relative">
         {/* Top Hero Section with Multiple Images Carousel */}
         <TraditionalHeroSection
           groom={groom}

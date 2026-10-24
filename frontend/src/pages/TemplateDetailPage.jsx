@@ -183,6 +183,11 @@ export function TemplateDetailPage() {
   // Check if this is the customized template (royal-gold) vs other standalone templates
   const isCustomized = activeTemplate.id === 'royal-gold';
   const isAngkorAncient = activeTemplate.cardStyle === 'angkor-ancient-royalty' || activeTemplate.id === 'angkor-ancient-royalty';
+  const isTraditional =
+    activeTemplate.category === 'traditional' ||
+    activeTemplate.tag === 'ប្រពៃណីបុរាណ' ||
+    activeTemplate.cardStyle?.startsWith('traditional-') ||
+    isAngkorAncient;
   const TraditionalComponent = TRADITIONAL_TEMPLATES[activeTemplate.id] || FLORAL_TEMPLATES[activeTemplate.id];
   const hasHtml = !!activeTemplate.htmlPreviewUrl;
   const [viewMode, setViewMode] = useState(hasHtml ? 'html' : 'smart');
@@ -251,6 +256,94 @@ export function TemplateDetailPage() {
   const themeBorder = activeTemplate.borderColor || '#D4AF37';
   const themeTitleColor = activeTemplate.titleColor || '#881337';
   const isEmerald = activeTemplate.themeColor === 'emerald' || activeTemplate.id === 'emerald-jade';
+
+  // Determine template-specific pattern background & consistent color palette
+  const getTemplateBackground = () => {
+    switch (activeTemplate.id) {
+      case 'traditional-phkachan-slathor':
+        return {
+          bgClass: 'bg-pattern-phkachan-slathor',
+          textColor: 'text-stone-800',
+          glowTop: 'bg-amber-300/20',
+          glowBottom: 'bg-amber-100/30',
+          btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-[#E5C058]/70 shadow-sm'
+        };
+      case 'traditional-royal-lacquer':
+        return {
+          bgClass: 'bg-pattern-royal-lacquer',
+          textColor: 'text-stone-800',
+          glowTop: 'bg-amber-200/20',
+          glowBottom: 'bg-amber-100/30',
+          btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-[#B38728]/70 shadow-sm'
+        };
+      case 'traditional-crimson-angkoreach':
+        return {
+          bgClass: 'bg-pattern-crimson-angkoreach',
+          textColor: 'text-stone-800',
+          glowTop: 'bg-rose-200/25',
+          glowBottom: 'bg-amber-100/30',
+          btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-[#D4AF37]/70 shadow-sm'
+        };
+      case 'traditional-ivory-parchment':
+        return {
+          bgClass: 'bg-pattern-ivory-parchment',
+          textColor: 'text-stone-800',
+          glowTop: 'bg-amber-200/20',
+          glowBottom: 'bg-amber-100/30',
+          btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-[#B38728]/70 shadow-sm'
+        };
+      case 'traditional-indigo-hol':
+        return {
+          bgClass: 'bg-pattern-indigo-hol',
+          textColor: 'text-stone-800',
+          glowTop: 'bg-blue-200/25',
+          glowBottom: 'bg-amber-100/30',
+          btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-[#E3BA55]/70 shadow-sm'
+        };
+      case 'traditional-angkor-pediment':
+        return {
+          bgClass: 'bg-pattern-angkor-pediment',
+          textColor: 'text-stone-800',
+          glowTop: 'bg-amber-200/20',
+          glowBottom: 'bg-amber-100/30',
+          btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-[#C5A059]/70 shadow-sm'
+        };
+      case 'traditional-royal-pavilion':
+        return {
+          bgClass: 'bg-pattern-royal-pavilion',
+          textColor: 'text-stone-800',
+          glowTop: 'bg-amber-200/25',
+          glowBottom: 'bg-amber-100/30',
+          btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-[#E5BE53]/70 shadow-sm'
+        };
+      case 'angkor-ancient-royalty':
+        return {
+          bgClass: 'bg-pattern-angkor-pediment',
+          textColor: 'text-stone-800',
+          glowTop: 'bg-amber-200/20',
+          glowBottom: 'bg-amber-100/30',
+          btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-[#C5A059]/70 shadow-sm'
+        };
+      default:
+        return isTraditional
+          ? {
+              bgClass: 'bg-traditional-pattern-main',
+              textColor: 'text-stone-800',
+              glowTop: 'bg-amber-300/15',
+              glowBottom: 'bg-amber-100/25',
+              btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-amber-400/60 shadow-sm'
+            }
+          : {
+              bgClass: 'bg-preview-romantic',
+              textColor: 'text-stone-800',
+              glowTop: 'bg-rose-300/25',
+              glowBottom: 'bg-amber-300/20',
+              btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-stone-200 shadow-sm'
+            };
+    }
+  };
+
+  const currentBg = getTemplateBackground();
 
   // Play audio from start on preview entrance; restart from beginning whenever template changes; stop when leaving
   useEffect(() => {
@@ -498,20 +591,20 @@ export function TemplateDetailPage() {
   };
 
   return (
-    <div className="w-full h-screen h-[100dvh] bg-preview-romantic text-stone-800 relative selection:bg-rose-900 selection:text-white flex flex-col p-0 sm:px-4 md:px-6 overflow-hidden">
+    <div className={`w-full h-screen h-[100dvh] ${currentBg.bgClass} ${currentBg.textColor} relative selection:bg-rose-900 selection:text-white flex flex-col p-0 sm:px-4 md:px-6 overflow-hidden`}>
 
       {/* Modern Khmer Flowers & Royal Hearts Background with Smooth Floating Animations (Outside the Modal/Card) */}
       <KhmerFloatingBackground count={26} />
 
-      {/* Decorative Subtle Ambient Stage Lighting */}
-      <div className="fixed -top-16 -left-16 w-80 h-80 rounded-full blur-3xl pointer-events-none select-none z-0 bg-rose-300/25" />
-      <div className="fixed -bottom-16 -right-16 w-80 h-80 rounded-full blur-3xl pointer-events-none select-none z-0 bg-amber-300/20" />
+      {/* Decorative Subtle Ambient Stage Lighting matching the template's color identity */}
+      <div className={`fixed -top-16 -left-16 w-80 h-80 rounded-full blur-3xl pointer-events-none select-none z-0 ${currentBg.glowTop}`} />
+      <div className={`fixed -bottom-16 -right-16 w-80 h-80 rounded-full blur-3xl pointer-events-none select-none z-0 ${currentBg.glowBottom}`} />
 
       {/* Floating Audio Play/Pause Button */}
       <div className="fixed bottom-4 right-4 sm:right-6 z-40 flex flex-col items-end gap-2">
         <button
           onClick={toggleAudio}
-          className="group flex items-center gap-2 px-3 py-2 rounded-full border-2 transition-all duration-300 cursor-pointer active:scale-95 shadow-sm bg-white/95 hover:bg-stone-50 text-stone-800"
+          className={`group flex items-center gap-2 px-3 py-2 rounded-full border-2 transition-all duration-300 cursor-pointer active:scale-95 shadow-sm ${currentBg.btnTheme}`}
           style={{ borderColor: themeBorder }}
           title={isAudioPlaying ? 'ចុចដើម្បីបិទភ្លេង' : 'ចុចដើម្បីចាក់ភ្លេងមង្គល'}
         >
@@ -522,10 +615,10 @@ export function TemplateDetailPage() {
             <Music className="w-3.5 h-3.5 text-white" />
           </div>
           <div className="text-left hidden sm:block pr-1">
-            <span className="block text-[11px] font-bold leading-tight text-stone-800">
+            <span className={`block text-[11px] font-bold leading-tight ${currentBg.textColor}`}>
               {isAudioPlaying ? 'កំពុងចាក់ «ភ្ជាប់និស្ស័យ»' : 'បទ៖ ភ្ជាប់និស្ស័យ (NISAI)'}
             </span>
-            <span className="block text-[10px] text-amber-600 font-medium">
+            <span className={`block text-[10px] ${isTraditional ? 'text-amber-400' : 'text-amber-600'} font-medium`}>
               {isAudioPlaying ? 'ចុចដើម្បីបិទ' : 'ចុចដើម្បីចាក់'}
             </span>
           </div>
@@ -536,7 +629,7 @@ export function TemplateDetailPage() {
           THE UNIFIED WEDDING INVITATION CONTAINER (SAME EXACT SHELL AS ROYAL-GOLD)
           ========================================================================= */}
       <main
-        className={`w-full max-w-xl sm:max-w-2xl mx-auto ${isAngkorAncient ? 'border-x-[3px] shadow-[0_0_35px_rgba(197,160,89,0.35)] ring-1 ring-[#8C6F19]/40' : 'sm:border-x-2 border-stone-800/30'} border-y-0 overflow-hidden relative z-10 animate-fade shadow-2xl flex-1 h-full min-h-0 bg-stone-900 flex flex-col`}
+        className={`w-full max-w-xl sm:max-w-2xl mx-auto ${isAngkorAncient ? 'border-x-[3px] shadow-[0_0_35px_rgba(197,160,89,0.35)] ring-1 ring-[#8C6F19]/40' : 'sm:border-x-2 border-stone-300/40'} border-y-0 overflow-hidden relative z-10 animate-fade shadow-2xl flex-1 h-full min-h-0 ${isTraditional ? 'bg-[#FAF7F2]' : 'bg-stone-900'} flex flex-col`}
         style={{ borderColor: themeBorder }}
       >
         {/* Top Floating Control Bar - Inside at Top of Container (Transparent background behind buttons) */}
@@ -544,7 +637,13 @@ export function TemplateDetailPage() {
           {/* Back button */}
           <div className="pointer-events-auto">
             <button
-              onClick={() => navigate({ to: '/wedding' })}
+              onClick={() => {
+                if (window.history.length > 1) {
+                  window.history.back();
+                } else {
+                  navigate({ to: `/${ceremonyType || 'wedding'}` });
+                }
+              }}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-md border border-white/25 shadow-lg text-xs font-bold transition-all cursor-pointer active:scale-95"
             >
               <ArrowLeft className="w-4 h-4 text-amber-300 shrink-0" />

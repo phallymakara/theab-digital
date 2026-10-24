@@ -25,6 +25,7 @@ export function InvitationPreviewPage() {
   const {
     invitationData,
     ceremonyType,
+    selectedTemplate,
     currentTheme,
     isAudioPlaying,
     toggleAudio,
@@ -125,8 +126,35 @@ export function InvitationPreviewPage() {
       ? 'bg-gradient-to-r from-emerald-700 to-emerald-900'
       : 'bg-gradient-to-r from-rose-900 to-rose-950';
 
-  const bgClass =
-    ceremonyType === 'engagement'
+  const isTraditional =
+    selectedTemplate?.category === 'traditional' ||
+    selectedTemplate?.tag === 'ប្រពៃណីបុរាណ' ||
+    selectedTemplate?.cardStyle?.startsWith('traditional-');
+
+  const getTraditionalBgClass = () => {
+    switch (selectedTemplate?.id) {
+      case 'traditional-phkachan-slathor':
+        return 'bg-pattern-phkachan-slathor';
+      case 'traditional-royal-lacquer':
+        return 'bg-pattern-royal-lacquer';
+      case 'traditional-crimson-angkoreach':
+        return 'bg-pattern-crimson-angkoreach';
+      case 'traditional-ivory-parchment':
+        return 'bg-pattern-ivory-parchment';
+      case 'traditional-indigo-hol':
+        return 'bg-pattern-indigo-hol';
+      case 'traditional-angkor-pediment':
+        return 'bg-pattern-angkor-pediment';
+      case 'traditional-royal-pavilion':
+        return 'bg-pattern-royal-pavilion';
+      default:
+        return 'bg-traditional-pattern-main';
+    }
+  };
+
+  const bgClass = isTraditional
+    ? getTraditionalBgClass()
+    : ceremonyType === 'engagement'
       ? 'bg-ceremony-engagement'
       : ceremonyType === 'housewarming'
       ? 'bg-ceremony-housewarming'

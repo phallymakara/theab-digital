@@ -11,6 +11,22 @@ export function AppProvider({ children }) {
   const [toasts, setToasts] = useState([]);
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
 
+  // Selected category tab state with sessionStorage persistence so it remembers user selection across navigations
+  const [selectedCategory, setSelectedCategoryState] = useState(() => {
+    try {
+      return sessionStorage.getItem('theab_selected_category') || 'all';
+    } catch (_) {
+      return 'all';
+    }
+  });
+
+  const setSelectedCategory = (cat) => {
+    setSelectedCategoryState(cat);
+    try {
+      sessionStorage.setItem('theab_selected_category', cat);
+    } catch (_) {}
+  };
+
   // Audio reference
   const [audio] = useState(() => {
     const a = new Audio('/audio/nisai_wedding_song.mp3');
@@ -197,6 +213,8 @@ export function AppProvider({ children }) {
         setIsQrModalOpen,
         invitationData,
         setInvitationData,
+        selectedCategory,
+        setSelectedCategory,
       }}
     >
       {children}

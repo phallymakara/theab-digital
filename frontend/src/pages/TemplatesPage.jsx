@@ -29,10 +29,13 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
     playAudio,
     restartAndPlayAudio,
     stopAudio,
-    pauseAudio
+    pauseAudio,
+    selectedCategory,
+    setSelectedCategory
   } = useApp();
 
-  const [activeCategory, setActiveCategory] = useState('all');
+  const activeCategory = selectedCategory || 'all';
+  const setActiveCategory = setSelectedCategory;
   const [previewTemplate, setPreviewTemplate] = useState(null);
   const categoryScrollRef = useRef(null);
 
@@ -55,6 +58,22 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
       });
     }
   };
+
+  // Auto-scroll the remembered active category tab into view on mount or tab change
+  useEffect(() => {
+    if (categoryScrollRef.current && activeCategory) {
+      const activeBtn = categoryScrollRef.current.querySelector(`[data-category-id="${activeCategory}"]`);
+      if (activeBtn) {
+        setTimeout(() => {
+          activeBtn.scrollIntoView({
+            behavior: 'smooth',
+            inline: 'center',
+            block: 'nearest'
+          });
+        }, 100);
+      }
+    }
+  }, [activeCategory]);
 
   // Synchronize ceremony selection with route & stop audio when browsing templates
   useEffect(() => {
@@ -90,18 +109,22 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
   const brideName = invitationData.brideName || ceremonyInfo.defaultBride;
 
   const bgClass =
-    ceremonyType === 'engagement'
-      ? 'bg-ceremony-engagement'
-      : ceremonyType === 'housewarming'
-        ? 'bg-ceremony-housewarming'
-        : 'bg-ceremony-wedding';
+    activeCategory === 'traditional'
+      ? 'bg-category-traditional'
+      : ceremonyType === 'engagement'
+        ? 'bg-ceremony-engagement'
+        : ceremonyType === 'housewarming'
+          ? 'bg-ceremony-housewarming'
+          : 'bg-ceremony-wedding';
 
   const bgGradFrom =
-    ceremonyType === 'engagement'
-      ? 'from-[#FDF9F9] via-[#FDF9F9]/90 to-transparent'
-      : ceremonyType === 'housewarming'
-        ? 'from-[#F8FAF8] via-[#F8FAF8]/90 to-transparent'
-        : 'from-[#FCFAF7] via-[#FCFAF7]/90 to-transparent';
+    activeCategory === 'traditional'
+      ? 'from-[#FAF8F5] via-[#FAF8F5]/90 to-transparent'
+      : ceremonyType === 'engagement'
+        ? 'from-[#FDF9F9] via-[#FDF9F9]/90 to-transparent'
+        : ceremonyType === 'housewarming'
+          ? 'from-[#F8FAF8] via-[#F8FAF8]/90 to-transparent'
+          : 'from-[#FCFAF7] via-[#FCFAF7]/90 to-transparent';
 
   return (
     <div className={`w-full h-screen h-[100dvh] flex flex-col ${bgClass} relative overflow-hidden animate-fade`}>
@@ -176,6 +199,7 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                 return (
                   <button
                     key={cat.id}
+                    data-category-id={cat.id}
                     onClick={(e) => handleCategorySelect(cat.id, e)}
                     className={`px-3.5 sm:px-4 py-1.5 rounded-full font-bold whitespace-nowrap text-xs transition-all duration-200 shrink-0 cursor-pointer select-none ${isActive
                         ? 'bg-theabCrimson text-white shadow-md shadow-rose-950/25 ring-2 ring-rose-300/60 scale-[1.02]'
