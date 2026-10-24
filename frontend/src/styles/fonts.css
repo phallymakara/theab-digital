@@ -112,3 +112,16 @@
   text-rendering: optimizeLegibility;
 }
 
+.font-koulen {
+  font-family: 'Koulen', cursive, sans-serif;
+  letter-spacing: 0.05em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-suwannaphum {
+  font-family: 'Suwannaphum', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+

@@ -1179,27 +1179,29 @@ button:active:not(:disabled) {
   display: none;
 }
 
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.no-scrollbar,
+.scrollbar-none {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
 }
 
-/* Custom sleek scrollbar for Template Components Scroll Container */
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Custom sleek hidden scrollbar for Template Components Scroll Container (Zero Gutter) */
+.luxury-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
 .luxury-scrollbar::-webkit-scrollbar {
-  width: 5px;
-}
-
-.luxury-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.luxury-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(212, 175, 55, 0.4);
-  border-radius: 9999px;
-}
-
-.luxury-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(212, 175, 55, 0.7);
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* =========================================================================
