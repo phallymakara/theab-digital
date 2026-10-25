@@ -19,7 +19,8 @@ import {
   CalendarCheck,
   Camera,
   Gift,
-  Mail
+  Mail,
+  Phone
 } from 'lucide-react';
 
 // Soft Harp & Celesta Pentatonic Melody Synthesizer (from pentatonic romantic scale)
@@ -95,21 +96,43 @@ class EditorialFloralAudio {
 
 export const editorialFloralAudio = new EditorialFloralAudio();
 
-export function EditorialMagazineTemplate({ data = {} }) {
-  const groom = data.groomName || 'កុសល វឌ្ឍនៈ';
-  const bride = data.brideName || 'សារ៉ា ទេវី';
-  const groomParents = data.groomParents || 'លោក កុសល សម្បត្តិ និង លោកស្រី គង់ សុជាតិ';
-  const brideParents = data.brideParents || 'លោក ទេព សុវណ្ណ និង លោកស្រី ហេង ធីតា';
-  const dateStr = data.ceremonyDate || 'ថ្ងៃសៅរ៍ ទី១៩ ខែធ្នូ ឆ្នាំ២០២៦';
-  const timeStr = data.ceremonyTime || 'វេលាម៉ោង ០៧:០០ ព្រឹក ដល់ ០៨:៣០ យប់';
-  const locationName = data.ceremonyLocation || 'សណ្ឋាគារ រ៉ូសវូដ ភ្នំពេញ (Rosewood Phnom Penh Salon)';
-  const address = data.ceremonyAddress || 'អគារ វឌ្ឍនៈ កាពីតាល មហាវិថីព្រះមុនីវង្ស រាជធានីភ្នំពេញ';
-  const preweddingImg = data.preweddingPhoto || '/images/templates/floral_editorial_magazine_prewedding.jpg';
+export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTemplate = {} }) {
+  const groom = data.groomName || invitation.groomName || activeTemplate?.demoGroom || 'កុសល វឌ្ឍនៈ';
+  const bride = data.brideName || invitation.brideName || activeTemplate?.demoBride || 'សារ៉ា ទេវី';
+  const groomParents = data.groomParents || (invitation.groomParents?.father ? `${invitation.groomParents.father} និង ${invitation.groomParents.mother}` : 'លោក កុសល សម្បត្តិ និង លោកស្រី គង់ សុជាតិ');
+  const brideParents = data.brideParents || (invitation.brideParents?.father ? `${invitation.brideParents.father} និង ${invitation.brideParents.mother}` : 'លោក ទេព សុវណ្ណ និង លោកស្រី ហេង ធីតា');
+  const dateStr = data.ceremonyDate || invitation.weddingDate || activeTemplate?.demoDate || 'ថ្ងៃសៅរ៍ ទី១៩ ខែធ្នូ ឆ្នាំ២០២៦';
+  const timeStr = data.ceremonyTime || invitation.weddingTime || 'វេលាម៉ោង ០៧:០០ ព្រឹក ដល់ ០៨:៣០ យប់';
+  const locationName = data.ceremonyLocation || invitation.weddingLocation || activeTemplate?.demoLocation || 'សណ្ឋាគារ រ៉ូសវូដ ភ្នំពេញ (Rosewood Phnom Penh Salon)';
+  const address = data.locationAddress || data.ceremonyAddress || invitation.locationAddress || 'អគារ វឌ្ឍនៈ កាពីតាល មហាវិថីព្រះមុនីវង្ស រាជធានីភ្នំពេញ';
+  const googleMapsUrl = data.googleMapsUrl || invitation.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationName + ' ' + address)}`;
+  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/floral_editorial_magazine_prewedding.jpg';
+
+  // Bank & Gift
+  const bankName = data.bankName || invitation.bankName || 'ABA BANK / BAKONG';
+  const accountName = data.accountName || invitation.accountName || `${groom} & ${bride}`;
+  const accountNumber = data.accountNumber || invitation.accountNumber || '001 888 999';
+  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || null;
+
+  // Host Contacts
+  const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation.hostPhoneGroom || '012 345 678';
+  const phoneBride = data.hostPhoneBride || data.phoneBride || invitation.hostPhoneBride || '098 765 432';
+  const telegramLink = data.telegramLink || invitation.telegramLink || 'https://t.me';
+
+  // Dynamic Programs
+  const programs = (data.ceremonyPrograms && data.ceremonyPrograms.length > 0)
+    ? data.ceremonyPrograms
+    : [
+        { time: '07:00 ព្រឹក', title: 'ពិធីសូត្រមន្ត & ហែជំនូន', desc: 'កិច្ចសូត្រមន្តចម្រើនព្រះបរិត្ត និងហែផ្លែឈើជំនូន' },
+        { time: '09:30 ព្រឹក', title: 'ពិធីកាត់សក់ & សែនចងដៃ', desc: 'កាត់សក់បង្កក់សិរី បង្វិលពពិល និងសែនចងដៃ' },
+        { time: '17:30 ល្ងាច', title: 'ពិធីពិសាភោជនាហារមង្គលការ', desc: 'ទទួលភ្ញៀវកិត្តិយសពិសាអាហារ និងរាំកម្សាន្ត' }
+      ];
 
   const [activeTab, setActiveTab] = useState('cover'); // 'cover' | 'letter' | 'agenda' | 'lookbook' | 'rsvp'
   const [isPlaying, setIsPlaying] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activePhoto, setActivePhoto] = useState(null);
+  const [showQrModal, setShowQrModal] = useState(false);
   const [rsvp, setRsvp] = useState({ name: '', attendance: 'attending', guests: '1 នាក់' });
   const [rsvpDone, setRsvpDone] = useState(false);
   const [wish, setWish] = useState({ name: '', text: '' });
@@ -225,14 +248,23 @@ export function EditorialMagazineTemplate({ data = {} }) {
     setWish({ name: '', text: '' });
   };
 
-  const lookbookPhotos = [
-    { id: 1, src: preweddingImg, title: 'The Wedding Cover', subtitle: 'Phnom Penh Editorial Look' },
-    { id: 2, src: '/images/templates/floral-romance/floral_1.jpg', title: 'The Serenade Arch', subtitle: 'Blush Hydrangeas' },
-    { id: 3, src: '/images/templates/floral-romance/floral_2.jpg', title: 'Sunset Silhouette', subtitle: 'Golden Hour Splendor' },
-    { id: 4, src: '/images/templates/floral-romance/floral_3.jpg', title: 'Couture Veil', subtitle: 'Handcrafted Lace' },
-    { id: 5, src: '/images/templates/floral_cambodian_blossom_prewedding.jpg', title: 'Khmer Pavilions', subtitle: 'Warm Jasmine Garden' },
-    { id: 6, src: '/images/templates/wedding_flowers_bg.jpg', title: 'Botanical Moments', subtitle: 'Timeless Affection' }
-  ];
+  const lookbookPhotos = (data.galleryPhotos && data.galleryPhotos.length > 0)
+    ? data.galleryPhotos.map((p, idx) => ({
+        id: p.id || idx + 1,
+        src: p.src || p.url,
+        title: p.caption || `Look ${idx + 1}`,
+        subtitle: 'Editorial Gallery'
+      }))
+    : (activeTemplate?.galleryPhotos?.map((p, idx) => ({
+        id: p.id || idx + 1,
+        src: p.src || p.url,
+        title: p.caption || `Look ${idx + 1}`,
+        subtitle: 'Editorial Gallery'
+      })) || [
+        { id: 1, src: preweddingImg, title: 'The Wedding Cover', subtitle: 'Phnom Penh Editorial Look' },
+        { id: 2, src: '/images/templates/floral-romance/floral_1.jpg', title: 'The Serenade Arch', subtitle: 'Blush Hydrangeas' },
+        { id: 3, src: '/images/templates/floral-romance/floral_2.jpg', title: 'Sunset Silhouette', subtitle: 'Golden Hour Splendor' }
+      ]);
 
   return (
     <div className="w-full min-h-screen text-[#262626] font-kantumruy antialiased selection:bg-[#E11D48] selection:text-white relative bg-[#FDFBF7]">
@@ -433,44 +465,20 @@ export function EditorialMagazineTemplate({ data = {} }) {
               </div>
 
               <div className="space-y-2.5">
-                <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-stone-200 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-stone-900 text-amber-200 flex items-center justify-center font-serifTrad font-bold text-xs">
-                      07:00
+                {programs.map((prog, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-[#FAF8F5] border border-stone-200 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-10 rounded-xl bg-stone-900 text-amber-200 flex items-center justify-center font-serifTrad font-bold text-xs text-center px-1">
+                        {prog.time.split(' ')[0]}
+                      </div>
+                      <div>
+                        <h4 className="font-phalluch text-xs sm:text-sm text-stone-900">{prog.title}</h4>
+                        {prog.desc && <p className="text-[11px] text-stone-500">{prog.desc}</p>}
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-phalluch text-xs sm:text-sm text-stone-900">ពិធីសូត្រមន្ត & ហែជំនូន</h4>
-                      <p className="text-[11px] text-stone-500">កិច្ចសូត្រមន្តចម្រើនព្រះបរិត្ត និងហែផ្លែឈើជំនូន</p>
-                    </div>
+                    <span className="text-[10px] font-serifTrad text-stone-400 uppercase">{prog.time}</span>
                   </div>
-                  <span className="text-[10px] font-serifTrad text-stone-400 uppercase">MORNING</span>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-stone-200 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-stone-900 text-amber-200 flex items-center justify-center font-serifTrad font-bold text-xs">
-                      09:30
-                    </div>
-                    <div>
-                      <h4 className="font-phalluch text-xs sm:text-sm text-stone-900">ពិធីកាត់សក់ & សែនចងដៃ</h4>
-                      <p className="text-[11px] text-stone-500">កាត់សក់បង្កក់សិរី បង្វិលពពិល និងសែនចងដៃ</p>
-                    </div>
-                  </div>
-                  <span className="text-[10px] font-serifTrad text-stone-400 uppercase">BLESSING</span>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-stone-200 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-stone-900 text-amber-200 flex items-center justify-center font-serifTrad font-bold text-xs">
-                      17:30
-                    </div>
-                    <div>
-                      <h4 className="font-phalluch text-xs sm:text-sm text-stone-900">ពិធីពិសាភោជនាហារមង្គលការ</h4>
-                      <p className="text-[11px] text-stone-500">ទទួលភ្ញៀវកិត្តិយសពិសាអាហារ និងរាំកម្សាន្ត</p>
-                    </div>
-                  </div>
-                  <span className="text-[10px] font-serifTrad text-stone-400 uppercase">EVENING</span>
-                </div>
+                ))}
               </div>
 
               {/* Location Card */}
@@ -479,7 +487,7 @@ export function EditorialMagazineTemplate({ data = {} }) {
                 <h4 className="font-phalluch text-base text-amber-100 mb-1">{locationName}</h4>
                 <p className="text-xs text-stone-300 max-w-sm mx-auto mb-4">{address}</p>
                 <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationName + ' ' + address)}`}
+                  href={googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-stone-900 text-xs font-bold shadow hover:bg-amber-100 transition-colors cursor-pointer"
@@ -538,30 +546,80 @@ export function EditorialMagazineTemplate({ data = {} }) {
                   DIGITAL GIFT & BLESSING
                 </span>
                 <h4 className="font-phalluch text-lg text-stone-900 mb-2">
-                  ចងដៃតាមរយៈគណនីធនាគារ (ABA / Bakong)
+                  ចងដៃតាមរយៈគណនីធនាគារ ({bankName})
                 </h4>
+                <p className="text-xs text-stone-500 mb-3">{accountName}</p>
 
-                <div className="max-w-[190px] mx-auto p-3 bg-white rounded-2xl border border-stone-200 shadow-inner mb-3">
+                <div
+                  onClick={() => setShowQrModal(true)}
+                  className="max-w-[190px] mx-auto p-3 bg-white rounded-2xl border border-stone-200 shadow-inner mb-3 cursor-pointer hover:border-stone-400 transition-all"
+                >
                   <img
-                    src="/images/aba_qr.png"
-                    alt="ABA QR"
+                    src={qrCodeImage || '/images/aba_qr.png'}
+                    alt="QR Code"
                     className="w-full h-auto rounded-lg object-contain"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
                     }}
                   />
+                  <span className="text-[10px] text-stone-400 mt-1 block">ចុចដើម្បីពង្រីក QR</span>
                 </div>
 
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-200/70 border border-stone-300 text-xs">
-                  <span className="font-serifTrad font-bold text-stone-900">ABA: 001 888 999</span>
+                  <span className="font-serifTrad font-bold text-stone-900">{accountNumber}</span>
                   <button
-                    onClick={() => copyAccount('001888999')}
+                    onClick={() => copyAccount(accountNumber.replace(/\s+/g, ''))}
                     className="text-stone-900 font-bold text-[11px] flex items-center gap-1 cursor-pointer hover:underline"
                   >
                     {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copied ? 'បានចម្លង!' : 'ចម្លង'}</span>
                   </button>
                 </div>
+              </div>
+
+              {/* Host Contacts */}
+              <div className="p-5 rounded-3xl bg-white border border-stone-200 text-center shadow-xs">
+                <span className="text-xs font-serifTrad text-stone-400 uppercase tracking-[0.25em] block mb-1">
+                  HOST CONTACT DETAILS
+                </span>
+                <h4 className="font-phalluch text-lg text-stone-900 mb-3">
+                  ទំនាក់ទំនងម្ចាស់កម្មវិធី
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md mx-auto">
+                  <a
+                    href={`tel:${phoneGroom}`}
+                    className="flex items-center justify-between p-3 rounded-2xl bg-stone-50 border border-stone-200 hover:bg-stone-100 transition-all text-xs"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Phone className="w-4 h-4 text-stone-700" />
+                      <span className="font-phalluch text-stone-900">ខាងកូនកំលោះ</span>
+                    </div>
+                    <span className="font-serifTrad font-bold text-stone-900">{phoneGroom}</span>
+                  </a>
+                  <a
+                    href={`tel:${phoneBride}`}
+                    className="flex items-center justify-between p-3 rounded-2xl bg-stone-50 border border-stone-200 hover:bg-stone-100 transition-all text-xs"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Phone className="w-4 h-4 text-stone-700" />
+                      <span className="font-phalluch text-stone-900">ខាងកូនក្រមុំ</span>
+                    </div>
+                    <span className="font-serifTrad font-bold text-stone-900">{phoneBride}</span>
+                  </a>
+                </div>
+                {telegramLink && (
+                  <div className="mt-3">
+                    <a
+                      href={telegramLink.startsWith('http') ? telegramLink : `https://${telegramLink}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-stone-900 text-amber-200 text-xs font-bold hover:bg-stone-800 transition-all"
+                    >
+                      <Send className="w-3.5 h-3.5" />
+                      <span>Telegram Host Chat</span>
+                    </a>
+                  </div>
+                )}
               </div>
 
               {/* RSVP Form */}
@@ -711,6 +769,36 @@ export function EditorialMagazineTemplate({ data = {} }) {
             </button>
             <img src={activePhoto.src} alt={activePhoto.title} className="w-full rounded-xl object-contain max-h-[70vh]" />
             <p className="text-center text-xs text-white mt-2 font-serifTrad">{activePhoto.title}</p>
+          </div>
+        </div>
+      )}
+
+      {/* QR Code Zoom Modal */}
+      {showQrModal && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setShowQrModal(false)}
+        >
+          <div
+            className="bg-white p-5 rounded-3xl max-w-xs w-full text-center shadow-2xl border border-stone-300 relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowQrModal(false)}
+              className="absolute top-3 right-3 w-8 h-8 rounded-full bg-stone-100 text-stone-700 hover:text-stone-950 flex items-center justify-center cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <h4 className="font-phalluch text-sm text-stone-900 mb-1">{bankName}</h4>
+            <p className="text-xs text-stone-500 mb-3">{accountName}</p>
+            <img
+              src={qrCodeImage || '/images/aba_qr.png'}
+              alt="QR Code"
+              className="w-full aspect-square object-contain rounded-xl border border-stone-200"
+            />
+            <p className="text-xs font-serifTrad font-bold text-stone-900 mt-3">
+              {accountNumber}
+            </p>
           </div>
         </div>
       )}

@@ -1,23 +1,80 @@
 import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { Calendar, Clock, MapPin, Copy, Check, Heart, Send, X, Music } from 'lucide-react';
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Copy,
+  Check,
+  Heart,
+  Send,
+  X,
+  Music,
+  Phone,
+  MessageCircle,
+  QrCode,
+  Sparkles,
+  ChevronLeft,
+  ChevronRight
+} from 'lucide-react';
 import { TraditionalHeroSection } from './TraditionalHeroSection';
 import { plengKarSynth } from './PinpeatAudio';
 
-export function IvoryParchmentTemplate({ data = {} }) {
-  const groom = data.groomName || 'ហេង វឌ្ឍនា';
-  const bride = data.brideName || 'កែវ ចរណៃ';
-  const groomParents = data.groomParents || 'លោក ហេង វណ្ណា និង អ្នកស្រី គីម ស្រ៊ុន';
-  const brideParents = data.brideParents || 'លោក កែវ សម្បត្តិ និង អ្នកស្រី សុខ ហៀង';
-  const dateStr = data.ceremonyDate || 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦';
-  const timeStr = data.ceremonyTime || 'វេលាម៉ោង ៥:០០ ល្ងាច តទៅ';
-  const locationName = data.ceremonyLocation || 'មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)';
-  const address = data.ceremonyAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
-  const preweddingImg = data.preweddingPhoto || '/images/templates/traditional_ivory_parchment_prewedding.jpg';
+export function IvoryParchmentTemplate({
+  data = {},
+  invitation = {},
+  invitationData = {},
+  activeTemplate = {}
+}) {
+  const groom = data.groomName || invitation.groomName || activeTemplate?.demoGroom || 'ហេង វឌ្ឍនា';
+  const bride = data.brideName || invitation.brideName || activeTemplate?.demoBride || 'កែវ ចរណៃ';
+  const groomParents = data.groomParents || (invitation.groomParents?.father ? `${invitation.groomParents.father} និង ${invitation.groomParents.mother}` : 'លោក ហេង វណ្ណា និង អ្នកស្រី គីម ស្រ៊ុន');
+  const brideParents = data.brideParents || (invitation.brideParents?.father ? `${invitation.brideParents.father} និង ${invitation.brideParents.mother}` : 'លោក កែវ សម្បត្តិ និង អ្នកស្រី សុខ ហៀង');
+  const dateStr = data.ceremonyDate || invitation.weddingDate || activeTemplate?.demoDate || 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦';
+  const timeStr = data.ceremonyTime || invitation.weddingTime || 'វេលាម៉ោង ៥:០០ ល្ងាច តទៅ';
+  const locationName = data.ceremonyLocation || invitation.weddingLocation || activeTemplate?.demoLocation || 'មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)';
+  const address = data.locationAddress || data.ceremonyAddress || invitation.locationAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
+  const googleMapsUrl = data.googleMapsUrl || invitation.googleMapsUrl || 'https://maps.google.com/?q=The+Premier+Center+Sen+Sok';
+  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/traditional_ivory_parchment_prewedding.jpg';
+
+  // Bank & Digital Gift
+  const bankName = data.bankName || invitation.bankName || 'ABA BANK / BAKONG';
+  const accountName = data.accountName || invitation.accountName || `${groom} & ${bride}`;
+  const accountNumber = data.accountNumber || invitation.accountNumber || '012 345 678';
+  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || null;
+
+  // Host Contacts
+  const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation.hostPhoneGroom || '012 345 678';
+  const phoneBride = data.hostPhoneBride || data.phoneBride || invitation.hostPhoneBride || '098 765 432';
+  const telegramLink = data.telegramLink || invitation.telegramLink || 'https://t.me';
+
+  // Dynamic Programs / Milestones
+  const programs = (data.ceremonyPrograms && data.ceremonyPrograms.length > 0)
+    ? data.ceremonyPrograms
+    : [
+        { time: '០៦:៣០ ព្រឹក', title: 'ជួបជុំភ្ញៀវកិត្តិយសដើម្បីរៀបចំហែចំនូន' },
+        { time: '០៧:០០ ព្រឹក', title: 'ពិធីហែចំនូនចូលរោងជ័យ (ជំនូនកាល)' },
+        { time: '០៨:០០ ព្រឹក', title: 'ពិធីចុះសំបុត្រអាពាហ៍ពិពាហ៍តាមច្បាប់' },
+        { time: '០៨:៣០ ព្រឹក', title: 'ពិធីកាត់សក់បង្កក់សិរី' },
+        { time: '១០:០០ ព្រឹក', title: 'ពិធីសំពះផ្ទឹម សែនចងដៃ ព្រះថោងនាងនាគ' },
+        { time: '១២:០០ ថ្ងៃត្រង់', title: 'អញ្ជើញភ្ញៀវកិត្តិយសពិសារអាហារថ្ងៃត្រង់' },
+        { time: '០៥:០០ ល្ងាច', title: 'ទទួលបដិសណ្ឋារកិច្ចភ្ញៀវកិត្តិយស និងពិសារភោជនាហារ' }
+      ];
+
+  // Gallery Photos
+  const gallery = (data.galleryPhotos && data.galleryPhotos.length > 0)
+    ? data.galleryPhotos
+    : (activeTemplate?.galleryPhotos || [
+        { id: 1, src: preweddingImg, caption: 'ក្រាំងមាសសូត្រភ្លុក' },
+        { id: 2, src: '/images/templates/angkor-ancient-royalty/ancient_1.jpg', caption: 'មហានគរសិរីមង្គល' },
+        { id: 3, src: '/images/templates/angkor-ancient-royalty/ancient_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីស្រឡាញ់' },
+        { id: 4, src: '/images/templates/royal-gold/gold_1.jpg', caption: 'អនុស្សាវរីយ៍ផ្អែមល្ហែម' }
+      ]);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activePhoto, setActivePhoto] = useState(null);
+  const [showQrModal, setShowQrModal] = useState(false);
   const [rsvp, setRsvp] = useState({ name: '', attendance: 'attending', guests: '1 នាក់' });
   const [rsvpDone, setRsvpDone] = useState(false);
   const [wish, setWish] = useState({ name: '', text: '' });
@@ -67,17 +124,14 @@ export function IvoryParchmentTemplate({ data = {} }) {
     setWish({ name: '', text: '' });
   };
 
-  const gallery = [
-    { id: 1, src: preweddingImg, caption: 'ក្រាំងមាសសូត្រភ្លុក' },
-    { id: 2, src: '/images/templates/angkor-ancient-royalty/ancient_1.jpg', caption: 'មហានគរសិរីមង្គល' },
-    { id: 3, src: '/images/templates/angkor-ancient-royalty/ancient_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីស្រឡាញ់' },
-    { id: 4, src: '/images/templates/royal-gold/gold_1.jpg', caption: 'អនុស្សាវរីយ៍ផ្អែមល្ហែម' }
-  ];
-
   return (
-    <div
-      className="w-full relative pb-20 text-[#2A1F1D] font-kantumruy antialiased selection:bg-[#B38728] selection:text-white bg-pattern-ivory-parchment"
-    >
+    <div className="w-full relative pb-20 text-[#2A1F1D] font-kantumruy antialiased selection:bg-[#B38728] selection:text-white bg-pattern-ivory-parchment overflow-hidden">
+      {/* Background Ambience Layer */}
+      <div
+        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-[0.06] fixed-bg"
+        style={{ backgroundImage: `url(${preweddingImg})` }}
+      />
+
       {/* Floating Audio Controller */}
       <button
         onClick={toggleMusic}
@@ -87,15 +141,16 @@ export function IvoryParchmentTemplate({ data = {} }) {
         <span>{isPlaying ? 'ភ្លេងការ (កំពុងចាក់)' : 'តន្ត្រីភ្លេងការ'}</span>
       </button>
 
-      <div className="w-full relative">
+      <div className="w-full relative z-10">
         {/* Top Hero Section with Multiple Images Carousel */}
         <TraditionalHeroSection
+          templateId="traditional-ivory-parchment"
           groom={groom}
           bride={bride}
           images={data.heroImages}
           fallbackImage={preweddingImg}
           themeBorder="#B38728"
-          badgeText="សិរីមង្គលអាពាហ៍ពិពាហ៍"
+          badgeText="សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍"
         />
 
         {/* Header */}
@@ -161,20 +216,14 @@ export function IvoryParchmentTemplate({ data = {} }) {
           </div>
         </section>
 
-        {/* Timeline */}
+        {/* Timeline / Programs */}
         <section className="px-6 py-8 border-t border-[#E8D8BA]">
           <h2 className="font-moul text-center text-[#54141E] text-base mb-6">កាលវិភាគពិធីការ</h2>
           <div className="space-y-3">
-            {[
-              { time: '០៦:៣០ ព្រឹក', text: 'ជួបជុំភ្ញៀវកិត្តិយសដើម្បីរៀបចំហែចំនូន' },
-              { time: '០៧:០០ ព្រឹក', text: 'ពិធីហែចំនូនចូលរោងជ័យ' },
-              { time: '០៨:៣០ ព្រឹក', text: 'ពិធីកាត់សក់បង្កក់សិរី' },
-              { time: '១០:០០ ព្រឹក', text: 'ពិធីសំពះផ្ទឹម សែនចងដៃ ព្រះថោងនាងនាគ' },
-              { time: '០៥:០០ ល្ងាច', text: 'ទទួលបដិសណ្ឋារកិច្ចភ្ញៀវកិត្តិយស និងពិសារភោជនាហារ' }
-            ].map((ev, i) => (
+            {programs.map((ev, i) => (
               <div key={i} className="flex items-center gap-4 p-3 rounded-xl bg-[#FFFBF2] border border-[#E8D8BA]">
                 <span className="text-xs font-bold text-[#54141E] bg-[#FBF2CE] px-2.5 py-1 rounded shrink-0 border border-[#D6B778]">{ev.time}</span>
-                <span className="text-xs sm:text-sm text-[#3C2E29]">{ev.text}</span>
+                <span className="text-xs sm:text-sm text-[#3C2E29] font-medium">{ev.title || ev.text}</span>
               </div>
             ))}
           </div>
@@ -183,29 +232,29 @@ export function IvoryParchmentTemplate({ data = {} }) {
         {/* Gallery */}
         <section className="px-6 py-8 border-t border-[#E8D8BA]">
           <h2 className="font-moul text-center text-[#54141E] text-base mb-6">រូបថតអនុស្សាវរីយ៍</h2>
-          <div className="grid grid-cols-2 gap-3">
-            {gallery.map((p) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {gallery.map((p, idx) => (
               <div
-                key={p.id}
-                onClick={() => setActivePhoto(p.src)}
+                key={p.id || idx}
+                onClick={() => setActivePhoto(p.src || p)}
                 className="group rounded-2xl overflow-hidden border border-[#D6B778] bg-[#FAF3E0] cursor-pointer hover:border-[#54141E] transition relative aspect-square shadow-sm"
               >
-                <img src={p.src} alt={p.caption} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                <img src={p.src || p} alt={p.caption || 'Prewedding'} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2 justify-center">
-                  <span className="text-[11px] font-semibold text-white truncate">{p.caption}</span>
+                  <span className="text-[11px] font-semibold text-white truncate">{p.caption || 'អនុស្សាវរីយ៍'}</span>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Location */}
+        {/* Location & Google Maps */}
         <section className="px-6 py-8 border-t border-[#E8D8BA] text-center">
           <h2 className="font-moul text-[#54141E] text-base mb-2">ទីតាំងប្រារព្ធពិធី</h2>
           <p className="text-sm font-semibold text-[#3C2E29] mb-1">{locationName}</p>
           <p className="text-xs text-[#7A5714] mb-5">{address}</p>
           <a
-            href="https://maps.google.com"
+            href={googleMapsUrl}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#B38728] to-[#AA771C] text-white font-semibold text-xs shadow-md hover:brightness-110 active:scale-95 transition cursor-pointer"
@@ -215,21 +264,64 @@ export function IvoryParchmentTemplate({ data = {} }) {
           </a>
         </section>
 
-        {/* Digital Gift */}
+        {/* Digital Gift (ABA / Bakong QR) */}
         <section className="px-6 py-8 border-t border-[#E8D8BA] text-center">
           <h2 className="font-moul text-[#54141E] text-base mb-2">ជូនចំណងដៃតាមប្រព័ន្ធឌីជីថល</h2>
-          <p className="text-xs text-[#7A5714] mb-6">ABA PAY / BAKONG</p>
+          <p className="text-xs text-[#7A5714] mb-6">{bankName}</p>
           <div className="p-5 rounded-2xl bg-[#FFFBF2] border border-[#D6B778] max-w-sm mx-auto shadow-md">
-            <p className="font-bold text-sm text-[#54141E] uppercase">{groom} & {bride}</p>
-            <p className="text-lg font-mono tracking-widest text-[#B38728] my-3">012 345 678</p>
+            {qrCodeImage && (
+              <div
+                onClick={() => setShowQrModal(true)}
+                className="w-36 h-36 mx-auto mb-3 p-1.5 rounded-xl bg-white border border-[#D6B778] cursor-pointer hover:scale-105 transition shadow-sm"
+              >
+                <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain rounded-lg" />
+                <span className="text-[9px] text-[#B38728] font-bold block mt-0.5">ចុចដើម្បីពង្រីក QR</span>
+              </div>
+            )}
+            <p className="font-bold text-sm text-[#54141E] uppercase">{accountName}</p>
+            <p className="text-lg font-mono tracking-widest text-[#B38728] my-3">{accountNumber}</p>
             <button
-              onClick={() => copyAccount('012 345 678')}
+              onClick={() => copyAccount(accountNumber)}
               className="text-xs bg-[#FBF2CE] hover:bg-[#F5E6B3] text-[#54141E] border border-[#B38728] px-4 py-1.5 rounded-md transition cursor-pointer flex items-center gap-1.5 mx-auto font-semibold"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-green-600" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copied ? 'បានចម្លងរួចរាល់' : 'ចម្លងលេខគណនី'}</span>
             </button>
           </div>
+        </section>
+
+        {/* Host Contacts */}
+        <section className="px-6 py-8 border-t border-[#E8D8BA]">
+          <h2 className="font-moul text-center text-[#54141E] text-base mb-6">ទំនាក់ទំនងម្ចាស់កម្មវិធី</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-sm mx-auto">
+            <a
+              href={`tel:${phoneGroom.replace(/\s+/g, '')}`}
+              className="flex items-center justify-center gap-2 p-3 rounded-xl bg-[#FFFBF2] border border-[#D6B778] text-[#54141E] hover:bg-[#FBF2CE] transition font-semibold text-xs shadow-xs"
+            >
+              <Phone className="w-4 h-4 text-[#B38728]" />
+              <span>កូនប្រុស៖ {phoneGroom}</span>
+            </a>
+            <a
+              href={`tel:${phoneBride.replace(/\s+/g, '')}`}
+              className="flex items-center justify-center gap-2 p-3 rounded-xl bg-[#FFFBF2] border border-[#D6B778] text-[#54141E] hover:bg-[#FBF2CE] transition font-semibold text-xs shadow-xs"
+            >
+              <Phone className="w-4 h-4 text-[#B38728]" />
+              <span>កូនស្រី៖ {phoneBride}</span>
+            </a>
+          </div>
+          {telegramLink && (
+            <div className="mt-3 text-center">
+              <a
+                href={telegramLink.startsWith('http') ? telegramLink : `https://${telegramLink}`}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow transition"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>Telegram ម្ចាស់កម្មវិធី</span>
+              </a>
+            </div>
+          )}
         </section>
 
         {/* RSVP */}
@@ -250,7 +342,7 @@ export function IvoryParchmentTemplate({ data = {} }) {
                   value={rsvp.name}
                   onChange={(e) => setRsvp({ ...rsvp, name: e.target.value })}
                   placeholder="សូមបញ្ចូលឈ្មោះ"
-                  className="w-full bg-white border border-[#D6B778] rounded-lg px-3 py-2 text-sm text-[#3C2E29] focus:outline-none focus:border-[#54141E]"
+                  className="w-full bg-white border border-[#D6B778] rounded-lg px-3 py-2 text-sm text-[#3C2E29] placeholder-[#9C8276] focus:outline-none focus:border-[#54141E]"
                 />
               </div>
               <div>
@@ -266,7 +358,7 @@ export function IvoryParchmentTemplate({ data = {} }) {
               </div>
               <button
                 type="submit"
-                className="w-full py-2.5 rounded-lg bg-[#54141E] hover:bg-[#6B1724] text-white font-semibold text-sm shadow-md cursor-pointer active:scale-95 transition"
+                className="w-full py-2.5 rounded-lg bg-gradient-to-r from-[#B38728] to-[#AA771C] text-white font-semibold text-sm hover:brightness-105 shadow-md cursor-pointer active:scale-95 transition"
               >
                 បញ្ជាក់ការចូលរួម
               </button>
@@ -276,49 +368,51 @@ export function IvoryParchmentTemplate({ data = {} }) {
 
         {/* Wishes */}
         <section className="px-6 py-8 border-t border-[#E8D8BA]">
-          <h2 className="font-moul text-center text-[#54141E] text-base mb-6">ពាក្យប្រសិទ្ធពរជ័យ</h2>
-          <form onSubmit={handleWish} className="space-y-3 max-w-sm mx-auto mb-6">
+          <h2 className="font-moul text-center text-[#54141E] text-base mb-6">សៀវភៅប្រសិទ្ធពរជ័យ</h2>
+          <form onSubmit={handleWish} className="space-y-4 max-w-sm mx-auto mb-6">
             <input
               type="text"
-              placeholder="ឈ្មោះរបស់អ្នក"
+              required
               value={wish.name}
               onChange={(e) => setWish({ ...wish, name: e.target.value })}
-              className="w-full bg-white border border-[#D6B778] rounded-lg px-3 py-2 text-xs text-[#3C2E29] focus:outline-none focus:border-[#54141E]"
+              placeholder="ឈ្មោះរបស់អ្នក"
+              className="w-full bg-white border border-[#D6B778] rounded-lg px-3 py-2 text-sm text-[#3C2E29] placeholder-[#9C8276] focus:outline-none focus:border-[#54141E]"
             />
             <textarea
-              rows="2"
-              placeholder="សារជូនពរ..."
+              required
+              rows="3"
               value={wish.text}
               onChange={(e) => setWish({ ...wish, text: e.target.value })}
-              className="w-full bg-white border border-[#D6B778] rounded-lg px-3 py-2 text-xs text-[#3C2E29] focus:outline-none focus:border-[#54141E]"
-            />
+              placeholder="សរសេរសារជូនពរ..."
+              className="w-full bg-white border border-[#D6B778] rounded-lg px-3 py-2 text-sm text-[#3C2E29] placeholder-[#9C8276] focus:outline-none focus:border-[#54141E]"
+            ></textarea>
             <button
               type="submit"
-              className="w-full py-2 rounded-lg bg-[#FAF5E8] hover:bg-[#F5ECCE] border border-[#B38728] text-[#54141E] font-semibold text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+              className="w-full py-2 rounded-lg bg-[#54141E] hover:bg-[#3D0F16] text-[#FBF2CE] font-semibold text-xs shadow-md transition cursor-pointer flex items-center justify-center gap-2"
             >
-              <Send className="w-3.5 h-3.5" />
+              <Send className="w-3.5 h-3.5 text-[#B38728]" />
               <span>ផ្ញើសារជូនពរ</span>
             </button>
           </form>
 
           <div className="space-y-3 max-w-sm mx-auto">
             {wishesList.map((w) => (
-              <div key={w.id} className="p-3 rounded-lg bg-white border border-[#E8D8BA] text-xs shadow-xs">
+              <div key={w.id} className="p-3 rounded-xl bg-[#FFFBF2] border border-[#E8D8BA] text-xs">
                 <p className="font-bold text-[#54141E] mb-1">{w.name}</p>
-                <p className="text-[#6B5B52]">{w.text}</p>
+                <p className="text-[#3C2E29]">{w.text}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Footer */}
-        <footer className="text-center py-8 px-4 border-t border-[#E8D8BA] bg-[#FAF5E8]">
+        <footer className="text-center py-8 px-4 border-t border-[#E8D8BA] bg-[#FFFBF2]">
           <p className="font-moul text-xs text-[#54141E] mb-2">Theab Digital • ធៀបអាពាហ៍ពិពាហ៍ឌីជីថល</p>
           <p className="text-xs text-[#7A5714]">សូមប្រសិទ្ធពរជ័យ សិរីសួស្តី ជ័យមង្គល វិបុលសុខគ្រប់ប្រការ</p>
         </footer>
       </div>
 
-      {/* Lightbox */}
+      {/* Lightbox Modal */}
       {activePhoto && (
         <div
           onClick={() => setActivePhoto(null)}
@@ -331,7 +425,31 @@ export function IvoryParchmentTemplate({ data = {} }) {
             >
               <X className="w-6 h-6" />
             </button>
-            <img src={activePhoto} alt="Enlarged" className="w-full rounded-2xl border-2 border-[#D6B778] object-contain shadow-2xl" />
+            <img src={activePhoto} alt="Enlarged" className="w-full rounded-2xl border-2 border-[#D4AF37] object-contain shadow-2xl" />
+          </div>
+        </div>
+      )}
+
+      {/* QR Code Zoom Modal */}
+      {showQrModal && qrCodeImage && (
+        <div
+          onClick={() => setShowQrModal(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+        >
+          <div className="relative max-w-sm w-full bg-white p-6 rounded-3xl text-center shadow-2xl border-2 border-[#B38728]" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setShowQrModal(false)}
+              className="absolute top-3 right-3 text-stone-500 hover:text-stone-900 p-1 cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="font-moul text-[#54141E] text-sm mb-1">ស្កេនដើម្បីជូនចំណងដៃ</h3>
+            <p className="text-xs text-[#7A5714] mb-4">{bankName}</p>
+            <div className="p-2 bg-stone-50 rounded-2xl border border-stone-200 mb-4">
+              <img src={qrCodeImage} alt="QR Code Enlarged" className="w-full h-auto rounded-xl object-contain max-h-[350px]" />
+            </div>
+            <p className="font-bold text-xs text-stone-800 uppercase">{accountName}</p>
+            <p className="text-base font-mono font-bold text-[#B38728] my-1">{accountNumber}</p>
           </div>
         </div>
       )}

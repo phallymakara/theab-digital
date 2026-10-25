@@ -1,14 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import { FlyingHeartsAndFlowers } from '../../FlyingHeartsAndFlowers';
+import { TraditionalBadgeComponent } from './TraditionalBadgeComponent';
 
 export function TraditionalHeroSection({
+  templateId = 'traditional-lacquer-gold',
   groom = 'ហេង វឌ្ឍនា',
   bride = 'កែវ ចរណៃ',
   images = [],
   fallbackImage = '/images/templates/traditional_lacquer_gold_prewedding.jpg',
   themeBorder = '#D4AF37',
-  badgeText = 'សិរីមង្គលអាពាហ៍ពិពាហ៍',
+  badgeText = 'សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍',
   fontNames = 'font-moul',
   onScrollDown
 }) {
@@ -66,7 +68,7 @@ export function TraditionalHeroSection({
   };
 
   return (
-    <section className="relative w-full aspect-[896/1200] min-h-[520px] sm:min-h-[620px] md:min-h-[700px] overflow-hidden select-none group border-b-2" style={{ borderColor: themeBorder }}>
+    <section className="relative w-full aspect-[896/1200] min-h-[460px] overflow-hidden select-none group border-b-2" style={{ borderColor: themeBorder }}>
       {/* Horizontal Snap Scroll Gallery */}
       <div
         ref={scrollRef}
@@ -79,12 +81,11 @@ export function TraditionalHeroSection({
             <div
               className="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-700"
               style={{
-                backgroundImage: `url(${src})`,
-                backgroundSize: '100% 100%'
+                backgroundImage: `url(${src})`
               }}
             />
             {/* Cinematic Balanced Vignette to Highlight Centered Gold Text */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/75" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/45 to-black/75" />
           </div>
         ))}
       </div>
@@ -108,20 +109,13 @@ export function TraditionalHeroSection({
       {/* Centered Couple Presentation on Hero Photo */}
       <div className="relative z-20 pointer-events-none w-full h-full flex flex-col justify-center items-center p-4 sm:p-6 text-center">
         <div className="space-y-3 sm:space-y-4 max-w-lg mx-auto w-full my-auto px-2">
-          {/* Top Auspicious Title Badge */}
-          <div>
-            <div className="inline-flex items-center justify-center gap-2 px-5 py-2 sm:px-7 sm:py-2.5 rounded-2xl bg-black/65 backdrop-blur-md border border-amber-400/80 shadow-[0_4px_25px_rgba(0,0,0,0.85)] relative">
-              <div className="absolute top-1 left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-amber-300 pointer-events-none" />
-              <div className="absolute top-1 right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-amber-300 pointer-events-none" />
-              <div className="absolute bottom-1 left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-amber-300 pointer-events-none" />
-              <div className="absolute bottom-1 right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-amber-300 pointer-events-none" />
-
-              <span className="text-amber-300 text-xs">❖</span>
-              <h1 className="font-moul text-sm sm:text-base md:text-lg text-amber-200 tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
-                {badgeText}
-              </h1>
-              <span className="text-amber-300 text-xs">❖</span>
-            </div>
+          {/* Top Auspicious Title Badge with unique bespoke historical styling */}
+          <div className="flex justify-center w-full">
+            <TraditionalBadgeComponent
+              templateId={templateId}
+              title={badgeText}
+              size="lg"
+            />
           </div>
 
           {/* Groom Name */}
@@ -131,11 +125,30 @@ export function TraditionalHeroSection({
             </div>
           </div>
 
-          {/* Central Knot / Connector */}
+          {/* Central Knot / Connector - Unique to each historical template */}
+          {/* Central Knot / Connector - Authentic Khmer 'និង' with traditional filigree */}
           <div className="flex items-center justify-center gap-3 my-1">
             <div className="h-[1.5px] w-12 sm:w-16 bg-gradient-to-r from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
-            <div className="w-8 h-8 rounded-full bg-black/70 border-2 border-amber-300 flex items-center justify-center shadow-[0_0_12px_rgba(212,175,55,0.7)]">
-              <span className="font-moul text-[10px] text-amber-200">៚</span>
+            <div className={`px-3.5 py-0.5 rounded-full border-2 flex items-center justify-center shadow-lg backdrop-blur-md ${
+              templateId === 'traditional-crimson-angkoreach'
+                ? 'bg-[#3B0712]/90 border-red-400 text-amber-200 shadow-red-500/50'
+                : templateId === 'traditional-indigo-hol'
+                ? 'bg-[#0F172A]/90 border-indigo-400 text-amber-200 shadow-indigo-500/50'
+                : templateId === 'traditional-ivory-parchment'
+                ? 'bg-[#FFFDF8]/95 border-amber-500 text-amber-900 shadow-amber-600/40'
+                : templateId === 'traditional-phkachan-slathor'
+                ? 'bg-[#1C1608]/90 border-amber-400 text-amber-200 shadow-amber-400/50'
+                : templateId === 'traditional-royal-pavilion'
+                ? 'bg-[#140E02]/90 border-amber-300 text-amber-200 shadow-amber-500/60'
+                : templateId === 'traditional-angkor-pediment'
+                ? 'bg-[#14100D]/90 border-amber-400 text-amber-200 shadow-amber-600/50'
+                : 'bg-black/80 border-amber-300 text-amber-200 shadow-amber-400/50'
+            }`}>
+              <span className={`font-moul text-[11px] sm:text-xs tracking-wider drop-shadow ${
+                templateId === 'traditional-ivory-parchment' ? 'text-amber-900' : 'text-amber-200'
+              }`}>
+                និង
+              </span>
             </div>
             <div className="h-[1.5px] w-12 sm:w-16 bg-gradient-to-l from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
           </div>

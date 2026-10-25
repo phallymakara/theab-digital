@@ -84,6 +84,33 @@
   font-display: swap;
 }
 
+/* 6. Asvadek Mokha by Designer Nou Sovannarout (នូ សុវណ្ណារោត - ASvadek)
+   Ref: https://www.khmerfonts.info/designer.php?id=52
+   Used for: Emerald Radiant Diamond (ត្បូងមរកតរស្មីពេជ្រចិន្តា)
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Asvadek Mokha';
+  src: local('Asvadek Mokha'),
+       local('AsvadekMokha'),
+       url('/fonts/Asvadek Mokha.ttf') format('truetype'),
+       url('/fonts/Asvadek-Mokha.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-mokha {
+  font-family: 'Asvadek Mokha', 'Moul', 'Preahvihear', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-asvadek-mokha {
+  font-family: 'Asvadek Mokha', 'Moul', 'Preahvihear', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .font-moul {
   font-family: 'Moul', 'Moulpali', serif;
   -webkit-font-smoothing: antialiased;

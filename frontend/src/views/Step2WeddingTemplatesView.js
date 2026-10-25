@@ -97,7 +97,7 @@ export const CEREMONY_TEMPLATES = {
     {
       id: 'floral-romdoul-moonlight',
       name: 'រាត្រីផ្ការំដួលពន្លឺចន្ទ',
-      subtitle: 'Romdoul Moonlight Romance & Starlight Garden',
+      subtitle: 'Romdoul Starlight Garden & Moonlight Union',
       category: 'floral',
       tag: 'ផ្កាស្រស់រ៉ូមែនទិក',
       tagColor: 'bg-indigo-950 text-amber-200 border-amber-400/40',
@@ -107,7 +107,7 @@ export const CEREMONY_TEMPLATES = {
       badgeBg: 'bg-indigo-900',
       description: 'រចនាបថរាត្រីផ្ការំដួលក្រោមពន្លឺចន្ទពេញវង់ អមដោយចលនាហើរនៃកូនអំពិលអំពែកភ្លឺផ្លេក កាតរឿងរ៉ាវស្នេហា ៤ ដំណាក់កាល និងការបង្ហោះគោមជូនពរឡើងលើមេឃ។',
       previewBg: 'bg-[#070B14]',
-      bgImage: '/images/templates/floral_romdoul_moonlight_prewedding.jpg',
+      bgImage: '/images/templates/romdoul-moonlight/hero_1.jpg',
       cardBorder: 'border-amber-400/40 hover:border-amber-300',
       demoGroom: 'លី វិសាល',
       demoBride: 'សុខ គន្ធារី',
@@ -136,26 +136,140 @@ export const CEREMONY_TEMPLATES = {
     },
     {
       id: 'emerald-jade',
-      name: 'ត្បូងមរកតសិរីសួស្តី',
-      subtitle: 'Imperial Emerald Jade',
+      name: 'មរកតរាជវាំងសិរីសួស្តី',
+      subtitle: 'Imperial Emerald Palace & Jade Heritage',
       category: 'emerald',
-      tag: 'ថ្លៃថ្នូរប្រណិត',
-      tagColor: 'bg-emerald-100 text-emerald-900 border-emerald-300',
+      tag: 'រាជវាំងមរកត',
+      tagColor: 'bg-emerald-100 text-emerald-950 border-emerald-400/80',
       themeColor: 'emerald',
-      primaryGradient: 'bg-gradient-to-r from-emerald-800 via-emerald-700 to-emerald-900',
+      primaryGradient: 'bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-950',
       borderColor: '#059669',
-      badgeBg: 'bg-emerald-600',
-      description: 'រចនាបថពណ៌បៃតងត្បូងមរកត តំណាងឱ្យសេចក្តីសុខក្សេមក្សាន្ត ភាពត្រជាក់ត្រជុំ ថ្កុំថ្កើង និងសេចក្តីចម្រើនយូរអង្វែងនៃគូស្វាមីភរិយាថ្មី។',
+      badgeBg: 'bg-emerald-700',
+      description: 'រចនាបថពណ៌បៃតងត្បូងមរកតរាជវាំង តំណាងឱ្យសេចក្តីសុខក្សេមក្សាន្ត ភាពត្រជាក់ត្រជុំ ថ្កុំថ្កើង និងមរតកសិរីសួស្តីនៃគូស្វាមីភរិយាថ្មី។',
       previewBg: 'bg-[#F4FBF7]',
-      cardBorder: 'border-emerald-200 hover:border-emerald-400',
-      features: ['ក្បាច់ឈូកមង្គល', 'តារាងកម្មវិធីព្រឹក-ល្ងាច', 'RSVP & ជូនពរឌីជីថល', 'គាំទ្រគ្រប់ទូរស័ព្ទ']
+      cardBorder: 'border-emerald-300 hover:border-emerald-500',
+      features: ['ក្បាច់រាជវាំងត្បូងមរកត', 'តារាងកាលវិភាគព្រះបរមរាជវាំង', 'សំបុត្រអញ្ជើញហត្ថលេខាមាស', 'RSVP & ជូនពរឌីជីថល']
+    },
+    {
+      id: 'emerald-radiant-diamond',
+      name: 'ត្បូងមរកតរស្មីពេជ្រចិន្តា',
+      subtitle: 'Haute Joaillerie Emerald & Diamond',
+      category: 'emerald',
+      tag: 'ពេជ្រចរណៃប្រណិត',
+      tagColor: 'bg-cyan-50 text-cyan-950 border-cyan-300',
+      themeColor: 'cyan',
+      primaryGradient: 'bg-gradient-to-r from-slate-900 via-cyan-900 to-sky-950',
+      borderColor: '#06B6D4',
+      badgeBg: 'bg-cyan-800',
+      description: 'រចនាបថគ្រាប់ពេជ្រចរណៃចែងចាំង និងត្បូងមរកត Emerald-Cut បែប Haute Joaillerie ស៊ីវិល័យ បង្ហាញពីភាពថ្លៃថ្នូរ ឧត្តមភាព និងសេចក្តីស្នេហាដ៏រឹងមាំ។',
+      previewBg: 'bg-[#F0F9FF]',
+      cardBorder: 'border-cyan-300 hover:border-cyan-500',
+      features: ['សំបុត្រអញ្ជើញ VIP Diamond Ticket', 'តារាងពេលវេលា Jewel-Cut Facet', 'ស្រោមសំបុត្រឌីជីថល ABA QR', 'វិចិត្រសាល Haute Joaillerie']
+    },
+    {
+      id: 'emerald-nature-heirloom',
+      name: 'មរតកធម្មជាតិត្បូងបៃតងព្រៃសិរី',
+      subtitle: 'Lush Forest Emerald & Golden Vine Heirloom',
+      category: 'emerald',
+      tag: 'ធម្មជាតិមរតក',
+      tagColor: 'bg-emerald-50 text-emerald-950 border-emerald-300',
+      themeColor: 'emerald',
+      primaryGradient: 'bg-gradient-to-r from-[#064E3B] via-[#043E2E] to-[#022C22]',
+      borderColor: '#047857',
+      badgeBg: 'bg-emerald-800',
+      description: 'រចនាបថម្លប់ត្រជាក់នៃរុក្ខជាតិត្បូងបៃតងព្រៃសិរី និងវល្លិមាសធម្មជាតិ បង្ហាញពីភាពក្សេមក្សាន្ត ភាពស្រស់បំព្រង និងសេចក្តីស្រឡាញ់ចម្រើនលូតលាស់ជានិរន្តរ៍។',
+      previewBg: 'bg-[#F2FBF6]',
+      cardBorder: 'border-emerald-400 hover:border-emerald-600',
+      features: ['សៀវភៅកំណត់ហេតុស្នេហា Storybook', 'នាឡិការាប់ថយក្រោយ Live Countdown', 'កម្រងពរជ័យមាតាបិតា Laurel Wreath', 'ដើមឈើពរជ័យ Wishing Tree']
+    },
+    {
+      id: 'emerald-glasshouse-moonlight',
+      name: 'មរកតវិមានកែវរស្មីចន្ទ្រា',
+      subtitle: 'Celestial Emerald Conservatory & Moonlit Glasshouse Heirloom',
+      category: 'emerald',
+      tag: 'វិមានកែវរស្មីចន្ទ្រា',
+      tagColor: 'bg-emerald-900/60 text-amber-200 border-amber-300/60',
+      themeColor: 'emerald',
+      primaryGradient: 'bg-gradient-to-r from-[#031C17] via-[#083D34] to-[#021410]',
+      borderColor: '#10B981',
+      badgeBg: 'bg-emerald-800',
+      description: 'រចនាបថវិមានកែវរស្មីចន្ទ្រា និងស៊ុមទ្វារកោងវិមានរាជវាំង រំលេចពន្លឺផ្កាយក្រោមមេឃរាត្រី និងចង្កៀងគ្រីស្តាល់ ផ្ដល់នូវភាពរ៉ូមែនទិកអភិជនកម្រិតកំពូល។',
+      previewBg: 'bg-[#F2FBF7]',
+      cardBorder: 'border-amber-300/80 hover:border-emerald-400',
+      features: ['ស៊ុមទ្វារកោងវិមានកែវ Cathedral Arch', 'អក្សរពុម្ពខ្មែរ Kh Ang Komutt B', 'ប្រតិទិនរស្មីចន្ទ្រា & Live Countdown', 'វិចិត្រសាល Prewedding ៦ សន្លឹក']
+    },
+    {
+      id: 'emerald-noir-editorial',
+      name: 'មរកតសូត្រខ្មៅវិចិត្រសាល',
+      subtitle: 'Emerald Noir Velvet Gazette & Haute Couture',
+      category: 'emerald',
+      tag: 'វិចិត្រសាលសូត្រខ្មៅ',
+      tagColor: 'bg-zinc-900 text-[#E2C375] border-[#E2C375]/60',
+      themeColor: 'emerald',
+      primaryGradient: 'bg-gradient-to-r from-[#030E0A] via-[#061F16] to-[#020B08]',
+      borderColor: '#E2C375',
+      badgeBg: 'bg-zinc-900',
+      description: 'រចនាបថទស្សនាវដ្តីវិចិត្រសាល Haute Couture រំលេចក្រណាត់សូត្រខ្មៅ និងវ៉េឡួរមរកត ជាមួយបន្ទាត់ឌិនមាស Hairline និងអក្សរពុម្ព Kh Ang Komutt B។',
+      previewBg: 'bg-[#030E0A]',
+      cardBorder: 'border-[#E2C375]/80 hover:border-[#E2C375]',
+      features: ['សន្លឹកទស្សនាវដ្តី Editorial Folio', 'អក្សរពុម្ពខ្មែរ Kh Ang Komutt B', 'ប្រតិទិនរស្មីចន្ទ្រា & Live Countdown', 'វិចិត្រសាល Haute Couture ៦ សន្លឹក']
+    },
+    {
+      id: 'emerald-malachite-seal',
+      name: 'មរកតក្សត្រាត្រាជ័រកែវ',
+      subtitle: 'Imperial Malachite & Gilded Royal Wax Seal',
+      category: 'emerald',
+      tag: 'ក្សត្រាត្រាជ័រមាស',
+      tagColor: 'bg-emerald-950 text-amber-300 border-amber-400/80',
+      themeColor: 'emerald',
+      primaryGradient: 'bg-gradient-to-r from-[#042017] via-[#083E2F] to-[#021A13]',
+      borderColor: '#F59E0B',
+      badgeBg: 'bg-amber-700',
+      description: 'រចនាបថថ្មម៉ាបត្បូងមរកត Malachite រាជវាំង រំលេចត្រាជ័រមាស 3D-embossed និងស៊ុម Cartouche បង្ហាញពីឧត្តមភាព កិត្តិយស និងសេចក្តីថ្លៃថ្នូរកម្រិតកំពូល។',
+      previewBg: 'bg-[#F2FBF6]',
+      cardBorder: 'border-amber-400/90 hover:border-amber-300',
+      features: ['ត្រាជ័រមាស 3D Gilded Wax Seal', 'ស៊ុមមេដាយក្សត្រា Cartouche', 'ប្រតិទិនរស្មីមាស & Live Countdown', 'វិចិត្រសាលរាជត្រកូល ៦ សន្លឹក']
+    },
+    {
+      id: 'modern-champagne-silk',
+      name: 'អភិជនសូត្រទឹកមាស',
+      subtitle: 'Modern Champagne Silk & Gold Aristocrat',
+      category: 'modern',
+      tag: 'អភិជនទំនើប',
+      tagColor: 'bg-amber-100 text-amber-900 border-amber-300',
+      themeColor: 'gold',
+      primaryGradient: 'bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900',
+      borderColor: '#D4AF37',
+      badgeBg: 'bg-stone-800',
+      description: 'រចនាបថបែបទាន់សម័យអភិជនសូត្រមាស Champagne Ivory & Soft Pearl បង្ហាញភាពស៊ីវិល័យ ត្រាសច្ចាស្នេហ៍ Monogram និងតន្ត្រី Piano Chimes រណ្តំចិត្ត។',
+      previewBg: 'bg-[#FAF8F5]',
+      bgImage: '/images/templates/modern-champagne/champagne_1.jpg',
+      cardBorder: 'border-amber-300/80 hover:border-amber-500',
+      features: ['ត្រាសច្ចាស្នេហ៍ Monogram', 'អក្សរឆ្លាក់បែបសុវណ្ណភូមិ', 'តន្ត្រី Piano Chimes', 'ប្រព័ន្ធ RSVP & QR កូដ']
+    },
+    {
+      id: 'modern-noir-diamond',
+      name: 'អភិជនរាត្រីពេជ្រខ្មៅ',
+      subtitle: 'Modern Noir Diamond & Platinum Chic',
+      category: 'modern',
+      tag: 'អភិជនទំនើប',
+      tagColor: 'bg-slate-900 text-cyan-200 border-cyan-400/40',
+      themeColor: 'midnight',
+      primaryGradient: 'bg-gradient-to-r from-[#050811] via-[#0A0F1D] to-[#050811]',
+      borderColor: '#38BDF8',
+      badgeBg: 'bg-slate-800',
+      description: 'រចនាបថរាត្រីសមោសរ Black-Tie Gala ទំនើបកម្រិតខ្ពស់ ពណ៌ Obsidian Black និងពន្លឺពេជ្រផ្លាទីនភ្លឺចែងចាំង ត្រា Diamond Emblem និងកាលវិភាគពិធីការប្រណិត។',
+      previewBg: 'bg-[#050811]',
+      bgImage: '/images/templates/modern-noir/noir_1.jpg',
+      cardBorder: 'border-cyan-400/50 hover:border-cyan-300',
+      features: ['ត្រាពេជ្រ Diamond Emblem', 'Black-Tie Haute Couture', 'តន្ត្រី Nocturne Chimes', 'ប្រព័ន្ធ RSVP & ABA QR']
     },
     {
       id: 'modern-luxury',
-      name: 'អភិជនទំនើប',
+      name: 'អភិជនទំនើបស៊ីវិល័យ',
       subtitle: 'Chic Modern Minimalist',
       category: 'modern',
-      tag: 'ទាន់សម័យ',
+      tag: 'អភិជនទំនើប',
       tagColor: 'bg-stone-100 text-stone-800 border-stone-300',
       themeColor: 'gold',
       primaryGradient: 'bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900',
@@ -163,14 +277,75 @@ export const CEREMONY_TEMPLATES = {
       badgeBg: 'bg-stone-800',
       description: 'រចនាបថបែបទាន់សម័យ សាមញ្ញតែប្រណិត (Minimalist Chic) បង្ហាញភាពស៊ីវិល័យ ស្រឡះភ្នែក ងាយស្រួលអាន និងរហ័សទាន់ចិត្តលើទូរស័ព្ទដៃ។',
       previewBg: 'bg-[#FAF9F5]',
+      bgImage: '/images/templates/modern-champagne/champagne_1.jpg',
       cardBorder: 'border-stone-200 hover:border-theabGold',
       features: ['រចនាបថ Minimalist', 'QR Code ផ្ទាល់ខ្លួន', 'ផែនទីពិធីការ', 'ចំណុចប្រទាក់លឿន']
+    },
+    {
+      id: 'modern-rosegold-royale',
+      name: 'អភិជនកុលាបមាស',
+      subtitle: 'Modern Rose Gold Royale & Haute Couture',
+      category: 'modern',
+      tag: 'អភិជនទំនើប',
+      tagColor: 'bg-rose-100 text-rose-900 border-rose-300',
+      themeColor: 'rose',
+      primaryGradient: 'bg-gradient-to-r from-[#291418] via-[#1C0D10] to-[#291418]',
+      borderColor: '#E0A899',
+      badgeBg: 'bg-rose-950',
+      description: 'រចនាបថបែបទាន់សម័យអភិជនពណ៌កុលាបមាស Rose Gold Royale & Warm Copper Blush បង្ហាញភាពផ្អែមល្ហែម ស៊ីវិល័យ និងមនោសញ្ចេតនាជ្រាលជ្រៅ។',
+      previewBg: 'bg-[#180E10]',
+      bgImage: '/images/templates/modern_rosegold_prewedding.jpg',
+      cardBorder: 'border-rose-300/80 hover:border-rose-500',
+      demoGroom: 'លាង សុវណ្ណរិទ្ធ',
+      demoBride: 'អ៊ឹង រ៉ូសាលីន',
+      demoDate: 'ថ្ងៃអាទិត្យ ទី២៤ ខែមករា ឆ្នាំ២០២៧',
+      features: ['ត្រាកុលាបមាស Rose Gold Seal', 'Haute Couture Lookbook', 'តន្ត្រី Romance Harp Chimes', 'ប្រព័ន្ធ RSVP & ABA QR']
+    },
+    {
+      id: 'modern-sapphire-azure',
+      name: 'អភិជនរស្មីត្បូងកណ្តៀង',
+      subtitle: 'Royal Sapphire Azure Gala & Platinum',
+      category: 'modern',
+      tag: 'អភិជនទំនើប',
+      tagColor: 'bg-blue-100 text-blue-950 border-blue-400',
+      themeColor: 'midnight',
+      primaryGradient: 'bg-gradient-to-r from-[#070B18] via-[#0F1B38] to-[#070B18]',
+      borderColor: '#38BDF8',
+      badgeBg: 'bg-blue-950',
+      description: 'រចនាបថរាត្រីសមោសរអភិជនត្បូងកណ្តៀង Royal Sapphire Azure & Mirror Platinum បង្ហាញភាពថ្លៃថ្នូរ រាជានុភាព និងភាពរ៉ូមែនទិកកម្រិតខ្ពស់។',
+      previewBg: 'bg-[#070B18]',
+      bgImage: '/images/templates/modern_sapphire_prewedding.jpg',
+      cardBorder: 'border-sky-400/80 hover:border-sky-300',
+      demoGroom: 'ចាន់ រិទ្ធីស័ក្តិ',
+      demoBride: 'តែ ពេជ្រចិន្តា',
+      demoDate: 'ថ្ងៃអាទិត្យ ទី១០ ខែមករា ឆ្នាំ២០២៧',
+      features: ['ត្រាត្បូងកណ្តៀង Star Sapphire', 'Black-Tie Sapphire Gala', 'តន្ត្រី Nocturne Azure Chimes', 'ប្រព័ន្ធ RSVP & ABA QR']
+    },
+    {
+      id: 'modern-sage-manor',
+      name: 'អភិជនវិមានកញ្ចក់បៃតង',
+      subtitle: 'Modern Sage Emerald Manor & Botanical',
+      category: 'modern',
+      tag: 'អភិជនទំនើប',
+      tagColor: 'bg-emerald-100 text-emerald-950 border-emerald-400',
+      themeColor: 'emerald',
+      primaryGradient: 'bg-gradient-to-r from-[#0E1A14] via-[#162D22] to-[#0E1A14]',
+      borderColor: '#4A6B5D',
+      badgeBg: 'bg-emerald-950',
+      description: 'រចនាបថបែបទាន់សម័យវិមានកញ្ចក់បៃតង Whisper Sage Green & Brushed Champagne Leaf បង្ហាញភាពស្រស់ស្រាយ ធម្មជាតិស្ងប់ស្ងាត់ និងប្រណិតភាព។',
+      previewBg: 'bg-[#0E1A14]',
+      bgImage: '/images/templates/modern_sage_prewedding.jpg',
+      cardBorder: 'border-emerald-400/80 hover:border-emerald-300',
+      demoGroom: 'ជា សុវណ្ណារ៉ា',
+      demoBride: 'គង់ សូហ្វីយ៉ា',
+      demoDate: 'ថ្ងៃសៅរ៍ ទី២០ ខែកុម្ភៈ ឆ្នាំ២០២៧',
+      features: ['ត្រាវិមានកញ្ចក់ Conservatory Seal', 'Fine-Art Botanical Gallery', 'តន្ត្រី Acoustic Serenade', 'ប្រព័ន្ធ RSVP & ABA QR']
     },
     {
       id: 'angkor-heritage',
       name: 'កេរដំណែលប្រាសាទអង្គរ',
       subtitle: 'Angkorian Grandeur Heritage',
-      category: 'heritage',
+      category: 'traditional',
       tag: 'កេរដំណែលវប្បធម៌',
       tagColor: 'bg-amber-50 text-amber-950 border-amber-300',
       themeColor: 'crimson',
@@ -245,306 +420,12 @@ export const CEREMONY_TEMPLATES = {
       demoBride: 'កែវ ចរណៃ',
       demoDate: 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
       features: ['ក្បាច់អង្គរាជមាស', 'ក្រឡាសំណាញ់ពេជ្រសូត្រ', 'រាប់ថយក្រោយ Countdown', 'ប្រព័ន្ធ RSVP ឆ្លាតវៃ']
-    },
-    {
-      id: 'traditional-ivory-parchment',
-      name: 'ក្រាំងមាសសូត្រភ្លុក',
-      subtitle: 'Sacred Ivory Parchment & Scripture',
-      category: 'traditional',
-      tag: 'ប្រពៃណីបុរាណ',
-      tagColor: 'bg-amber-50 text-amber-900 border-amber-300',
-      themeColor: 'gold',
-      primaryGradient: 'bg-gradient-to-r from-[#FBF7EE] via-[#E8D8BA] to-[#B38728]',
-      borderColor: '#B38728',
-      badgeBg: 'bg-[#54141E]',
-      description: 'រចនាបថក្រាំងមាសសូត្រភ្លុកពណ៌សាច់ក្រដាសបុរាណ រំលេចក្បាច់ចម្លាក់អង្គរាជ និងក្រហមរាជវាំង ផ្ដល់នូវអារម្មណ៍ថ្លៃថ្នូរ សុភាព និងបរិសុទ្ធ។',
-      previewBg: 'bg-[#FDFBF7]',
-      bgImage: '/images/templates/traditional_ivory_parchment_prewedding.jpg',
-      cardBorder: 'border-[#B38728]/80 hover:border-[#D4AF37]',
-      demoGroom: 'ហេង វឌ្ឍនា',
-      demoBride: 'កែវ ចរណៃ',
-      demoDate: 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
-      features: ['សាច់ក្រាំងមាសសូត្រភ្លុក', 'ក្បាច់ឆ្លាក់លង្ហិនមាស', 'ភ្លេងប្រពៃណី', 'តារាងវេលាមង្គល']
-    },
-    {
-      id: 'traditional-indigo-hol',
-      name: 'ហូលពពិលឥន្ទ្រនីលមាស',
-      subtitle: 'Royal Indigo Ikat Hol & Gold',
-      category: 'traditional',
-      tag: 'ប្រពៃណីបុរាណ',
-      tagColor: 'bg-blue-100 text-blue-950 border-blue-400',
-      themeColor: 'gold',
-      primaryGradient: 'bg-gradient-to-r from-[#1D4ED8] via-[#93C5FD] to-[#E3BA55]',
-      borderColor: '#E3BA55',
-      badgeBg: 'bg-[#1A2A5E]',
-      description: 'រចនាបថក្រណាត់សូត្រហូលខ្មែរពណ៌ខៀវឥន្ទ្រនីល លាយក្បាច់ពពិលមាសរលើបរលោង តំណាងឱ្យភាពត្រជាក់ត្រជុំ និងរាជានុភាពនៃគូស្នេហ៍។',
-      previewBg: 'bg-[#F5F8FD]',
-      bgImage: '/images/templates/traditional_indigo_hol_prewedding.jpg',
-      cardBorder: 'border-[#E3BA55]/80 hover:border-[#FBF2B7]',
-      demoGroom: 'ហេង វឌ្ឍនា',
-      demoBride: 'កែវ ចរណៃ',
-      demoDate: 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
-      features: ['សូត្រហូលពពិលខ្មែរ', 'គែមក្រងមាសប្រណិត', 'ភ្លេងការប្រពៃណី', 'QR ចងដៃឌីជីថល']
-    },
-    {
-      id: 'traditional-angkor-pediment',
-      name: 'ហោជាងប្រាសាទថ្មមាស',
-      subtitle: 'Angkor Pediment Arch & Stone',
-      category: 'traditional',
-      tag: 'ប្រពៃណីបុរាណ',
-      tagColor: 'bg-stone-200 text-stone-900 border-stone-400',
-      themeColor: 'gold',
-      primaryGradient: 'bg-gradient-to-r from-[#8C6813] via-[#FFF9D2] to-[#C59B27]',
-      borderColor: '#D4AF37',
-      badgeBg: 'bg-[#68480C]',
-      description: 'រចនាបថហោជាងប្រាសាទខ្មែរបុរាណ ឆ្លាក់លើថ្មភ្នំគូលែនស្រោបទឹកមាស អមដោយទម្រង់ស្លឹករឹត និងភ្លេងការប្រពៃណីដ៏ពិរោះរណ្តំ។',
-      previewBg: 'bg-[#FAF7F2]',
-      bgImage: '/images/templates/traditional_angkor_pediment_prewedding.jpg',
-      cardBorder: 'border-[#D4AF37]/80 hover:border-[#FFF9D2]',
-      demoGroom: 'ហេង វឌ្ឍនា',
-      demoBride: 'កែវ ចរណៃ',
-      demoDate: 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
-      features: ['ហោជាងប្រាសាទថ្មមាស', 'ស្លឹករឹតបុរាណ', 'ភ្លេងការប្រពៃណី', 'ហិបមាសពហុកោណ']
-    },
-    {
-      id: 'traditional-royal-pavilion',
-      name: 'ព្រះពន្លាមាស ហោរាសាស្ត្រមង្គល',
-      subtitle: 'Royal Golden Pavilion & Astrology',
-      category: 'traditional',
-      tag: 'ប្រពៃណីបុរាណ',
-      tagColor: 'bg-red-100 text-red-950 border-red-400',
-      themeColor: 'gold',
-      primaryGradient: 'bg-gradient-to-r from-[#B45309] via-[#FFFDE8] to-[#E5BE53]',
-      borderColor: '#E5BE53',
-      badgeBg: 'bg-[#26090D]',
-      description: 'រចនាបថព្រះពន្លាក្សត្រ និងក្បួនហោរាសាស្ត្រមង្គលរាសីខ្មែរបុរាណ រំលេចក្បាច់សន្លឹកមាសលើឈើខ្មៅលា័ក្ខ ផ្ដល់នូវភាពសក្តិសិទ្ធិ និងជោគលាភ។',
-      previewBg: 'bg-[#FAF6ED]',
-      bgImage: '/images/templates/traditional_royal_pavilion_prewedding.jpg',
-      cardBorder: 'border-[#E5BE53]/80 hover:border-[#FFF2B2]',
-      demoGroom: 'ហេង វឌ្ឍនា',
-      demoBride: 'កែវ ចរណៃ',
-      demoDate: 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
-      features: ['ព្រះពន្លាមាសរាជវាំង', 'ហោរាសាស្ត្រមង្គលរាសី', 'បន្ទះថ្មចារឹកបុរាណ', 'កម្រងផ្កាម្លិះស្រស់']
-    },
-    {
-      id: 'traditional-phkachan-slathor',
-      name: 'សូត្រផ្កាចន្ទន៍ដង្វាយមាស',
-      subtitle: 'Phka Chan Silk & 7-Tier Sla Thor',
-      category: 'traditional',
-      tag: 'ប្រពៃណីបុរាណ',
-      tagColor: 'bg-amber-100 text-amber-950 border-amber-400',
-      themeColor: 'gold',
-      primaryGradient: 'bg-gradient-to-r from-[#B88926] via-[#FFF6D1] to-[#E5C058]',
-      borderColor: '#E5C058',
-      badgeBg: 'bg-[#8E6514]',
-      description: 'រចនាបថផ្កាចន្ទន៍ដង្វាយស្លាធម៌ និងយ័ន្ត៨ទិស អមដោយទម្រង់ពានមាសដង្វាយ គែមរំយោលផ្កាកម្រងម្លិះ និងចំណងដៃសូត្រក្រហមមង្គល។',
-      previewBg: 'bg-[#FAF7F2]',
-      bgImage: '/images/templates/traditional_phkachan_slathor_prewedding.jpg',
-      cardBorder: 'border-[#E5C058]/80 hover:border-[#FFF9D2]',
-      demoGroom: 'ហេង វឌ្ឍនា',
-      demoBride: 'កែវ ចរណៃ',
-      demoDate: 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
-      features: ['សូត្រហូលផ្កាចន្ទន៍', 'យ័ន្ត ៨ ទិសមង្គល', 'ពានមាសដង្វាយស្លាធម៌', 'ចំណងដៃសូត្រក្រហម']
     }
   ],
 
-  engagement: [
-    {
-      id: 'betrothal-gold',
-      name: 'មង្គលសិរី ស្តីដណ្តឹង',
-      subtitle: 'Golden Betrothal Heritage',
-      category: 'traditional',
-      tag: 'ពេញនិយមបំផុត',
-      tagColor: 'bg-amber-100 text-amber-900 border-amber-300',
-      themeColor: 'gold',
-      primaryGradient: 'bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800',
-      borderColor: '#D4AF37',
-      badgeBg: 'bg-amber-500',
-      description: 'រចនាបថប្រពៃណីខ្មែរសម្រាប់ពិធីស្តីដណ្តឹង និងសែនព្រេន រំលេចក្បាច់ភ្ញីទេសពណ៌មាសលើផ្ទៃក្រហមមង្គល យ៉ាងសមរម្យសម្រាប់កិច្ចសន្យាដំបូង។',
-      previewBg: 'bg-[#FCFAF6]',
-      cardBorder: 'border-amber-300/80 hover:border-amber-500',
-      features: ['ក្បាច់ភ្ញីទេសមាស', 'ពិធីស្តីដណ្តឹង & សែនព្រេន', 'ប្រព័ន្ធ RSVP ឌីជីថល', 'ផែនទីគេហដ្ឋានខាងស្រី']
-    },
-    {
-      id: 'areca-sacred',
-      name: 'ផ្កាស្លាពិសិដ្ឋ',
-      subtitle: 'Sacred Areca Flower Tradition',
-      category: 'floral',
-      tag: 'ប្រពៃណីបុរាណ',
-      tagColor: 'bg-rose-100 text-rose-900 border-rose-300',
-      themeColor: 'crimson',
-      primaryGradient: 'bg-gradient-to-r from-rose-800 via-rose-700 to-rose-900',
-      borderColor: '#881337',
-      badgeBg: 'bg-rose-600',
-      description: 'លើកតម្កើងពិធីជូនផ្កាស្លាពិសិដ្ឋតាមទំនៀមទម្លាប់ខ្មែរបុរាណ បង្ហាញភាពស្មោះស្ម័គ្រ និងកិត្តិយសថ្លៃថ្លានៃគ្រួសារទាំងសងខាង។',
-      previewBg: 'bg-[#FFF9FA]',
-      cardBorder: 'border-rose-200 hover:border-rose-400',
-      features: ['ពិធីជូនផ្កាស្លាពិសិដ្ឋ', 'កាលវិភាគពិធីពេលព្រឹក', 'រាប់ថយក្រោយ (Countdown)', 'ចែករំលែក Telegram']
-    },
-    {
-      id: 'promise-ring',
-      name: 'ចិញ្ចៀនពេជ្រសច្ចា',
-      subtitle: 'Diamond Promise Ring',
-      category: 'modern',
-      tag: 'ទាន់សម័យ',
-      tagColor: 'bg-stone-100 text-stone-800 border-stone-300',
-      themeColor: 'gold',
-      primaryGradient: 'bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900',
-      borderColor: '#D4AF37',
-      badgeBg: 'bg-stone-800',
-      description: 'រចនាបថទំនើបបែប Romance រំលេចរូបតំណាងចិញ្ចៀនភ្ជាប់ពាក្យ និងពាក្យសច្ចាប្រណិធានស្នេហារវាងគូដណ្តឹងទាំងពីរ។',
-      previewBg: 'bg-[#FAF9F5]',
-      cardBorder: 'border-stone-200 hover:border-theabGold',
-      features: ['រូបតំណាងចិញ្ចៀនពេជ្រ', 'ទម្រង់ឆ្លើយតបងាយស្រួល', 'QR Code ផ្ទាល់ខ្លួន', 'ផែនទី Google Maps']
-    },
-    {
-      id: 'emerald-blessing',
-      name: 'មរកតជ័យមង្គល',
-      subtitle: 'Emerald Auspicious Betrothal',
-      category: 'emerald',
-      tag: 'ថ្លៃថ្នូរប្រណិត',
-      tagColor: 'bg-emerald-100 text-emerald-900 border-emerald-300',
-      themeColor: 'emerald',
-      primaryGradient: 'bg-gradient-to-r from-emerald-800 via-emerald-700 to-emerald-900',
-      borderColor: '#059669',
-      badgeBg: 'bg-emerald-600',
-      description: 'ពណ៌បៃតងត្បូងមរកត តំណាងឱ្យភាពត្រជាក់ត្រជុំ និងការប្រសិទ្ធពរជ័យពីចាស់ទុំទាំងសងខាងក្នុងមង្គលពិធីស្តីដណ្តឹង។',
-      previewBg: 'bg-[#F4FBF7]',
-      cardBorder: 'border-emerald-200 hover:border-emerald-400',
-      features: ['ក្បាច់ឈូកមង្គល', 'ពិធីសែនព្រេនដូនតា', 'RSVP & ជូនពរឌីជីថល', 'គាំទ្រគ្រប់ទូរស័ព្ទ']
-    },
-    {
-      id: 'floral-romdoul',
-      name: 'ផ្ការំដួលមនោសញ្ចេតនា',
-      subtitle: 'Romdoul Romance',
-      category: 'floral',
-      tag: 'ផ្កាស្រស់រ៉ូមែនទិក',
-      tagColor: 'bg-pink-100 text-pink-900 border-pink-300',
-      themeColor: 'crimson',
-      primaryGradient: 'bg-gradient-to-r from-pink-800 via-rose-700 to-rose-900',
-      borderColor: '#BE123C',
-      badgeBg: 'bg-pink-600',
-      description: 'ផ្ការំដួលតំណាងជាតិខ្មែរ ផ្សំជាមួយក្បាច់ភ្ញីទន់ភ្លន់ បង្កើតបានជាលិខិតអញ្ជើញភ្ជាប់ពាក្យដ៏ស្រស់បំព្រង និងស្និទ្ធស្នាល។',
-      previewBg: 'bg-[#FFFDFB]',
-      cardBorder: 'border-pink-200 hover:border-pink-400',
-      features: ['ក្បាច់ផ្ការំដួលស្រស់', 'ភ្លេងការខ្មែរពិរោះ', 'ពាក្យពេចន៍មាតាបិតា', 'ស្កេនចូលរួម']
-    },
-    {
-      id: 'ancestral-classic',
-      name: 'ពិធីសែនព្រេនដូនតា',
-      subtitle: 'Ancestral Ceremony Classic',
-      category: 'traditional',
-      tag: 'ប្រពៃណីខ្មែរសុទ្ធ',
-      tagColor: 'bg-rose-50 text-rose-950 border-rose-300',
-      themeColor: 'crimson',
-      primaryGradient: 'bg-gradient-to-r from-rose-950 via-rose-900 to-rose-950',
-      borderColor: '#881337',
-      badgeBg: 'bg-rose-800',
-      description: 'រចនាបថបែបប្រពៃណីខ្មែរសុទ្ធសាធ គោរពកិច្ចសែនព្រេនដូនតានិងព្រះភូមិ តាមគន្លងធម៌ និងទំនៀមពីបុរាណនៃពិធីភ្ជាប់ពាក្យ។',
-      previewBg: 'bg-[#FAF6EE]',
-      cardBorder: 'border-amber-200 hover:border-amber-400',
-      features: ['ក្បាច់បុរាណខ្មែរ', 'ពាក្យប្រសិទ្ធពរជ័យ', 'ទាញយក QR ព្រីន', 'គាំទ្រទូរស័ព្ទ']
-    }
-  ],
+  engagement: [],
 
-  housewarming: [
-    {
-      id: 'prosperous-home',
-      name: 'សិរីសួស្តី ឡើងគេហដ្ឋានថ្មី',
-      subtitle: 'Prosperous New Home',
-      category: 'traditional',
-      tag: 'ពេញនិយមបំផុត',
-      tagColor: 'bg-amber-100 text-amber-900 border-amber-300',
-      themeColor: 'gold',
-      primaryGradient: 'bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800',
-      borderColor: '#D4AF37',
-      badgeBg: 'bg-amber-500',
-      description: 'រចនាបថអបអរសាទរផ្ទះថ្មី រំលេចរូបតំណាងគេហដ្ឋានមាសប្រណិត សិរីសួស្តី ជ័យមង្គល និងវិបុលសុខគ្រប់ប្រការសម្រាប់ម្ចាស់ផ្ទះថ្មី។',
-      previewBg: 'bg-[#FCFAF6]',
-      cardBorder: 'border-amber-300/80 hover:border-amber-500',
-      features: ['រូបតំណាងគេហដ្ឋានមាស', 'ផែនទីបុរី / ទីតាំងផ្ទះ', 'ប្រព័ន្ធ RSVP ឆ្លាតវៃ', 'ពិធីឡើងផ្ទះ']
-    },
-    {
-      id: 'monk-blessing',
-      name: 'សូត្រមន្តឡើងផ្ទះមង្គល',
-      subtitle: 'Blessing House Monks Ceremony',
-      category: 'traditional',
-      tag: 'សូត្រមន្តឡើងផ្ទះ',
-      tagColor: 'bg-rose-100 text-rose-900 border-rose-300',
-      themeColor: 'crimson',
-      primaryGradient: 'bg-gradient-to-r from-rose-800 via-rose-700 to-rose-900',
-      borderColor: '#881337',
-      badgeBg: 'bg-rose-600',
-      description: 'រចនាបថបែបពុទ្ធសាសនា និងប្រពៃណី រំលេចក្បាច់ផ្កាឈូក និងពាក្យប្រសិទ្ធពរជ័យសិរីសួស្តីពីព្រះសង្ឃក្នុងពិធីចម្រើនព្រះបរិត្ត។',
-      previewBg: 'bg-[#FFF9FA]',
-      cardBorder: 'border-rose-200 hover:border-rose-400',
-      features: ['ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត', 'កាលវិភាគពិធីពេលព្រឹក', 'រាប់ថយក្រោយ (Countdown)', 'ចែករំលែក Telegram']
-    },
-    {
-      id: 'golden-residence',
-      name: 'គេហដ្ឋានមាសប្រណិត',
-      subtitle: 'Golden Residence Luxury',
-      category: 'modern',
-      tag: 'ប្រណិតភាព',
-      tagColor: 'bg-stone-100 text-stone-800 border-stone-300',
-      themeColor: 'gold',
-      primaryGradient: 'bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900',
-      borderColor: '#D4AF37',
-      badgeBg: 'bg-stone-800',
-      description: 'រចនាបថមាសឆើតឆាយ សម្រាប់ពិធីសម្ពោធផ្ទះថ្មី ឬភូមិគ្រឹះប្រណិត ជាមួយព័ត៌មានទីតាំងច្បាស់លាស់ និងការអញ្ជើញយ៉ាងថ្លៃថ្នូរ។',
-      previewBg: 'bg-[#FAF9F5]',
-      cardBorder: 'border-stone-200 hover:border-theabGold',
-      features: ['រចនាបថ Luxury Residence', 'QR Code ផ្ទាល់ខ្លួន', 'ផែនទី Google Maps', 'ពិសារអាហារសាមគ្គី']
-    },
-    {
-      id: 'peaceful-villa',
-      name: 'ភូមិគ្រឹះសុខសាន្ត',
-      subtitle: 'Peaceful Villa Heritage',
-      category: 'emerald',
-      tag: 'ត្រជាក់ត្រជុំ',
-      tagColor: 'bg-emerald-100 text-emerald-900 border-emerald-300',
-      themeColor: 'emerald',
-      primaryGradient: 'bg-gradient-to-r from-emerald-800 via-emerald-700 to-emerald-900',
-      borderColor: '#059669',
-      badgeBg: 'bg-emerald-600',
-      description: 'ពណ៌បៃតងត្បូងមរកត និងមាស បង្ហាញពីភាពសុខដុមរមនា ត្រជាក់ត្រជុំ និងភាពសុខសាន្តយូរអង្វែងនៃគេហដ្ឋានថ្មី។',
-      previewBg: 'bg-[#F4FBF7]',
-      cardBorder: 'border-emerald-200 hover:border-emerald-400',
-      features: ['ពណ៌បៃតងសុខដុមរមនា', 'តារាងកម្មវិធីពិសាអាហារ', 'RSVP & ជូនពរឌីជីថល', 'គាំទ្រគ្រប់ទូរស័ព្ទ']
-    },
-    {
-      id: 'smart-modern',
-      name: 'គេហដ្ឋានទំនើបស៊ីវិល័យ',
-      subtitle: 'Modern Chic Home Celebration',
-      category: 'modern',
-      tag: 'ទាន់សម័យ',
-      tagColor: 'bg-amber-50 text-amber-950 border-amber-300',
-      themeColor: 'gold',
-      primaryGradient: 'bg-gradient-to-r from-amber-800 via-stone-800 to-amber-900',
-      borderColor: '#B69225',
-      badgeBg: 'bg-amber-700',
-      description: 'រចនាបថ Minimalist ទំនើប ស្រឡះភ្នែក រហ័ស និងទាក់ទាញ ងាយស្រួលអានលើទូរស័ព្ទដៃ និងងាយស្រួលចែករំលែក។',
-      previewBg: 'bg-[#FAF6EE]',
-      cardBorder: 'border-amber-200 hover:border-amber-400',
-      features: ['រចនាបថ Smart Modern', 'ផែនទី GPS ផ្ទះថ្មី', 'ទាញយក QR ព្រីន', 'គាំទ្រទូរស័ព្ទ']
-    },
-    {
-      id: 'grand-opening',
-      name: 'សម្ពោធផ្ទះសិរីមង្គល',
-      subtitle: 'Grand Opening Auspicious Home',
-      category: 'traditional',
-      tag: 'ប្រពៃណីខ្មែរសុទ្ធ',
-      tagColor: 'bg-rose-50 text-rose-950 border-rose-300',
-      themeColor: 'crimson',
-      primaryGradient: 'bg-gradient-to-r from-rose-950 via-rose-900 to-rose-950',
-      borderColor: '#881337',
-      badgeBg: 'bg-rose-800',
-      description: 'រចនាបថក្រហមមង្គលបុរាណ អមដោយពាក្យអញ្ជើញពិសាអាហារសាមគ្គី និងការជួបជុំញាតិមិត្តជិតឆ្ងាយក្នុងឱកាសឡើងផ្ទះថ្មី។',
-      previewBg: 'bg-[#FFFDFB]',
-      cardBorder: 'border-rose-300/80 hover:border-theabCrimson',
-      features: ['អក្សរមូលប្រពៃណី', 'ពាក្យពេចន៍ម្ចាស់ផ្ទះ', 'គ្រប់គ្រងភ្ញៀវឆ្លើយតប', 'ស្កេនចូលរួម']
-    }
-  ]
+  housewarming: []
 };
 
 export const WEDDING_TEMPLATES = CEREMONY_TEMPLATES.wedding;
@@ -584,6 +465,56 @@ export class Step2WeddingTemplatesView extends BaseView {
     const titleKh = this.getTitle(ceremonyType);
     const monogram = this.getMonogram(ceremonyType);
 
+    if (templates.length === 0) {
+      this.container.innerHTML = `
+        <section class="container-max min-h-[calc(100vh-160px)] flex flex-col justify-between py-6 sm:py-8 animate-fade">
+          <div class="mb-2">
+            <div class="flex items-center justify-between mb-4">
+              <button id="templates-back-btn" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white hover:bg-stone-100 border border-stone-200 text-stone-600 hover:text-theabCrimson text-xs font-bold transition shadow-2xs cursor-pointer">
+                <i data-lucide="arrow-left" class="w-4 h-4 text-theabCrimson"></i>
+                <span>ត្រឡប់ក្រោយ</span>
+              </button>
+            </div>
+            <h1 class="font-moul text-xl sm:text-2xl md:text-3xl text-theabCrimson tracking-wide text-center">
+              ${titleKh}
+            </h1>
+          </div>
+
+          <div class="my-auto flex items-center justify-center py-6">
+            <div class="py-10 sm:py-14 text-center max-w-lg w-full bg-white/95 backdrop-blur-md rounded-[32px] border border-stone-200/80 p-6 sm:p-10 shadow-xl animate-fade">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-5 rounded-full bg-rose-50 border border-rose-200/80 flex items-center justify-center text-theabCrimson shadow-xs">
+                <i data-lucide="sparkles" class="w-8 h-8 sm:w-10 sm:h-10 opacity-80"></i>
+              </div>
+              <h3 class="font-moul text-base sm:text-lg text-stone-800 mb-2.5 sm:mb-3">
+                កំពុងរៀបចំគំរូរចនាថ្មីៗ
+              </h3>
+              <p class="text-xs sm:text-sm text-stone-600 mb-6 sm:mb-8 leading-relaxed font-suwannaphum max-w-md mx-auto">
+                គំរូធៀបក្នុងប្រភេទនេះកំពុងស្ថិតក្នុងការច្នៃប្រឌិត និងដាក់ឱ្យប្រើប្រាស់ឆាប់ៗនេះ។ លោកអ្នកអាចជ្រើសរើសប្រភេទផ្សេងទៀតបាន។
+              </p>
+              <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <button id="btn-fallback-wedding" class="w-full sm:w-auto px-6 py-2.5 rounded-full bg-theabCrimson hover:bg-rose-900 text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg active:scale-95 cursor-pointer transition-all">
+                  ជ្រើសរើសគំរូមង្គលការ (Wedding)
+                </button>
+                <button id="btn-fallback-back" class="w-full sm:w-auto px-6 py-2.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs sm:text-sm font-bold active:scale-95 cursor-pointer transition-all border border-stone-200">
+                  ត្រឡប់ទៅទំព័រដើម
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="h-6"></div>
+        </section>
+      `;
+      const backBtn = document.getElementById('templates-back-btn');
+      const fallbackBackBtn = document.getElementById('btn-fallback-back');
+      const fallbackWeddingBtn = document.getElementById('btn-fallback-wedding');
+      if (backBtn && this.handlers.onPrev) backBtn.onclick = () => this.handlers.onPrev();
+      if (fallbackBackBtn && this.handlers.onPrev) fallbackBackBtn.onclick = () => this.handlers.onPrev();
+      if (fallbackWeddingBtn && this.handlers.onPrev) fallbackWeddingBtn.onclick = () => this.handlers.onPrev();
+      this.refreshIcons();
+      return;
+    }
+
     this.container.innerHTML = `
       <section class="container-max py-6 sm:py-10 animate-fade">
         
@@ -600,24 +531,26 @@ export class Step2WeddingTemplatesView extends BaseView {
             ${titleKh}
           </h1>
 
-          <!-- Category Filter Tabs (Horizontal scroll on mobile) -->
-          <div class="flex items-center justify-start sm:justify-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 scrollbar-none text-xs">
-            <button data-cat="all" class="cat-filter-btn px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${this.activeCategory === 'all' ? 'bg-theabCrimson text-white shadow-sm' : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'}">
+          <!-- Category Filter Tabs (Centered in the middle of the page) -->
+          ${templates.length > 0 ? `
+          <div class="flex items-center justify-center gap-1.5 sm:gap-2.5 overflow-x-auto pb-2 scrollbar-none text-xs max-w-full mx-auto">
+            <button data-cat="all" class="cat-filter-btn px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-colors duration-150 cursor-pointer border ${this.activeCategory === 'all' ? 'bg-theabCrimson text-white border-theabCrimson shadow-sm' : 'bg-white text-stone-600 hover:bg-stone-100 border-stone-200'}">
               ទាំងអស់ (${templates.length})
             </button>
-            <button data-cat="traditional" class="cat-filter-btn px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${this.activeCategory === 'traditional' ? 'bg-theabCrimson text-white shadow-sm' : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'}">
+            <button data-cat="traditional" class="cat-filter-btn px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-colors duration-150 cursor-pointer border ${this.activeCategory === 'traditional' ? 'bg-theabCrimson text-white border-theabCrimson shadow-sm' : 'bg-white text-stone-600 hover:bg-stone-100 border-stone-200'}">
               ប្រពៃណីបុរាណ
             </button>
-            <button data-cat="floral" class="cat-filter-btn px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${this.activeCategory === 'floral' ? 'bg-theabCrimson text-white shadow-sm' : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'}">
+            <button data-cat="floral" class="cat-filter-btn px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-colors duration-150 cursor-pointer border ${this.activeCategory === 'floral' ? 'bg-theabCrimson text-white border-theabCrimson shadow-sm' : 'bg-white text-stone-600 hover:bg-stone-100 border-stone-200'}">
               ផ្កាស្រស់រ៉ូមែនទិក
             </button>
-            <button data-cat="emerald" class="cat-filter-btn px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${this.activeCategory === 'emerald' ? 'bg-theabCrimson text-white shadow-sm' : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'}">
+            <button data-cat="emerald" class="cat-filter-btn px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-colors duration-150 cursor-pointer border ${this.activeCategory === 'emerald' ? 'bg-theabCrimson text-white border-theabCrimson shadow-sm' : 'bg-white text-stone-600 hover:bg-stone-100 border-stone-200'}">
               ត្បូងមរកតសិរី
             </button>
-            <button data-cat="modern" class="cat-filter-btn px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${this.activeCategory === 'modern' ? 'bg-theabCrimson text-white shadow-sm' : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'}">
+            <button data-cat="modern" class="cat-filter-btn px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition-colors duration-150 cursor-pointer border ${this.activeCategory === 'modern' ? 'bg-theabCrimson text-white border-theabCrimson shadow-sm' : 'bg-white text-stone-600 hover:bg-stone-100 border-stone-200'}">
               អភិជនទំនើប
             </button>
           </div>
+          ` : ''}
         </div>
 
         <!-- Templates Gallery Grid (Responsive 1-col on mobile, 2-col on tablet, 3-col on desktop) -->

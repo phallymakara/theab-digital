@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
-import { Calendar, Clock, MapPin, Music, Heart, Send, Copy, Check, X, Sparkles, ChevronLeft, ChevronRight, Volume2, VolumeX, Flower2 } from 'lucide-react';
+import { Calendar, Clock, MapPin, Music, Heart, Send, Copy, Check, X, Sparkles, ChevronLeft, ChevronRight, Volume2, VolumeX, Flower2, Phone } from 'lucide-react';
 
 // Soft Flute & Acoustic Romantic Melody Synthesizer (C Major / F Major / G Major gentle harmonies)
 class JasmineRomanceAudio {
@@ -83,31 +83,53 @@ class JasmineRomanceAudio {
 
 export const jasmineRomanceAudio = new JasmineRomanceAudio();
 
-export function KhmerBlossomTemplate({ data = {} }) {
-  const groom = data.groomName || 'សុខ វិបុល';
-  const bride = data.brideName || 'ជា សុជាតា';
-  const groomParents = data.groomParents || 'លោក សុខ ជា និង លោកស្រី កែវ ផល្លី';
-  const brideParents = data.brideParents || 'លោក ជា វណ្ណា និង លោកស្រី ហែម ស៊ីវន';
-  const dateStr = data.ceremonyDate || 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦';
-  const timeStr = data.ceremonyTime || 'វេលាម៉ោង ០៧:០០ ព្រឹក ដល់ ០៨:០០ យប់';
-  const locationName = data.ceremonyLocation || 'សាលមង្គលសួនផ្ការំដួល ឌឹ ព្រេមៀ សែនសុខ (អគារ C)';
-  const address = data.ceremonyAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
-  const preweddingImg = data.preweddingPhoto || '/images/templates/floral_cambodian_blossom_prewedding.jpg';
+export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplate = {} }) {
+  const groom = data.groomName || invitation.groomName || activeTemplate?.demoGroom || 'សុខ វិបុល';
+  const bride = data.brideName || invitation.brideName || activeTemplate?.demoBride || 'ជា សុជាតា';
+  const groomParents = data.groomParents || (invitation.groomParents?.father ? `${invitation.groomParents.father} និង ${invitation.groomParents.mother}` : 'លោក សុខ ជា និង លោកស្រី កែវ ផល្លី');
+  const brideParents = data.brideParents || (invitation.brideParents?.father ? `${invitation.brideParents.father} និង ${invitation.brideParents.mother}` : 'លោក ជា វណ្ណា និង លោកស្រី ហែម ស៊ីវន');
+  const dateStr = data.ceremonyDate || invitation.weddingDate || activeTemplate?.demoDate || 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦';
+  const timeStr = data.ceremonyTime || invitation.weddingTime || 'វេលាម៉ោង ០៧:០០ ព្រឹក ដល់ ០៨:០០ យប់';
+  const locationName = data.ceremonyLocation || invitation.weddingLocation || activeTemplate?.demoLocation || 'សាលមង្គលសួនផ្ការំដួល ឌឹ ព្រេមៀ សែនសុខ (អគារ C)';
+  const address = data.locationAddress || data.ceremonyAddress || invitation.locationAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
+  const googleMapsUrl = data.googleMapsUrl || invitation.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationName + ' ' + address)}`;
+  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/floral_cambodian_blossom_prewedding.jpg';
+
+  // Bank & Gift
+  const bankName = data.bankName || invitation.bankName || 'ABA BANK / BAKONG';
+  const accountName = data.accountName || invitation.accountName || `${groom} & ${bride}`;
+  const accountNumber = data.accountNumber || invitation.accountNumber || '001 888 999';
+  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || null;
+
+  // Host Contacts
+  const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation.hostPhoneGroom || '012 345 678';
+  const phoneBride = data.hostPhoneBride || data.phoneBride || invitation.hostPhoneBride || '098 765 432';
+  const telegramLink = data.telegramLink || invitation.telegramLink || 'https://t.me';
+
+  // Dynamic Programs
+  const programs = (data.ceremonyPrograms && data.ceremonyPrograms.length > 0)
+    ? data.ceremonyPrograms
+    : [
+        { time: '០៧:០០ ព្រឹក', title: 'ពិធីហែជំនូន និងពិធីសែនព្រេន', desc: 'ពិធីហែផ្លែឈើជំនូន ពិធីសែនមេបា និងកិច្ចសំពះពិសារស្លាកំណត់' },
+        { time: '០៩:៣០ ព្រឹក', title: 'ពិធីកាត់សក់បង្កក់សិរី និងចងដៃ', desc: 'ពិធីកាត់សក់បង្កក់សិរី ពិធីបង្វិលពពិល និងពិធីសែនចងដៃសិរីសួស្តី' },
+        { time: '០៥:០០ ល្ងាច', title: 'ពិធីពិសាភោជនាហារមង្គលការ', desc: 'ទទួលភ្ញៀវកិត្តិយសពិសាអាហារសាមគ្គី និងរាំកម្សាន្តអបអរសាទរ' }
+      ];
 
   const heroList = (data.heroImages && data.heroImages.length > 0)
     ? data.heroImages
-    : [
+    : (activeTemplate?.heroImages || [
         '/images/templates/floral_cambodian_blossom_prewedding.jpg',
         '/images/templates/floral-romance/floral_1.jpg',
         '/images/templates/floral-romance/floral_2.jpg',
         '/images/templates/floral-romance/floral_3.jpg'
-      ];
+      ]);
 
   const [activeHeroIdx, setActiveHeroIdx] = useState(0);
   const heroScrollRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activePhoto, setActivePhoto] = useState(null);
+  const [showQrModal, setShowQrModal] = useState(false);
   const [blessingCount, setBlessingCount] = useState(88);
   const [rsvp, setRsvp] = useState({ name: '', attendance: 'attending', guests: '1 នាក់' });
   const [rsvpDone, setRsvpDone] = useState(false);
@@ -198,14 +220,13 @@ export function KhmerBlossomTemplate({ data = {} }) {
     setWish({ name: '', text: '' });
   };
 
-  const gallery = [
-    { id: 1, src: preweddingImg, caption: 'មន្តស្នេហ៍ផ្កាម្លិះ និងកុលាបមង្គល' },
-    { id: 2, src: '/images/templates/floral-romance/floral_1.jpg', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
-    { id: 3, src: '/images/templates/floral-romance/floral_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' },
-    { id: 4, src: '/images/templates/floral-romance/floral_3.jpg', caption: 'អនុស្សាវរីយ៍សួនផ្កាអមតៈ' },
-    { id: 5, src: '/images/templates/wedding_floral_bg.jpg', caption: 'កម្រងផ្កាស្រស់សិរីមង្គល' },
-    { id: 6, src: '/images/templates/wedding_flowers_bg.jpg', caption: 'សេចក្តីសុខក្សេមក្សាន្តជានិរន្តរ៍' }
-  ];
+  const gallery = (data.galleryPhotos && data.galleryPhotos.length > 0)
+    ? data.galleryPhotos
+    : (activeTemplate?.galleryPhotos || [
+        { id: 1, src: preweddingImg, caption: 'មន្តស្នេហ៍ផ្កាម្លិះ និងកុលាបមង្គល' },
+        { id: 2, src: '/images/templates/floral-romance/floral_1.jpg', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
+        { id: 3, src: '/images/templates/floral-romance/floral_3.jpg', caption: 'អនុស្សាវរីយ៍សួនផ្កាអមតៈ' }
+      ]);
 
   return (
     <div
@@ -274,26 +295,32 @@ export function KhmerBlossomTemplate({ data = {} }) {
                   loading={idx === 0 ? 'eager' : 'lazy'}
                 />
                 {/* Warm Sunset Vignette Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#2F1117]/85 via-transparent to-black/20 pointer-events-none"></div>
-
-                {/* Couple Names in Moulpali Font */}
-                <div className="absolute bottom-10 inset-x-4 text-center text-white z-10">
-                  <div className="inline-flex items-center gap-2 mb-1.5">
-                    <span className="h-[1px] w-6 bg-rose-200/70"></span>
-                    <span className="text-[11px] font-moulpali text-rose-200 tracking-widest uppercase">
-                      សិរីសួស្តីអាពាហ៍ពិពាហ៍
-                    </span>
-                    <span className="h-[1px] w-6 bg-rose-200/70"></span>
-                  </div>
-                  <h1 className="font-moulpali text-2xl sm:text-3xl text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)] tracking-wide leading-relaxed">
-                    {groom} <span className="text-amber-300 text-xl font-moulpali">✦ និង ✦</span> {bride}
-                  </h1>
-                  <p className="text-xs text-rose-100/90 font-serifTrad tracking-widest mt-1">
-                    {dateStr}
-                  </p>
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#2F1117]/85 via-black/30 to-black/40 pointer-events-none"></div>
               </div>
             ))}
+          </div>
+
+          {/* Stationary Layer: Text at Center & Middle of Hero Section */}
+          <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-center p-4 sm:p-6 text-center">
+            <div className="space-y-3 max-w-md mx-auto w-full px-2">
+              <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-rose-300/60 shadow-[0_4px_20px_rgba(0,0,0,0.7)]">
+                <span className="h-[1px] w-6 bg-rose-200/70"></span>
+                <span className="text-[11px] sm:text-xs font-moulpali text-rose-200 tracking-widest uppercase drop-shadow">
+                  សិរីសួស្តីអាពាហ៍ពិពាហ៍
+                </span>
+                <span className="h-[1px] w-6 bg-rose-200/70"></span>
+              </div>
+
+              <h1 className="font-moulpali text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] tracking-wide leading-relaxed">
+                {groom} <span className="text-amber-300 text-xl sm:text-2xl font-moulpali drop-shadow">✦ និង ✦</span> {bride}
+              </h1>
+
+              <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1 rounded-full bg-black/50 backdrop-blur-xs border border-white/25">
+                <p className="text-xs sm:text-sm text-rose-100 font-serifTrad tracking-widest drop-shadow">
+                  {dateStr}
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Navigation Chevron Buttons */}
@@ -473,56 +500,26 @@ export function KhmerBlossomTemplate({ data = {} }) {
             </div>
 
             <div className="space-y-3">
-              <div className="p-4 rounded-2xl bg-white border border-[#E06D7B]/20 shadow-xs flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-rose-100 text-[#C84B5B] flex items-center justify-center shrink-0 mt-0.5">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-moulpali text-sm text-[#2F1117]">ពិធីហែជំនូន និងពិធីសែនព្រេន</h4>
-                    <span className="text-[11px] font-serifTrad text-[#C84B5B] font-semibold bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200">
-                      ០៧:០០ ព្រឹក
-                    </span>
+              {programs.map((prog, idx) => (
+                <div key={idx} className="p-4 rounded-2xl bg-white border border-[#E06D7B]/20 shadow-xs flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-rose-100 text-[#C84B5B] flex items-center justify-center shrink-0 mt-0.5">
+                    {idx % 3 === 0 ? <Clock className="w-5 h-5" /> : idx % 3 === 1 ? <Heart className="w-5 h-5" /> : <Sparkles className="w-5 h-5" />}
                   </div>
-                  <p className="text-xs text-stone-500 mt-1">
-                    ពិធីហែផ្លែឈើជំនូន ពិធីសែនមេបា និងកិច្ចសំពះពិសារស្លាកំណត់
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-white border border-[#E06D7B]/20 shadow-xs flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-rose-100 text-[#C84B5B] flex items-center justify-center shrink-0 mt-0.5">
-                  <Heart className="w-5 h-5" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-moulpali text-sm text-[#2F1117]">ពិធីកាត់សក់បង្កក់សិរី និងចងដៃ</h4>
-                    <span className="text-[11px] font-serifTrad text-[#C84B5B] font-semibold bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200">
-                      ០៩:៣០ ព្រឹក
-                    </span>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-moulpali text-sm text-[#2F1117]">{prog.title}</h4>
+                      <span className="text-[11px] font-serifTrad text-[#C84B5B] font-semibold bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200">
+                        {prog.time}
+                      </span>
+                    </div>
+                    {prog.desc && (
+                      <p className="text-xs text-stone-500 mt-1">
+                        {prog.desc}
+                      </p>
+                    )}
                   </div>
-                  <p className="text-xs text-stone-500 mt-1">
-                    ពិធីកាត់សក់បង្កក់សិរី ពិធីបង្វិលពពិល និងពិធីសែនចងដៃសិរីសួស្តី
-                  </p>
                 </div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-white border border-[#E06D7B]/20 shadow-xs flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-rose-100 text-[#C84B5B] flex items-center justify-center shrink-0 mt-0.5">
-                  <Sparkles className="w-5 h-5" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-moulpali text-sm text-[#2F1117]">ពិធីពិសាភោជនាហារមង្គលការ</h4>
-                    <span className="text-[11px] font-serifTrad text-[#C84B5B] font-semibold bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200">
-                      ០៥:០០ ល្ងាច
-                    </span>
-                  </div>
-                  <p className="text-xs text-stone-500 mt-1">
-                    ទទួលភ្ញៀវកិត្តិយសពិសាអាហារសាមគ្គី និងរាំកម្សាន្តអបអរសាទរ
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </section>
 
@@ -542,7 +539,7 @@ export function KhmerBlossomTemplate({ data = {} }) {
               </p>
 
               <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationName + ' ' + address)}`}
+                href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C84B5B] text-white text-xs font-semibold shadow hover:bg-[#A93342] active:scale-95 transition-all cursor-pointer"
@@ -601,30 +598,83 @@ export function KhmerBlossomTemplate({ data = {} }) {
                 ចងដៃតាមរយៈគណនីធនាគារ
               </h4>
               <p className="text-xs text-stone-500 max-w-sm mx-auto mb-4">
-                ភ្ញៀវកិត្តិយសអាចស្កេន QR Code ឬចម្លងលេខគណនីខាងក្រោម
+                {bankName} • {accountName}
               </p>
 
-              <div className="max-w-[200px] mx-auto p-3 bg-white rounded-2xl border border-stone-200 shadow-inner mb-3">
+              <div
+                onClick={() => setShowQrModal(true)}
+                className="max-w-[200px] mx-auto p-3 bg-white rounded-2xl border border-stone-200 shadow-inner mb-3 cursor-pointer hover:border-[#E06D7B] transition-all"
+              >
                 <img
-                  src="/images/aba_qr.png"
-                  alt="ABA QR"
+                  src={qrCodeImage || '/images/aba_qr.png'}
+                  alt="QR Code"
                   className="w-full h-auto rounded-lg object-contain"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                   }}
                 />
+                <span className="text-[10px] text-stone-400 mt-1 block">ចុចដើម្បីពង្រីក QR</span>
               </div>
 
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-stone-100 border border-stone-200 text-xs">
-                <span className="font-serifTrad font-bold text-[#2F1117]">ABA: 001 888 999</span>
+                <span className="font-serifTrad font-bold text-[#2F1117]">{accountNumber}</span>
                 <button
-                  onClick={() => copyAccount('001888999')}
+                  onClick={() => copyAccount(accountNumber.replace(/\s+/g, ''))}
                   className="text-[#C84B5B] hover:text-black font-semibold text-[11px] flex items-center gap-1 cursor-pointer"
                 >
                   {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? 'បានចម្លង!' : 'ចម្លង'}</span>
                 </button>
               </div>
+            </div>
+          </section>
+
+          {/* =========================================================================
+              8.5 HOST CONTACTS
+              ========================================================================= */}
+          <section className="mt-8">
+            <div className="p-5 rounded-3xl bg-white border border-[#E06D7B]/20 shadow-sm text-center">
+              <span className="text-xs font-moulpali text-[#C84B5B] tracking-widest block mb-1">
+                ទំនាក់ទំនងម្ចាស់ដើមការ
+              </span>
+              <h4 className="font-moulpali text-lg text-[#2F1117] mb-3">
+                ព័ត៌មានទំនាក់ទំនងសាមីខ្លួន
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md mx-auto">
+                <a
+                  href={`tel:${phoneGroom}`}
+                  className="flex items-center justify-between p-3 rounded-2xl bg-rose-50/70 border border-rose-200/60 hover:bg-rose-100/70 transition-all text-xs"
+                >
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-[#C84B5B]" />
+                    <span className="font-moulpali text-[#2F1117]">ខាងកូនកំលោះ</span>
+                  </div>
+                  <span className="font-serifTrad font-bold text-[#C84B5B]">{phoneGroom}</span>
+                </a>
+                <a
+                  href={`tel:${phoneBride}`}
+                  className="flex items-center justify-between p-3 rounded-2xl bg-rose-50/70 border border-rose-200/60 hover:bg-rose-100/70 transition-all text-xs"
+                >
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-[#C84B5B]" />
+                    <span className="font-moulpali text-[#2F1117]">ខាងកូនក្រមុំ</span>
+                  </div>
+                  <span className="font-serifTrad font-bold text-[#C84B5B]">{phoneBride}</span>
+                </a>
+              </div>
+              {telegramLink && (
+                <div className="mt-3">
+                  <a
+                    href={telegramLink.startsWith('http') ? telegramLink : `https://${telegramLink}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#E06D7B]/10 hover:bg-[#E06D7B]/20 text-[#C84B5B] text-xs font-semibold transition-all"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                    <span className="font-moulpali text-[11px]">ឆាតតាម Telegram</span>
+                  </a>
+                </div>
+              )}
             </div>
           </section>
 
@@ -780,6 +830,36 @@ export function KhmerBlossomTemplate({ data = {} }) {
             </button>
             <img src={activePhoto.src} alt={activePhoto.caption} className="w-full rounded-xl object-contain max-h-[70vh]" />
             <p className="text-center text-xs text-rose-200 mt-2 font-moulpali">{activePhoto.caption}</p>
+          </div>
+        </div>
+      )}
+
+      {/* QR Code Zoom Modal */}
+      {showQrModal && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setShowQrModal(false)}
+        >
+          <div
+            className="bg-white p-5 rounded-3xl max-w-xs w-full text-center shadow-2xl border border-rose-200 relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowQrModal(false)}
+              className="absolute top-3 right-3 w-8 h-8 rounded-full bg-rose-50 text-stone-500 hover:text-stone-800 flex items-center justify-center cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <h4 className="font-moulpali text-sm text-[#2F1117] mb-1">{bankName}</h4>
+            <p className="text-xs text-stone-500 mb-3">{accountName}</p>
+            <img
+              src={qrCodeImage || '/images/aba_qr.png'}
+              alt="QR Code"
+              className="w-full aspect-square object-contain rounded-xl border border-stone-200"
+            />
+            <p className="text-xs font-serifTrad font-bold text-[#C84B5B] mt-3">
+              {accountNumber}
+            </p>
           </div>
         </div>
       )}

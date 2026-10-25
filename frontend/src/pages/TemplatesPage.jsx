@@ -4,6 +4,7 @@ import { useApp } from '../context/AppContext';
 import { CEREMONY_DATA, TEMPLATE_CATEGORIES } from '../data/templates';
 import { FlyingHeartsAndFlowers } from '../components/FlyingHeartsAndFlowers';
 import { KhmerFloatingBackground } from '../components/KhmerBackgroundFlowers';
+import { TraditionalBadgeComponent } from '../components/templates/traditional';
 import {
   ArrowLeft,
   ChevronLeft,
@@ -48,32 +49,9 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
     }
   };
 
-  const handleCategorySelect = (catId, e) => {
+  const handleCategorySelect = (catId) => {
     setActiveCategory(catId);
-    if (e?.currentTarget?.scrollIntoView) {
-      e.currentTarget.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center',
-        block: 'nearest'
-      });
-    }
   };
-
-  // Auto-scroll the remembered active category tab into view on mount or tab change
-  useEffect(() => {
-    if (categoryScrollRef.current && activeCategory) {
-      const activeBtn = categoryScrollRef.current.querySelector(`[data-category-id="${activeCategory}"]`);
-      if (activeBtn) {
-        setTimeout(() => {
-          activeBtn.scrollIntoView({
-            behavior: 'smooth',
-            inline: 'center',
-            block: 'nearest'
-          });
-        }, 100);
-      }
-    }
-  }, [activeCategory]);
 
   // Synchronize ceremony selection with route & stop audio when browsing templates
   useEffect(() => {
@@ -102,7 +80,7 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
     setSelectedTemplate(template);
     setCurrentTheme(template.themeColor || 'crimson');
     addToast(`បានជ្រើសរើសគំរូ៖ "${template.name}"`, 'success');
-    navigate({ to: '/invitation' });
+    navigate({ to: `/customize/${template.id}` });
   };
 
   const groomName = invitationData.groomName || ceremonyInfo.defaultGroom;
@@ -172,80 +150,78 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
           {/* Luxury Gold Divider Strip */}
           <div className="khmer-gold-strip max-w-xs mx-auto mb-3 opacity-70"></div>
 
-          {/* Category Filter Horizontal Scroll Bar with Left/Right Navigation */}
-          <div className="relative max-w-5xl mx-auto flex items-center gap-1.5 sm:gap-2 px-1">
-            {/* Scroll Left Button (Visible on sm+ screens) */}
-            <button
-              type="button"
-              onClick={() => scrollCategories('left')}
-              aria-label="Scroll left"
-              className="p-1.5 sm:p-2 rounded-full bg-white/90 hover:bg-white border border-stone-200/90 text-stone-600 hover:text-theabCrimson shadow-xs transition cursor-pointer shrink-0 hidden sm:flex items-center justify-center hover:scale-105 active:scale-95"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-
-            {/* Horizontal Scroll Track */}
-            <div
-              ref={categoryScrollRef}
-              className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto py-1 px-1 scroll-smooth no-scrollbar flex-nowrap w-full"
-              style={{
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-                WebkitOverflowScrolling: 'touch'
-              }}
-            >
-              {TEMPLATE_CATEGORIES.map((cat) => {
-                const isActive = activeCategory === cat.id;
-                return (
-                  <button
-                    key={cat.id}
-                    data-category-id={cat.id}
-                    onClick={(e) => handleCategorySelect(cat.id, e)}
-                    className={`px-3.5 sm:px-4 py-1.5 rounded-full font-bold whitespace-nowrap text-xs transition-all duration-200 shrink-0 cursor-pointer select-none ${isActive
-                        ? 'bg-theabCrimson text-white shadow-md shadow-rose-950/25 ring-2 ring-rose-300/60 scale-[1.02]'
-                        : 'bg-white/85 text-stone-700 hover:bg-white hover:text-theabCrimson border border-stone-200/90 shadow-2xs hover:shadow-xs'
-                      }`}
-                  >
-                    {cat.name}
-                  </button>
-                );
-              })}
+          {/* Category Filter Bar (Centered in the middle of the page, completely static position) */}
+          {templates.length > 0 && (
+            <div className="w-full flex items-center justify-center px-2">
+              <div
+                ref={categoryScrollRef}
+                className="flex items-center justify-center gap-1.5 sm:gap-2.5 overflow-x-auto py-1 px-1 no-scrollbar flex-nowrap max-w-full"
+                style={{
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none',
+                  WebkitOverflowScrolling: 'touch'
+                }}
+              >
+                {TEMPLATE_CATEGORIES.map((cat) => {
+                  const isActive = activeCategory === cat.id;
+                  return (
+                    <button
+                      key={cat.id}
+                      data-category-id={cat.id}
+                      onClick={() => handleCategorySelect(cat.id)}
+                      className={`px-3.5 sm:px-4 py-1.5 rounded-full font-bold whitespace-nowrap text-xs transition-colors duration-150 shrink-0 cursor-pointer select-none border ${isActive
+                          ? 'bg-theabCrimson text-white border-theabCrimson shadow-md shadow-rose-950/25 ring-2 ring-rose-300/60'
+                          : 'bg-white/85 text-stone-700 hover:bg-white hover:text-theabCrimson border-stone-200/90 shadow-2xs hover:shadow-xs'
+                        }`}
+                    >
+                      {cat.name}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-
-            {/* Scroll Right Button (Visible on sm+ screens) */}
-            <button
-              type="button"
-              onClick={() => scrollCategories('right')}
-              aria-label="Scroll right"
-              className="p-1.5 sm:p-2 rounded-full bg-white/90 hover:bg-white border border-stone-200/90 text-stone-600 hover:text-theabCrimson shadow-xs transition cursor-pointer shrink-0 hidden sm:flex items-center justify-center hover:scale-105 active:scale-95"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
+          )}
         </div>
       </header>
 
       {/* Scrollable Cards Container (Cards scroll with comfortable top padding) */}
-      <main className="flex-1 overflow-y-auto relative z-10 px-3 sm:px-6 pt-4 sm:pt-6 pb-16 scroll-smooth [mask-image:linear-gradient(to_bottom,transparent_0px,black_24px,black_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0px,black_24px,black_100%)]">
-        <div className="container-max">
+      <main className={`flex-1 overflow-y-auto relative z-10 px-3 sm:px-6 pt-4 sm:pt-6 pb-12 scroll-smooth ${filteredTemplates.length === 0 ? 'flex flex-col justify-center items-center' : ''} [mask-image:linear-gradient(to_bottom,transparent_0px,black_24px,black_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0px,black_24px,black_100%)]`}>
+        <div className={`w-full ${filteredTemplates.length === 0 ? 'flex items-center justify-center my-auto' : 'container-max'}`}>
           {/* Templates Gallery Grid (Modern Sleek Cards) */}
           {filteredTemplates.length === 0 ? (
-            <div className="py-16 text-center max-w-md mx-auto bg-white/80 backdrop-blur-xs rounded-3xl border border-stone-200/80 p-8 shadow-sm">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-rose-50 border border-rose-200/80 flex items-center justify-center text-theabCrimson shadow-xs">
-                <Flower2 className="w-8 h-8 opacity-80" />
+            <div className="py-10 sm:py-14 text-center max-w-lg w-full mx-auto bg-white/95 backdrop-blur-md rounded-[32px] border border-stone-200/80 p-6 sm:p-10 shadow-xl my-auto animate-fade">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-5 rounded-full bg-rose-50 border border-rose-200/80 flex items-center justify-center text-theabCrimson shadow-xs animate-pulse">
+                <Flower2 className="w-8 h-8 sm:w-10 sm:h-10 opacity-80" />
               </div>
-              <h3 className="font-moul text-base text-stone-800 mb-2">
+              <h3 className="font-moul text-base sm:text-lg text-stone-800 mb-2.5 sm:mb-3">
                 កំពុងរៀបចំគំរូរចនាថ្មីៗ
               </h3>
-              <p className="text-xs text-stone-500 mb-5 leading-relaxed font-suwannaphum">
+              <p className="text-xs sm:text-sm text-stone-600 mb-6 sm:mb-8 leading-relaxed font-suwannaphum max-w-md mx-auto">
                 គំរូធៀបក្នុងប្រភេទនេះកំពុងស្ថិតក្នុងការច្នៃប្រឌិត និងដាក់ឱ្យប្រើប្រាស់ឆាប់ៗនេះ។ លោកអ្នកអាចជ្រើសរើសប្រភេទផ្សេងទៀតបាន។
               </p>
-              <button
-                onClick={() => setActiveCategory('all')}
-                className="px-5 py-2 rounded-full bg-theabCrimson text-white text-xs font-bold shadow-sm hover:brightness-110 active:scale-95 cursor-pointer transition-all"
-              >
-                មើលគំរូទាំងអស់
-              </button>
+              {templates.length === 0 ? (
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <button
+                    onClick={() => navigate({ to: '/wedding' })}
+                    className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-theabCrimson hover:bg-rose-900 text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg active:scale-95 cursor-pointer transition-all"
+                  >
+                    ជ្រើសរើសគំរូមង្គលការ (Wedding)
+                  </button>
+                  <button
+                    onClick={() => navigate({ to: '/' })}
+                    className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs sm:text-sm font-bold active:scale-95 cursor-pointer transition-all border border-stone-200"
+                  >
+                    ត្រឡប់ទៅទំព័រដើម
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setActiveCategory('all')}
+                  className="px-6 py-2.5 rounded-full bg-theabCrimson hover:bg-rose-900 text-white text-xs sm:text-sm font-bold shadow-sm hover:brightness-110 active:scale-95 cursor-pointer transition-all"
+                >
+                  មើលគំរូទាំងអស់
+                </button>
+              )}
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-5xl mx-auto">
@@ -295,11 +271,6 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                       {tpl.cardStyle === 'floral-romdoul-moonlight' ? (
                         /* Romdoul Moonlight Romance Style with font-suwannaphum */
                         <div className="text-center w-full relative z-20 my-auto px-4 py-2 flex flex-col justify-center items-center">
-                          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-0.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-amber-400/40 text-amber-200 mb-2">
-                            <span className="text-[10px]">🌙</span>
-                            <span className="font-suwannaphum text-[11px] text-amber-200 tracking-wider">រាត្រីផ្ការំដួលពន្លឺចន្ទ</span>
-                          </div>
-
                           <div className="font-suwannaphum text-lg sm:text-xl text-white font-bold leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-200 transition-colors truncate">
                             {cardGroom}
                           </div>
@@ -317,11 +288,6 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                       ) : tpl.cardStyle === 'floral-golden-orchid' ? (
                         /* Golden Orchid & Glasshouse Luxury with font-koulen */
                         <div className="text-center w-full relative z-20 my-auto px-4 py-2 flex flex-col justify-center items-center">
-                          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-0.5 rounded-full bg-white/90 backdrop-blur-md border border-amber-300 shadow-sm mb-2">
-                            <span className="text-amber-600 text-[10px]">❀</span>
-                            <span className="font-koulen text-[11px] text-amber-900 tracking-wider">ផ្កាអ័រគីដេវិមានកែវ</span>
-                          </div>
-
                           <div className="font-koulen text-xl sm:text-2xl text-amber-100 leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-300 transition-colors truncate">
                             {cardGroom}
                           </div>
@@ -339,11 +305,6 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                       ) : tpl.cardStyle === 'floral-editorial-magazine' ? (
                         /* Editorial Haute Couture Floral Magazine Style */
                         <div className="text-center w-full relative z-20 my-auto px-4 py-2 flex flex-col justify-center items-center">
-                          {/* Magazine issue tag */}
-                          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-0.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white mb-2">
-                            <span className="font-serifTrad text-[9px] uppercase tracking-[0.2em] text-amber-200">VOGUE WEDDING</span>
-                          </div>
-
                           {/* Groom Name in Phalluch */}
                           <div className="font-phalluch text-lg sm:text-xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-200 transition-colors truncate">
                             {cardGroom}
@@ -364,15 +325,6 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                       ) : tpl.cardStyle === 'floral-khmer-blossom' ? (
                         /* Cambodian Couple Romantic Floral Jasmine & Rose Blossom Style */
                         <div className="text-center w-full relative z-20 my-auto px-4 py-2 flex flex-col justify-center items-center">
-                          {/* Auspicious floral badge */}
-                          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md border border-rose-300 shadow-sm mb-2">
-                            <span className="text-rose-500 text-[10px]">❀</span>
-                            <span className="font-moulpali text-[11px] text-[#C84B5B] tracking-wider">
-                              មន្តស្នេហ៍ផ្កាម្លិះ និងកុលាបមង្គល
-                            </span>
-                            <span className="text-rose-500 text-[10px]">❀</span>
-                          </div>
-
                           {/* Groom Name in Moulpali */}
                           <div className="font-moulpali text-lg sm:text-xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-rose-200 transition-colors truncate">
                             {cardGroom}
@@ -393,15 +345,6 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                       ) : tpl.cardStyle === 'floral-glasshouse' ? (
                         /* Luxury Botanical Glasshouse & Champagne Peony Style */
                         <div className="text-center w-full relative z-20 my-auto px-4 py-2 flex flex-col justify-center items-center">
-                          {/* Arched botanical badge */}
-                          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-full bg-white/80 backdrop-blur-md border border-[#4A6753]/40 shadow-sm mb-2">
-                            <span className="text-[#D4AF37] text-[10px]">❀</span>
-                            <span className="font-preahvihear text-[11px] text-[#2D3A30] tracking-wider font-semibold">
-                              សួនផ្កាអភិជនបូតានិក
-                            </span>
-                            <span className="text-[#D4AF37] text-[10px]">❀</span>
-                          </div>
-
                           {/* Groom Name in Preahvihear */}
                           <div className="font-preahvihear text-xl sm:text-2xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-200 transition-colors truncate">
                             {cardGroom}
@@ -470,7 +413,7 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                             <div className="h-[1px] w-6 bg-gradient-to-r from-transparent to-emerald-400"></div>
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#34D399]"></span>
                             <span className="font-moulpali text-xs sm:text-[13px] text-emerald-200 tracking-wide drop-shadow-[0_2px_4px_rgba(2,44,34,0.95)]">
-                              សិរីសួស្តីអាពាហ៍ពិពាហ៍
+                              មរកតរាជវាំងសិរីសួស្តី
                             </span>
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#34D399]"></span>
                             <div className="h-[1px] w-6 bg-gradient-to-l from-transparent to-emerald-400"></div>
@@ -504,7 +447,117 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_4px_#34D399]"></div>
                           </div>
                         </div>
-                      ) : tpl.cardStyle === 'modern-luxury' ? (
+                      ) : tpl.cardStyle === 'emerald-radiant-diamond' ? (
+                        /* Haute Joaillerie Radiant Sapphire-Cyan Diamond Direct Typographic Style (Kh Ang Komutt B Font, No Container) */
+                        <div className="text-center w-full relative z-20 my-auto px-4 py-2 flex flex-col justify-center items-center">
+                          <div className="font-komutt text-xl sm:text-2xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] hover:text-cyan-200 transition-colors truncate">
+                            {cardGroom}
+                          </div>
+
+                          <div className="flex items-center justify-center gap-2.5 my-1">
+                            <div className="h-[1px] w-10 bg-gradient-to-r from-transparent via-cyan-300 to-amber-300"></div>
+                            <span className="font-serif italic text-xs font-bold text-cyan-300 drop-shadow">✦ & ✦</span>
+                            <div className="h-[1px] w-10 bg-gradient-to-l from-transparent via-cyan-300 to-amber-300"></div>
+                          </div>
+
+                          <div className="font-komutt text-xl sm:text-2xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] hover:text-cyan-200 transition-colors truncate">
+                            {cardBride}
+                          </div>
+                        </div>
+                      ) : tpl.cardStyle === 'emerald-nature-heirloom' ? (
+                        /* Lush Forest Emerald Nature Direct Typographic Style (Kh Ang Komutt B Font, No Container) */
+                        <div className="text-center w-full relative z-20 my-auto px-4 py-2 flex flex-col justify-center items-center">
+                          <div className="font-komutt text-xl sm:text-2xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] hover:text-emerald-200 transition-colors truncate">
+                            {cardGroom}
+                          </div>
+
+                          <div className="flex items-center justify-center gap-2.5 my-1">
+                            <div className="h-[1px] w-10 bg-gradient-to-r from-transparent via-amber-300/80 to-amber-300"></div>
+                            <Heart className="w-4 h-4 fill-amber-300 text-amber-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
+                            <div className="h-[1px] w-10 bg-gradient-to-l from-transparent via-amber-300/80 to-amber-300"></div>
+                          </div>
+
+                          <div className="font-komutt text-xl sm:text-2xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] hover:text-emerald-200 transition-colors truncate">
+                            {cardBride}
+                          </div>
+                        </div>
+                      ) : tpl.cardStyle === 'emerald-glasshouse-moonlight' ? (
+                        /* Celestial Emerald Glasshouse Moonlight Style (Asvadek Mokha Font, No Container) */
+                        <div className="text-center w-full relative z-20 my-auto px-4 py-2 flex flex-col justify-center items-center">
+                          {/* Top Header Motif & Title in Asvadek Mokha */}
+                          <div className="flex items-center justify-center gap-1.5 mb-1">
+                            <span className="text-amber-300 text-[10px] drop-shadow">✦</span>
+                            <span className="font-komutt text-[11px] sm:text-xs text-amber-200 tracking-widest drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+                              មរកតវិមានកែវរស្មីចន្ទ្រា
+                            </span>
+                            <span className="text-amber-300 text-[10px] drop-shadow">✦</span>
+                          </div>
+
+                          <div className="font-komutt text-xl sm:text-2xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] hover:text-amber-100 transition-colors truncate">
+                            {cardGroom}
+                          </div>
+
+                          <div className="flex items-center justify-center gap-2.5 my-1">
+                            <div className="h-[1px] w-10 bg-gradient-to-r from-transparent via-emerald-400 to-amber-300"></div>
+                            <div className="w-5 h-5 rounded-full bg-[#03241D]/90 border border-amber-300/80 flex items-center justify-center shadow-[0_0_8px_rgba(245,158,11,0.6)]">
+                              <span className="font-serif italic text-[10px] font-bold text-amber-300">✦ & ✦</span>
+                            </div>
+                            <div className="h-[1px] w-10 bg-gradient-to-l from-transparent via-emerald-400 to-amber-300"></div>
+                          </div>
+
+                          <div className="font-komutt text-xl sm:text-2xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] hover:text-amber-100 transition-colors truncate">
+                            {cardBride}
+                          </div>
+                        </div>
+                      ) : tpl.cardStyle === 'emerald-noir-editorial' ? (
+                        /* Emerald Noir Editorial Folio Style (Kh Ang Komutt B, No Container) */
+                        <div className="text-center w-full relative z-20 my-auto px-4 py-2 flex flex-col justify-center items-center">
+                          <div className="flex items-center justify-center gap-1.5 mb-1">
+                            <span className="text-[#E2C375] text-[10px] font-mono tracking-widest">+ HAUTE COUTURE +</span>
+                          </div>
+
+                          <div className="font-komutt text-xl sm:text-2xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] hover:text-[#E2C375] transition-colors truncate">
+                            {cardGroom}
+                          </div>
+
+                          <div className="flex items-center justify-center gap-2.5 my-1">
+                            <div className="h-[0.5px] w-10 bg-gradient-to-r from-transparent via-[#E2C375] to-[#E2C375]"></div>
+                            <span className="font-serif italic text-xs font-bold text-[#E2C375]">&</span>
+                            <div className="h-[0.5px] w-10 bg-gradient-to-l from-transparent via-[#E2C375] to-[#E2C375]"></div>
+                          </div>
+
+                          <div className="font-komutt text-xl sm:text-2xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] hover:text-[#E2C375] transition-colors truncate">
+                            {cardBride}
+                          </div>
+                        </div>
+                      ) : tpl.cardStyle === 'emerald-malachite-seal' ? (
+                        /* Imperial Malachite Gilded Wax Seal Style (Kh Ang Komutt B, No Container) */
+                        <div className="text-center w-full relative z-20 my-auto px-4 py-2 flex flex-col justify-center items-center">
+                          <div className="flex items-center justify-center gap-1.5 mb-1">
+                            <span className="text-amber-300 text-[10px]">⚜</span>
+                            <span className="font-komutt text-[11px] sm:text-xs text-amber-200 tracking-widest drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+                              មរកតក្សត្រាត្រាជ័រកែវ
+                            </span>
+                            <span className="text-amber-300 text-[10px]">⚜</span>
+                          </div>
+
+                          <div className="font-komutt text-xl sm:text-2xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] hover:text-amber-200 transition-colors truncate">
+                            {cardGroom}
+                          </div>
+
+                          <div className="flex items-center justify-center gap-2.5 my-1">
+                            <div className="h-[1px] w-10 bg-gradient-to-r from-transparent via-amber-300 to-amber-400"></div>
+                            <div className="w-5 h-5 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 border border-amber-200 flex items-center justify-center shadow-[0_0_8px_rgba(245,158,11,0.6)]">
+                              <span className="font-serif italic text-[10px] font-black text-emerald-950">✦ & ✦</span>
+                            </div>
+                            <div className="h-[1px] w-10 bg-gradient-to-l from-transparent via-amber-300 to-amber-400"></div>
+                          </div>
+
+                          <div className="font-komutt text-xl sm:text-2xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] hover:text-amber-200 transition-colors truncate">
+                            {cardBride}
+                          </div>
+                        </div>
+                      ) : tpl.cardStyle?.startsWith('modern-') ? (
                         /* Modern Luxury Chic Direct-on-Photo Typographic Style (Kh Ang Komutt B Font, No Container/Background) */
                         <div className="text-center w-full relative z-20 my-auto px-2">
                           {/* Top Header Motif & Title in Kh Ang Komutt B */}
@@ -654,31 +707,31 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                           </div>
                         </div>
                       ) : tpl.cardStyle?.startsWith('traditional-') ? (
-                        /* Traditional Khmer Styles (Test 2 to 8) */
-                        <div className="text-center w-full relative z-20 my-auto px-4 py-3 flex flex-col justify-center items-center">
-                          {/* Top Header Motif & Title in Moul */}
-                          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-xl bg-black/60 backdrop-blur-md border border-amber-400/80 shadow-[0_2px_15px_rgba(0,0,0,0.7)] relative mb-2">
-                            <span className="text-amber-300 text-[10px]">❖</span>
-                            <span className="font-moul text-[11px] sm:text-xs text-amber-200 tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
-                              សិរីមង្គលអាពាហ៍ពិពាហ៍
-                            </span>
-                            <span className="text-amber-300 text-[10px]">❖</span>
+                        /* Traditional Khmer Styles with Distinct Historic Badges */
+                        <div className="text-center w-full relative z-20 my-auto px-3 py-2 flex flex-col justify-center items-center">
+                          {/* Distinct Modern-Historical Badge Component */}
+                          <div className="mb-2">
+                            <TraditionalBadgeComponent
+                              templateId={tpl.id || tpl.cardStyle}
+                              title="សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍"
+                              size="sm"
+                            />
                           </div>
 
                           {/* Groom Name */}
-                          <div className="font-moul text-lg sm:text-xl text-[#FFF2B2] bg-gradient-to-r from-[#FFFDE8] via-[#FCE692] to-[#E5BE53] bg-clip-text text-transparent leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:brightness-125 transition-all truncate">
+                          <div className="font-moul text-base sm:text-lg text-[#FFF2B2] bg-gradient-to-r from-[#FFFDE8] via-[#FCE692] to-[#E5BE53] bg-clip-text text-transparent leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:brightness-125 transition-all truncate">
                             {cardGroom}
                           </div>
 
                           {/* Central Khmer Motif */}
-                          <div className="flex items-center justify-center gap-2.5 my-1.5">
-                            <div className="h-[1px] w-10 bg-gradient-to-r from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
-                            <span className="text-xs font-semibold text-amber-300 font-moul tracking-widest drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">✦ និង ✦</span>
-                            <div className="h-[1px] w-10 bg-gradient-to-l from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
+                          <div className="flex items-center justify-center gap-2 my-1">
+                            <div className="h-[1px] w-8 bg-gradient-to-r from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
+                            <span className="text-[11px] font-semibold text-amber-300 font-moul tracking-wider drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">និង</span>
+                            <div className="h-[1px] w-8 bg-gradient-to-l from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
                           </div>
 
                           {/* Bride Name */}
-                          <div className="font-moul text-lg sm:text-xl text-[#FFF2B2] bg-gradient-to-r from-[#FFFDE8] via-[#FCE692] to-[#E5BE53] bg-clip-text text-transparent leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:brightness-125 transition-all truncate">
+                          <div className="font-moul text-base sm:text-lg text-[#FFF2B2] bg-gradient-to-r from-[#FFFDE8] via-[#FCE692] to-[#E5BE53] bg-clip-text text-transparent leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:brightness-125 transition-all truncate">
                             {cardBride}
                           </div>
                         </div>
@@ -736,7 +789,8 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                           onClick={() => {
                             setSelectedTemplate(tpl);
                             setCurrentTheme(tpl.themeColor || 'crimson');
-                            navigate({ to: `/${tpl.id}/preview` });
+                            addToast(`បានជ្រើសរើសគំរូ៖ "${tpl.name}"`, 'success');
+                            navigate({ to: `/customize/${tpl.id}` });
                           }}
                           style={{
                             backgroundColor: tpl.titleColor || (tpl.themeColor === 'gold' ? '#B69225' : tpl.borderColor),
@@ -827,14 +881,6 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
 
                 {previewTemplate.cardStyle === 'floral-romdoul-moonlight' ? (
                   <div className="text-center w-full relative z-20 my-4 px-2">
-                    <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md border border-amber-400/40 text-amber-200 mb-3">
-                      <span className="text-xs">🌙</span>
-                      <span className="font-suwannaphum text-xs text-amber-200 tracking-wider">
-                        រាត្រីផ្ការំដួលពន្លឺចន្ទ
-                      </span>
-                      <span className="text-xs">✨</span>
-                    </div>
-
                     <div className="font-suwannaphum text-2xl sm:text-3xl font-bold text-white leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-200 transition-colors truncate">
                       {modalGroom}
                     </div>
@@ -851,14 +897,6 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                   </div>
                 ) : previewTemplate.cardStyle === 'floral-golden-orchid' ? (
                   <div className="text-center w-full relative z-20 my-4 px-2">
-                    <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-amber-300 shadow-sm mb-3">
-                      <span className="text-amber-600 text-xs">❀</span>
-                      <span className="font-koulen text-xs text-amber-900 tracking-wider">
-                        ផ្កាអ័រគីដេវិមានកែវ
-                      </span>
-                      <span className="text-amber-600 text-xs">❀</span>
-                    </div>
-
                     <div className="font-koulen text-2xl sm:text-3xl text-amber-100 leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-300 transition-colors truncate">
                       {modalGroom}
                     </div>
@@ -875,10 +913,6 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                   </div>
                 ) : previewTemplate.cardStyle === 'floral-editorial-magazine' ? (
                   <div className="text-center w-full relative z-20 my-4 px-2">
-                    <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white mb-3">
-                      <span className="font-serifTrad text-[10px] uppercase tracking-[0.2em] text-amber-200">EDITORIAL WEDDING JOURNAL</span>
-                    </div>
-
                     <div className="font-phalluch text-2xl sm:text-3xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-200 transition-colors truncate">
                       {modalGroom}
                     </div>
@@ -895,14 +929,6 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                   </div>
                 ) : previewTemplate.cardStyle === 'floral-khmer-blossom' ? (
                   <div className="text-center w-full relative z-20 my-4 px-2">
-                    <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-rose-300 shadow-sm mb-3">
-                      <span className="text-rose-500 text-xs">❀</span>
-                      <span className="font-moulpali text-xs text-[#C84B5B] tracking-wider">
-                        មន្តស្នេហ៍ផ្កាម្លិះ និងកុលាបមង្គល
-                      </span>
-                      <span className="text-rose-500 text-xs">❀</span>
-                    </div>
-
                     <div className="font-moulpali text-2xl sm:text-3xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-rose-200 transition-colors truncate">
                       {modalGroom}
                     </div>
@@ -919,14 +945,6 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                   </div>
                 ) : previewTemplate.cardStyle === 'floral-glasshouse' ? (
                   <div className="text-center w-full relative z-20 my-4 px-2">
-                    <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 backdrop-blur-md border border-[#4A6753]/40 shadow-sm mb-3">
-                      <span className="text-[#D4AF37] text-xs">❀</span>
-                      <span className="font-preahvihear text-xs text-[#2D3A30] tracking-wider font-semibold">
-                        មហាសួនផ្កាកុលាបមនោរម្យ • BOTANICAL GLASSHOUSE
-                      </span>
-                      <span className="text-[#D4AF37] text-xs">❀</span>
-                    </div>
-
                     <div className="font-preahvihear text-2xl sm:text-3xl text-white leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-200 transition-colors truncate">
                       {modalGroom}
                     </div>
@@ -1012,7 +1030,112 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                       <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_4px_#34D399]"></div>
                     </div>
                   </div>
-                ) : previewTemplate.cardStyle === 'modern-luxury' ? (
+                ) : previewTemplate.cardStyle === 'emerald-radiant-diamond' ? (
+                  /* Haute Joaillerie Diamond Direct Typographic Style in Modal (Kh Ang Komutt B Font) */
+                  <div className="text-center w-full relative z-20 my-4 px-2">
+                    <div className="font-komutt text-2xl sm:text-3xl text-white leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                      {modalGroom}
+                    </div>
+                    <div className="flex items-center justify-center gap-3 my-2">
+                      <div className="h-[1px] w-14 bg-gradient-to-r from-transparent via-cyan-300 to-amber-300"></div>
+                      <span className="font-serif italic text-sm font-bold text-cyan-300 drop-shadow">✦ & ✦</span>
+                      <div className="h-[1px] w-14 bg-gradient-to-l from-transparent via-cyan-300 to-amber-300"></div>
+                    </div>
+                    <div className="font-komutt text-2xl sm:text-3xl text-white leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                      {modalBride}
+                    </div>
+                  </div>
+                ) : previewTemplate.cardStyle === 'emerald-nature-heirloom' ? (
+                  /* Lush Forest Emerald Nature Direct Typographic Style in Modal (Kh Ang Komutt B Font) */
+                  <div className="text-center w-full relative z-20 my-4 px-2">
+                    <div className="font-komutt text-2xl sm:text-3xl text-white leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                      {modalGroom}
+                    </div>
+                    <div className="flex items-center justify-center gap-3 my-2">
+                      <div className="h-[1px] w-14 bg-gradient-to-r from-transparent via-amber-300/80 to-amber-300"></div>
+                      <Heart className="w-5 h-5 fill-amber-300 text-amber-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
+                      <div className="h-[1px] w-14 bg-gradient-to-l from-transparent via-amber-300/80 to-amber-300"></div>
+                    </div>
+                    <div className="font-komutt text-2xl sm:text-3xl text-white leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                      {modalBride}
+                    </div>
+                  </div>
+                ) : previewTemplate.cardStyle === 'emerald-glasshouse-moonlight' ? (
+                  /* Celestial Emerald Glasshouse Moonlight Style in Modal (Asvadek Mokha Font) */
+                  <div className="text-center w-full relative z-20 my-4 px-2">
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <span className="text-amber-300 text-xs drop-shadow">✦</span>
+                      <span className="font-komutt text-xs sm:text-sm text-amber-200 tracking-widest drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+                        មរកតវិមានកែវរស្មីចន្ទ្រា
+                      </span>
+                      <span className="text-amber-300 text-xs drop-shadow">✦</span>
+                    </div>
+
+                    <div className="font-komutt text-2xl sm:text-3xl text-white leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                      {modalGroom}
+                    </div>
+
+                    <div className="flex items-center justify-center gap-3 my-2">
+                      <div className="h-[1px] w-14 bg-gradient-to-r from-transparent via-emerald-400 to-amber-300"></div>
+                      <div className="w-7 h-7 rounded-full bg-[#03241D]/90 border border-amber-300/80 flex items-center justify-center shadow-[0_0_10px_rgba(245,158,11,0.7)]">
+                        <span className="font-serif italic text-xs font-bold text-amber-300">✦ & ✦</span>
+                      </div>
+                      <div className="h-[1px] w-14 bg-gradient-to-l from-transparent via-emerald-400 to-amber-300"></div>
+                    </div>
+
+                    <div className="font-komutt text-2xl sm:text-3xl text-white leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                      {modalBride}
+                    </div>
+                  </div>
+                ) : previewTemplate.cardStyle === 'emerald-noir-editorial' ? (
+                  /* Emerald Noir Editorial Folio Style in Modal */
+                  <div className="text-center w-full relative z-20 my-4 px-2">
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <span className="text-[#E2C375] text-xs font-mono tracking-widest">+ VOL. 01 / HAUTE COUTURE +</span>
+                    </div>
+
+                    <div className="font-komutt text-2xl sm:text-3xl text-white leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                      {modalGroom}
+                    </div>
+
+                    <div className="flex items-center justify-center gap-3 my-2">
+                      <div className="h-[0.5px] w-14 bg-gradient-to-r from-transparent via-[#E2C375] to-[#E2C375]"></div>
+                      <span className="font-serif italic text-sm font-bold text-[#E2C375]">&</span>
+                      <div className="h-[0.5px] w-14 bg-gradient-to-l from-transparent via-[#E2C375] to-[#E2C375]"></div>
+                    </div>
+
+                    <div className="font-komutt text-2xl sm:text-3xl text-white leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                      {modalBride}
+                    </div>
+                  </div>
+                ) : previewTemplate.cardStyle === 'emerald-malachite-seal' ? (
+                  /* Imperial Malachite Gilded Wax Seal in Modal */
+                  <div className="text-center w-full relative z-20 my-4 px-2">
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <span className="text-amber-300 text-xs">⚜</span>
+                      <span className="font-komutt text-xs sm:text-sm text-amber-200 tracking-widest drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+                        មរកតក្សត្រាត្រាជ័រកែវ
+                      </span>
+                      <span className="text-amber-300 text-xs">⚜</span>
+                    </div>
+
+                    <div className="font-komutt text-2xl sm:text-3xl text-white leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                      {modalGroom}
+                    </div>
+
+                    <div className="flex items-center justify-center gap-3 my-2">
+                      <div className="h-[1px] w-14 bg-gradient-to-r from-transparent via-amber-300 to-amber-400"></div>
+                      <div className="w-7 h-7 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 border border-amber-200 flex items-center justify-center shadow-[0_0_10px_rgba(245,158,11,0.7)]">
+                        <span className="font-serif italic text-xs font-black text-emerald-950">✦ & ✦</span>
+                      </div>
+                      <div className="h-[1px] w-14 bg-gradient-to-l from-transparent via-amber-300 to-amber-400"></div>
+                    </div>
+
+                    <div className="font-komutt text-2xl sm:text-3xl text-white leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                      {modalBride}
+                    </div>
+                  </div>
+                ) : previewTemplate.cardStyle?.startsWith('modern-') ? (
                   /* Modern Luxury Chic Direct-on-Photo Typographic Style (Kh Ang Komutt B Font, No Container/Background) */
                   <div className="text-center w-full relative z-20 my-4 px-2">
                     {/* Top Header Motif & Title in Kh Ang Komutt B */}
@@ -1178,14 +1301,14 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                     </div>
                   </div>
                 ) : previewTemplate.cardStyle?.startsWith('traditional-') ? (
-                  /* Traditional Khmer Styles in Modal */
-                  <div className="text-center w-full relative z-20 my-4 px-4 py-3 flex flex-col justify-center items-center">
-                    <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-xl bg-black/70 backdrop-blur-md border border-amber-400/90 shadow-[0_2px_20px_rgba(0,0,0,0.8)] relative mb-3">
-                      <span className="text-amber-300 text-xs">❖</span>
-                      <span className="font-moul text-xs sm:text-sm bg-gradient-to-r from-[#FFFDE8] via-[#FCE692] to-[#E5BE53] bg-clip-text text-transparent tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
-                        សិរីមង្គលអាពាហ៍ពិពាហ៍
-                      </span>
-                      <span className="text-amber-300 text-xs">❖</span>
+                  /* Traditional Khmer Styles in Modal with Distinct Historic Badge */
+                  <div className="text-center w-full relative z-20 my-3 px-4 py-2 flex flex-col justify-center items-center">
+                    <div className="mb-3">
+                      <TraditionalBadgeComponent
+                        templateId={previewTemplate.id || previewTemplate.cardStyle}
+                        title="សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍"
+                        size="md"
+                      />
                     </div>
 
                     <div className="font-moul text-xl sm:text-2xl text-[#FFF2B2] bg-gradient-to-r from-[#FFFDE8] via-[#FCE692] to-[#E5BE53] bg-clip-text text-transparent leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:brightness-125 transition-all truncate">
@@ -1193,9 +1316,9 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                     </div>
 
                     <div className="flex items-center justify-center gap-3 my-2">
-                      <div className="h-[1.5px] w-14 bg-gradient-to-r from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
-                      <span className="text-xs font-semibold text-amber-300 font-moul tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">✦ ជួបប្រសព្វនឹង ✦</span>
-                      <div className="h-[1.5px] w-14 bg-gradient-to-l from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
+                      <div className="h-[1.5px] w-12 bg-gradient-to-r from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
+                      <span className="text-xs font-semibold text-amber-300 font-moul tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">✦ និង ✦</span>
+                      <div className="h-[1.5px] w-12 bg-gradient-to-l from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
                     </div>
 
                     <div className="font-moul text-xl sm:text-2xl text-[#FFF2B2] bg-gradient-to-r from-[#FFFDE8] via-[#FCE692] to-[#E5BE53] bg-clip-text text-transparent leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:brightness-125 transition-all truncate">
@@ -1256,7 +1379,8 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                     setPreviewTemplate(null);
                     setSelectedTemplate(t);
                     setCurrentTheme(t.themeColor || 'crimson');
-                    navigate({ to: `/${t.id}/preview` });
+                    addToast(`បានជ្រើសរើសគំរូ៖ "${t.name}"`, 'success');
+                    navigate({ to: `/customize/${t.id}` });
                   }}
                   style={{
                     backgroundColor: previewTemplate.titleColor || (previewTemplate.themeColor === 'gold' ? '#B69225' : previewTemplate.borderColor),

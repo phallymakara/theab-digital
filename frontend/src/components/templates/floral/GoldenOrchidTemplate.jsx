@@ -18,7 +18,10 @@ import {
   ChevronRight,
   Utensils,
   Award,
-  Flower2
+  Flower2,
+  Phone,
+  X,
+  Camera
 } from 'lucide-react';
 
 /**
@@ -37,23 +40,53 @@ import {
  */
 
 export default function GoldenOrchidTemplate({
-  invitation,
+  data = {},
+  invitation = {},
+  activeTemplate = {},
   isEditMode = false,
   onSave = () => {}
 }) {
   // Safe default data
-  const groomName = invitation?.groomName || 'កែវ សិទ្ធិពង្ស';
-  const brideName = invitation?.brideName || 'អ៊ុំ ម៉ាលីកា';
-  const groomFather = invitation?.groomParents?.father || 'ឯកឧត្តម កែវ មុនីរ័ត្ន';
-  const groomMother = invitation?.groomParents?.mother || 'លោកជំទាវ ស៊ុន សុភា';
-  const brideFather = invitation?.brideParents?.father || 'លោក អ៊ុំ សុវណ្ណារ៉ា';
-  const brideMother = invitation?.brideParents?.mother || 'លោកស្រី ជា ចិន្តា';
-  const weddingDate = invitation?.weddingDate || 'ថ្ងៃអាទិត្យ ទី១០ ខែមករា ឆ្នាំ២០២៧';
-  const weddingTime = invitation?.weddingTime || 'ម៉ោង ៤:៣០ រសៀល';
-  const weddingLocation = invitation?.weddingLocation || 'វិមានកញ្ចក់ Grand Glasshouse Pavilion (The Premier Center Sen Sok)';
-  const locationAddress = invitation?.locationAddress || 'ផ្លូវ ១០០៣ សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
-  const preweddingImage = invitation?.preweddingImage || '/images/templates/floral_golden_orchid_prewedding.jpg';
-  const googleMapsUrl = invitation?.googleMapsUrl || 'https://maps.google.com/?q=The+Premier+Center+Sen+Sok';
+  const groomName = data?.groomName || invitation?.groomName || activeTemplate?.demoGroom || 'កែវ សិទ្ធិពង្ស';
+  const brideName = data?.brideName || invitation?.brideName || activeTemplate?.demoBride || 'អ៊ុំ ម៉ាលីកា';
+  const groomFather = data?.groomFather || invitation?.groomParents?.father || 'ឯកឧត្តម កែវ មុនីរ័ត្ន';
+  const groomMother = data?.groomMother || invitation?.groomParents?.mother || 'លោកជំទាវ ស៊ុន សុភា';
+  const brideFather = data?.brideFather || invitation?.brideParents?.father || 'លោក អ៊ុំ សុវណ្ណារ៉ា';
+  const brideMother = data?.brideMother || invitation?.brideParents?.mother || 'លោកស្រី ជា ចិន្តា';
+  const weddingDate = data?.ceremonyDate || invitation?.weddingDate || activeTemplate?.demoDate || 'ថ្ងៃអាទិត្យ ទី១០ ខែមករា ឆ្នាំ២០២៧';
+  const weddingTime = data?.ceremonyTime || invitation?.weddingTime || 'ម៉ោង ៤:៣០ រសៀល';
+  const weddingLocation = data?.ceremonyLocation || invitation?.weddingLocation || activeTemplate?.demoLocation || 'វិមានកញ្ចក់ Grand Glasshouse Pavilion (The Premier Center Sen Sok)';
+  const locationAddress = data?.locationAddress || data?.ceremonyAddress || invitation?.locationAddress || 'ផ្លូវ ១០០៣ សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
+  const preweddingImage = data?.preweddingPhoto || data?.bgImage || activeTemplate?.bgImage || invitation?.preweddingImage || '/images/templates/floral_golden_orchid_prewedding.jpg';
+  const googleMapsUrl = data?.googleMapsUrl || invitation?.googleMapsUrl || 'https://maps.google.com/?q=The+Premier+Center+Sen+Sok';
+
+  // Bank & Gift
+  const bankName = data?.bankName || invitation?.bankName || 'ABA & ACLEDA';
+  const accountName = data?.accountName || invitation?.accountName || `${groomName} & ${brideName}`;
+  const accountNumber = data?.accountNumber || invitation?.accountNumber || '012 999 888';
+  const qrCodeImage = data?.qrCodeImage || invitation?.qrCodeImage || null;
+
+  // Host Contacts
+  const phoneGroom = data?.hostPhoneGroom || data?.phoneGroom || invitation?.hostPhoneGroom || '012 345 678';
+  const phoneBride = data?.hostPhoneBride || data?.phoneBride || invitation?.hostPhoneBride || '098 765 432';
+  const telegramLink = data?.telegramLink || invitation?.telegramLink || 'https://t.me';
+
+  // Dynamic Programs
+  const programs = (data?.ceremonyPrograms && data.ceremonyPrograms.length > 0)
+    ? data.ceremonyPrograms
+    : [
+        { time: '០៦:៣០ ព្រឹក ដល់ ១១:០០ ព្រឹក', title: 'ពិធីហែជំនូន កាត់សក់បង្កក់សិរី និងសំពះផ្ទឹម', desc: 'ប្រារព្ធឡើងនៅគេហដ្ឋានខាងស្រី ស្របតាមទំនៀមទម្លាប់ព្រះរាជពិធីខ្មែរបុរាណ មានកិច្ចសូត្រមន្ត ប្រោះព្រំទឹកមន្ត និងសំពះចាស់ទុំ។' },
+        { time: `${weddingTime} តទៅ`, title: 'ពិធីពិសាភោជនាហារ និងបាចផ្កាប្រសិទ្ធពរជ័យ', desc: `ប្រារព្ធឡើងនៅ ${weddingLocation}។ អមដោយតន្ត្រីកំដរពិធី និងការទទួលទានអាហារបែបអឺរ៉ុបលំដាប់ផ្កាយ ៥។` }
+      ];
+
+  // Gallery Photos
+  const galleryPhotos = (data?.galleryPhotos && data.galleryPhotos.length > 0)
+    ? data.galleryPhotos
+    : (activeTemplate?.galleryPhotos || [
+        { id: 1, src: preweddingImage, caption: 'Grand Glasshouse Orchid Luxury' },
+        { id: 2, src: '/images/templates/floral-romance/floral_1.jpg', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
+        { id: 3, src: '/images/templates/floral-romance/floral_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' }
+      ]);
 
   // Audio State
   const [isPlaying, setIsPlaying] = useState(false);
@@ -63,6 +96,10 @@ export default function GoldenOrchidTemplate({
   // Canvas Petal Burst & Golden Shimmer
   const canvasRef = useRef(null);
   const burstsRef = useRef([]);
+
+  // Modal States
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [showQrModal, setShowQrModal] = useState(false);
 
   // RSVP Form State
   const [rsvpName, setRsvpName] = useState('');
@@ -287,7 +324,7 @@ export default function GoldenOrchidTemplate({
   };
 
   const copyBankInfo = () => {
-    navigator.clipboard?.writeText('012 999 888 (ABA Bank: KEO SITHIPHONG)');
+    navigator.clipboard?.writeText(accountNumber.replace(/\s+/g, ''));
     setCopiedBank(true);
     setTimeout(() => setCopiedBank(false), 2500);
   };
@@ -438,84 +475,30 @@ export default function GoldenOrchidTemplate({
             </h3>
           </div>
 
-          {/* Schedule Navigation Pills */}
-          <div className="flex items-center justify-center gap-3">
-            <button
-              onClick={() => setActiveTab('morning')}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer ${
-                activeTab === 'morning'
-                  ? 'bg-amber-600 text-white shadow-md'
-                  : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
-              }`}
-            >
-              ពិធីពេលព្រឹក (Morning Blessing)
-            </button>
-            <button
-              onClick={() => setActiveTab('reception')}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition cursor-pointer ${
-                activeTab === 'reception'
-                  ? 'bg-amber-600 text-white shadow-md'
-                  : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
-              }`}
-            >
-              ពិធីទទួលទានភោជនាហារ (Evening Banquet)
-            </button>
+          {/* Dynamic Itinerary Schedule List */}
+          <div className="space-y-3">
+            {programs.map((prog, idx) => (
+              <div key={idx} className="p-4 sm:p-5 rounded-2xl bg-[#FCFAF6] border border-stone-200 flex items-start gap-4">
+                <div className="w-11 h-11 rounded-2xl bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-800 font-bold shrink-0 mt-0.5">
+                  {idx % 2 === 0 ? <Clock className="w-5 h-5" /> : <Utensils className="w-5 h-5" />}
+                </div>
+                <div className="flex-1 space-y-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                    <h4 className="font-koulen text-lg text-stone-900">{prog.title}</h4>
+                    <span className="text-xs text-amber-800 font-semibold font-serifTrad">{prog.time}</span>
+                  </div>
+                  {prog.desc && <p className="text-xs text-stone-600 leading-relaxed">{prog.desc}</p>}
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Active Schedule Content */}
-          {activeTab === 'morning' ? (
-            <div className="p-6 rounded-2xl bg-[#FCFAF6] border border-stone-200 space-y-4">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-800 font-bold shrink-0">
-                  <Clock className="w-6 h-6" />
-                </div>
-                <div className="space-y-1">
-                  <h4 className="font-koulen text-xl text-stone-900">
-                    ពិធីហែជំនូន កាត់សក់បង្កក់សិរី និងសំពះផ្ទឹម
-                  </h4>
-                  <p className="text-xs text-amber-800 font-semibold font-serifTrad">
-                    ០៦:៣០ ព្រឹក ដល់ ១១:០០ ព្រឹក
-                  </p>
-                  <p className="text-xs text-stone-600 leading-relaxed">
-                    ប្រារព្ធឡើងនៅគេហដ្ឋានខាងស្រី ស្របតាមទំនៀមទម្លាប់ព្រះរាជពិធីខ្មែរបុរាណ មានកិច្ចសូត្រមន្ត ប្រោះព្រំទឹកមន្ត និងសំពះចាស់ទុំ។
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-amber-50/70 border border-amber-200 text-xs flex items-center gap-2 text-amber-900">
-                <Award className="w-4 h-4 text-amber-700 shrink-0" />
-                <span>
-                  <strong>សម្លៀកបំពាក់កិត្តិយសពេលព្រឹក:</strong> សម្លៀកបំពាក់ប្រពៃណីខ្មែរ (ហូល ផាមួង ពណ៌មាស ឬស្រទន់)
-                </span>
-              </div>
-            </div>
-          ) : (
-            <div className="p-6 rounded-2xl bg-[#FCFAF6] border border-stone-200 space-y-4">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-800 font-bold shrink-0">
-                  <Utensils className="w-6 h-6" />
-                </div>
-                <div className="space-y-1">
-                  <h4 className="font-koulen text-xl text-stone-900">
-                    ពិធីពិសាភោជនាហារ និងបាចផ្កាប្រសិទ្ធពរជ័យ
-                  </h4>
-                  <p className="text-xs text-amber-800 font-semibold font-serifTrad">
-                    {weddingTime} តទៅ
-                  </p>
-                  <p className="text-xs text-stone-600 leading-relaxed">
-                    ប្រារព្ធឡើងនៅ {weddingLocation}។ អមដោយតន្ត្រីកំដរពិធី និងការទទួលទានអាហារបែបអឺរ៉ុបលំដាប់ផ្កាយ ៥។
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-amber-50/70 border border-amber-200 text-xs flex items-center gap-2 text-amber-900">
-                <Award className="w-4 h-4 text-amber-700 shrink-0" />
-                <span>
-                  <strong>សម្លៀកបំពាក់កិត្តិយសពេលល្ងាច (Dress Code):</strong> Champagne Gold, Ivory & Formal Suit
-                </span>
-              </div>
-            </div>
-          )}
+          <div className="p-3 rounded-xl bg-amber-50/70 border border-amber-200 text-xs flex items-center gap-2 text-amber-900">
+            <Award className="w-4 h-4 text-amber-700 shrink-0" />
+            <span>
+              <strong>សម្លៀកបំពាក់កិត្តិយស (Dress Code):</strong> Champagne Gold, Ivory & Formal Suit / សម្លៀកបំពាក់ប្រពៃណីខ្មែរ
+            </span>
+          </div>
 
           {/* Location & Map Link */}
           <div className="p-5 rounded-2xl bg-stone-50 border border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -535,6 +518,41 @@ export default function GoldenOrchidTemplate({
               <Navigation className="w-3.5 h-3.5" />
               <span>បើកមើលផែនទី Google Maps</span>
             </a>
+          </div>
+        </div>
+
+        {/* Pre-wedding Gallery Section */}
+        <div className="rounded-3xl p-6 sm:p-10 bg-white/90 border border-stone-200/90 shadow-lg backdrop-blur-xl mb-12 space-y-6">
+          <div className="text-center space-y-2">
+            <span className="text-xs font-semibold uppercase tracking-widest text-amber-700 font-serifTrad">
+              Photo Memories
+            </span>
+            <h3 className="font-koulen text-2xl sm:text-3xl text-stone-900">
+              កម្រងរូបភាពអនុស្សាវរីយ៍ Pre-Wedding
+            </h3>
+            <p className="text-xs text-stone-500">ចុចលើរូបភាពដើម្បីមើលទំហំធំ</p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {galleryPhotos.map((photo) => (
+              <div
+                key={photo.id}
+                onClick={() => setSelectedPhoto(photo)}
+                className="group relative aspect-[3/4] rounded-2xl overflow-hidden bg-stone-100 border border-amber-200/60 cursor-pointer shadow-sm hover:border-amber-500 transition duration-300"
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.caption || 'Prewedding'}
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-2.5">
+                  <p className="text-[11px] text-amber-200 font-serifTrad line-clamp-2">
+                    {photo.caption}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -665,15 +683,29 @@ export default function GoldenOrchidTemplate({
 
             {isEnvelopeOpen && (
               <div className="mt-4 p-5 rounded-2xl bg-white border border-stone-200 shadow-xl space-y-4 animate-in fade-in zoom-in duration-300">
-                <div className="w-32 h-32 mx-auto bg-stone-50 p-2 rounded-xl border border-stone-300 flex flex-col items-center justify-center text-center">
-                  <span className="font-bold text-xs text-blue-900">ABA & ACLEDA</span>
-                  <span className="text-[9px] text-stone-500 mt-1">KHQR WEDDING</span>
-                  <span className="text-[8px] text-stone-600 mt-1 font-semibold">KEO SITHIPHONG</span>
+                <div
+                  onClick={() => setShowQrModal(true)}
+                  className="w-36 h-36 mx-auto bg-stone-50 p-2 rounded-xl border border-stone-300 flex flex-col items-center justify-center text-center cursor-pointer hover:border-amber-500 transition"
+                >
+                  {qrCodeImage ? (
+                    <img
+                      src={qrCodeImage}
+                      alt="QR Code"
+                      className="w-full h-full object-contain rounded-lg"
+                    />
+                  ) : (
+                    <>
+                      <span className="font-bold text-xs text-blue-900">{bankName}</span>
+                      <span className="text-[9px] text-stone-500 mt-1">KHQR WEDDING</span>
+                      <span className="text-[8px] text-stone-600 mt-1 font-semibold truncate max-w-full">{accountName}</span>
+                    </>
+                  )}
                 </div>
+                <span className="text-[10px] text-stone-400 block">ចុចដើម្បីពង្រីក QR</span>
 
                 <div className="text-xs text-stone-700 space-y-0.5">
-                  <p className="font-bold text-stone-900">ABA Bank: 012 999 888</p>
-                  <p className="text-[11px] text-stone-500">ឈ្មោះគណនី: KEO SITHIPHONG</p>
+                  <p className="font-bold text-stone-900">{bankName}: {accountNumber}</p>
+                  <p className="text-[11px] text-stone-500">ឈ្មោះគណនី: {accountName}</p>
                 </div>
 
                 <button
@@ -697,6 +729,52 @@ export default function GoldenOrchidTemplate({
           </div>
         </div>
 
+        {/* Host Contacts Section */}
+        <div className="rounded-3xl p-6 sm:p-8 bg-white/90 border border-amber-300/60 shadow-lg backdrop-blur-xl mb-12 text-center space-y-4">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-amber-700 font-serifTrad">
+            <Phone className="w-3.5 h-3.5 text-amber-600" />
+            <span>Host Contacts</span>
+          </div>
+          <h3 className="font-koulen text-2xl text-stone-900">
+            ទំនាក់ទំនងម្ចាស់ដើមការ
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg mx-auto">
+            <a
+              href={`tel:${phoneGroom}`}
+              className="flex items-center justify-between p-3.5 rounded-2xl bg-[#FCFAF6] border border-amber-200 hover:bg-amber-50 transition text-xs"
+            >
+              <div className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-amber-700" />
+                <span className="font-koulen text-stone-800 text-sm">ខាងកូនប្រុស</span>
+              </div>
+              <span className="font-serifTrad font-bold text-amber-900">{phoneGroom}</span>
+            </a>
+            <a
+              href={`tel:${phoneBride}`}
+              className="flex items-center justify-between p-3.5 rounded-2xl bg-[#FCFAF6] border border-amber-200 hover:bg-amber-50 transition text-xs"
+            >
+              <div className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-amber-700" />
+                <span className="font-koulen text-stone-800 text-sm">ខាងកូនស្រី</span>
+              </div>
+              <span className="font-serifTrad font-bold text-amber-900">{phoneBride}</span>
+            </a>
+          </div>
+          {telegramLink && (
+            <div className="pt-2">
+              <a
+                href={telegramLink.startsWith('http') ? telegramLink : `https://${telegramLink}`}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold shadow-md transition"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>ឆាតតាម Telegram</span>
+              </a>
+            </div>
+          )}
+        </div>
+
         {/* Footer */}
         <footer className="text-center pt-12 text-xs text-stone-500 space-y-1">
           <p className="font-koulen text-stone-700 text-sm">
@@ -707,6 +785,78 @@ export default function GoldenOrchidTemplate({
           </p>
         </footer>
       </div>
+
+      {/* Lightbox Modal */}
+      {selectedPhoto && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <div
+            className="relative max-w-lg w-full bg-white border border-amber-300 rounded-3xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedPhoto(null)}
+              className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/60 text-white hover:text-amber-300 flex items-center justify-center cursor-pointer border border-white/20"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <div className="aspect-[3/4] w-full bg-black">
+              <img
+                src={selectedPhoto.src}
+                alt={selectedPhoto.caption || 'Photo'}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            {selectedPhoto.caption && (
+              <div className="p-4 text-center bg-stone-50 border-t border-stone-200">
+                <p className="font-serifTrad text-sm text-stone-800 font-semibold">
+                  {selectedPhoto.caption}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* QR Code Zoom Modal */}
+      {showQrModal && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setShowQrModal(false)}
+        >
+          <div
+            className="bg-white p-6 rounded-3xl max-w-xs w-full text-center shadow-2xl border border-amber-300 relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowQrModal(false)}
+              className="absolute top-3 right-3 w-8 h-8 rounded-full bg-stone-100 text-stone-600 hover:text-stone-900 flex items-center justify-center cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <h4 className="font-koulen text-base text-stone-900 mb-1">{bankName}</h4>
+            <p className="text-xs text-stone-500 mb-3">{accountName}</p>
+            {qrCodeImage ? (
+              <img
+                src={qrCodeImage}
+                alt="QR Code"
+                className="w-full aspect-square object-contain rounded-xl border border-stone-200 bg-white p-2"
+              />
+            ) : (
+              <div className="w-full aspect-square bg-stone-50 rounded-xl border border-stone-200 flex flex-col items-center justify-center text-amber-900 p-4">
+                <span className="font-bold text-sm mb-1">{bankName}</span>
+                <span className="text-xs">{accountNumber}</span>
+                <span className="text-[11px] text-stone-500 mt-1">{accountName}</span>
+              </div>
+            )}
+            <p className="text-xs font-serifTrad font-bold text-amber-800 mt-3">
+              {accountNumber}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

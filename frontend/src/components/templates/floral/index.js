@@ -13,6 +13,7 @@ export {
 };
 
 export const FLORAL_TEMPLATES = {
+  'floral-romance': BotanicalGlasshouseTemplate,
   'floral-botanical-glasshouse': BotanicalGlasshouseTemplate,
   'floral-khmer-blossom': KhmerBlossomTemplate,
   'floral-editorial-magazine': EditorialMagazineTemplate,

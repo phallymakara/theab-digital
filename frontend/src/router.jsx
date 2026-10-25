@@ -13,6 +13,7 @@ import { TemplatesPage } from './pages/TemplatesPage';
 import { InvitationPreviewPage } from './pages/InvitationPreviewPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { TemplateDetailPage } from './pages/TemplateDetailPage';
+import { TemplateCustomizerPage } from './pages/TemplateCustomizerPage';
 
 // Root Route layout
 const rootRoute = createRootRoute({
@@ -90,6 +91,20 @@ const previewRoute = createRoute({
   component: TemplateDetailPage,
 });
 
+// Route: /customize/$templateId
+const customizeTemplateRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/customize/$templateId',
+  component: TemplateCustomizerPage,
+});
+
+// Route: /customize
+const customizeRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/customize',
+  component: TemplateCustomizerPage,
+});
+
 // Build route tree
 const routeTree = rootRoute.addChildren([
   indexRoute,
@@ -101,6 +116,8 @@ const routeTree = rootRoute.addChildren([
   templatePreviewRoute,
   previewTemplateRoute,
   previewRoute,
+  customizeTemplateRoute,
+  customizeRoute,
 ]);
 
 // Create TanStack Router instance

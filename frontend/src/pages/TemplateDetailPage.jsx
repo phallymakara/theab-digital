@@ -4,6 +4,8 @@ import { useApp } from '../context/AppContext';
 import { CEREMONY_DATA } from '../data/templates';
 import { TRADITIONAL_TEMPLATES } from '../components/templates/traditional';
 import { FLORAL_TEMPLATES } from '../components/templates/floral';
+import { EMERALD_TEMPLATES } from '../components/templates/emerald';
+import { MODERN_TEMPLATES } from '../components/templates/modern';
 import confetti from 'canvas-confetti';
 import { FlyingHeartsAndFlowers } from '../components/FlyingHeartsAndFlowers';
 import { KhmerFloatingBackground } from '../components/KhmerBackgroundFlowers';
@@ -188,7 +190,12 @@ export function TemplateDetailPage() {
     activeTemplate.tag === 'ប្រពៃណីបុរាណ' ||
     activeTemplate.cardStyle?.startsWith('traditional-') ||
     isAngkorAncient;
-  const TraditionalComponent = TRADITIONAL_TEMPLATES[activeTemplate.id] || FLORAL_TEMPLATES[activeTemplate.id];
+  const TraditionalComponent =
+    TRADITIONAL_TEMPLATES[activeTemplate.id] ||
+    FLORAL_TEMPLATES[activeTemplate.id] ||
+    EMERALD_TEMPLATES[activeTemplate.id] ||
+    MODERN_TEMPLATES[activeTemplate.id] ||
+    MODERN_TEMPLATES[activeTemplate.cardStyle];
   const hasHtml = !!activeTemplate.htmlPreviewUrl;
   const [viewMode, setViewMode] = useState(hasHtml ? 'html' : 'smart');
 
@@ -228,11 +235,21 @@ export function TemplateDetailPage() {
                   ? 'font-komutt-a'
                   : activeTemplate.cardStyle === 'emerald-jade' || activeTemplate.id === 'emerald-jade'
                     ? 'font-moulpali'
-                    : activeTemplate.cardStyle === 'romantic-frosted' || activeTemplate.id === 'floral-romance'
+                    : activeTemplate.cardStyle === 'emerald-radiant-diamond' || activeTemplate.id === 'emerald-radiant-diamond'
+                      ? 'font-komutt'
+                      : activeTemplate.cardStyle === 'emerald-nature-heirloom' || activeTemplate.id === 'emerald-nature-heirloom'
+                        ? 'font-komutt'
+                        : activeTemplate.cardStyle === 'emerald-glasshouse-moonlight' || activeTemplate.id === 'emerald-glasshouse-moonlight'
+                          ? 'font-komutt'
+                        : activeTemplate.cardStyle === 'emerald-noir-editorial' || activeTemplate.id === 'emerald-noir-editorial'
+                          ? 'font-komutt'
+                        : activeTemplate.cardStyle === 'emerald-malachite-seal' || activeTemplate.id === 'emerald-malachite-seal'
+                          ? 'font-komutt'
+                      : activeTemplate.cardStyle === 'romantic-frosted' || activeTemplate.id === 'floral-romance'
                       ? 'font-kouteok'
                       : activeTemplate.id === 'angkor-heritage'
                         ? 'font-phalluch'
-                        : activeTemplate.cardStyle === 'modern-luxury' || activeTemplate.id === 'modern-luxury'
+                        : activeTemplate.cardStyle?.startsWith('modern-') || activeTemplate.id?.startsWith('modern-')
                           ? 'font-komutt'
                           : activeTemplate.id === 'royal-gold'
                             ? 'font-komutt-a'
@@ -255,7 +272,11 @@ export function TemplateDetailPage() {
   // Theme accent colors
   const themeBorder = activeTemplate.borderColor || '#D4AF37';
   const themeTitleColor = activeTemplate.titleColor || '#881337';
-  const isEmerald = activeTemplate.themeColor === 'emerald' || activeTemplate.id === 'emerald-jade';
+  const isEmerald =
+    activeTemplate.themeColor === 'emerald' ||
+    activeTemplate.category === 'emerald' ||
+    activeTemplate.id === 'emerald-jade' ||
+    activeTemplate.id?.startsWith('emerald-');
 
   // Determine template-specific pattern background & consistent color palette
   const getTemplateBackground = () => {
@@ -284,38 +305,6 @@ export function TemplateDetailPage() {
           glowBottom: 'bg-amber-100/30',
           btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-[#D4AF37]/70 shadow-sm'
         };
-      case 'traditional-ivory-parchment':
-        return {
-          bgClass: 'bg-pattern-ivory-parchment',
-          textColor: 'text-stone-800',
-          glowTop: 'bg-amber-200/20',
-          glowBottom: 'bg-amber-100/30',
-          btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-[#B38728]/70 shadow-sm'
-        };
-      case 'traditional-indigo-hol':
-        return {
-          bgClass: 'bg-pattern-indigo-hol',
-          textColor: 'text-stone-800',
-          glowTop: 'bg-blue-200/25',
-          glowBottom: 'bg-amber-100/30',
-          btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-[#E3BA55]/70 shadow-sm'
-        };
-      case 'traditional-angkor-pediment':
-        return {
-          bgClass: 'bg-pattern-angkor-pediment',
-          textColor: 'text-stone-800',
-          glowTop: 'bg-amber-200/20',
-          glowBottom: 'bg-amber-100/30',
-          btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-[#C5A059]/70 shadow-sm'
-        };
-      case 'traditional-royal-pavilion':
-        return {
-          bgClass: 'bg-pattern-royal-pavilion',
-          textColor: 'text-stone-800',
-          glowTop: 'bg-amber-200/25',
-          glowBottom: 'bg-amber-100/30',
-          btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-[#E5BE53]/70 shadow-sm'
-        };
       case 'angkor-ancient-royalty':
         return {
           bgClass: 'bg-pattern-angkor-pediment',
@@ -323,6 +312,14 @@ export function TemplateDetailPage() {
           glowTop: 'bg-amber-200/20',
           glowBottom: 'bg-amber-100/30',
           btnTheme: 'bg-white/95 hover:bg-stone-50 text-stone-800 border-[#C5A059]/70 shadow-sm'
+        };
+      case 'floral-botanical-glasshouse':
+        return {
+          bgClass: 'bg-pattern-botanical-glasshouse',
+          textColor: 'text-[#23372B]',
+          glowTop: 'bg-emerald-200/25',
+          glowBottom: 'bg-amber-100/30',
+          btnTheme: 'bg-white/95 hover:bg-stone-50 text-[#23372B] border-[#4A6753]/60 shadow-sm'
         };
       default:
         return isTraditional
@@ -629,7 +626,7 @@ export function TemplateDetailPage() {
           THE UNIFIED WEDDING INVITATION CONTAINER (SAME EXACT SHELL AS ROYAL-GOLD)
           ========================================================================= */}
       <main
-        className={`w-full max-w-xl sm:max-w-2xl mx-auto ${isAngkorAncient ? 'border-x-[3px] shadow-[0_0_35px_rgba(197,160,89,0.35)] ring-1 ring-[#8C6F19]/40' : 'sm:border-x-2 border-stone-300/40'} border-y-0 overflow-hidden relative z-10 animate-fade shadow-2xl flex-1 h-full min-h-0 ${isTraditional ? 'bg-[#FAF7F2]' : 'bg-stone-900'} flex flex-col`}
+        className={`w-full max-w-xl sm:max-w-2xl mx-auto ${isAngkorAncient ? 'border-x-[3px] shadow-[0_0_35px_rgba(197,160,89,0.35)] ring-1 ring-[#8C6F19]/40' : 'sm:border-x-2 border-stone-300/40'} border-y-0 overflow-hidden relative z-10 animate-fade shadow-2xl flex-1 h-full min-h-0 ${isTraditional || activeTemplate.id === 'floral-botanical-glasshouse' ? 'bg-[#FAF7F2]' : isEmerald ? (activeTemplate.id === 'emerald-radiant-diamond' ? 'bg-[#021824]' : activeTemplate.id === 'emerald-jade' ? 'bg-[#042A20]' : activeTemplate.id === 'emerald-glasshouse-moonlight' ? 'bg-[#031C17]' : activeTemplate.id === 'emerald-noir-editorial' ? 'bg-[#030E0A]' : activeTemplate.id === 'emerald-malachite-seal' ? 'bg-[#042017]' : 'bg-[#033022]') : 'bg-stone-900'} flex flex-col`}
         style={{ borderColor: themeBorder }}
       >
         {/* Top Floating Control Bar - Inside at Top of Container (Transparent background behind buttons) */}
@@ -704,6 +701,18 @@ export function TemplateDetailPage() {
               <Share2 className="w-4 h-4 text-amber-300 shrink-0" />
               <span className="hidden xs:inline">ចែករំលែកធៀប</span>
               <span className="xs:hidden">ចែករំលែក</span>
+            </button>
+
+            {/* Customize / Rent Button */}
+            <button
+              onClick={() => {
+                setSelectedTemplate(activeTemplate);
+                navigate({ to: `/customize/${activeTemplate.id}` });
+              }}
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:brightness-110 text-white backdrop-blur-md border border-amber-300/40 shadow-lg text-xs font-bold transition-all cursor-pointer active:scale-95"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-200 shrink-0" />
+              <span>ជ្រើសរើសបំពេញព័ត៌មាន</span>
             </button>
           </div>
         </header>
@@ -870,20 +879,6 @@ export function TemplateDetailPage() {
                             {brideName}
                           </div>
                         </div>
-
-                        {/* Date & Location with smooth Moul & Suwannaphum font, solid gold color (no transparency) */}
-                        <div className="pt-2 sm:pt-2.5 space-y-1">
-                          <div className="inline-flex items-center justify-center gap-2 my-0.5">
-                            <span className="text-amber-400 text-xs select-none">✦</span>
-                            <p className="font-moul text-sm sm:text-base md:text-lg text-amber-200 tracking-wide drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
-                              {weddingDate}
-                            </p>
-                            <span className="text-amber-400 text-xs select-none">✦</span>
-                          </div>
-                          <p className="text-xs sm:text-[13px] text-amber-100/90 font-suwannaphum leading-relaxed drop-shadow-[0_1px_5px_rgba(0,0,0,0.95)] max-w-sm mx-auto">
-                            {weddingLocation}
-                          </p>
-                        </div>
                       </div>
                     </div>
                   ) : (
@@ -907,19 +902,6 @@ export function TemplateDetailPage() {
                           <div className={`${groomBrideFont} text-xl sm:text-2xl md:text-3xl text-white tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]`}>
                             {brideName}
                           </div>
-                        </div>
-
-                        {/* Date & Venue Badge - Enlarged Text Sizes */}
-                        <div className="pt-2.5 sm:pt-3.5 space-y-1">
-                          <p className="text-sm sm:text-base text-amber-200 font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
-                            ប្រព្រឹត្តទៅនៅ
-                          </p>
-                          <p className={`${templateFont} text-xl sm:text-2xl md:text-3xl text-white tracking-wide my-1 drop-shadow-[0_3px_8px_rgba(0,0,0,0.95)]`}>
-                            {weddingDate}
-                          </p>
-                          <p className="text-xs sm:text-sm md:text-base text-amber-100 font-suwannaphum leading-relaxed drop-shadow-[0_1px_6px_rgba(0,0,0,0.95)] max-w-md mx-auto">
-                            {weddingLocation}
-                          </p>
                         </div>
                       </div>
                     </div>
@@ -1306,18 +1288,18 @@ export function TemplateDetailPage() {
                     <KhmerDivider isAncient={isAngkorAncient} />
 
                     {/* Editorial Photo Grid */}
-                    <div className="grid grid-cols-2 gap-2 sm:gap-2.5 max-w-xl mx-auto">
+                    <div className="grid grid-cols-2 gap-2 sm:gap-2.5 max-w-xl mx-auto items-start">
                       {galleryPhotos.map((photo, idx) => {
                         const isFullWidth = idx === 0 || idx === 5;
                         const heightClass = isFullWidth
-                          ? 'h-64 sm:h-80 md:h-92'
-                          : 'h-52 sm:h-64 md:h-72';
+                          ? 'h-64 sm:h-80 md:h-92 hover:h-72 sm:hover:h-88 md:hover:h-[400px]'
+                          : 'h-52 sm:h-64 md:h-72 hover:h-60 sm:hover:h-72 md:hover:h-80';
 
                         return (
                           <div
                             key={photo.id}
                             onClick={() => setActivePhoto(photo)}
-                            className={`group relative rounded-2xl overflow-hidden cursor-pointer ${isAngkorAncient ? 'border-2 border-[#C5A059]/80 shadow-[0_8px_30px_rgba(140,111,25,0.2)]' : 'border border-white/80 shadow-[0_8px_25px_rgba(0,0,0,0.06)]'} backdrop-blur-xs transition-all hover:shadow-lg hover:border-amber-300/80 ${isFullWidth ? 'col-span-2' : 'col-span-1'
+                            className={`group relative rounded-2xl overflow-hidden cursor-pointer ${isAngkorAncient ? 'border-2 border-[#C5A059]/80 shadow-[0_8px_30px_rgba(140,111,25,0.2)]' : 'border border-white/80 shadow-[0_8px_25px_rgba(0,0,0,0.06)]'} transition-all duration-500 ease-out hover:shadow-xl hover:border-amber-300/80 ${isFullWidth ? 'col-span-2' : 'col-span-1'
                               } ${heightClass}`}
                           >
                             <img
@@ -1325,8 +1307,8 @@ export function TemplateDetailPage() {
                               alt={photo.caption}
                               className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                             />
-                            {/* Subtle Elegant Glass Hover Gradient Overlay with Caption */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-3.5 sm:p-4 text-white text-center backdrop-blur-[2px]">
+                            {/* Subtle Elegant Hover Gradient Overlay with Caption (No blur) */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3.5 sm:p-4 text-white text-center">
                               <p className="text-xs sm:text-sm font-semibold tracking-wide drop-shadow-md">
                                 {photo.caption}
                               </p>

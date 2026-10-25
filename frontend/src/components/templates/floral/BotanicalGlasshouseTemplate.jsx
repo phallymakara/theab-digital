@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
-import { Calendar, Clock, MapPin, Music, Heart, Send, Copy, Check, X, Sparkles, ChevronLeft, ChevronRight, Volume2, VolumeX } from 'lucide-react';
+import { Calendar, Clock, MapPin, Music, Heart, Send, Copy, Check, X, Sparkles, ChevronLeft, ChevronRight, Volume2, VolumeX, Phone, MessageCircle, QrCode } from 'lucide-react';
 
 // Gentle Acoustic Floral Romantic Melody Synthesizer (Cello + Flute + Harp arpeggios)
 class FloralRomanticAudio {
@@ -87,26 +87,62 @@ class FloralRomanticAudio {
 
 export const floralRomanticAudio = new FloralRomanticAudio();
 
-export function BotanicalGlasshouseTemplate({ data = {} }) {
-  const groom = data.groomName || 'លី ម៉េងហុង';
-  const bride = data.brideName || 'ចាន់ ធីតា';
-  const groomParents = data.groomParents || 'លោក លី គឹមសាន និង លោកស្រី អ៊ុក សុផល';
-  const brideParents = data.brideParents || 'លោក ចាន់ សុវណ្ណ និង លោកស្រី គង់ ម៉ាលីស';
-  const dateStr = data.ceremonyDate || 'ថ្ងៃសៅរ៍ ទី២៨ ខែវិច្ឆិកា ឆ្នាំ២០២៦';
-  const timeStr = data.ceremonyTime || 'វេលាម៉ោង ០៧:០០ ព្រឹក ដល់ ០៨:០០ យប់';
-  const locationName = data.ceremonyLocation || 'សួនរុក្ខជាតិបូតានិក ហ្គ្រេនផាឡេស (Botanical Glasshouse Hall)';
-  const address = data.ceremonyAddress || 'មហាវិថីសម្តេចតេជោ (៦០ម៉ែត្រ) រាជធានីភ្នំពេញ';
-  const preweddingImg = data.preweddingPhoto || '/images/templates/floral_botanical_prewedding.jpg';
+export function BotanicalGlasshouseTemplate({
+  data = {},
+  invitation = {},
+  invitationData = {},
+  activeTemplate = {}
+}) {
+  const groom = data.groomName || invitation.groomName || activeTemplate?.demoGroom || 'លី ម៉េងហុង';
+  const bride = data.brideName || invitation.brideName || activeTemplate?.demoBride || 'ចាន់ ធីតា';
+  const groomParents = data.groomParents || (invitation.groomParents?.father ? `${invitation.groomParents.father} និង ${invitation.groomParents.mother}` : 'លោក លី គឹមសាន និង លោកស្រី អ៊ុក សុផល');
+  const brideParents = data.brideParents || (invitation.brideParents?.father ? `${invitation.brideParents.father} និង ${invitation.brideParents.mother}` : 'លោក ចាន់ សុវណ្ណ និង លោកស្រី គង់ ម៉ាលីស');
+  const dateStr = data.ceremonyDate || invitation.weddingDate || activeTemplate?.demoDate || 'ថ្ងៃសៅរ៍ ទី២៨ ខែវិច្ឆិកា ឆ្នាំ២០២៦';
+  const timeStr = data.ceremonyTime || invitation.weddingTime || 'វេលាម៉ោង ០៧:០០ ព្រឹក ដល់ ០៨:០០ យប់';
+  const locationName = data.ceremonyLocation || invitation.weddingLocation || activeTemplate?.demoLocation || 'សួនរុក្ខជាតិបូតានិក ហ្គ្រេនផាឡេស (Botanical Glasshouse Hall)';
+  const address = data.locationAddress || data.ceremonyAddress || invitation.locationAddress || 'មហាវិថីសម្តេចតេជោ (៦០ម៉ែត្រ) រាជធានីភ្នំពេញ';
+  const googleMapsUrl = data.googleMapsUrl || invitation.googleMapsUrl || 'https://maps.google.com/?q=Botanical+Glasshouse+Hall';
+  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/floral_botanical_prewedding.jpg';
+
+  // Bank & Gift
+  const bankName = data.bankName || invitation.bankName || 'ABA BANK / BAKONG';
+  const accountName = data.accountName || invitation.accountName || `${groom} & ${bride}`;
+  const accountNumber = data.accountNumber || invitation.accountNumber || '001 888 999';
+  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || null;
+
+  // Host contacts
+  const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation.hostPhoneGroom || '012 345 678';
+  const phoneBride = data.hostPhoneBride || data.phoneBride || invitation.hostPhoneBride || '098 765 432';
+  const telegramLink = data.telegramLink || invitation.telegramLink || 'https://t.me';
+
+  // Dynamic Programs
+  const programs = (data.ceremonyPrograms && data.ceremonyPrograms.length > 0)
+    ? data.ceremonyPrograms
+    : [
+        { time: '០៧:០០ ព្រឹក', title: 'ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត', desc: 'ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត និងបាចផ្កាចងដៃសិរីមង្គលដោយព្រះសង្ឃ' },
+        { time: '០៩:៣០ ព្រឹក', title: 'ពិធីហែកំណត់ និងសែនចងដៃ', desc: 'ពិធីហែជំនូន ពិធីកាត់សក់បង្កក់សិរី និងពិធីសែនចងដៃកូនប្រុសកូនស្រី' },
+        { time: '១២:០០ ថ្ងៃត្រង់', title: 'ពិសារអាហារថ្ងៃត្រង់គ្រួសារ', desc: 'ជួបជុំសាច់ញាតិពិសារអាហារសាមគ្គី' },
+        { time: '០៥:០០ ល្ងាច', title: 'ពិធីពិសាភោជនាហារមង្គលការ', desc: 'ទទួលភ្ញៀវកិត្តិយសពិសាភោជនាហារ និងរាំកម្សាន្តអបអរសាទរ' }
+      ];
 
   // Multi-image hero list
   const heroList = (data.heroImages && data.heroImages.length > 0)
     ? data.heroImages
-    : [
+    : (activeTemplate?.heroImages || [
         '/images/templates/floral_botanical_prewedding.jpg',
         '/images/templates/floral-romance/floral_1.jpg',
         '/images/templates/floral-romance/floral_2.jpg',
         '/images/templates/floral-romance/floral_3.jpg'
-      ];
+      ]);
+
+  // Gallery Photos
+  const gallery = (data.galleryPhotos && data.galleryPhotos.length > 0)
+    ? data.galleryPhotos
+    : (activeTemplate?.galleryPhotos || [
+        { id: 1, src: preweddingImg, caption: 'សួនផ្កាកុលាបបារាំងមនោរម្យ' },
+        { id: 2, src: '/images/templates/floral-romance/floral_1.jpg', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
+        { id: 3, src: '/images/templates/floral-romance/floral_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' }
+      ]);
 
   const [activeHeroIdx, setActiveHeroIdx] = useState(0);
   const heroScrollRef = useRef(null);
@@ -114,6 +150,7 @@ export function BotanicalGlasshouseTemplate({ data = {} }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activePhoto, setActivePhoto] = useState(null);
+  const [showQrModal, setShowQrModal] = useState(false);
   const [envelopeOpened, setEnvelopeOpened] = useState(false);
   const [rsvp, setRsvp] = useState({ name: '', attendance: 'attending', guests: '1 នាក់', note: '' });
   const [rsvpDone, setRsvpDone] = useState(false);
@@ -192,26 +229,9 @@ export function BotanicalGlasshouseTemplate({ data = {} }) {
     setWish({ name: '', text: '' });
   };
 
-  const gallery = [
-    { id: 1, src: preweddingImg, caption: 'សួនផ្កាកុលាបបារាំងមនោរម្យ' },
-    { id: 2, src: '/images/templates/floral-romance/floral_1.jpg', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
-    { id: 3, src: '/images/templates/floral-romance/floral_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' },
-    { id: 4, src: '/images/templates/floral-romance/floral_3.jpg', caption: 'អនុស្សាវរីយ៍សួនផ្កាអមតៈ' },
-    { id: 5, src: '/images/templates/wedding_floral_bg.jpg', caption: 'កម្រងផ្កាស្រស់សិរីមង្គល' },
-    { id: 6, src: '/images/templates/wedding_flowers_bg.jpg', caption: 'សេចក្តីសុខក្សេមក្សាន្តជានិរន្តរ៍' }
-  ];
-
   return (
     <div
-      className="w-full min-h-screen text-[#2D3A30] font-suwannaphum antialiased selection:bg-[#4A6753] selection:text-[#FAF7F2] relative"
-      style={{
-        backgroundColor: '#FAF7F2',
-        backgroundImage: `
-          radial-gradient(circle at 10% 20%, rgba(232, 197, 184, 0.25) 0%, transparent 40%),
-          radial-gradient(circle at 90% 80%, rgba(74, 103, 83, 0.15) 0%, transparent 45%),
-          url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%234a6753' fill-opacity='0.035'%3E%3Cpath d='M30 10 C35 20 40 25 50 30 C40 35 35 40 30 50 C25 40 20 35 10 30 C20 25 25 20 30 10 Z'/%3E%3Ccircle cx='30' cy='30' r='2' fill='%23d4af37' fill-opacity='0.08'/%3E%3C/g%3E%3C/svg%3E")
-        `
-      }}
+      className="w-full min-h-screen text-[#2D3A30] font-suwannaphum antialiased selection:bg-[#4A6753] selection:text-[#FAF7F2] relative bg-pattern-botanical-glasshouse"
     >
       {/* Floating Gentle Acoustic Music Player */}
       <aside className="fixed top-5 right-5 z-40">
@@ -234,24 +254,13 @@ export function BotanicalGlasshouseTemplate({ data = {} }) {
       </aside>
 
       {/* Main Container - Cathedral Botanical Glasshouse Arch */}
-      <div className="w-full relative bg-[#FCFAF6] pb-24">
+      <div className="w-full relative bg-[#FCFAF6]/90 backdrop-blur-xs pb-24 shadow-sm">
         
         {/* =========================================================================
             1. CATHEDRAL BOTANICAL ARCH HERO GALLERY (MULTI-IMAGE HORIZONTAL SWIPE)
             ========================================================================= */}
         <section className="relative w-full overflow-hidden bg-[#F2EDE4] border-b border-[#4A6753]/20">
           
-          {/* Glasshouse Conservatory Dome Header Motif */}
-          <div className="absolute top-0 inset-x-0 z-20 flex justify-center pt-3 pointer-events-none">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/85 backdrop-blur-md border border-[#4A6753]/30 shadow-md">
-              <span className="text-[#D4AF37] text-xs">❀</span>
-              <span className="font-preahvihear text-[11px] sm:text-xs text-[#2D3A30] tracking-wider font-semibold">
-                មហាសួនផ្កាកុលាបមនោរម្យ • BOTANICAL GLASSHOUSE
-              </span>
-              <span className="text-[#D4AF37] text-xs">❀</span>
-            </div>
-          </div>
-
           {/* Horizontal Snap Scroll Prewedding Gallery */}
           <div
             ref={heroScrollRef}
@@ -282,9 +291,6 @@ export function BotanicalGlasshouseTemplate({ data = {} }) {
                   <h1 className="font-preahvihear text-3xl sm:text-4xl text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] tracking-wide">
                     {groom} <span className="text-amber-200 text-2xl font-serifTrad italic">&</span> {bride}
                   </h1>
-                  <p className="text-xs text-amber-100/90 font-serifTrad tracking-widest mt-1">
-                    {dateStr}
-                  </p>
                 </div>
               </div>
             ))}
@@ -462,59 +468,26 @@ export function BotanicalGlasshouseTemplate({ data = {} }) {
             </div>
 
             <div className="space-y-3">
-              {/* Event 1 */}
-              <div className="p-4 rounded-2xl bg-white border border-[#4A6753]/20 shadow-xs flex items-start gap-3.5 hover:shadow-md transition-shadow">
-                <div className="w-10 h-10 rounded-xl bg-[#EAF1EC] text-[#354E3E] flex items-center justify-center shrink-0 mt-0.5">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-preahvihear text-sm text-[#23372B]">ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត</h4>
-                    <span className="text-[11px] font-serifTrad text-[#5B8067] font-semibold bg-[#EAF1EC] px-2 py-0.5 rounded-full">
-                      ០៧:០០ ព្រឹក
-                    </span>
+              {programs.map((ev, idx) => (
+                <div key={idx} className="p-4 rounded-2xl bg-white border border-[#4A6753]/20 shadow-xs flex items-start gap-3.5 hover:shadow-md transition-shadow">
+                  <div className="w-10 h-10 rounded-xl bg-[#EAF1EC] text-[#354E3E] flex items-center justify-center shrink-0 mt-0.5">
+                    <Clock className="w-5 h-5" />
                   </div>
-                  <p className="text-xs text-stone-500 mt-1 leading-relaxed">
-                    ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត និងបាចផ្កាចងដៃសិរីមង្គលដោយព្រះសង្ឃ
-                  </p>
-                </div>
-              </div>
-
-              {/* Event 2 */}
-              <div className="p-4 rounded-2xl bg-white border border-[#4A6753]/20 shadow-xs flex items-start gap-3.5 hover:shadow-md transition-shadow">
-                <div className="w-10 h-10 rounded-xl bg-[#EAF1EC] text-[#354E3E] flex items-center justify-center shrink-0 mt-0.5">
-                  <Heart className="w-5 h-5" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-preahvihear text-sm text-[#23372B]">ពិធីហែកំណត់ និងសែនចងដៃ</h4>
-                    <span className="text-[11px] font-serifTrad text-[#5B8067] font-semibold bg-[#EAF1EC] px-2 py-0.5 rounded-full">
-                      ០៩:៣០ ព្រឹក
-                    </span>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-preahvihear text-sm text-[#23372B]">{ev.title || ev.text}</h4>
+                      <span className="text-[11px] font-serifTrad text-[#5B8067] font-semibold bg-[#EAF1EC] px-2 py-0.5 rounded-full">
+                        {ev.time}
+                      </span>
+                    </div>
+                    {ev.desc && (
+                      <p className="text-xs text-stone-500 mt-1 leading-relaxed">
+                        {ev.desc}
+                      </p>
+                    )}
                   </div>
-                  <p className="text-xs text-stone-500 mt-1 leading-relaxed">
-                    ពិធីហែជំនូន ពិធីកាត់សក់បង្កក់សិរី និងពិធីសែនចងដៃកូនប្រុសកូនស្រី
-                  </p>
                 </div>
-              </div>
-
-              {/* Event 3 */}
-              <div className="p-4 rounded-2xl bg-white border border-[#4A6753]/20 shadow-xs flex items-start gap-3.5 hover:shadow-md transition-shadow">
-                <div className="w-10 h-10 rounded-xl bg-[#EAF1EC] text-[#354E3E] flex items-center justify-center shrink-0 mt-0.5">
-                  <Sparkles className="w-5 h-5" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-preahvihear text-sm text-[#23372B]">ពិធីពិសាភោជនាហារមង្គលការ</h4>
-                    <span className="text-[11px] font-serifTrad text-[#5B8067] font-semibold bg-[#EAF1EC] px-2 py-0.5 rounded-full">
-                      ០៥:០០ ល្ងាច
-                    </span>
-                  </div>
-                  <p className="text-xs text-stone-500 mt-1 leading-relaxed">
-                    ទទួលភ្ញៀវកិត្តិយសពិសាភោជនាហារ និងរាំកម្សាន្តអបអរសាទរ
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </section>
 
@@ -534,7 +507,7 @@ export function BotanicalGlasshouseTemplate({ data = {} }) {
               </p>
 
               <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationName + ' ' + address)}`}
+                href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#354E3E] text-white text-xs font-semibold shadow hover:bg-[#283C30] active:scale-95 transition-all cursor-pointer"
@@ -559,21 +532,21 @@ export function BotanicalGlasshouseTemplate({ data = {} }) {
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {gallery.map((item) => (
+              {gallery.map((item, idx) => (
                 <div
-                  key={item.id}
+                  key={item.id || idx}
                   onClick={() => setActivePhoto(item)}
                   className="rounded-2xl overflow-hidden aspect-[3/4] bg-stone-100 border border-[#4A6753]/20 shadow-xs hover:shadow-md cursor-pointer group relative"
                 >
                   <img
-                    src={item.src}
-                    alt={item.caption}
+                    src={item.src || item}
+                    alt={item.caption || 'Prewedding'}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2.5">
                     <p className="text-[11px] text-white leading-tight font-preahvihear">
-                      {item.caption}
+                      {item.caption || 'អនុស្សាវរីយ៍'}
                     </p>
                   </div>
                 </div>
@@ -596,23 +569,27 @@ export function BotanicalGlasshouseTemplate({ data = {} }) {
                 ដើម្បីភាពងាយស្រួល ភ្ញៀវកិត្តិយសអាចស្កេន QR Code ឬចម្លងលេខគណនីខាងក្រោម
               </p>
 
-              <div className="max-w-[200px] mx-auto p-3 bg-white rounded-2xl border border-stone-200 shadow-inner mb-3">
-                <img
-                  src="/images/aba_qr.png"
-                  alt="ABA QR"
-                  className="w-full h-auto rounded-lg object-contain"
-                  onError={(e) => {
-                    // Fallback visual QR simulation
-                    e.currentTarget.style.display = 'none';
-                  }}
-                />
-              </div>
+              {qrCodeImage && (
+                <div
+                  onClick={() => setShowQrModal(true)}
+                  className="max-w-[180px] mx-auto p-2 bg-white rounded-2xl border border-stone-200 shadow-inner mb-3 cursor-pointer hover:scale-105 transition"
+                >
+                  <img
+                    src={qrCodeImage}
+                    alt="Bank QR"
+                    className="w-full h-auto rounded-lg object-contain"
+                  />
+                  <span className="text-[9px] text-[#354E3E] font-bold block mt-1">ចុចដើម្បីពង្រីក QR</span>
+                </div>
+              )}
 
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-stone-100 border border-stone-200 text-xs">
-                <span className="font-serifTrad font-bold text-[#23372B]">ABA: 001 888 999</span>
+              <p className="font-bold text-xs text-stone-800 uppercase mb-1">{accountName}</p>
+
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-stone-100 border border-stone-200 text-xs">
+                <span className="font-serifTrad font-bold text-[#23372B]">{bankName}: {accountNumber}</span>
                 <button
-                  onClick={() => copyAccount('001888999')}
-                  className="text-[#354E3E] hover:text-black font-semibold text-[11px] flex items-center gap-1 cursor-pointer"
+                  onClick={() => copyAccount(accountNumber)}
+                  className="text-[#354E3E] hover:text-black font-semibold text-[11px] flex items-center gap-1 cursor-pointer bg-white px-2 py-0.5 rounded-full border border-stone-200"
                 >
                   {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? 'បានចម្លង!' : 'ចម្លង'}</span>
@@ -737,6 +714,45 @@ export function BotanicalGlasshouseTemplate({ data = {} }) {
             </div>
           </section>
 
+          {/* Host Contacts */}
+          <section className="mt-8">
+            <div className="p-5 rounded-3xl bg-white border border-[#4A6753]/25 shadow-sm text-center">
+              <span className="text-xs font-preahvihear text-[#5B8067] tracking-widest uppercase block mb-1">
+                ព័ត៌មានទំនាក់ទំនង
+              </span>
+              <h4 className="font-preahvihear text-base text-[#23372B] mb-3">
+                ទំនាក់ទំនងម្ចាស់កម្មវិធី
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-sm mx-auto mb-3">
+                <a
+                  href={`tel:${phoneGroom.replace(/\s+/g, '')}`}
+                  className="flex items-center justify-center gap-2 p-2.5 rounded-2xl bg-[#F7F4EE] border border-[#4A6753]/20 text-[#23372B] hover:bg-[#EAF1EC] transition text-xs font-semibold"
+                >
+                  <Phone className="w-4 h-4 text-[#354E3E]" />
+                  <span>កូនប្រុស៖ {phoneGroom}</span>
+                </a>
+                <a
+                  href={`tel:${phoneBride.replace(/\s+/g, '')}`}
+                  className="flex items-center justify-center gap-2 p-2.5 rounded-2xl bg-[#F7F4EE] border border-[#4A6753]/20 text-[#23372B] hover:bg-[#EAF1EC] transition text-xs font-semibold"
+                >
+                  <Phone className="w-4 h-4 text-[#354E3E]" />
+                  <span>កូនស្រី៖ {phoneBride}</span>
+                </a>
+              </div>
+              {telegramLink && (
+                <a
+                  href={telegramLink.startsWith('http') ? telegramLink : `https://${telegramLink}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#354E3E] text-white text-xs font-semibold hover:bg-[#283C30] transition shadow"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-amber-200" />
+                  <span>Telegram ម្ចាស់កម្មវិធី</span>
+                </a>
+              )}
+            </div>
+          </section>
+
           {/* Footer Back to Top */}
           <footer className="mt-12 text-center text-xs text-stone-500 pb-6">
             <p className="font-preahvihear text-xs text-[#5B8067] mb-1">
@@ -771,8 +787,32 @@ export function BotanicalGlasshouseTemplate({ data = {} }) {
             >
               <X className="w-4 h-4" />
             </button>
-            <img src={activePhoto.src} alt={activePhoto.caption} className="w-full rounded-xl object-contain max-h-[70vh]" />
-            <p className="text-center text-xs text-amber-200 mt-2 font-preahvihear">{activePhoto.caption}</p>
+            <img src={activePhoto.src || activePhoto} alt={activePhoto.caption || 'Prewedding'} className="w-full rounded-xl object-contain max-h-[70vh]" />
+            <p className="text-center text-xs text-amber-200 mt-2 font-preahvihear">{activePhoto.caption || 'អនុស្សាវរីយ៍'}</p>
+          </div>
+        </div>
+      )}
+
+      {/* QR Code Zoom Modal */}
+      {showQrModal && qrCodeImage && (
+        <div
+          onClick={() => setShowQrModal(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+        >
+          <div className="relative max-w-sm w-full bg-white p-6 rounded-3xl text-center shadow-2xl border-2 border-[#4A6753]" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setShowQrModal(false)}
+              className="absolute top-3 right-3 text-stone-500 hover:text-stone-900 p-1 cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="font-preahvihear text-[#23372B] text-base mb-1">ស្កេនដើម្បីជូនចំណងដៃ</h3>
+            <p className="text-xs text-[#5B8067] mb-4">{bankName}</p>
+            <div className="p-2 bg-stone-50 rounded-2xl border border-stone-200 mb-4">
+              <img src={qrCodeImage} alt="QR Code Enlarged" className="w-full h-auto rounded-xl object-contain max-h-[350px]" />
+            </div>
+            <p className="font-bold text-xs text-stone-800 uppercase">{accountName}</p>
+            <p className="text-base font-mono font-bold text-[#354E3E] my-1">{accountNumber}</p>
           </div>
         </div>
       )}

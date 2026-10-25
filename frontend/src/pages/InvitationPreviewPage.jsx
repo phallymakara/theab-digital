@@ -133,20 +133,10 @@ export function InvitationPreviewPage() {
 
   const getTraditionalBgClass = () => {
     switch (selectedTemplate?.id) {
-      case 'traditional-phkachan-slathor':
-        return 'bg-pattern-phkachan-slathor';
       case 'traditional-royal-lacquer':
         return 'bg-pattern-royal-lacquer';
       case 'traditional-crimson-angkoreach':
         return 'bg-pattern-crimson-angkoreach';
-      case 'traditional-ivory-parchment':
-        return 'bg-pattern-ivory-parchment';
-      case 'traditional-indigo-hol':
-        return 'bg-pattern-indigo-hol';
-      case 'traditional-angkor-pediment':
-        return 'bg-pattern-angkor-pediment';
-      case 'traditional-royal-pavilion':
-        return 'bg-pattern-royal-pavilion';
       default:
         return 'bg-traditional-pattern-main';
     }

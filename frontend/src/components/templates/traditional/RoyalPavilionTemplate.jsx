@@ -4,20 +4,51 @@ import { plengKarSynth } from './PinpeatAudio';
 import { TraditionalHeroSection } from './TraditionalHeroSection';
 import { Calendar, Clock, MapPin, Music, Heart, Send, Copy, Check, X, Phone, CalendarPlus } from 'lucide-react';
 
-export function RoyalPavilionTemplate({ data = {} }) {
-  const groom = data.groomName || 'ហេង វឌ្ឍនា';
-  const bride = data.brideName || 'កែវ ចរណៃ';
-  const groomParents = data.groomParents || 'លោក ហេង វណ្ណា និង អ្នកស្រី គីម ស្រ៊ុន';
-  const brideParents = data.brideParents || 'លោក កែវ សម្បត្តិ និង អ្នកស្រី សុខ ហៀង';
-  const dateStr = data.ceremonyDate || 'ថ្ងៃចន្ទ ទី២៥ ខែធ្នូ ឆ្នាំ២០២៨';
-  const timeStr = data.ceremonyTime || 'វេលាម៉ោង ០៦:៣០ ព្រឹក ដល់ ០៨:០០ យប់';
-  const locationName = data.ceremonyLocation || 'មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)';
-  const address = data.ceremonyAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
-  const preweddingImg = data.preweddingPhoto || '/images/templates/traditional_royal_pavilion_prewedding.jpg';
+export function RoyalPavilionTemplate({
+  data = {},
+  invitation = {},
+  invitationData = {},
+  activeTemplate = {}
+}) {
+  const groom = data.groomName || invitation.groomName || activeTemplate?.demoGroom || 'ហេង វឌ្ឍនា';
+  const bride = data.brideName || invitation.brideName || activeTemplate?.demoBride || 'កែវ ចរណៃ';
+  const groomParents = data.groomParents || (invitation.groomParents?.father ? `${invitation.groomParents.father} និង ${invitation.groomParents.mother}` : 'លោក ហេង វណ្ណា និង អ្នកស្រី គីម ស្រ៊ុន');
+  const brideParents = data.brideParents || (invitation.brideParents?.father ? `${invitation.brideParents.father} និង ${invitation.brideParents.mother}` : 'លោក កែវ សម្បត្តិ និង អ្នកស្រី សុខ ហៀង');
+  const dateStr = data.ceremonyDate || invitation.weddingDate || activeTemplate?.demoDate || 'ថ្ងៃចន្ទ ទី២៥ ខែធ្នូ ឆ្នាំ២០២៨';
+  const timeStr = data.ceremonyTime || invitation.weddingTime || 'វេលាម៉ោង ០៦:៣០ ព្រឹក ដល់ ០៨:០០ យប់';
+  const locationName = data.ceremonyLocation || invitation.weddingLocation || activeTemplate?.demoLocation || 'មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)';
+  const address = data.locationAddress || data.ceremonyAddress || invitation.locationAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
+  const googleMapsUrl = data.googleMapsUrl || invitation.googleMapsUrl || 'https://maps.google.com/?q=The+Premier+Center+Sen+Sok';
+  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/traditional_royal_pavilion_prewedding.jpg';
+
+  // Bank & Digital Gift
+  const bankName = data.bankName || invitation.bankName || 'ABA PAY / BAKONG';
+  const accountName = data.accountName || invitation.accountName || `${groom} & ${bride}`;
+  const accountNumber = data.accountNumber || invitation.accountNumber || '012 345 678';
+  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || null;
+
+  // Host Contacts
+  const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation.hostPhoneGroom || '012 345 678';
+  const phoneBride = data.hostPhoneBride || data.phoneBride || invitation.hostPhoneBride || '098 765 432';
+  const telegramLink = data.telegramLink || invitation.telegramLink || 'https://t.me';
+
+  // Dynamic Programs
+  const programs = (data.ceremonyPrograms && data.ceremonyPrograms.length > 0)
+    ? data.ceremonyPrograms
+    : [
+        { time: '០៦:៣០ ព្រឹក', title: 'ជួបជុំភ្ញៀវកិត្តិយសដើម្បីរៀបចំហែចំនូន' },
+        { time: '០៧:០០ ព្រឹក', title: 'ពិធីហែចំនូនចូលរោងជ័យ (ជំនូនកាល)' },
+        { time: '០៨:០០ ព្រឹក', title: 'ពិធីចុះសំបុត្រអាពាហ៍ពិពាហ៍តាមច្បាប់' },
+        { time: '០៨:៣០ ព្រឹក', title: 'ពិធីកាត់សក់បង្កក់សិរីមង្គល' },
+        { time: '១០:០០ ព្រឹក', title: 'ពិធីសំពះផ្ទឹម សែនចងដៃ ព្រះថោងនាងនាគ' },
+        { time: '១២:០០ ថ្ងៃត្រង់', title: 'អញ្ជើញភ្ញៀវកិត្តិយសពិសារអាហារថ្ងៃត្រង់' },
+        { time: '០៥:០០ ល្ងាច', title: 'ទទួលបដិសណ្ឋារកិច្ចភ្ញៀវកិត្តិយស ពិសាភោជនាហារ' }
+      ];
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [copied, setCopied] = useState(false);
   const [activePhoto, setActivePhoto] = useState(null);
+  const [showQrModal, setShowQrModal] = useState(false);
   const [activeTab, setActiveTab] = useState('rsvp'); // 'rsvp' | 'wishes'
   const [rsvp, setRsvp] = useState({ name: '', attendance: 'yes', guests: '1 នាក់' });
   const [rsvpDone, setRsvpDone] = useState(false);
@@ -76,14 +107,16 @@ export function RoyalPavilionTemplate({ data = {} }) {
     setWish({ name: '', text: '' });
   };
 
-  const gallery = [
-    { id: 1, src: preweddingImg, caption: 'ព្រះពន្លាមាស ហោរាសាស្ត្រមង្គល' },
-    { id: 2, src: '/images/templates/angkor-heritage/angkor_1.jpg', caption: 'មង្គលសិរីមាសប្រណិត' },
-    { id: 3, src: '/images/templates/angkor-heritage/angkor_2.jpg', caption: 'អនុស្សាវរីយ៍ផ្កាស្រស់រ៉ូមែនទិក' },
-    { id: 4, src: '/images/templates/angkor-ancient-royalty/ancient_1.jpg', caption: 'ភាពថ្លៃថ្នូរ និងសេចក្តីសុខក្សេមក្សាន្ត' },
-    { id: 5, src: '/images/templates/angkor-ancient-royalty/ancient_2.jpg', caption: 'កេរដំណែលប្រពៃណីខ្មែរអង្គរ' },
-    { id: 6, src: '/images/templates/traditional_crimson_angkoreach_prewedding.jpg', caption: 'ភាពទាន់សម័យ និងស៊ីវិល័យ' }
-  ];
+  const gallery = (data.galleryPhotos && data.galleryPhotos.length > 0)
+    ? data.galleryPhotos
+    : (activeTemplate?.galleryPhotos || [
+        { id: 1, src: preweddingImg, caption: 'ព្រះពន្លាមាស ហោរាសាស្ត្រមង្គល' },
+        { id: 2, src: '/images/templates/angkor-heritage/angkor_1.jpg', caption: 'មង្គលសិរីមាសប្រណិត' },
+        { id: 3, src: '/images/templates/angkor-heritage/angkor_2.jpg', caption: 'អនុស្សាវរីយ៍ផ្កាស្រស់រ៉ូមែនទិក' },
+        { id: 4, src: '/images/templates/angkor-ancient-royalty/ancient_1.jpg', caption: 'ភាពថ្លៃថ្នូរ និងសេចក្តីសុខក្សេមក្សាន្ត' },
+        { id: 5, src: '/images/templates/angkor-ancient-royalty/ancient_2.jpg', caption: 'កេរដំណែលប្រពៃណីខ្មែរអង្គរ' },
+        { id: 6, src: '/images/templates/traditional_crimson_angkoreach_prewedding.jpg', caption: 'ភាពទាន់សម័យ និងស៊ីវិល័យ' }
+      ]);
 
   return (
     <div
@@ -149,12 +182,13 @@ export function RoyalPavilionTemplate({ data = {} }) {
       <div className="w-full relative pb-28">
         {/* Full-width Multi-Image Hero Section */}
         <TraditionalHeroSection
+          templateId="traditional-royal-pavilion"
           groom={groom}
           bride={bride}
           images={data.heroImages}
           fallbackImage={preweddingImg}
           themeBorder="#E5BE53"
-          badgeText="សិរីមង្គលអាពាហ៍ពិពាហ៍"
+          badgeText="សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍"
         />
 
         {/* 1. HERO GATE */}
@@ -386,41 +420,36 @@ export function RoyalPavilionTemplate({ data = {} }) {
           </div>
 
           <div className="relative max-w-md mx-auto space-y-4">
-            {[
-              { time: '០៦:៣០ ព្រឹក', title: 'ជួបជុំភ្ញៀវកិត្តិយសដើម្បីរៀបចំហែចំនូន', num: '១', left: true },
-              { time: '០៧:០០ ព្រឹក', title: 'ពិធីហែចំនូនចូលរោងជ័យ (ជំនូនកាល)', num: '២', left: false },
-              { time: '០៨:០០ ព្រឹក', title: 'ពិធីចុះសំបុត្រអាពាហ៍ពិពាហ៍តាមច្បាប់', num: '៣', left: true },
-              { time: '០៨:៣០ ព្រឹក', title: 'ពិធីកាត់សក់បង្កក់សិរីមង្គល', num: '៤', left: false },
-              { time: '១០:០០ ព្រឹក', title: 'ពិធីសំពះផ្ទឹម សែនចងដៃ ព្រះថោងនាងនាគ', num: '៥', left: true },
-              { time: '១២:០០ ថ្ងៃត្រង់', title: 'អញ្ជើញភ្ញៀវកិត្តិយសពិសារអាហារថ្ងៃត្រង់', num: '៦', left: false },
-              { time: '០៥:០០ ល្ងាច', title: 'ទទួលបដិសណ្ឋារកិច្ចភ្ញៀវកិត្តិយស ពិសាភោជនាហារ', num: '៧', left: true }
-            ].map((st, i) => (
-              <div key={i} className="flex items-center justify-between gap-3">
-                <div className={`w-1/2 ${st.left ? 'text-right pr-3' : 'pr-3'}`}>
-                  {st.left && (
-                    <>
-                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-white border border-[#E5BE53] text-[10px] font-bold text-[#92400E] shadow-xs mb-1">
-                        {st.time}
-                      </span>
-                      <p className="text-xs font-semibold text-stone-800">{st.title}</p>
-                    </>
-                  )}
+            {programs.map((st, i) => {
+              const isLeft = i % 2 === 0;
+              return (
+                <div key={i} className="flex items-center justify-between gap-3">
+                  <div className={`w-1/2 ${isLeft ? 'text-right pr-3' : 'pr-3'}`}>
+                    {isLeft && (
+                      <>
+                        <span className="inline-block px-2.5 py-0.5 rounded-full bg-white border border-[#E5BE53] text-[10px] font-bold text-[#92400E] shadow-xs mb-1">
+                          {st.time}
+                        </span>
+                        <p className="text-xs font-semibold text-stone-800">{st.title || st.text}</p>
+                      </>
+                    )}
+                  </div>
+                  <div className="w-8 h-8 rounded-full bg-[#FAF6ED] border-2 border-[#E5BE53] z-10 flex items-center justify-center text-[10px] font-bold text-[#92400E] shadow-xs shrink-0">
+                    {i + 1}
+                  </div>
+                  <div className={`w-1/2 ${!isLeft ? 'text-left pl-3' : 'pl-3'}`}>
+                    {!isLeft && (
+                      <>
+                        <span className="inline-block px-2.5 py-0.5 rounded-full bg-white border border-[#E5BE53] text-[10px] font-bold text-[#92400E] shadow-xs mb-1">
+                          {st.time}
+                        </span>
+                        <p className="text-xs font-semibold text-stone-800">{st.title || st.text}</p>
+                      </>
+                    )}
+                  </div>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-[#FAF6ED] border-2 border-[#E5BE53] z-10 flex items-center justify-center text-[10px] font-bold text-[#92400E] shadow-xs shrink-0">
-                  {st.num}
-                </div>
-                <div className={`w-1/2 ${!st.left ? 'text-left pl-3' : 'pl-3'}`}>
-                  {!st.left && (
-                    <>
-                      <span className="inline-block px-2.5 py-0.5 rounded-full bg-white border border-[#E5BE53] text-[10px] font-bold text-[#92400E] shadow-xs mb-1">
-                        {st.time}
-                      </span>
-                      <p className="text-xs font-semibold text-stone-800">{st.title}</p>
-                    </>
-                  )}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
@@ -439,20 +468,29 @@ export function RoyalPavilionTemplate({ data = {} }) {
               <h3 className="font-moul text-base text-[#92400E] tracking-wider mb-0.5">
                 ពានមាសជូនចំណងដៃឌីជីថល
               </h3>
-              <p className="text-xs text-[#B45309]">{groom} & {bride}</p>
+              <p className="text-xs text-[#B45309]">{bankName}</p>
             </div>
 
             <div className="max-w-xs mx-auto p-4 rounded-2xl bg-[#FAF6ED] border border-[#E5BE53]/60 shadow-xs my-2">
+              {qrCodeImage && (
+                <div
+                  onClick={() => setShowQrModal(true)}
+                  className="w-32 h-32 mx-auto mb-3 p-1.5 rounded-xl bg-white border border-[#E5BE53] cursor-pointer hover:scale-105 transition shadow-sm"
+                >
+                  <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain rounded-lg" />
+                  <span className="text-[9px] text-[#92400E] font-bold block mt-0.5">ចុចដើម្បីពង្រីក QR</span>
+                </div>
+              )}
               <div className="flex items-center justify-between text-[10px] text-stone-500 border-b border-[#E5BE53]/30 pb-2 mb-2 font-mono">
-                <span>ABA PAY / BAKONG</span>
+                <span>{bankName}</span>
                 <span>USD / KHR</span>
               </div>
-              <p className="font-bold text-xs text-stone-800 tracking-wide mb-1 uppercase">HENG VATTANA & KEO CHORNAI</p>
+              <p className="font-bold text-xs text-stone-800 tracking-wide mb-1 uppercase">{accountName}</p>
               <div className="bg-white py-2 px-3 rounded-xl border border-[#E5BE53]/40 my-2">
-                <span className="text-lg font-mono font-bold text-[#92400E] tracking-widest">012 345 678</span>
+                <span className="text-lg font-mono font-bold text-[#92400E] tracking-widest">{accountNumber}</span>
               </div>
               <button
-                onClick={() => copyAccount('012345678')}
+                onClick={() => copyAccount(accountNumber)}
                 className="w-full py-2 px-4 rounded-xl bg-gradient-to-r from-[#B45309] via-[#FFFDE8] to-[#E5BE53] text-stone-900 font-bold text-xs flex items-center justify-center gap-2 shadow-xs hover:brightness-105 active:scale-95 transition cursor-pointer"
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-stone-900" /> : <Copy className="w-3.5 h-3.5 text-stone-900" />}
@@ -472,9 +510,9 @@ export function RoyalPavilionTemplate({ data = {} }) {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {gallery.map((photo) => (
+            {gallery.map((photo, idx) => (
               <div
-                key={photo.id}
+                key={photo.id || idx}
                 onClick={() => setActivePhoto(photo)}
                 className="cursor-pointer group relative bg-stone-100 border-2 border-[#E5BE53]/60 aspect-[3/4] overflow-hidden shadow-xs hover:border-[#B45309] transition"
                 style={{
@@ -482,12 +520,12 @@ export function RoyalPavilionTemplate({ data = {} }) {
                 }}
               >
                 <img
-                  src={photo.src}
-                  alt={photo.caption}
+                  src={photo.src || photo}
+                  alt={photo.caption || 'Prewedding'}
                   className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
                 />
                 <div className="absolute inset-x-0 bottom-0 p-2 bg-gradient-to-t from-stone-950 via-stone-900/60 to-transparent text-center">
-                  <p className="text-[10px] font-bold text-[#FFFDE8] truncate">{photo.caption}</p>
+                  <p className="text-[10px] font-bold text-[#FFFDE8] truncate">{photo.caption || 'អនុស្សាវរីយ៍'}</p>
                 </div>
               </div>
             ))}
@@ -508,7 +546,7 @@ export function RoyalPavilionTemplate({ data = {} }) {
               {address}
             </p>
             <a
-              href="https://maps.google.com/?cid=16357496095708519698"
+              href={googleMapsUrl}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#B45309] via-[#FFFDE8] to-[#E5BE53] text-stone-900 font-bold text-xs uppercase shadow-md hover:brightness-105 active:scale-95 transition"
@@ -676,9 +714,31 @@ export function RoyalPavilionTemplate({ data = {} }) {
 
         {/* 10. FOOTER */}
         <footer className="mt-12 pt-8 pb-10 text-center px-4 border-t border-[#E5BE53]/30 bg-[#FAF6ED]/80">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-xs mb-4">
-            <span className="text-[#92400E]">✈️ Telegram: <span className="font-mono text-stone-800">012 345 678</span></span>
-            <span className="text-[#92400E]">📞 ទូរស័ព្ទ: <span className="font-mono text-stone-800">012 345 678</span></span>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-xs mb-4">
+            <a
+              href={`tel:${phoneGroom.replace(/\s+/g, '')}`}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#E5BE53] text-[#92400E] font-semibold hover:bg-stone-50 transition"
+            >
+              <Phone className="w-3.5 h-3.5" />
+              <span>កូនប្រុស៖ {phoneGroom}</span>
+            </a>
+            <a
+              href={`tel:${phoneBride.replace(/\s+/g, '')}`}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#E5BE53] text-[#92400E] font-semibold hover:bg-stone-50 transition"
+            >
+              <Phone className="w-3.5 h-3.5" />
+              <span>កូនស្រី៖ {phoneBride}</span>
+            </a>
+            {telegramLink && (
+              <a
+                href={telegramLink.startsWith('http') ? telegramLink : `https://${telegramLink}`}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#229ED9] text-white font-semibold hover:brightness-105 transition"
+              >
+                <span>✈️ Telegram ម្ចាស់កម្មវិធី</span>
+              </a>
+            )}
           </div>
 
           <p className="font-moul text-xs text-[#92400E] mb-1">
@@ -712,11 +772,35 @@ export function RoyalPavilionTemplate({ data = {} }) {
           </button>
           <div className="max-w-md w-full text-center" onClick={(e) => e.stopPropagation()}>
             <img
-              src={activePhoto.src}
-              alt={activePhoto.caption}
+              src={activePhoto.src || activePhoto}
+              alt={activePhoto.caption || 'Photo'}
               className="max-h-[75vh] w-auto mx-auto rounded-xl border border-[#E5BE53]"
             />
-            <p className="mt-3 text-sm text-[#FFF2B2] font-semibold">{activePhoto.caption}</p>
+            <p className="mt-3 text-sm text-[#FFF2B2] font-semibold">{activePhoto.caption || 'អនុស្សាវរីយ៍'}</p>
+          </div>
+        </div>
+      )}
+
+      {/* QR Code Zoom Modal */}
+      {showQrModal && qrCodeImage && (
+        <div
+          onClick={() => setShowQrModal(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+        >
+          <div className="relative max-w-sm w-full bg-white p-6 rounded-3xl text-center shadow-2xl border-2 border-[#E5BE53]" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setShowQrModal(false)}
+              className="absolute top-3 right-3 text-stone-500 hover:text-stone-900 p-1 cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="font-moul text-[#92400E] text-sm mb-1">ស្កេនដើម្បីជូនចំណងដៃ</h3>
+            <p className="text-xs text-[#B45309] mb-4">{bankName}</p>
+            <div className="p-2 bg-stone-50 rounded-2xl border border-stone-200 mb-4">
+              <img src={qrCodeImage} alt="QR Code Enlarged" className="w-full h-auto rounded-xl object-contain max-h-[350px]" />
+            </div>
+            <p className="font-bold text-xs text-stone-800 uppercase">{accountName}</p>
+            <p className="text-base font-mono font-bold text-[#92400E] my-1">{accountNumber}</p>
           </div>
         </div>
       )}
