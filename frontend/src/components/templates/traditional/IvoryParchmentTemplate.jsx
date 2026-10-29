@@ -18,7 +18,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { TraditionalHeroSection } from './TraditionalHeroSection';
-import { plengKarSynth } from './PinpeatAudio';
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 
 export function IvoryParchmentTemplate({
   data = {},
@@ -71,7 +71,7 @@ export function IvoryParchmentTemplate({
         { id: 4, src: '/images/templates/royal-gold/gold_1.jpg', caption: 'អនុស្សាវរីយ៍ផ្អែមល្ហែម' }
       ]);
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { isPlaying, toggleMusic } = useTemplateAudio();
   const [copied, setCopied] = useState(false);
   const [activePhoto, setActivePhoto] = useState(null);
   const [showQrModal, setShowQrModal] = useState(false);
@@ -97,10 +97,7 @@ export function IvoryParchmentTemplate({
     return () => clearInterval(t);
   }, []);
 
-  const toggleMusic = () => {
-    const res = plengKarSynth.toggle();
-    setIsPlaying(res);
-  };
+
 
   const copyAccount = (acc) => {
     navigator.clipboard.writeText(acc);
@@ -173,7 +170,7 @@ export function IvoryParchmentTemplate({
 
           {/* Prewedding Photo */}
           <div className="my-6 max-w-sm mx-auto rounded-2xl overflow-hidden border-2 border-[#D6B778] shadow-xl relative group">
-            <img src={preweddingImg} alt={`${groom} & ${bride}`} className="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-700" />
+            <img src={preweddingImg} alt={`${groom} & ${bride}`} className="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-700" decoding="async" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#54141E]/40 via-transparent to-transparent"></div>
           </div>
 
@@ -239,7 +236,7 @@ export function IvoryParchmentTemplate({
                 onClick={() => setActivePhoto(p.src || p)}
                 className="group rounded-2xl overflow-hidden border border-[#D6B778] bg-[#FAF3E0] cursor-pointer hover:border-[#54141E] transition relative aspect-square shadow-sm"
               >
-                <img src={p.src || p} alt={p.caption || 'Prewedding'} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                <img src={p.src || p} alt={p.caption || 'Prewedding'} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" decoding="async" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2 justify-center">
                   <span className="text-[11px] font-semibold text-white truncate">{p.caption || 'អនុស្សាវរីយ៍'}</span>
                 </div>
@@ -274,7 +271,7 @@ export function IvoryParchmentTemplate({
                 onClick={() => setShowQrModal(true)}
                 className="w-36 h-36 mx-auto mb-3 p-1.5 rounded-xl bg-white border border-[#D6B778] cursor-pointer hover:scale-105 transition shadow-sm"
               >
-                <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain rounded-lg" />
+                <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain rounded-lg" decoding="async" loading="lazy" />
                 <span className="text-[9px] text-[#B38728] font-bold block mt-0.5">ចុចដើម្បីពង្រីក QR</span>
               </div>
             )}
@@ -425,7 +422,7 @@ export function IvoryParchmentTemplate({
             >
               <X className="w-6 h-6" />
             </button>
-            <img src={activePhoto} alt="Enlarged" className="w-full rounded-2xl border-2 border-[#D4AF37] object-contain shadow-2xl" />
+            <img src={activePhoto} alt="Enlarged" className="w-full rounded-2xl border-2 border-[#D4AF37] object-contain shadow-2xl" decoding="async" />
           </div>
         </div>
       )}
@@ -446,7 +443,7 @@ export function IvoryParchmentTemplate({
             <h3 className="font-moul text-[#54141E] text-sm mb-1">ស្កេនដើម្បីជូនចំណងដៃ</h3>
             <p className="text-xs text-[#7A5714] mb-4">{bankName}</p>
             <div className="p-2 bg-stone-50 rounded-2xl border border-stone-200 mb-4">
-              <img src={qrCodeImage} alt="QR Code Enlarged" className="w-full h-auto rounded-xl object-contain max-h-[350px]" />
+              <img src={qrCodeImage} alt="QR Code Enlarged" className="w-full h-auto rounded-xl object-contain max-h-[350px]" decoding="async" loading="lazy" />
             </div>
             <p className="font-bold text-xs text-stone-800 uppercase">{accountName}</p>
             <p className="text-base font-mono font-bold text-[#B38728] my-1">{accountNumber}</p>

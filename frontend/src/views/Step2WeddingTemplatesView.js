@@ -399,7 +399,7 @@ export const CEREMONY_TEMPLATES = {
       demoGroom: 'ហេង វឌ្ឍនា',
       demoBride: 'កែវ ចរណៃ',
       demoDate: 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
-      features: ['ពណ៌លា័ក្ខរាជវាំងបុរាណ', 'ក្បាច់ភ្ញីទេសទឹកមាស', 'តារាងកម្មវិធីមង្គល', 'Google Maps & RSVP']
+      features: ['ពុម្ពអក្សរ ASvadek Momo', 'ក្បាច់ភ្ញីទេសទឹកមាស', 'តារាងកម្មវិធីមង្គល', 'Google Maps & RSVP']
     },
     {
       id: 'traditional-crimson-angkoreach',
@@ -419,7 +419,7 @@ export const CEREMONY_TEMPLATES = {
       demoGroom: 'ហេង វឌ្ឍនា',
       demoBride: 'កែវ ចរណៃ',
       demoDate: 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
-      features: ['ក្បាច់អង្គរាជមាស', 'ក្រឡាសំណាញ់ពេជ្រសូត្រ', 'រាប់ថយក្រោយ Countdown', 'ប្រព័ន្ធ RSVP ឆ្លាតវៃ']
+      features: ['ពុម្ពអក្សរ Kh Ang Kouteok', 'ក្បាច់អង្គរាជមាស', 'រាប់ថយក្រោយ Countdown', 'ប្រព័ន្ធ RSVP ឆ្លាតវៃ']
     }
   ],
 

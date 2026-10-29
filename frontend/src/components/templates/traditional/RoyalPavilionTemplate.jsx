@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { plengKarSynth } from './PinpeatAudio';
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import { TraditionalHeroSection } from './TraditionalHeroSection';
 import { Calendar, Clock, MapPin, Music, Heart, Send, Copy, Check, X, Phone, CalendarPlus } from 'lucide-react';
 
@@ -45,7 +45,7 @@ export function RoyalPavilionTemplate({
         { time: '០៥:០០ ល្ងាច', title: 'ទទួលបដិសណ្ឋារកិច្ចភ្ញៀវកិត្តិយស ពិសាភោជនាហារ' }
       ];
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { isPlaying, toggleMusic } = useTemplateAudio();
   const [copied, setCopied] = useState(false);
   const [activePhoto, setActivePhoto] = useState(null);
   const [showQrModal, setShowQrModal] = useState(false);
@@ -80,10 +80,7 @@ export function RoyalPavilionTemplate({
     return () => clearInterval(timer);
   }, []);
 
-  const toggleMusic = () => {
-    const res = plengKarSynth.toggle();
-    setIsPlaying(res);
-  };
+
 
   const copyAccount = (acc) => {
     navigator.clipboard.writeText(acc);
@@ -477,7 +474,7 @@ export function RoyalPavilionTemplate({
                   onClick={() => setShowQrModal(true)}
                   className="w-32 h-32 mx-auto mb-3 p-1.5 rounded-xl bg-white border border-[#E5BE53] cursor-pointer hover:scale-105 transition shadow-sm"
                 >
-                  <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain rounded-lg" />
+                  <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain rounded-lg" decoding="async" loading="lazy" />
                   <span className="text-[9px] text-[#92400E] font-bold block mt-0.5">ចុចដើម្បីពង្រីក QR</span>
                 </div>
               )}
@@ -522,8 +519,7 @@ export function RoyalPavilionTemplate({
                 <img
                   src={photo.src || photo}
                   alt={photo.caption || 'Prewedding'}
-                  className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
-                />
+                  className="w-full h-full object-cover group-hover:scale-110 transition duration-500" decoding="async" loading="lazy" />
                 <div className="absolute inset-x-0 bottom-0 p-2 bg-gradient-to-t from-stone-950 via-stone-900/60 to-transparent text-center">
                   <p className="text-[10px] font-bold text-[#FFFDE8] truncate">{photo.caption || 'អនុស្សាវរីយ៍'}</p>
                 </div>
@@ -774,8 +770,7 @@ export function RoyalPavilionTemplate({
             <img
               src={activePhoto.src || activePhoto}
               alt={activePhoto.caption || 'Photo'}
-              className="max-h-[75vh] w-auto mx-auto rounded-xl border border-[#E5BE53]"
-            />
+              className="max-h-[75vh] w-auto mx-auto rounded-xl border border-[#E5BE53]" decoding="async" />
             <p className="mt-3 text-sm text-[#FFF2B2] font-semibold">{activePhoto.caption || 'អនុស្សាវរីយ៍'}</p>
           </div>
         </div>
@@ -797,7 +792,7 @@ export function RoyalPavilionTemplate({
             <h3 className="font-moul text-[#92400E] text-sm mb-1">ស្កេនដើម្បីជូនចំណងដៃ</h3>
             <p className="text-xs text-[#B45309] mb-4">{bankName}</p>
             <div className="p-2 bg-stone-50 rounded-2xl border border-stone-200 mb-4">
-              <img src={qrCodeImage} alt="QR Code Enlarged" className="w-full h-auto rounded-xl object-contain max-h-[350px]" />
+              <img src={qrCodeImage} alt="QR Code Enlarged" className="w-full h-auto rounded-xl object-contain max-h-[350px]" decoding="async" loading="lazy" />
             </div>
             <p className="font-bold text-xs text-stone-800 uppercase">{accountName}</p>
             <p className="text-base font-mono font-bold text-[#92400E] my-1">{accountNumber}</p>

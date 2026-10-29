@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
   Heart,
   Calendar,
@@ -88,10 +89,8 @@ export default function GoldenOrchidTemplate({
         { id: 3, src: '/images/templates/floral-romance/floral_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' }
       ]);
 
-  // Audio State
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioContextRef = useRef(null);
-  const timerRef = useRef(null);
+  // Fully isolated template audio («ភ្ជាប់និស្ស័យ» - NISAI)
+  const { isPlaying, toggleAudio } = useTemplateAudio();
 
   // Canvas Petal Burst & Golden Shimmer
   const canvasRef = useRef(null);
@@ -114,80 +113,6 @@ export default function GoldenOrchidTemplate({
 
   // Active Ceremony Tab
   const [activeTab, setActiveTab] = useState('reception');
-
-  // Interactive Classical Cello & Piano Waltz Synthesizer
-  const toggleAudio = () => {
-    if (isPlaying) {
-      if (timerRef.current) clearInterval(timerRef.current);
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-        audioContextRef.current = null;
-      }
-      setIsPlaying(false);
-      return;
-    }
-
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      const ctx = new AudioCtx();
-      audioContextRef.current = ctx;
-
-      // Rich romantic waltz progression in G major / E minor (Orchid Conservatory theme)
-      // G3, B3, D4, G4, A4, B4, D5
-      const notes = [196.00, 246.94, 293.66, 392.00, 440.00, 493.88, 587.33];
-      let step = 0;
-
-      const playWaltzChord = () => {
-        if (!audioContextRef.current || audioContextRef.current.state === 'closed') return;
-        const now = ctx.currentTime;
-        const note = notes[step % notes.length];
-        step++;
-
-        // Warm Grand Piano / Cello Oscillator
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(note, now);
-
-        // Sub-bass root for warmth
-        const bassOsc = ctx.createOscillator();
-        const bassGain = ctx.createGain();
-        bassOsc.type = 'sine';
-        bassOsc.frequency.setValueAtTime(note / 2, now);
-
-        gain.gain.setValueAtTime(0, now);
-        gain.gain.linearRampToValueAtTime(0.09, now + 0.08);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.0);
-
-        bassGain.gain.setValueAtTime(0, now);
-        bassGain.gain.linearRampToValueAtTime(0.05, now + 0.06);
-        bassGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
-
-        osc.connect(gain);
-        bassOsc.connect(bassGain);
-        gain.connect(ctx.destination);
-        bassGain.connect(ctx.destination);
-
-        osc.start(now);
-        bassOsc.start(now);
-        osc.stop(now + 3.2);
-        bassOsc.stop(now + 2.4);
-      };
-
-      playWaltzChord();
-      timerRef.current = setInterval(playWaltzChord, 1200);
-      setIsPlaying(true);
-    } catch {
-      setIsPlaying(false);
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-      if (audioContextRef.current) audioContextRef.current.close();
-    };
-  }, []);
 
   // Canvas Petal Burst & Golden Glitters
   useEffect(() => {
@@ -346,17 +271,17 @@ export default function GoldenOrchidTemplate({
               ? 'bg-amber-600/10 text-amber-800 border-amber-500/50 ring-2 ring-amber-400/30'
               : 'bg-white/80 text-stone-600 border-stone-300 hover:text-stone-900'
           }`}
-          title="តន្ត្រីវិមានកែវ (Glasshouse Conservatory Waltz)"
+          title="ភ្លេងមង្គល «ភ្ជាប់និស្ស័យ»"
         >
           {isPlaying ? (
             <>
               <Volume2 className="w-4 h-4 animate-pulse text-amber-600" />
-              <span>តន្ត្រីវិមានកែវ</span>
+              <span>ភ្លេង «ភ្ជាប់និស្ស័យ»</span>
             </>
           ) : (
             <>
               <VolumeX className="w-4 h-4 text-stone-400" />
-              <span>បើកតន្ត្រី</span>
+              <span>ចាក់ភ្លេងមង្គល</span>
             </>
           )}
         </button>
@@ -378,22 +303,25 @@ export default function GoldenOrchidTemplate({
           </p>
         </div>
 
-        {/* Hero Showcase with Prewedding Cambodian Couple (Fitted 100% Edge-to-Edge with Container) */}
+        {/* Hero Showcase with Prewedding Cambodian Couple (Fitted 100% Edge-to-Edge with Container, Frameless) */}
         <div className="relative mb-12 w-full mx-auto px-0">
-          <div className="relative overflow-hidden border-y-2 border-amber-300/80 shadow-[0_15px_40px_rgba(212,175,55,0.15)] w-full">
+          <div className="relative overflow-hidden shadow-[0_15px_40px_rgba(212,175,55,0.15)] w-full">
             <div className="relative overflow-hidden aspect-[896/1200] bg-stone-100 w-full">
               <img
                 src={preweddingImage}
                 alt="Cambodian Couple in Golden Orchid Glasshouse"
-                className="w-full h-full object-cover object-center transform hover:scale-102 transition duration-700 ease-out"
-              />
+                className="w-full h-full object-cover object-center transform hover:scale-102 transition duration-700 ease-out" decoding="async" />
 
               {/* Bottom Glass Bar Over Image */}
               <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent backdrop-blur-[2px] text-white">
-                <span className="text-[11px] sm:text-xs text-amber-300 font-serifTrad tracking-widest uppercase block mb-1">
-                  Sacred Cambodian Wedding Ceremony
-                </span>
-                <h1 className="font-koulen text-3xl sm:text-5xl tracking-wide drop-shadow-md text-amber-100">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="text-amber-300 text-xs">❖</span>
+                  <span className="font-koulen text-[11px] sm:text-xs md:text-sm text-amber-300 tracking-wider">
+                    សិរីសួស្តីអាពាហ៍ពិពាហ៍
+                  </span>
+                  <span className="text-amber-300 text-xs">❖</span>
+                </div>
+                <h1 className="font-koulen text-2xl sm:text-4xl md:text-5xl tracking-wide drop-shadow-md text-amber-100">
                   {groomName} & {brideName}
                 </h1>
                 <p className="text-xs text-stone-200 mt-1 max-w-lg font-light hidden sm:block">
@@ -544,8 +472,7 @@ export default function GoldenOrchidTemplate({
                   src={photo.src}
                   alt={photo.caption || 'Prewedding'}
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                  loading="lazy"
-                />
+                  loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-2.5">
                   <p className="text-[11px] text-amber-200 font-serifTrad line-clamp-2">
                     {photo.caption}
@@ -691,8 +618,7 @@ export default function GoldenOrchidTemplate({
                     <img
                       src={qrCodeImage}
                       alt="QR Code"
-                      className="w-full h-full object-contain rounded-lg"
-                    />
+                      className="w-full h-full object-contain rounded-lg" decoding="async" loading="lazy" />
                   ) : (
                     <>
                       <span className="font-bold text-xs text-blue-900">{bankName}</span>
@@ -806,8 +732,7 @@ export default function GoldenOrchidTemplate({
               <img
                 src={selectedPhoto.src}
                 alt={selectedPhoto.caption || 'Photo'}
-                className="w-full h-full object-contain"
-              />
+                className="w-full h-full object-contain" decoding="async" />
             </div>
             {selectedPhoto.caption && (
               <div className="p-4 text-center bg-stone-50 border-t border-stone-200">
@@ -842,8 +767,7 @@ export default function GoldenOrchidTemplate({
               <img
                 src={qrCodeImage}
                 alt="QR Code"
-                className="w-full aspect-square object-contain rounded-xl border border-stone-200 bg-white p-2"
-              />
+                className="w-full aspect-square object-contain rounded-xl border border-stone-200 bg-white p-2" decoding="async" loading="lazy" />
             ) : (
               <div className="w-full aspect-square bg-stone-50 rounded-xl border border-stone-200 flex flex-col items-center justify-center text-amber-900 p-4">
                 <span className="font-bold text-sm mb-1">{bankName}</span>

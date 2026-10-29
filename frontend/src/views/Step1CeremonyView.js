@@ -15,7 +15,7 @@ export class Step1CeremonyView extends BaseView {
           
           <!-- Official Logo with Background Removed (Scales responsively) -->
           <div class="mb-3 sm:mb-4">
-            <img src="/logo/theab_digital.png" alt="Digital Theab Logo" class="w-24 h-24 sm:w-32 sm:h-32 object-contain drop-shadow-md mx-auto" />
+            <img src="/logo/theab_digital.png" alt="Digital Theab Logo" class="w-24 h-24 sm:w-32 sm:h-32 object-contain drop-shadow-md mx-auto" decoding="async" />
           </div>
 
           <!-- Traditional Floral Header Motif (Responsive size & spacing) -->

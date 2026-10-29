@@ -2,86 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { Calendar, Clock, MapPin, Music, Heart, Send, Copy, Check, X, Sparkles, ChevronLeft, ChevronRight, Volume2, VolumeX, Flower2, Phone } from 'lucide-react';
 
-// Soft Flute & Acoustic Romantic Melody Synthesizer (C Major / F Major / G Major gentle harmonies)
-class JasmineRomanceAudio {
-  constructor() {
-    this.ctx = null;
-    this.isPlaying = false;
-    this.timer = null;
-    this.step = 0;
-  }
-
-  init() {
-    if (!this.ctx) {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      this.ctx = new AudioCtx();
-    }
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
-    }
-  }
-
-  playTone(freq, dur = 1.8, type = 'sine', gainVal = 0.1) {
-    if (!this.ctx) return;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-
-    gain.gain.setValueAtTime(0.001, this.ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(gainVal, this.ctx.currentTime + 0.1);
-    gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + dur);
-
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
-    osc.start();
-    osc.stop(this.ctx.currentTime + dur);
-  }
-
-  start() {
-    this.init();
-    if (this.isPlaying) return;
-    this.isPlaying = true;
-
-    // Romantic acoustic melody (Hz) - Sweet Jasmine & Rose Waltz
-    const notes = [
-      329.63, 392.00, 523.25, 493.88,
-      440.00, 392.00, 349.23, 329.63,
-      293.66, 349.23, 440.00, 392.00,
-      329.63, 261.63, 293.66, 329.63
-    ];
-
-    this.timer = setInterval(() => {
-      const f = notes[this.step % notes.length];
-      this.playTone(f, 1.5, 'sine', 0.08);
-      // Soft bass accompaniment every 4 beats
-      if (this.step % 4 === 0) {
-        this.playTone(f / 2, 2.2, 'triangle', 0.06);
-      }
-      this.step++;
-    }, 480);
-  }
-
-  stop() {
-    this.isPlaying = false;
-    if (this.timer) {
-      clearInterval(this.timer);
-      this.timer = null;
-    }
-  }
-
-  toggle() {
-    if (this.isPlaying) {
-      this.stop();
-      return false;
-    } else {
-      this.start();
-      return true;
-    }
-  }
-}
-
-export const jasmineRomanceAudio = new JasmineRomanceAudio();
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 
 export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplate = {} }) {
   const groom = data.groomName || invitation.groomName || activeTemplate?.demoGroom || 'សុខ វិបុល';
@@ -126,7 +47,7 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
 
   const [activeHeroIdx, setActiveHeroIdx] = useState(0);
   const heroScrollRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { isPlaying, toggleMusic } = useTemplateAudio();
   const [copied, setCopied] = useState(false);
   const [activePhoto, setActivePhoto] = useState(null);
   const [showQrModal, setShowQrModal] = useState(false);
@@ -181,10 +102,7 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
     }
   };
 
-  const toggleMusic = () => {
-    const res = jasmineRomanceAudio.toggle();
-    setIsPlaying(res);
-  };
+
 
   const handleBlessingShower = () => {
     setBlessingCount((prev) => prev + 1);
@@ -292,8 +210,7 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
                   src={imgUrl}
                   alt={`Cambodian Wedding ${idx + 1}`}
                   className="w-full h-full object-cover object-top"
-                  loading={idx === 0 ? 'eager' : 'lazy'}
-                />
+                  loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
                 {/* Warm Sunset Vignette Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#2F1117]/85 via-black/30 to-black/40 pointer-events-none"></div>
               </div>
@@ -311,8 +228,8 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
                 <span className="h-[1px] w-6 bg-rose-200/70"></span>
               </div>
 
-              <h1 className="font-moulpali text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] tracking-wide leading-relaxed">
-                {groom} <span className="text-amber-300 text-xl sm:text-2xl font-moulpali drop-shadow">✦ និង ✦</span> {bride}
+              <h1 className="font-moulpali text-xl sm:text-2xl md:text-3xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] tracking-wide leading-relaxed">
+                {groom} <span className="text-amber-300 text-sm sm:text-base md:text-xl font-moulpali drop-shadow">✦ និង ✦</span> {bride}
               </h1>
 
               <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1 rounded-full bg-black/50 backdrop-blur-xs border border-white/25">
@@ -574,8 +491,7 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
                     src={item.src}
                     alt={item.caption}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
+                    loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2.5">
                     <p className="text-[11px] text-white leading-tight font-moulpali">
                       {item.caption}
@@ -611,8 +527,7 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
                   className="w-full h-auto rounded-lg object-contain"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
-                  }}
-                />
+                  }} decoding="async" loading="lazy" />
                 <span className="text-[10px] text-stone-400 mt-1 block">ចុចដើម្បីពង្រីក QR</span>
               </div>
 
@@ -828,7 +743,7 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
             >
               <X className="w-4 h-4" />
             </button>
-            <img src={activePhoto.src} alt={activePhoto.caption} className="w-full rounded-xl object-contain max-h-[70vh]" />
+            <img src={activePhoto.src} alt={activePhoto.caption} className="w-full rounded-xl object-contain max-h-[70vh]" decoding="async" />
             <p className="text-center text-xs text-rose-200 mt-2 font-moulpali">{activePhoto.caption}</p>
           </div>
         </div>
@@ -855,8 +770,7 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
             <img
               src={qrCodeImage || '/images/aba_qr.png'}
               alt="QR Code"
-              className="w-full aspect-square object-contain rounded-xl border border-stone-200"
-            />
+              className="w-full aspect-square object-contain rounded-xl border border-stone-200" decoding="async" loading="lazy" />
             <p className="text-xs font-serifTrad font-bold text-[#C84B5B] mt-3">
               {accountNumber}
             </p>

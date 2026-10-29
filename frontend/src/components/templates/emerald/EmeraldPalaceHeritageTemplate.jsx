@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
   Heart,
   Calendar,
@@ -9,6 +10,8 @@ import {
   Share2,
   Phone,
   Music,
+  Volume2,
+  VolumeX,
   Send,
   Sparkles,
   ExternalLink,
@@ -47,6 +50,9 @@ export function EmeraldPalaceHeritageTemplate({ data = {}, invitationData = {}, 
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation?.hostPhoneGroom || '012 345 678';
   const phoneBride = data.hostPhoneBride || data.phoneBride || invitation?.hostPhoneBride || '098 765 432';
   const telegramLink = data.telegramLink || invitation?.telegramLink || 'https://t.me';
+
+  // Isolated template audio («ភ្ជាប់និស្ស័យ» - NISAI)
+  const { isPlaying, toggleAudio } = useTemplateAudio();
 
   // 5 Hero prewedding images
   const heroList = (data.heroImages && data.heroImages.length > 0)
@@ -214,39 +220,37 @@ export function EmeraldPalaceHeritageTemplate({ data = {}, invitationData = {}, 
                 src={imgUrl}
                 alt={`Prewedding ${idx + 1}`}
                 className="w-full h-full object-cover object-center"
-                loading={idx === 0 ? 'eager' : 'lazy'}
-              />
+                loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
               {/* Emerald Velvet & Soft Gold Vignette */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#021A13] via-[#021A13]/40 to-black/35 pointer-events-none" />
-              <div className="absolute inset-0 ring-1 ring-inset ring-emerald-400/30 pointer-events-none" />
             </div>
           ))}
         </div>
 
-        {/* Stationary Centered Typography Directly on Photo (Moulpali Font, No Container) */}
-        <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-center p-6 text-center">
-          <div className="space-y-3 w-full px-4">
+        {/* Stationary Centered Typography Directly on Photo (Moulpali Font, Scaled for mobile readability, frameless) */}
+        <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-center p-4 sm:p-6 text-center">
+          <div className="space-y-2.5 sm:space-y-3 w-full max-w-md mx-auto px-2 sm:px-4">
             <div className="flex items-center justify-center gap-2 mb-1">
               <span className="text-amber-300 text-xs drop-shadow">❖</span>
-              <span className="font-moulpali text-xs sm:text-sm text-emerald-200 tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+              <span className="font-moulpali text-[11px] sm:text-xs md:text-sm text-emerald-200 tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                 សិរីសួស្តីអាពាហ៍ពិពាហ៍
               </span>
               <span className="text-amber-300 text-xs drop-shadow">❖</span>
             </div>
 
-            <h1 className="font-moulpali text-3xl sm:text-4xl md:text-5xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
+            <h1 className="font-moulpali text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
               {groom}
             </h1>
 
-            <div className="flex items-center justify-center gap-3 my-1">
-              <div className="h-[1.5px] w-12 bg-gradient-to-r from-transparent via-emerald-400 to-amber-300 drop-shadow" />
-              <div className="w-7 h-7 rounded-full bg-emerald-950/80 border border-emerald-400/80 flex items-center justify-center text-amber-300 font-serif italic text-xs font-bold shadow-[0_0_12px_rgba(52,211,153,0.8)]">
+            <div className="flex items-center justify-center gap-2.5 my-0.5 sm:my-1">
+              <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-12 bg-gradient-to-r from-transparent via-emerald-400 to-amber-300 drop-shadow" />
+              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-emerald-950/80 border border-emerald-400/80 flex items-center justify-center text-amber-300 font-serif italic text-[11px] sm:text-xs font-bold shadow-[0_0_12px_rgba(52,211,153,0.8)]">
                 &
               </div>
-              <div className="h-[1.5px] w-12 bg-gradient-to-l from-transparent via-emerald-400 to-amber-300 drop-shadow" />
+              <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-12 bg-gradient-to-l from-transparent via-emerald-400 to-amber-300 drop-shadow" />
             </div>
 
-            <h1 className="font-moulpali text-3xl sm:text-4xl md:text-5xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
+            <h1 className="font-moulpali text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
               {bride}
             </h1>
 
@@ -563,8 +567,7 @@ export function EmeraldPalaceHeritageTemplate({ data = {}, invitationData = {}, 
                 <img
                   src={photo.src}
                   alt={photo.caption}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" decoding="async" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
                   <span className="text-[10px] text-amber-200 font-bold">ចុចដើម្បីមើលរូបធំ ✦</span>
                 </div>
@@ -602,7 +605,7 @@ export function EmeraldPalaceHeritageTemplate({ data = {}, invitationData = {}, 
             className="w-40 h-40 mx-auto my-3.5 p-2 rounded-2xl bg-white shadow-xl flex items-center justify-center cursor-pointer relative group"
           >
             {qrCodeImage ? (
-              <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" />
+              <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" decoding="async" loading="lazy" />
             ) : (
               <QrCode className="w-32 h-32 text-stone-900" />
             )}
@@ -858,7 +861,7 @@ export function EmeraldPalaceHeritageTemplate({ data = {}, invitationData = {}, 
             <p className="text-xs text-white mb-3 font-mono">{bankName}</p>
             <div className="w-48 h-48 mx-auto p-2 bg-white rounded-2xl flex items-center justify-center mb-3">
               {qrCodeImage ? (
-                <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" />
+                <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" decoding="async" loading="lazy" />
               ) : (
                 <QrCode className="w-40 h-40 text-stone-900" />
               )}
@@ -909,8 +912,7 @@ export function EmeraldPalaceHeritageTemplate({ data = {}, invitationData = {}, 
             <img
               src={selectedPhoto}
               alt="Preview"
-              className="w-full max-h-[70vh] object-contain bg-black"
-            />
+              className="w-full max-h-[70vh] object-contain bg-black" decoding="async" />
             <div className="p-4 text-center">
               <button
                 type="button"
@@ -923,6 +925,32 @@ export function EmeraldPalaceHeritageTemplate({ data = {}, invitationData = {}, 
           </div>
         </div>
       )}
+
+      {/* Floating Audio Toggle - Isolated Template Soundtrack («ភ្ជាប់និស្ស័យ» - NISAI) */}
+      <div className="fixed bottom-5 right-5 z-40">
+        <button
+          type="button"
+          onClick={toggleAudio}
+          className={`px-3.5 py-2.5 rounded-full flex items-center gap-2 border backdrop-blur-md shadow-2xl transition-all duration-300 text-xs font-medium cursor-pointer ${
+            isPlaying
+              ? 'bg-emerald-700 text-white border-emerald-400 shadow-emerald-500/30 ring-2 ring-emerald-400/40'
+              : 'bg-white/90 text-stone-800 border-emerald-300 hover:text-black'
+          }`}
+          title="ភ្លេងមង្គល «ភ្ជាប់និស្ស័យ»"
+        >
+          {isPlaying ? (
+            <>
+              <Volume2 className="w-4 h-4 animate-pulse text-emerald-200" />
+              <span className="font-kantumruy font-bold">កំពុងចាក់ «ភ្ជាប់និស្ស័យ»</span>
+            </>
+          ) : (
+            <>
+              <VolumeX className="w-4 h-4 text-stone-500" />
+              <span className="font-kantumruy">ចាក់ភ្លេងមង្គល</span>
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 }

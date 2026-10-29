@@ -41,7 +41,7 @@ export class QrModalView extends BaseView {
 
           <!-- QR Code Image Box -->
           <div class="p-4 bg-white rounded-2xl border border-amber-200 shadow-sm inline-block mb-4">
-            <img src="${qrSrc}" alt="Digital Theab QR Code" class="w-48 h-48 object-contain mx-auto rounded-lg" onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(shareUrl)}'" />
+            <img src="${qrSrc}" alt="Digital Theab QR Code" class="w-48 h-48 object-contain mx-auto rounded-lg" onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(shareUrl)}'" decoding="async" loading="lazy" />
           </div>
 
           <!-- Share Link Box -->

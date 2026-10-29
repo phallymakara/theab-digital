@@ -61,8 +61,7 @@ export function QrModal() {
             onError={(e) => {
               e.currentTarget.onerror = null;
               e.currentTarget.src = fallbackQr;
-            }}
-          />
+            }} decoding="async" loading="lazy" />
         </div>
 
         {/* Share Link Box */}

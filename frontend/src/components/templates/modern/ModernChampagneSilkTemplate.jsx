@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
   Heart,
   Calendar,
@@ -33,7 +34,7 @@ import {
  * -------------------------------------------------------------
  * Theme: "អភិជនសូត្រទឹកមាស" (Modern Champagne Silk & Gold Aristocrat)
  * Category: អភិជនទំនើប (modern)
- * Typography: font-suwannaphum (headings/names) + font-serifTrad (Cinzel) + font-kantumruy (body)
+ * Typography: font-komutt (headings/names) + font-serifTrad (Cinzel) + font-kantumruy (body)
  * Aesthetic: Haute-Couture Editorial Vogue, Champagne Silk, Soft Pearl, Brushed Gold
  */
 
@@ -123,10 +124,8 @@ export function ModernChampagneSilkTemplate({
   // Lightbox Modal State
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
-  // Audio Synthesizer State (Romantic Champagne Acoustic Piano)
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioContextRef = useRef(null);
-  const timerRef = useRef(null);
+  // Fully isolated template audio («ភ្ជាប់និស្ស័យ» - NISAI)
+  const { isPlaying, toggleAudio } = useTemplateAudio();
 
   // Live Countdown (Target: Dec 19, 2026)
   const [timeLeft, setTimeLeft] = useState({ days: 785, hours: 18, minutes: 30, seconds: 45 });
@@ -210,65 +209,7 @@ export function ModernChampagneSilkTemplate({
     setGuestText('');
   };
 
-  // Ambient Piano & Acoustic Synthesizer
-  const toggleAudio = () => {
-    if (isPlaying) {
-      if (timerRef.current) clearInterval(timerRef.current);
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-        audioContextRef.current = null;
-      }
-      setIsPlaying(false);
-      return;
-    }
 
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      const ctx = new AudioCtx();
-      audioContextRef.current = ctx;
-
-      // Champagne major pentatonic notes (Db, Eb, F, Ab, Bb, C5, Db5)
-      const notes = [277.18, 311.13, 349.23, 415.30, 466.16, 523.25, 554.37];
-      let step = 0;
-
-      const playPianoNote = () => {
-        if (!audioContextRef.current || audioContextRef.current.state === 'closed') return;
-        const now = ctx.currentTime;
-        const note = notes[step % notes.length];
-        step++;
-
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(note, now);
-
-        gain.gain.setValueAtTime(0, now);
-        gain.gain.linearRampToValueAtTime(0.09, now + 0.04);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.8);
-
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc.start(now);
-        osc.stop(now + 2.9);
-      };
-
-      playPianoNote();
-      timerRef.current = setInterval(playPianoNote, 1200);
-      setIsPlaying(true);
-    } catch {
-      setIsPlaying(false);
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-      }
-    };
-  }, []);
 
   // Download .ics Calendar Event
   const downloadCalendarEvent = () => {
@@ -317,17 +258,17 @@ export function ModernChampagneSilkTemplate({
               ? 'bg-amber-600 text-white border-amber-500 shadow-amber-500/20 ring-2 ring-amber-400/30'
               : 'bg-white/90 text-stone-700 border-stone-300 hover:text-stone-900'
           }`}
-          title="តន្ត្រីសូត្រមាសអភិជន (Champagne Piano)"
+          title="ភ្លេងមង្គល «ភ្ជាប់និស្ស័យ»"
         >
           {isPlaying ? (
             <>
               <Volume2 className="w-4 h-4 animate-pulse text-amber-200" />
-              <span>តន្ត្រីសូត្រមាស</span>
+              <span>ភ្លេង «ភ្ជាប់និស្ស័យ»</span>
             </>
           ) : (
             <>
               <VolumeX className="w-4 h-4 text-stone-500" />
-              <span>បើកតន្ត្រី</span>
+              <span>ចាក់ភ្លេងមង្គល</span>
             </>
           )}
         </button>
@@ -352,49 +293,47 @@ export function ModernChampagneSilkTemplate({
                 src={imgUrl}
                 alt={`Champagne Silk Prewedding ${idx + 1}`}
                 className="w-full h-full object-cover object-center"
-                loading={idx === 0 ? 'eager' : 'lazy'}
-              />
+                loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
               {/* Balanced Dark Vignette for Crystal Clear Typography */}
               <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/45 to-black/50 pointer-events-none" />
-              <div className="absolute inset-0 ring-1 ring-inset ring-amber-300/20 pointer-events-none" />
             </div>
           ))}
         </div>
 
-        {/* Stationary Centered Typography Directly on Photo */}
-        <div className="absolute inset-0 z-20 pointer-events-none flex flex-col items-center justify-center p-6 text-center">
-          <div className="space-y-3 w-full max-w-md mx-auto px-4">
+        {/* Stationary Centered Typography Directly on Photo (Scaled for mobile readability, frameless) */}
+        <div className="absolute inset-0 z-20 pointer-events-none flex flex-col items-center justify-center p-4 sm:p-6 text-center">
+          <div className="space-y-2.5 sm:space-y-3 w-full max-w-md mx-auto px-2 sm:px-4">
             {/* Top Aristocrat Monogram Badge */}
             <div className="flex items-center justify-center gap-2 mb-1">
               <span className="text-amber-300 text-xs drop-shadow-[0_0_8px_#F59E0B]">✦</span>
-              <span className="font-suwannaphum text-xs sm:text-sm text-amber-200 tracking-widest drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
-                សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍
+              <span className="font-komutt text-[11px] sm:text-xs md:text-sm text-amber-200 tracking-widest drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                សិរីសួស្តីអាពាហ៍ពិពាហ៍
               </span>
               <span className="text-amber-300 text-xs drop-shadow-[0_0_8px_#F59E0B]">✦</span>
             </div>
 
-            {/* Groom Name in font-suwannaphum */}
-            <h1 className="font-suwannaphum text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-300">
+            {/* Groom Name in font-komutt */}
+            <h1 className="font-komutt text-2xl sm:text-3xl md:text-4xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-300">
               {groomName}
             </h1>
 
             {/* Ampersand Divider */}
-            <div className="flex items-center justify-center gap-3 my-1">
-              <div className="h-[1.5px] w-14 bg-gradient-to-r from-transparent via-amber-300 to-amber-200 drop-shadow" />
-              <div className="w-8 h-8 rounded-full bg-stone-900/90 border border-amber-300/80 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.7)] backdrop-blur-sm">
-                <span className="font-serifTrad italic text-amber-300 text-xs font-bold">~ & ~</span>
+            <div className="flex items-center justify-center gap-2.5 my-0.5 sm:my-1">
+              <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-14 bg-gradient-to-r from-transparent via-amber-300 to-amber-200 drop-shadow" />
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-stone-900/90 border border-amber-300/80 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.7)] backdrop-blur-sm">
+                <span className="font-serifTrad italic text-amber-300 text-[10px] sm:text-xs font-bold">~ & ~</span>
               </div>
-              <div className="h-[1.5px] w-14 bg-gradient-to-l from-transparent via-amber-300 to-amber-200 drop-shadow" />
+              <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-14 bg-gradient-to-l from-transparent via-amber-300 to-amber-200 drop-shadow" />
             </div>
 
-            {/* Bride Name in font-suwannaphum */}
-            <h1 className="font-suwannaphum text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-300">
+            {/* Bride Name in font-komutt */}
+            <h1 className="font-komutt text-2xl sm:text-3xl md:text-4xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-300">
               {brideName}
             </h1>
 
             {/* Date & Location Subtitle */}
             <div className="pt-2">
-              <p className="text-xs sm:text-sm text-amber-200/95 font-medium tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] font-suwannaphum">
+              <p className="text-xs sm:text-sm text-amber-200/95 font-medium tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] font-komutt">
                 {weddingDate}
               </p>
               <p className="text-[11px] sm:text-xs text-stone-300 mt-1 drop-shadow font-light">
@@ -453,7 +392,7 @@ export function ModernChampagneSilkTemplate({
               <span>Honorable Parents Blessing</span>
               <Sparkles className="w-3.5 h-3.5 text-amber-600" />
             </div>
-            <h2 className="font-suwannaphum text-2xl sm:text-3xl font-bold text-stone-900">
+            <h2 className="font-komutt text-2xl sm:text-3xl font-bold text-stone-900">
               សេចក្តីគោរពអញ្ជើញ និងពរជ័យមាតាបិតា
             </h2>
             <p className="text-xs text-stone-600 max-w-md mx-auto leading-relaxed">
@@ -467,8 +406,8 @@ export function ModernChampagneSilkTemplate({
               <span className="text-[11px] text-amber-800 font-serifTrad uppercase tracking-wider block mb-1">
                 ខាងកូនប្រុស
               </span>
-              <p className="font-suwannaphum text-sm sm:text-base font-semibold text-stone-900">{groomFather}</p>
-              <p className="font-suwannaphum text-sm sm:text-base font-semibold text-stone-900">{groomMother}</p>
+              <p className="font-komutt text-sm sm:text-base font-semibold text-stone-900">{groomFather}</p>
+              <p className="font-komutt text-sm sm:text-base font-semibold text-stone-900">{groomMother}</p>
             </div>
 
             {/* Bride's Parents */}
@@ -476,8 +415,8 @@ export function ModernChampagneSilkTemplate({
               <span className="text-[11px] text-amber-800 font-serifTrad uppercase tracking-wider block mb-1">
                 ខាងកូនស្រី
               </span>
-              <p className="font-suwannaphum text-sm sm:text-base font-semibold text-stone-900">{brideFather}</p>
-              <p className="font-suwannaphum text-sm sm:text-base font-semibold text-stone-900">{brideMother}</p>
+              <p className="font-komutt text-sm sm:text-base font-semibold text-stone-900">{brideFather}</p>
+              <p className="font-komutt text-sm sm:text-base font-semibold text-stone-900">{brideMother}</p>
             </div>
           </div>
         </div>
@@ -494,7 +433,7 @@ export function ModernChampagneSilkTemplate({
             <Award className="w-3.5 h-3.5 text-amber-600" />
           </div>
 
-          <h2 className="font-suwannaphum text-2xl sm:text-3xl font-bold text-stone-900">
+          <h2 className="font-komutt text-2xl sm:text-3xl font-bold text-stone-900">
             សេចក្តីគោរពអញ្ជើញ
           </h2>
 
@@ -502,7 +441,7 @@ export function ModernChampagneSilkTemplate({
             ដើម្បីប្រសិទ្ធពរជ័យ សិរីសួស្តី ជ័យមង្គល វិបុលសុខ មហាប្រសើរ ក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍នៃកូនប្រុស-កូនស្រីរបស់យើងខ្ញុំ ដែលនឹងប្រព្រឹត្តទៅតាមគន្លងប្រពៃណីព្រះពុទ្ធសាសនា និងទំនៀមខ្មែរបុរាណ។ វត្តមានដ៏ឧត្តុង្គឧត្តមរបស់លោកអ្នក គឺជាកិត្តិយសដ៏ថ្លៃថ្លាបំផុតសម្រាប់គ្រួសារយើងខ្ញុំទាំងពីរ។
           </p>
 
-          <div className="pt-2 flex items-center justify-center gap-2 text-xs text-amber-700 font-suwannaphum">
+          <div className="pt-2 flex items-center justify-center gap-2 text-xs text-amber-700 font-komutt">
             <span>សូមអរគុណយ៉ាងជ្រាលជ្រៅចំពោះវត្តមានដ៏មានតម្លៃ!</span>
           </div>
         </div>
@@ -515,10 +454,10 @@ export function ModernChampagneSilkTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-white border border-amber-200/80 shadow-xl space-y-8">
           <div className="text-center space-y-1">
             <span className="text-xs text-amber-700 uppercase tracking-widest font-serifTrad">Event Countdown & Date</span>
-            <h2 className="font-suwannaphum text-2xl sm:text-3xl font-bold text-stone-900">
+            <h2 className="font-komutt text-2xl sm:text-3xl font-bold text-stone-900">
               កាលបរិច្ឆេទ & ការរាប់ថយក្រោយ
             </h2>
-            <p className="text-xs text-stone-500 font-suwannaphum">{weddingDate}</p>
+            <p className="text-xs text-stone-500 font-komutt">{weddingDate}</p>
           </div>
 
           {/* Real-Time Live Countdown Timer */}
@@ -527,25 +466,25 @@ export function ModernChampagneSilkTemplate({
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-800">
                 {timeLeft.days}
               </span>
-              <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider font-suwannaphum">ថ្ងៃ</span>
+              <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider font-komutt">ថ្ងៃ</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-amber-200/60 shadow-xs">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-800">
                 {timeLeft.hours}
               </span>
-              <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider font-suwannaphum">ម៉ោង</span>
+              <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider font-komutt">ម៉ោង</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-amber-200/60 shadow-xs">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-800">
                 {timeLeft.minutes}
               </span>
-              <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider font-suwannaphum">នាទី</span>
+              <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider font-komutt">នាទី</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-amber-200/60 shadow-xs">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-600 animate-pulse">
                 {timeLeft.seconds}
               </span>
-              <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider font-suwannaphum">វិនាទី</span>
+              <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider font-komutt">វិនាទី</span>
             </div>
           </div>
 
@@ -617,7 +556,7 @@ export function ModernChampagneSilkTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-white border border-amber-200/80 shadow-xl space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-amber-700 uppercase tracking-widest font-serifTrad">Full Wedding Schedule</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-stone-900">កាលវិភាគពិធីការទាំង ៧ កម្មវិធី</h2>
+            <h2 className="font-komutt text-2xl font-bold text-stone-900">កាលវិភាគពិធីការទាំង ៧ កម្មវិធី</h2>
           </div>
 
           <div className="space-y-3.5">
@@ -631,7 +570,7 @@ export function ModernChampagneSilkTemplate({
                 </div>
                 <div className="flex-1">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                    <h4 className="font-suwannaphum font-bold text-stone-900 text-sm sm:text-base">
+                    <h4 className="font-komutt font-bold text-stone-900 text-sm sm:text-base">
                       {prog.title}
                     </h4>
                     <span className="text-xs text-amber-700 font-serifTrad font-semibold shrink-0">
@@ -657,7 +596,7 @@ export function ModernChampagneSilkTemplate({
             <Sparkles className="w-3.5 h-3.5 text-amber-600" />
           </div>
 
-          <h2 className="font-suwannaphum text-2xl sm:text-3xl font-bold text-stone-900">
+          <h2 className="font-komutt text-2xl sm:text-3xl font-bold text-stone-900">
             សេចក្តីថ្លែងអំណរគុណ
           </h2>
 
@@ -665,7 +604,7 @@ export function ModernChampagneSilkTemplate({
             យើងខ្ញុំជាគូស្វាមីភរិយាថ្មី រួមជាមួយមាតាបិតាទាំងសងខាង សូមលំឱនកាយវាចាចិត្តថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅបំផុត ចំពោះវត្តមានដ៏ឧត្តុង្គឧត្តម ពេលវេលាដ៏មានតម្លៃ និងពរជ័យសព្ទសាធុការពររបស់ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាងកញ្ញា ដែលបានផ្តល់កិត្តិយសអញ្ជើញមកចូលរួមជាសាក្សីនៃសេចក្តីស្រឡាញ់របស់យើងខ្ញុំ។
           </p>
 
-          <div className="pt-2 text-xs text-amber-800 font-suwannaphum">
+          <div className="pt-2 text-xs text-amber-800 font-komutt">
             «សូមទេវតាថែរក្សា និងប្រទានពរជ័យឱ្យលោកអ្នកជួបតែសេចក្តីសុខ ចម្រើនជានិច្ចនិរន្តរ៍»
           </div>
         </div>
@@ -678,7 +617,7 @@ export function ModernChampagneSilkTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-white border border-amber-200/80 shadow-xl space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-amber-700 uppercase tracking-widest font-serifTrad">Venue & Directions</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-stone-900">ទីតាំងប្រារព្ធពិធី</h2>
+            <h2 className="font-komutt text-2xl font-bold text-stone-900">ទីតាំងប្រារព្ធពិធី</h2>
           </div>
 
           <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -709,7 +648,7 @@ export function ModernChampagneSilkTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-white border border-amber-200/80 shadow-xl space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-amber-700 uppercase tracking-widest font-serifTrad">Memories & Portraits</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-stone-900">កម្រងរូបភាពអនុស្សាវរីយ៍</h2>
+            <h2 className="font-komutt text-2xl font-bold text-stone-900">កម្រងរូបភាពអនុស្សាវរីយ៍</h2>
             <p className="text-xs text-stone-500">ចុចលើរូបភាពដើម្បីមើលទំហំធំពេញអេក្រង់</p>
           </div>
 
@@ -724,10 +663,9 @@ export function ModernChampagneSilkTemplate({
                   src={photo.src}
                   alt={photo.caption}
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                  loading="lazy"
-                />
+                  loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-2.5">
-                  <p className="text-[10px] text-amber-200 line-clamp-2 font-suwannaphum">
+                  <p className="text-[10px] text-amber-200 line-clamp-2 font-komutt">
                     {photo.caption}
                   </p>
                 </div>
@@ -756,11 +694,10 @@ export function ModernChampagneSilkTemplate({
                 <img
                   src={selectedPhoto.src}
                   alt={selectedPhoto.caption}
-                  className="w-full h-full object-contain"
-                />
+                  className="w-full h-full object-contain" decoding="async" />
               </div>
               <div className="p-4 text-center bg-stone-900 border-t border-stone-800">
-                <p className="font-suwannaphum text-sm text-amber-200 font-semibold">
+                <p className="font-komutt text-sm text-amber-200 font-semibold">
                   {selectedPhoto.caption}
                 </p>
               </div>
@@ -779,7 +716,7 @@ export function ModernChampagneSilkTemplate({
               <Gift className="w-4 h-4 text-amber-600" />
               <span>Digital Wedding Envelope</span>
             </div>
-            <h2 className="font-suwannaphum text-2xl font-bold text-stone-900">
+            <h2 className="font-komutt text-2xl font-bold text-stone-900">
               អាំងប៉ាវ & ចំណងដៃពរជ័យ
             </h2>
             <p className="text-xs text-stone-500 max-w-sm mx-auto">
@@ -794,7 +731,7 @@ export function ModernChampagneSilkTemplate({
             >
               {qrCodeImage ? (
                 <>
-                  <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" />
+                  <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" decoding="async" loading="lazy" />
                   <div className="absolute inset-0 bg-black/40 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span className="text-[10px] text-white font-bold bg-black/70 px-2 py-1 rounded">ចុចដើម្បីពង្រីក</span>
                   </div>
@@ -841,7 +778,7 @@ export function ModernChampagneSilkTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-white border border-amber-200/80 shadow-xl">
           <div className="text-center space-y-1 mb-6">
             <span className="text-xs text-amber-700 uppercase tracking-widest font-serifTrad">RSVP Confirmation</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-stone-900">ការបញ្ជាក់វត្តមានចូលរួម</h2>
+            <h2 className="font-komutt text-2xl font-bold text-stone-900">ការបញ្ជាក់វត្តមានចូលរួម</h2>
             <p className="text-xs text-stone-500 max-w-sm mx-auto">
               សូមមេត្តាឆ្លើយតបមុនថ្ងៃទី ០១ ខែធ្នូ ដើម្បីជួយសម្រួលដល់ការរៀបចំតុទទួលភ្ញៀវ
             </p>
@@ -850,7 +787,7 @@ export function ModernChampagneSilkTemplate({
           {rsvpSubmitted ? (
             <div className="p-6 rounded-2xl bg-amber-50 border border-amber-300 text-center space-y-2">
               <CheckCircle className="w-8 h-8 text-amber-600 mx-auto" />
-              <h3 className="font-suwannaphum text-lg font-bold text-stone-900">
+              <h3 className="font-komutt text-lg font-bold text-stone-900">
                 អរគុណសម្រាប់ការបញ្ជាក់វត្តមាន!
               </h3>
               <p className="text-xs text-stone-600">
@@ -860,7 +797,7 @@ export function ModernChampagneSilkTemplate({
           ) : (
             <form onSubmit={handleRsvpSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1.5 font-suwannaphum">
+                <label className="block text-xs font-semibold text-stone-700 mb-1.5 font-komutt">
                   ឈ្មោះពេញរបស់អ្នក *
                 </label>
                 <input
@@ -874,14 +811,14 @@ export function ModernChampagneSilkTemplate({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1.5 font-suwannaphum">
+                <label className="block text-xs font-semibold text-stone-700 mb-1.5 font-komutt">
                   វត្តមានចូលរួម
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
                     onClick={() => setRsvpAttending('yes')}
-                    className={`py-2.5 rounded-xl text-xs font-bold font-suwannaphum transition border cursor-pointer ${
+                    className={`py-2.5 rounded-xl text-xs font-bold font-komutt transition border cursor-pointer ${
                       rsvpAttending === 'yes'
                         ? 'bg-amber-600 text-white border-amber-600 shadow-md'
                         : 'bg-[#FAF8F5] text-stone-600 border-stone-300 hover:border-stone-400'
@@ -892,7 +829,7 @@ export function ModernChampagneSilkTemplate({
                   <button
                     type="button"
                     onClick={() => setRsvpAttending('no')}
-                    className={`py-2.5 rounded-xl text-xs font-bold font-suwannaphum transition border cursor-pointer ${
+                    className={`py-2.5 rounded-xl text-xs font-bold font-komutt transition border cursor-pointer ${
                       rsvpAttending === 'no'
                         ? 'bg-stone-800 text-white border-stone-800 shadow-md'
                         : 'bg-[#FAF8F5] text-stone-600 border-stone-300 hover:border-stone-400'
@@ -905,7 +842,7 @@ export function ModernChampagneSilkTemplate({
 
               {rsvpAttending === 'yes' && (
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 mb-1.5 font-suwannaphum">
+                  <label className="block text-xs font-semibold text-stone-700 mb-1.5 font-komutt">
                     ចំនួនភ្ញៀវចូលរួម
                   </label>
                   <select
@@ -923,7 +860,7 @@ export function ModernChampagneSilkTemplate({
               )}
 
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1.5 font-suwannaphum">
+                <label className="block text-xs font-semibold text-stone-700 mb-1.5 font-komutt">
                   លេខទូរស័ព្ទ (ជាជម្រើស)
                 </label>
                 <input
@@ -936,7 +873,7 @@ export function ModernChampagneSilkTemplate({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-stone-700 mb-1.5 font-suwannaphum">
+                <label className="block text-xs font-semibold text-stone-700 mb-1.5 font-komutt">
                   ចំណាំបន្ថែម / ពាក្យជូនពរ
                 </label>
                 <textarea
@@ -966,7 +903,7 @@ export function ModernChampagneSilkTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-white border border-amber-200/80 shadow-xl space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-amber-700 uppercase tracking-widest font-serifTrad">Guest Wishes</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-stone-900">សៀវភៅកត់ត្រាពរជ័យឌីជីថល</h2>
+            <h2 className="font-komutt text-2xl font-bold text-stone-900">សៀវភៅកត់ត្រាពរជ័យឌីជីថល</h2>
             <p className="text-xs text-stone-500">ផ្ញើសារជូនពរដល់គូស្វាមីភរិយាថ្មី</p>
           </div>
 
@@ -1001,7 +938,7 @@ export function ModernChampagneSilkTemplate({
             {wishes.map((w) => (
               <div key={w.id} className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-amber-100 space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="font-suwannaphum font-semibold text-amber-900 text-xs">
+                  <span className="font-komutt font-semibold text-amber-900 text-xs">
                     {w.name}
                   </span>
                   <span className="text-[10px] text-stone-400 font-serifTrad">{w.time}</span>
@@ -1020,7 +957,7 @@ export function ModernChampagneSilkTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-white border border-amber-200/80 shadow-xl space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-amber-700 uppercase tracking-widest font-serifTrad">Contact & Inquiries</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-stone-900">ទំនាក់ទំនងម្ចាស់កម្មវិធី</h2>
+            <h2 className="font-komutt text-2xl font-bold text-stone-900">ទំនាក់ទំនងម្ចាស់កម្មវិធី</h2>
             <p className="text-xs text-stone-500">សម្រាប់ព័ត៌មានបន្ថែម ឬការសាកសួរទីតាំង</p>
           </div>
 
@@ -1094,7 +1031,7 @@ export function ModernChampagneSilkTemplate({
           </button>
         </div>
 
-        <p className="font-suwannaphum text-amber-900 font-medium">
+        <p className="font-komutt text-amber-900 font-medium">
           សូមអរគុណយ៉ាងជ្រាលជ្រៅចំពោះវត្តមាន និងពរជ័យដ៏ថ្លៃថ្លារបស់លោកអ្នក!
         </p>
 
@@ -1113,12 +1050,12 @@ export function ModernChampagneSilkTemplate({
             onClick={(e) => e.stopPropagation()}
             className="max-w-xs w-full bg-stone-900 border border-amber-400/40 rounded-3xl p-5 text-center shadow-2xl relative"
           >
-            <h4 className="font-suwannaphum text-base font-bold text-amber-300 mb-1">
+            <h4 className="font-komutt text-base font-bold text-amber-300 mb-1">
               {bankName}
             </h4>
             <p className="text-xs text-stone-300 font-mono mb-3">{accountName} • {accountNumber}</p>
             <div className="p-3 bg-white rounded-2xl inline-block shadow-inner mb-4">
-              <img src={qrCodeImage} alt="QR Code Large" className="w-56 h-56 object-contain" />
+              <img src={qrCodeImage} alt="QR Code Large" className="w-56 h-56 object-contain" decoding="async" loading="lazy" />
             </div>
             <button
               type="button"

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
   Calendar,
   Clock,
@@ -105,9 +106,8 @@ export function ModernRoseGoldRoyaleTemplate({
   };
 
   const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioContextRef = useRef(null);
-  const timerRef = useRef(null);
+  // Fully isolated template audio («ភ្ជាប់និស្ស័យ» - NISAI)
+  const { isPlaying, toggleAudio } = useTemplateAudio();
 
   const [timeLeft, setTimeLeft] = useState({ days: 763, hours: 14, minutes: 20, seconds: 15 });
 
@@ -128,57 +128,7 @@ export function ModernRoseGoldRoyaleTemplate({
     return () => clearInterval(interval);
   }, []);
 
-  const toggleMusic = () => {
-    if (isPlaying) {
-      if (timerRef.current) clearInterval(timerRef.current);
-      if (audioContextRef.current) audioContextRef.current.close();
-      audioContextRef.current = null;
-      setIsPlaying(false);
-    } else {
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        const ctx = new AudioCtx();
-        audioContextRef.current = ctx;
 
-        const notes = [392, 440, 523.25, 587.33, 659.25, 523.25];
-        let noteIndex = 0;
-
-        const playNote = () => {
-          if (!audioContextRef.current || audioContextRef.current.state === 'closed') return;
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(notes[noteIndex % notes.length], ctx.currentTime);
-
-          gain.gain.setValueAtTime(0.001, ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.1);
-          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.9);
-
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start();
-          osc.stop(ctx.currentTime + 0.9);
-
-          noteIndex++;
-        };
-
-        playNote();
-        timerRef.current = setInterval(playNote, 900);
-        setIsPlaying(true);
-      } catch (_) {
-        setIsPlaying(false);
-      }
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-      if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
-        audioContextRef.current.close();
-      }
-    };
-  }, []);
 
   // Download .ics Calendar Event
   const downloadCalendarEvent = () => {
@@ -257,11 +207,12 @@ export function ModernRoseGoldRoyaleTemplate({
 
       {/* Floating Audio Controller */}
       <button
-        onClick={toggleMusic}
+        onClick={toggleAudio}
         className="fixed bottom-5 right-5 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#231215]/90 border border-rose-400/40 text-rose-200 text-xs font-semibold shadow-[0_4px_20px_rgba(224,168,153,0.3)] backdrop-blur-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+        title="ភ្លេងមង្គល «ភ្ជាប់និស្ស័យ»"
       >
         <Music className={`w-4 h-4 text-rose-300 ${isPlaying ? 'animate-bounce' : ''}`} />
-        <span>{isPlaying ? 'តន្ត្រីកុលាបមាស (កំពុងចាក់)' : 'ចាក់តន្ត្រី'}</span>
+        <span>{isPlaying ? 'ភ្លេង «ភ្ជាប់និស្ស័យ»' : 'ចាក់ភ្លេងមង្គល'}</span>
       </button>
 
       {/* 1. HERO SECTION (Snap Carousel) - Responsive aspect ratio for all phone heights */}
@@ -296,13 +247,13 @@ export function ModernRoseGoldRoyaleTemplate({
           ))}
         </div>
 
-        {/* Hero Content */}
-        <div className="relative z-20 w-full h-full flex flex-col justify-between p-6 sm:p-8 text-center pointer-events-none">
+        {/* Hero Content (Scaled for mobile readability, frameless) */}
+        <div className="relative z-20 w-full h-full flex flex-col justify-between p-4 sm:p-8 text-center pointer-events-none">
           {/* Top Rose Gold Monogram Seal (Clean Khmer, No English subtitle) */}
-          <div className="mt-8 flex flex-col items-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-950/60 border border-rose-400/50 backdrop-blur-md shadow-[0_4px_20px_rgba(224,168,153,0.3)]">
+          <div className="mt-6 sm:mt-8 flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-rose-950/60 border border-rose-400/50 backdrop-blur-md shadow-[0_4px_20px_rgba(224,168,153,0.3)]">
               <span className="w-1.5 h-1.5 rotate-45 bg-rose-300" />
-              <span className="font-komutt text-xs sm:text-sm tracking-wider bg-gradient-to-r from-rose-100 via-rose-200 to-amber-200 bg-clip-text text-transparent">
+              <span className="font-komutt text-[11px] sm:text-xs md:text-sm tracking-wider bg-gradient-to-r from-rose-100 via-rose-200 to-amber-200 bg-clip-text text-transparent">
                 សិរីសួស្តីអាពាហ៍ពិពាហ៍អភិជន
               </span>
               <span className="w-1.5 h-1.5 rotate-45 bg-rose-300" />
@@ -310,18 +261,18 @@ export function ModernRoseGoldRoyaleTemplate({
           </div>
 
           {/* Names in Kh Ang Komutt */}
-          <div className="my-auto space-y-3">
-            <h1 className="font-komutt text-3xl sm:text-4xl md:text-5xl bg-gradient-to-b from-[#FFF5F2] via-[#F5D0C5] to-[#E0A899] bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
+          <div className="my-auto space-y-2.5 sm:space-y-3">
+            <h1 className="font-komutt text-2xl sm:text-3xl md:text-4xl bg-gradient-to-b from-[#FFF5F2] via-[#F5D0C5] to-[#E0A899] bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
               {groomName}
             </h1>
-            <div className="flex items-center justify-center gap-3">
-              <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-rose-300" />
-              <div className="w-7 h-7 rounded-full bg-rose-950/80 border border-rose-400/60 flex items-center justify-center shadow-[0_0_12px_rgba(224,168,153,0.5)]">
-                <span className="font-serifTrad italic text-xs font-bold text-rose-300">&</span>
+            <div className="flex items-center justify-center gap-2.5 my-0.5 sm:my-1">
+              <div className="h-[1px] w-10 sm:w-12 bg-gradient-to-r from-transparent to-rose-300" />
+              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-rose-950/80 border border-rose-400/60 flex items-center justify-center shadow-[0_0_12px_rgba(224,168,153,0.5)]">
+                <span className="font-serifTrad italic text-[11px] sm:text-xs font-bold text-rose-300">&</span>
               </div>
-              <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-rose-300" />
+              <div className="h-[1px] w-10 sm:w-12 bg-gradient-to-l from-transparent to-rose-300" />
             </div>
-            <h1 className="font-komutt text-3xl sm:text-4xl md:text-5xl bg-gradient-to-b from-[#FFF5F2] via-[#F5D0C5] to-[#E0A899] bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
+            <h1 className="font-komutt text-2xl sm:text-3xl md:text-4xl bg-gradient-to-b from-[#FFF5F2] via-[#F5D0C5] to-[#E0A899] bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
               {brideName}
             </h1>
           </div>
@@ -331,7 +282,7 @@ export function ModernRoseGoldRoyaleTemplate({
             <p className="font-kantumruy text-sm text-rose-200/90 drop-shadow">
               {weddingDate}
             </p>
-            <p className="font-suwannaphum text-xs text-rose-300/80 tracking-wide mt-0.5">
+            <p className="font-komutt text-xs text-rose-300/80 tracking-wide mt-0.5">
               {weddingLocation}
             </p>
           </div>
@@ -393,16 +344,16 @@ export function ModernRoseGoldRoyaleTemplate({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
           <div className="p-5 rounded-2xl bg-[#231215]/80 border border-rose-500/20 backdrop-blur-sm">
             <p className="text-[11px] font-semibold text-rose-300 tracking-wider uppercase mb-2">មាតាបិតាខាងកូនប្រុស</p>
-            <p className="font-suwannaphum text-base text-white font-bold">{groomFather}</p>
-            <p className="font-suwannaphum text-base text-white font-bold">{groomMother}</p>
+            <p className="font-komutt text-base text-white font-bold">{groomFather}</p>
+            <p className="font-komutt text-base text-white font-bold">{groomMother}</p>
             <div className="mt-3 pt-3 border-t border-rose-500/20">
               <p className="text-xs text-rose-300/90">កូនប្រុសនាម: <span className="font-bold text-rose-100">{groomName}</span></p>
             </div>
           </div>
           <div className="p-5 rounded-2xl bg-[#231215]/80 border border-rose-500/20 backdrop-blur-sm">
             <p className="text-[11px] font-semibold text-rose-300 tracking-wider uppercase mb-2">មាតាបិតាខាងកូនស្រី</p>
-            <p className="font-suwannaphum text-base text-white font-bold">{brideFather}</p>
-            <p className="font-suwannaphum text-base text-white font-bold">{brideMother}</p>
+            <p className="font-komutt text-base text-white font-bold">{brideFather}</p>
+            <p className="font-komutt text-base text-white font-bold">{brideMother}</p>
             <div className="mt-3 pt-3 border-t border-rose-500/20">
               <p className="text-xs text-rose-300/90">កូនស្រីនាម: <span className="font-bold text-rose-100">{brideName}</span></p>
             </div>
@@ -489,7 +440,7 @@ export function ModernRoseGoldRoyaleTemplate({
                     {prog.time}
                   </span>
                 </div>
-                <h3 className="font-suwannaphum text-sm font-bold text-white mt-1">{prog.title}</h3>
+                <h3 className="font-komutt text-sm font-bold text-white mt-1">{prog.title}</h3>
                 <p className="text-xs text-rose-200/70 mt-0.5">{prog.desc}</p>
               </div>
             </div>
@@ -504,7 +455,7 @@ export function ModernRoseGoldRoyaleTemplate({
             <MapPin className="w-6 h-6" />
           </div>
           <h2 className="font-komutt text-xl text-rose-100 mb-1">ទីតាំងប្រារព្ធពិធី</h2>
-          <p className="font-suwannaphum text-base font-bold text-white">{weddingLocation}</p>
+          <p className="font-komutt text-base font-bold text-white">{weddingLocation}</p>
           <p className="text-xs text-rose-200/70 mt-1 max-w-sm mx-auto">{locationAddress}</p>
           <div className="mt-5 flex justify-center">
             <a
@@ -536,8 +487,7 @@ export function ModernRoseGoldRoyaleTemplate({
               <img
                 src={photo.src}
                 alt={photo.caption}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" decoding="async" loading="lazy" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
                 <p className="text-[11px] text-white font-medium line-clamp-1">{photo.caption}</p>
               </div>
@@ -561,8 +511,7 @@ export function ModernRoseGoldRoyaleTemplate({
           <img
             src={selectedPhoto}
             alt="Preview"
-            className="max-w-full max-h-[85vh] rounded-2xl object-contain border border-rose-500/30 shadow-2xl"
-          />
+            className="max-w-full max-h-[85vh] rounded-2xl object-contain border border-rose-500/30 shadow-2xl" decoding="async" />
         </div>
       )}
 
@@ -625,8 +574,7 @@ export function ModernRoseGoldRoyaleTemplate({
                 <img
                   src={qrCodeImage}
                   alt="Bank QR"
-                  className="w-44 h-44 object-contain"
-                />
+                  className="w-44 h-44 object-contain" decoding="async" loading="lazy" />
               ) : (
                 <img
                   src={
@@ -635,8 +583,7 @@ export function ModernRoseGoldRoyaleTemplate({
                       : 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=ACLEDA654321098'
                   }
                   alt="Bank QR"
-                  className="w-40 h-40 object-contain"
-                />
+                  className="w-40 h-40 object-contain" decoding="async" loading="lazy" />
               )}
             </div>
             <p className="text-xs font-bold text-white">{accountName}</p>
@@ -673,7 +620,7 @@ export function ModernRoseGoldRoyaleTemplate({
           {rsvpSubmitted ? (
             <div className="p-6 rounded-2xl bg-rose-500/10 border border-rose-400/40 text-center space-y-2">
               <CheckCircle className="w-10 h-10 text-emerald-400 mx-auto" />
-              <h3 className="font-suwannaphum text-base font-bold text-white">អរគុណសម្រាប់ការឆ្លើយតប!</h3>
+              <h3 className="font-komutt text-base font-bold text-white">អរគុណសម្រាប់ការឆ្លើយតប!</h3>
               <p className="text-xs text-rose-200/80">យើងខ្ញុំពិតជារំភើប និងទន្ទឹងរង់ចាំវត្តមានដ៏ខ្ពង់ខ្ពស់របស់អ្នក។</p>
             </div>
           ) : (
@@ -785,7 +732,7 @@ export function ModernRoseGoldRoyaleTemplate({
           {wishes.map((w) => (
             <div key={w.id} className="p-4 rounded-2xl bg-[#231215]/60 border border-rose-500/20">
               <div className="flex justify-between items-center mb-1">
-                <span className="font-suwannaphum text-xs font-bold text-rose-200">{w.name}</span>
+                <span className="font-komutt text-xs font-bold text-rose-200">{w.name}</span>
                 <span className="text-[10px] text-rose-300/60">{w.date}</span>
               </div>
               <p className="text-xs text-rose-100/90 leading-relaxed">{w.text}</p>
@@ -833,7 +780,7 @@ export function ModernRoseGoldRoyaleTemplate({
 
       {/* Footer */}
       <footer className="text-center py-6 border-t border-rose-500/20 text-xs text-rose-300/70">
-        <p className="font-suwannaphum text-xs text-rose-200 font-bold">សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍អភិជន</p>
+        <p className="font-komutt text-xs text-rose-200 font-bold">សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍អភិជន</p>
         <p className="text-[10px] mt-1 text-rose-400/50">Designed with love by Theab Digital</p>
       </footer>
     </div>

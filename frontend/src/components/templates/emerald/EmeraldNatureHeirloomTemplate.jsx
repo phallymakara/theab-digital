@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
   Heart,
   Calendar,
@@ -18,11 +19,16 @@ import {
   ArrowUp,
   Image as ImageIcon,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 import { FlyingHeartsAndFlowers } from '../../FlyingHeartsAndFlowers';
 
 export function EmeraldNatureHeirloomTemplate({ data = {}, invitationData = {}, invitation = {}, activeTemplate = {} }) {
+  // Isolated template audio («ភ្ជាប់និស្ស័យ» - NISAI)
+  const { isPlaying, toggleAudio } = useTemplateAudio();
+
   const groom = data.groomName || invitation.groomName || invitationData.groomName || activeTemplate?.demoGroom || 'សុខ សិរីរ័ត្ន';
   const bride = data.brideName || invitation.brideName || invitationData.brideName || activeTemplate?.demoBride || 'លឹម មុនីកា';
   
@@ -214,28 +220,27 @@ export function EmeraldNatureHeirloomTemplate({ data = {}, invitationData = {}, 
                   src={imgUrl}
                   alt={`Prewedding Khmer Couple ${idx + 1}`}
                   className="w-full h-full object-cover object-center filter brightness-[0.93] contrast-[1.05]"
-                  loading={idx === 0 ? 'eager' : 'lazy'}
-                />
+                  loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
                 {/* Natural Forest Mist & Vignette */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#021B13] via-[#021B13]/40 to-black/30 pointer-events-none" />
               </div>
             ))}
           </div>
 
-          {/* Stationary Centered Typography Directly on Photo (Kh Ang Komutt B Font, No Container) */}
-          <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-center p-6 text-center">
-            <div className="space-y-3 w-full px-4">
-              <div className="font-komutt text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
+          {/* Stationary Centered Typography Directly on Photo (Kh Ang Komutt B Font, Scaled for mobile readability, frameless) */}
+          <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-center p-4 sm:p-6 text-center">
+            <div className="space-y-2.5 sm:space-y-3 w-full max-w-md mx-auto px-2 sm:px-4">
+              <div className="font-komutt text-xl sm:text-2xl md:text-3xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
                 {groom}
               </div>
 
-              <div className="flex items-center justify-center gap-3 my-1">
-                <div className="h-[1.5px] w-12 bg-gradient-to-r from-transparent via-amber-300/80 to-amber-300 drop-shadow"></div>
-                <Heart className="w-5 h-5 fill-amber-300 text-amber-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
-                <div className="h-[1.5px] w-12 bg-gradient-to-l from-transparent via-amber-300/80 to-amber-300 drop-shadow"></div>
+              <div className="flex items-center justify-center gap-2.5 my-0.5 sm:my-1">
+                <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-12 bg-gradient-to-r from-transparent via-amber-300/80 to-amber-300 drop-shadow"></div>
+                <Heart className="w-4 h-4 sm:w-5 sm:h-5 fill-amber-300 text-amber-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
+                <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-12 bg-gradient-to-l from-transparent via-amber-300/80 to-amber-300 drop-shadow"></div>
               </div>
 
-              <div className="font-komutt text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
+              <div className="font-komutt text-xl sm:text-2xl md:text-3xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
                 {bride}
               </div>
 
@@ -539,8 +544,7 @@ export function EmeraldNatureHeirloomTemplate({ data = {}, invitationData = {}, 
                   <img
                     src={photo.src}
                     alt={photo.caption}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" decoding="async" loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
                     <span className="text-[10px] text-amber-200 font-bold">ចុចដើម្បីមើលរូបធំ ✦</span>
                   </div>
@@ -578,7 +582,7 @@ export function EmeraldNatureHeirloomTemplate({ data = {}, invitationData = {}, 
               className="w-40 h-40 mx-auto my-3.5 p-2 rounded-2xl bg-white shadow-xl flex items-center justify-center cursor-pointer relative group"
             >
               {qrCodeImage ? (
-                <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" />
+                <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" decoding="async" loading="lazy" />
               ) : (
                 <QrCode className="w-32 h-32 text-stone-900" />
               )}
@@ -835,7 +839,7 @@ export function EmeraldNatureHeirloomTemplate({ data = {}, invitationData = {}, 
               <p className="text-xs text-emerald-200 mb-3 font-mono">{bankName}</p>
               <div className="w-48 h-48 mx-auto p-2 bg-white rounded-2xl flex items-center justify-center mb-3 border-2 border-amber-300">
                 {qrCodeImage ? (
-                  <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" />
+                  <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" decoding="async" loading="lazy" />
                 ) : (
                   <QrCode className="w-40 h-40 text-stone-900" />
                 )}
@@ -882,10 +886,35 @@ export function EmeraldNatureHeirloomTemplate({ data = {}, invitationData = {}, 
           <img
             src={selectedPhoto}
             alt="Preview"
-            className="max-w-full max-h-[85vh] rounded-2xl shadow-2xl border-2 border-emerald-400/60 object-contain"
-          />
+            className="max-w-full max-h-[85vh] rounded-2xl shadow-2xl border-2 border-emerald-400/60 object-contain" decoding="async" />
         </div>
       )}
+
+      {/* Floating Audio Toggle - Isolated Template Soundtrack («ភ្ជាប់និស្ស័យ» - NISAI) */}
+      <div className="fixed bottom-5 right-5 z-40">
+        <button
+          type="button"
+          onClick={toggleAudio}
+          className={`px-3.5 py-2.5 rounded-full flex items-center gap-2 border backdrop-blur-md shadow-2xl transition-all duration-300 text-xs font-medium cursor-pointer ${
+            isPlaying
+              ? 'bg-emerald-800 text-white border-emerald-400 shadow-emerald-500/30 ring-2 ring-emerald-400/40'
+              : 'bg-white/90 text-stone-800 border-emerald-300 hover:text-black'
+          }`}
+          title="ភ្លេងមង្គល «ភ្ជាប់និស្ស័យ»"
+        >
+          {isPlaying ? (
+            <>
+              <Volume2 className="w-4 h-4 animate-pulse text-emerald-200" />
+              <span className="font-kantumruy font-bold">កំពុងចាក់ «ភ្ជាប់និស្ស័យ»</span>
+            </>
+          ) : (
+            <>
+              <VolumeX className="w-4 h-4 text-stone-500" />
+              <span className="font-kantumruy">ចាក់ភ្លេងមង្គល</span>
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 }

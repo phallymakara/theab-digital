@@ -7,9 +7,10 @@
     <title>Digital Theab (ធៀបឌីជីថល) - Khmer Traditional Digital Invitation Platform</title>
 
     <!-- Browser Favicon & Apple Touch Icon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo/favicon-32x32.png" />
     <link rel="icon" type="image/png" href="/logo/theab_digital.png" />
-    <link rel="shortcut icon" type="image/png" href="/logo/theab_digital.png" />
-    <link rel="apple-touch-icon" href="/logo/theab_digital.png" />
+    <link rel="shortcut icon" type="image/png" href="/logo/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo/apple-touch-icon.png" />
 
     <!-- Open Graph / Web Browser & Social Link Preview (Telegram, Facebook, Messenger) -->
     <meta property="og:type" content="website" />
@@ -21,6 +22,12 @@
     <meta property="twitter:description" content="វេទិកាបង្កើតលិខិតអញ្ជើញឌីជីថលប្រពៃណីខ្មែរទំនើប" />
     <meta property="twitter:image" content="/logo/theab_digital.png" />
 
+    <!-- Preload Critical Khmer Web Fonts for Instant First Contentful Paint -->
+    <link rel="preload" href="/fonts/khmer/phalluch/kh-phalluch-002.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/khmer/komutt/kh-ang-komutt-b.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/khmer/kouteok/kh-ang-kouteok.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/khmer/asvadek-momo/asvadek-momo.woff2" as="font" type="font/woff2" crossorigin />
+
     <!-- Google Fonts: Angkor, Bayon, Koulen, Battambang, Moul, Kantumruy Pro, Moulpali, Preahvihear, Suwannaphum & Cinzel -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,56 +36,6 @@
       rel="stylesheet"
     />
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              angkor: ['Moul', 'Moulpali', 'Preahvihear', 'serif'],
-              toathmor: ['Moul', 'Moulpali', '"Kh Ang Komutt B"', 'Preahvihear', 'serif'],
-              komuttA: ['"Kh Ang Komutt A"', '"Kh Ang Komutt B"', 'Moul', '"Kantumruy Pro"', 'serif'],
-              phalluch: ['"KH PhalLuch 002"', '"Kantumruy Pro"', 'sans-serif'],
-              komutt: ['"Kh Ang Komutt B"', '"Kantumruy Pro"', 'sans-serif'],
-              kouteok: ['"Kh Ang Kouteok"', '"Kantumruy Pro"', 'sans-serif'],
-              mokha: ['"Asvadek Mokha"', 'Moul', '"Kantumruy Pro"', 'sans-serif'],
-              moul: ['Moul', 'serif'],
-              moulpali: ['Moulpali', 'serif'],
-              preahvihear: ['Preahvihear', 'cursive', 'sans-serif'],
-              suwannaphum: ['Suwannaphum', 'serif'],
-              kantumruy: ['"Kantumruy Pro"', 'sans-serif'],
-              battambang: ['Battambang', 'sans-serif'],
-              koulen: ['Koulen', 'cursive'],
-              serifTrad: ['Cinzel', 'serif'],
-            },
-            colors: {
-              theabGold: {
-                DEFAULT: '#D4AF37',
-                50: '#FDFBF4',
-                100: '#FAF4E3',
-                200: '#F2E4BA',
-                300: '#E9D28F',
-                400: '#DFC066',
-                500: '#D4AF37',
-                600: '#B69225',
-                700: '#8C6F19',
-                800: '#624D11',
-                900: '#3D3008',
-              },
-              theabCrimson: {
-                DEFAULT: '#881337',
-                50: '#FFF1F2',
-                100: '#FFE4E6',
-                600: '#BE123C',
-                800: '#881337',
-                900: '#4C0519',
-              }
-            }
-          }
-        }
-      };
-    </script>
 
     <!-- Lucide Icons (CDN fallback) -->
     <script src="https://unpkg.com/lucide@latest"></script>

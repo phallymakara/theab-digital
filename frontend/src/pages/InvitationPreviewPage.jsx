@@ -131,6 +131,24 @@ export function InvitationPreviewPage() {
     selectedTemplate?.tag === 'ប្រពៃណីបុរាណ' ||
     selectedTemplate?.cardStyle?.startsWith('traditional-');
 
+  const isRoyalLacquer =
+    selectedTemplate?.id === 'traditional-royal-lacquer' ||
+    selectedTemplate?.cardStyle === 'traditional-royal-lacquer' ||
+    selectedTemplate?.cardStyle === 'traditional-lacquer-gold';
+
+  const previewHeadingFont =
+    selectedTemplate?.font ||
+    selectedTemplate?.fontFamily ||
+    (selectedTemplate?.id === 'royal-gold' ? 'font-komutt-a' :
+     selectedTemplate?.id === 'angkor-heritage' ? 'font-phalluch' :
+     selectedTemplate?.id === 'floral-romance' ? 'font-kouteok' :
+     isRoyalLacquer ? 'font-momo' :
+     selectedTemplate?.id === 'angkor-ancient-royalty' || selectedTemplate?.id === 'traditional-crimson-angkoreach' ? 'font-kouteok' :
+     selectedTemplate?.id === 'floral-editorial-magazine' ? 'font-phalluch' :
+     selectedTemplate?.id === 'floral-golden-orchid' ? 'font-koulen' :
+     selectedTemplate?.category === 'modern' ? 'font-komutt' :
+     'font-moul');
+
   const getTraditionalBgClass = () => {
     switch (selectedTemplate?.id) {
       case 'traditional-royal-lacquer':
@@ -202,13 +220,13 @@ export function InvitationPreviewPage() {
         {/* Top Royal Khmer Banner */}
         <div className={`${accentBg} text-amber-300 py-6 px-4 text-center relative overflow-hidden`}>
           <div className="absolute -right-8 -bottom-8 w-28 h-28 rounded-full bg-white/10 pointer-events-none animate-float-slow"></div>
-          <div className="w-16 h-16 rounded-full mx-auto bg-amber-400/20 text-amber-300 flex items-center justify-center font-moul text-2xl shadow-inner border border-amber-300/40 mb-2 animate-glow-pulse">
+          <div className={`w-16 h-16 rounded-full mx-auto bg-amber-400/20 text-amber-300 flex items-center justify-center ${previewHeadingFont} text-2xl shadow-inner border border-amber-300/40 mb-2 animate-glow-pulse`}>
             {ceremonyInfo.monogram}
           </div>
           <span className="text-xs uppercase font-sans tracking-widest text-amber-200 font-bold block">
             Digital Khmer Theab
           </span>
-          <h1 className="font-moul text-xl md:text-2xl mt-1 tracking-wide text-amber-100">
+          <h1 className={`${previewHeadingFont} text-xl md:text-2xl mt-1 tracking-wide text-amber-100`}>
             {data.titleKh || ceremonyInfo.title}
           </h1>
           <div className="khmer-gold-strip max-w-xs mx-auto mt-3"></div>
@@ -240,7 +258,7 @@ export function InvitationPreviewPage() {
             <span className="text-xs text-amber-800 font-bold uppercase tracking-wider block mb-1">
               {ceremonyType === 'housewarming' ? 'ម្ចាស់គេហដ្ឋាន' : 'កូនប្រុស • កូនស្រី'}
             </span>
-            <div className="font-moul text-xl md:text-2xl text-rose-900 leading-snug">
+            <div className={`${previewHeadingFont} text-xl md:text-2xl text-rose-900 leading-snug`}>
               {data.groomName || ceremonyInfo.defaultGroom}
             </div>
             <div className="my-2 flex items-center justify-center gap-3">
@@ -250,7 +268,7 @@ export function InvitationPreviewPage() {
               </span>
               <span className="h-[1px] w-12 bg-amber-300"></span>
             </div>
-            <div className="font-moul text-xl md:text-2xl text-rose-900 leading-snug">
+            <div className={`${previewHeadingFont} text-xl md:text-2xl text-rose-900 leading-snug`}>
               {data.brideName || ceremonyInfo.defaultBride}
             </div>
           </div>

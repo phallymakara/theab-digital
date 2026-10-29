@@ -469,83 +469,59 @@ export function TraditionalBadgeComponent({
 
   switch (templateId) {
     // -------------------------------------------------------------
-    // 1. មង្គលរាជវាំងលា័ក្ខមាស (Royal Lacquer Gold) - ក្បាច់មកុដ & ភ្ញីទេស
+    // មង្គលសិរីមាសប្រណិត (Royal Gold Heritage - Kh Ang Komutt A Font)
     // -------------------------------------------------------------
-    case 'traditional-royal-lacquer':
-    case 'traditional-lacquer-gold':
+    case 'royal-gold':
       return (
-        <div className="relative inline-flex flex-col items-center justify-center select-none">
-          {/* Top Royal Crown Crest */}
-          <div className="mb-[-2px] z-10 drop-shadow-[0_2px_8px_rgba(212,175,55,0.6)]">
-            <RoyalCrownCrest size={size} />
-          </div>
-
-          {/* Center Cartouche Framed by Kbach Phni Tes Wings */}
-          <div className={`relative inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-[#0C0A06] via-[#1C1609] to-[#0C0A06] border-2 border-[#D4AF37] ring-1 ring-amber-300/60 shadow-[0_4px_25px_rgba(212,175,55,0.45)] backdrop-blur-md ${
-            isSm ? 'px-2 py-0.5 gap-1' : isMd ? 'px-3 py-1 gap-1.5' : 'px-4 py-1.5 sm:px-6 sm:py-2 gap-2 sm:gap-3'
+        <div className="relative inline-flex items-center justify-center select-none py-1">
+          <h1 className={`font-komutt-a tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] text-amber-200 text-center whitespace-nowrap ${
+            isSm ? 'text-xs sm:text-sm' : isMd ? 'text-sm sm:text-base' : 'text-lg sm:text-xl md:text-2xl'
           }`}>
-            {/* Left Kbach Phni Tes */}
-            <KbachPhniTesWing flip={false} size={size} />
-
-            {/* Inner Title with 24K Gold Leaf Gradient */}
-            <h1 className={`font-moul tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] bg-gradient-to-r from-[#FFFDF0] via-[#FCE38A] to-[#E5A825] bg-clip-text text-transparent text-center whitespace-nowrap px-1 ${
-              isSm ? 'text-[10px]' : isMd ? 'text-xs sm:text-[13px]' : 'text-sm sm:text-base md:text-lg'
-            }`}>
-              {title}
-            </h1>
-
-            {/* Right Kbach Phni Tes */}
-            <KbachPhniTesWing flip={true} size={size} />
-          </div>
-
-          {/* Under-badge Kbach Subtitle */}
-          {!isSm && (
-            <div className="mt-1 flex items-center justify-center gap-1.5 opacity-90">
-              <span className="h-[1px] w-6 bg-gradient-to-r from-transparent to-amber-400" />
-              <span className="text-[10px] tracking-widest uppercase font-serifTrad text-amber-300 font-bold">
-                ក្បាច់ភ្ញីទេសរាជវាំង
-              </span>
-              <span className="h-[1px] w-6 bg-gradient-to-l from-transparent to-amber-400" />
-            </div>
-          )}
+            {title}
+          </h1>
         </div>
       );
 
     // -------------------------------------------------------------
-    // 2. មង្គលក្បាច់អង្គរាជ (Crimson Angkoreach) - ក្បាច់ភ្ញីភ្លើង
+    // 1. បុរាណមហានគរ (Angkor Ancient Royalty) - Kh Ang Kouteok Font
+    // -------------------------------------------------------------
+    case 'angkor-ancient-royalty':
+      return (
+        <div className="relative inline-flex items-center justify-center select-none py-1">
+          <h1 className={`font-kouteok tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] text-amber-200 text-center whitespace-nowrap ${
+            isSm ? 'text-xs sm:text-sm' : isMd ? 'text-sm sm:text-base' : 'text-lg sm:text-xl md:text-2xl'
+          }`}>
+            {title}
+          </h1>
+        </div>
+      );
+
+    // -------------------------------------------------------------
+    // 2. មង្គលរាជវាំងលា័ក្ខមាស (Royal Lacquer Gold - ASvadek Momo Font)
+    // -------------------------------------------------------------
+    case 'traditional-royal-lacquer':
+    case 'traditional-lacquer-gold':
+      return (
+        <div className="relative inline-flex items-center justify-center select-none py-1">
+          <h1 className={`font-momo tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] text-amber-200 text-center whitespace-nowrap ${
+            isSm ? 'text-[11px] sm:text-xs' : isMd ? 'text-xs sm:text-sm' : 'text-base sm:text-lg md:text-xl'
+          }`}>
+            {title}
+          </h1>
+        </div>
+      );
+
+    // -------------------------------------------------------------
+    // 2. មង្គលក្បាច់អង្គរាជ (Crimson Angkoreach - Kh Ang Kouteok Font)
     // -------------------------------------------------------------
     case 'traditional-crimson-angkoreach':
       return (
-        <div className="relative inline-flex flex-col items-center justify-center select-none">
-          {/* Top Angkoreach Flame Apex */}
-          <div className="mb-[-2px] z-10 drop-shadow-[0_2px_10px_rgba(225,29,72,0.8)]">
-            <AngkoreachApexFlame size={size} />
-          </div>
-
-          {/* Crimson Frame with Winged Flame Kbach */}
-          <div className={`relative inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-[#240308] via-[#3F0712] to-[#240308] border-2 border-red-500/90 ring-1 ring-amber-400/60 shadow-[0_4px_25px_rgba(190,18,60,0.65)] backdrop-blur-md ${
-            isSm ? 'px-2 py-0.5 gap-1' : isMd ? 'px-3 py-1 gap-1.5' : 'px-4 py-1.5 sm:px-6 sm:py-2 gap-2 sm:gap-3'
+        <div className="relative inline-flex items-center justify-center select-none py-1">
+          <h1 className={`font-kouteok tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] text-amber-200 text-center whitespace-nowrap ${
+            isSm ? 'text-[11px] sm:text-xs' : isMd ? 'text-xs sm:text-sm' : 'text-base sm:text-lg md:text-xl'
           }`}>
-            <KbachPhniPhleungWing flip={false} size={size} />
-
-            <h1 className={`font-moul tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] bg-gradient-to-r from-[#FFF5F5] via-[#FECDD3] to-[#FDE047] bg-clip-text text-transparent text-center whitespace-nowrap px-1 ${
-              isSm ? 'text-[10px]' : isMd ? 'text-xs sm:text-[13px]' : 'text-sm sm:text-base md:text-lg'
-            }`}>
-              {title}
-            </h1>
-
-            <KbachPhniPhleungWing flip={true} size={size} />
-          </div>
-
-          {!isSm && (
-            <div className="mt-1 flex items-center justify-center gap-1.5 opacity-90">
-              <span className="h-[1px] w-6 bg-gradient-to-r from-transparent to-red-400" />
-              <span className="text-[10px] tracking-widest uppercase font-serifTrad text-red-200 font-bold">
-                ក្បាច់ភ្ញីភ្លើងអង្គរាជ
-              </span>
-              <span className="h-[1px] w-6 bg-gradient-to-l from-transparent to-red-400" />
-            </div>
-          )}
+            {title}
+          </h1>
         </div>
       );
 

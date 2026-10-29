@@ -184,76 +184,90 @@ export function TemplateDetailPage() {
 
   // Check if this is the customized template (royal-gold) vs other standalone templates
   const isCustomized = activeTemplate.id === 'royal-gold';
+  const isRoyalGold = activeTemplate.id === 'royal-gold';
+  const isAngkorHeritage = activeTemplate.id === 'angkor-heritage' || activeTemplate.cardStyle === 'angkor-heritage';
+  const isFloralRomance = activeTemplate.id === 'floral-romance' || activeTemplate.cardStyle === 'romantic-frosted';
   const isAngkorAncient = activeTemplate.cardStyle === 'angkor-ancient-royalty' || activeTemplate.id === 'angkor-ancient-royalty';
+  const isModern = activeTemplate.cardStyle?.startsWith('modern-') || activeTemplate.id?.startsWith('modern-');
   const isTraditional =
     activeTemplate.category === 'traditional' ||
     activeTemplate.tag === 'ប្រពៃណីបុរាណ' ||
     activeTemplate.cardStyle?.startsWith('traditional-') ||
-    isAngkorAncient;
+    isAngkorAncient ||
+    isAngkorHeritage;
+
   const TraditionalComponent =
     TRADITIONAL_TEMPLATES[activeTemplate.id] ||
+    TRADITIONAL_TEMPLATES[activeTemplate.cardStyle] ||
     FLORAL_TEMPLATES[activeTemplate.id] ||
+    FLORAL_TEMPLATES[activeTemplate.cardStyle] ||
     EMERALD_TEMPLATES[activeTemplate.id] ||
+    EMERALD_TEMPLATES[activeTemplate.cardStyle] ||
     MODERN_TEMPLATES[activeTemplate.id] ||
     MODERN_TEMPLATES[activeTemplate.cardStyle];
   const hasHtml = !!activeTemplate.htmlPreviewUrl;
   const [viewMode, setViewMode] = useState(hasHtml ? 'html' : 'smart');
 
   // Independent template data: each template preserves its own demo content unless viewing the customized template
-  const groomName = activeTemplate.demoGroom || (isAngkorAncient ? 'កែវ វិបុលរាជ' : (isCustomized ? 'ហេង វឌ្ឍនា' : 'សុខ វិបុល'));
-  const brideName = activeTemplate.demoBride || (isAngkorAncient ? 'ទេព ធីតាសួគ៌' : (isCustomized ? 'កែវ ចរណៃ' : 'ជា សុជាតា'));
-  const weddingDate = activeTemplate.demoDate || (isAngkorAncient ? 'ថ្ងៃអាទិត្យ ទី១៤ ខែកុម្ភៈ ឆ្នាំ២០២៧' : (isCustomized ? '១៨ - ឧសភា - ២០២៦' : 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦'));
+  const groomName = activeTemplate.demoGroom || (isAngkorAncient ? 'កែវ វិបុលរាជ' : (isCustomized ? 'សុខ វិបុល' : 'សុខ វិបុល'));
+  const brideName = activeTemplate.demoBride || (isAngkorAncient ? 'ទេព ធីតាសួគ៌' : (isCustomized ? 'ជា សុជាតា' : 'ជា សុជាតា'));
+  const weddingDate = activeTemplate.demoDate || (isAngkorAncient ? 'ថ្ងៃអាទិត្យ ទី១៤ ខែកុម្ភៈ ឆ្នាំ២០២៧' : (isCustomized ? 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦' : 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦'));
   const weddingLocation = activeTemplate.demoLocation || (isAngkorAncient ? 'ពិធីសិរីមង្គលបុរាណប្រារព្ធនៅ សាលប្រាសាទមាស សែនសុខ រាជធានីភ្នំពេញ' : 'ពិធីនេះរៀបចំឡើងនៅសាលមង្គល ឌឹ ព្រេមៀ សែនសុខ (អគារ A) រាជធានីភ្នំពេញ');
 
-  const groomFather = isAngkorAncient
+  const groomFather = activeTemplate.demoGroomParents?.split?.(' និង ')?.[0] || (isAngkorAncient
     ? 'លោក កែវ សម្បត្តិវិបុល'
-    : isCustomized ? 'លោក ហេង វណ្ណា' : 'លោក ស៊ុន ហេង';
-  const groomMother = isAngkorAncient
+    : isCustomized ? 'លោក សុខ ជា' : 'លោក ស៊ុន ហេង');
+  const groomMother = activeTemplate.demoGroomParents?.split?.(' និង ')?.[1] || (isAngkorAncient
     ? 'លោកស្រី ជា ចរិយា'
-    : isCustomized ? 'អ្នកស្រី គីម ស្រ៊ុន' : 'អ្នកស្រី គីម ស្រ៊ុន';
-  const brideFather = isAngkorAncient
+    : isCustomized ? 'លោកស្រី កែវ ផល្លី' : 'អ្នកស្រី គីម ស្រ៊ុន');
+  const brideFather = activeTemplate.demoBrideParents?.split?.(' និង ')?.[0] || (isAngkorAncient
     ? 'លោក ទេព វរវង្ស'
-    : isCustomized ? 'លោក កែវ សម្បត្តិ' : 'លោក ជា សម្បត្តិ';
-  const brideMother = isAngkorAncient
+    : isCustomized ? 'លោក ជា វណ្ណា' : 'លោក ជា សម្បត្តិ');
+  const brideMother = activeTemplate.demoBrideParents?.split?.(' និង ')?.[1] || (isAngkorAncient
     ? 'អ្នកស្រី ម៉ៅ សុវណ្ណមាលា'
-    : isCustomized ? 'អ្នកស្រី សុខ ហៀង' : 'អ្នកស្រី អ៊ុក ផល្លី';
+    : isCustomized ? 'លោកស្រី ហែម ស៊ីវន' : 'អ្នកស្រី អ៊ុក ផល្លី');
+
+  const isRoyalLacquer =
+    activeTemplate.id === 'traditional-royal-lacquer' ||
+    activeTemplate.cardStyle === 'traditional-royal-lacquer' ||
+    activeTemplate.cardStyle === 'traditional-lacquer-gold';
+
+  const isCrimsonAngkoreach =
+    activeTemplate.id === 'traditional-crimson-angkoreach' ||
+    activeTemplate.cardStyle === 'traditional-crimson-angkoreach';
 
   const templateFont =
-    isAngkorAncient || activeTemplate.cardStyle?.startsWith('traditional-')
-      ? 'font-moul'
+    isRoyalGold
+      ? 'font-komutt-a'
+      : isAngkorHeritage
+      ? 'font-phalluch'
+      : isFloralRomance
+      ? 'font-kouteok'
+      : isRoyalLacquer
+      ? 'font-momo'
+      : isCrimsonAngkoreach || isAngkorAncient || activeTemplate.id === 'angkor-ancient-royalty' || activeTemplate.cardStyle === 'angkor-ancient-royalty'
+      ? 'font-kouteok'
+      : isModern
+      ? 'font-komutt'
       : activeTemplate.cardStyle === 'floral-editorial-magazine' || activeTemplate.id === 'floral-editorial-magazine'
-        ? 'font-phalluch'
-        : activeTemplate.cardStyle === 'floral-romdoul-moonlight' || activeTemplate.id === 'floral-romdoul-moonlight'
-          ? 'font-suwannaphum'
-          : activeTemplate.cardStyle === 'floral-golden-orchid' || activeTemplate.id === 'floral-golden-orchid'
-            ? 'font-koulen'
-            : activeTemplate.cardStyle === 'floral-glasshouse' || activeTemplate.id === 'floral-botanical-glasshouse'
-              ? 'font-preahvihear'
-              : activeTemplate.cardStyle === 'floral-khmer-blossom' || activeTemplate.id === 'floral-khmer-blossom'
-                ? 'font-moulpali'
-                : activeTemplate.cardStyle === 'crimson-classic' || activeTemplate.id === 'crimson-classic'
-                  ? 'font-komutt-a'
-                  : activeTemplate.cardStyle === 'emerald-jade' || activeTemplate.id === 'emerald-jade'
-                    ? 'font-moulpali'
-                    : activeTemplate.cardStyle === 'emerald-radiant-diamond' || activeTemplate.id === 'emerald-radiant-diamond'
-                      ? 'font-komutt'
-                      : activeTemplate.cardStyle === 'emerald-nature-heirloom' || activeTemplate.id === 'emerald-nature-heirloom'
-                        ? 'font-komutt'
-                        : activeTemplate.cardStyle === 'emerald-glasshouse-moonlight' || activeTemplate.id === 'emerald-glasshouse-moonlight'
-                          ? 'font-komutt'
-                        : activeTemplate.cardStyle === 'emerald-noir-editorial' || activeTemplate.id === 'emerald-noir-editorial'
-                          ? 'font-komutt'
-                        : activeTemplate.cardStyle === 'emerald-malachite-seal' || activeTemplate.id === 'emerald-malachite-seal'
-                          ? 'font-komutt'
-                      : activeTemplate.cardStyle === 'romantic-frosted' || activeTemplate.id === 'floral-romance'
-                      ? 'font-kouteok'
-                      : activeTemplate.id === 'angkor-heritage'
-                        ? 'font-phalluch'
-                        : activeTemplate.cardStyle?.startsWith('modern-') || activeTemplate.id?.startsWith('modern-')
-                          ? 'font-komutt'
-                          : activeTemplate.id === 'royal-gold'
-                            ? 'font-komutt-a'
-                            : 'font-moul';
+      ? 'font-phalluch'
+      : activeTemplate.cardStyle === 'floral-golden-orchid' || activeTemplate.id === 'floral-golden-orchid'
+      ? 'font-koulen'
+      : activeTemplate.cardStyle === 'floral-romdoul-moonlight' || activeTemplate.id === 'floral-romdoul-moonlight'
+      ? 'font-suwannaphum'
+      : activeTemplate.cardStyle === 'floral-glasshouse' || activeTemplate.id === 'floral-botanical-glasshouse'
+      ? 'font-preahvihear'
+      : activeTemplate.cardStyle === 'floral-khmer-blossom' || activeTemplate.id === 'floral-khmer-blossom'
+      ? 'font-moulpali'
+      : activeTemplate.cardStyle === 'crimson-classic' || activeTemplate.id === 'crimson-classic'
+      ? 'font-komutt-a'
+      : activeTemplate.cardStyle === 'emerald-jade' || activeTemplate.id === 'emerald-jade'
+      ? 'font-moulpali'
+      : activeTemplate.cardStyle?.startsWith('emerald-') || activeTemplate.id?.startsWith('emerald-')
+      ? 'font-komutt'
+      : activeTemplate.cardStyle?.startsWith('traditional-')
+      ? 'font-moul'
+      : 'font-moul';
 
   const groomBrideFont = templateFont;
 
@@ -341,16 +355,23 @@ export function TemplateDetailPage() {
   };
 
   const currentBg = getTemplateBackground();
+  const isNavigatingToCustomizer = useRef(false);
 
-  // Play audio from start on preview entrance; restart from beginning whenever template changes; stop when leaving
+  // Play audio on preview entrance only for fallback templates without their own component; isolated components manage their own audio
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    restartAndPlayAudio();
+    if (!TraditionalComponent) {
+      restartAndPlayAudio?.();
+    } else {
+      stopAudio?.();
+    }
 
     return () => {
-      stopAudio();
+      if (!isNavigatingToCustomizer.current) {
+        stopAudio?.();
+      }
     };
-  }, [templateId]);
+  }, [templateId, TraditionalComponent]);
 
   // Sync selected template in context
   useEffect(() => {
@@ -588,7 +609,7 @@ export function TemplateDetailPage() {
   };
 
   return (
-    <div className={`w-full h-screen h-[100dvh] ${currentBg.bgClass} ${currentBg.textColor} relative selection:bg-rose-900 selection:text-white flex flex-col p-0 sm:px-4 md:px-6 overflow-hidden`}>
+    <div className={`w-full h-screen h-[100dvh] ${currentBg.bgClass} ${currentBg.textColor} relative selection:bg-rose-900 selection:text-white flex flex-col p-0 overflow-hidden`}>
 
       {/* Modern Khmer Flowers & Royal Hearts Background with Smooth Floating Animations (Outside the Modal/Card) */}
       <KhmerFloatingBackground count={26} />
@@ -597,30 +618,32 @@ export function TemplateDetailPage() {
       <div className={`fixed -top-16 -left-16 w-80 h-80 rounded-full blur-3xl pointer-events-none select-none z-0 ${currentBg.glowTop}`} />
       <div className={`fixed -bottom-16 -right-16 w-80 h-80 rounded-full blur-3xl pointer-events-none select-none z-0 ${currentBg.glowBottom}`} />
 
-      {/* Floating Audio Play/Pause Button */}
-      <div className="fixed bottom-4 right-4 sm:right-6 z-40 flex flex-col items-end gap-2">
-        <button
-          onClick={toggleAudio}
-          className={`group flex items-center gap-2 px-3 py-2 rounded-full border-2 transition-all duration-300 cursor-pointer active:scale-95 shadow-sm ${currentBg.btnTheme}`}
-          style={{ borderColor: themeBorder }}
-          title={isAudioPlaying ? 'ចុចដើម្បីបិទភ្លេង' : 'ចុចដើម្បីចាក់ភ្លេងមង្គល'}
-        >
-          <div className={`w-7 h-7 rounded-full flex items-center justify-center text-white ${isAudioPlaying
-            ? 'bg-gradient-to-tr from-amber-600 to-amber-500 animate-[spin_4s_linear_infinite]'
-            : 'bg-stone-500'
-            }`}>
-            <Music className="w-3.5 h-3.5 text-white" />
-          </div>
-          <div className="text-left hidden sm:block pr-1">
-            <span className={`block text-[11px] font-bold leading-tight ${currentBg.textColor}`}>
-              {isAudioPlaying ? 'កំពុងចាក់ «ភ្ជាប់និស្ស័យ»' : 'បទ៖ ភ្ជាប់និស្ស័យ (NISAI)'}
-            </span>
-            <span className={`block text-[10px] ${isTraditional ? 'text-amber-400' : 'text-amber-600'} font-medium`}>
-              {isAudioPlaying ? 'ចុចដើម្បីបិទ' : 'ចុចដើម្បីចាក់'}
-            </span>
-          </div>
-        </button>
-      </div>
+      {/* Floating Audio Play/Pause Button - ONLY for fallback templates that do not have their own isolated audio */}
+      {!TraditionalComponent && (
+        <div className="fixed bottom-4 right-4 sm:right-6 z-40 flex flex-col items-end gap-2">
+          <button
+            onClick={toggleAudio}
+            className={`group flex items-center gap-2 px-3 py-2 rounded-full border-2 transition-all duration-300 cursor-pointer active:scale-95 shadow-sm ${currentBg.btnTheme}`}
+            style={{ borderColor: themeBorder }}
+            title={isAudioPlaying ? 'ចុចដើម្បីបិទភ្លេង' : 'ចុចដើម្បីចាក់ភ្លេងមង្គល'}
+          >
+            <div className={`w-7 h-7 rounded-full flex items-center justify-center text-white ${isAudioPlaying
+              ? 'bg-gradient-to-tr from-amber-600 to-amber-500 animate-[spin_4s_linear_infinite]'
+              : 'bg-stone-500'
+              }`}>
+              <Music className="w-3.5 h-3.5 text-white" />
+            </div>
+            <div className="text-left hidden sm:block pr-1">
+              <span className={`block text-[11px] font-bold leading-tight ${currentBg.textColor}`}>
+                {isAudioPlaying ? 'កំពុងចាក់ «ភ្ជាប់និស្ស័យ»' : 'បទ៖ ភ្ជាប់និស្ស័យ (NISAI)'}
+              </span>
+              <span className={`block text-[10px] ${isTraditional ? 'text-amber-400' : 'text-amber-600'} font-medium`}>
+                {isAudioPlaying ? 'ចុចដើម្បីបិទ' : 'ចុចដើម្បីចាក់'}
+              </span>
+            </div>
+          </button>
+        </div>
+      )}
 
       {/* =========================================================================
           THE UNIFIED WEDDING INVITATION CONTAINER (SAME EXACT SHELL AS ROYAL-GOLD)
@@ -635,6 +658,10 @@ export function TemplateDetailPage() {
           <div className="pointer-events-auto">
             <button
               onClick={() => {
+                if (window.self !== window.top) {
+                  window.parent.postMessage({ type: 'CLOSE_PREVIEW_MODAL' }, '*');
+                  return;
+                }
                 if (window.history.length > 1) {
                   window.history.back();
                 } else {
@@ -693,26 +720,24 @@ export function TemplateDetailPage() {
               <span>✨</span>
             </button>
 
-            {/* Share button */}
-            <button
-              onClick={handleShareLink}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-md border border-white/25 shadow-lg text-xs font-bold transition-all cursor-pointer active:scale-95"
-            >
-              <Share2 className="w-4 h-4 text-amber-300 shrink-0" />
-              <span className="hidden xs:inline">ចែករំលែកធៀប</span>
-              <span className="xs:hidden">ចែករំលែក</span>
-            </button>
-
-            {/* Customize / Rent Button */}
+            {/* Select / Customize Template Button */}
             <button
               onClick={() => {
+                isNavigatingToCustomizer.current = true;
+                if (window.self !== window.top) {
+                  window.parent.postMessage({
+                    type: 'SELECT_TEMPLATE',
+                    templateId: activeTemplate.id
+                  }, '*');
+                  return;
+                }
                 setSelectedTemplate(activeTemplate);
                 navigate({ to: `/customize/${activeTemplate.id}` });
               }}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:brightness-110 text-white backdrop-blur-md border border-amber-300/40 shadow-lg text-xs font-bold transition-all cursor-pointer active:scale-95"
+              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:brightness-110 text-white backdrop-blur-md border border-amber-300/40 shadow-lg text-xs font-bold transition-all cursor-pointer active:scale-95"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-200 shrink-0" />
-              <span>ជ្រើសរើសបំពេញព័ត៌មាន</span>
+              <span>ជ្រើសរើសគំរូ</span>
             </button>
           </div>
         </header>
@@ -731,15 +756,23 @@ export function TemplateDetailPage() {
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             <TraditionalComponent
+              key={activeTemplate.id}
               data={{
                 groomName,
                 brideName,
+                groomFather,
+                groomMother,
+                brideFather,
+                brideMother,
                 groomParents: `${groomFather} និង ${groomMother}`,
                 brideParents: `${brideFather} និង ${brideMother}`,
                 ceremonyDate: weddingDate,
+                ceremonyTime: activeTemplate.defaultTime || 'វេលាម៉ោង ៥:០០ ល្ងាច តទៅ',
                 ceremonyLocation: weddingLocation,
+                locationAddress: activeTemplate.defaultAddress || weddingLocation,
                 preweddingPhoto: activeTemplate.bgImage,
-                heroImages: activeTemplate.heroImages
+                heroImages: activeTemplate.heroImages,
+                galleryPhotos: activeTemplate.galleryPhotos
               }}
               activeTemplate={activeTemplate}
             />
@@ -828,78 +861,64 @@ export function TemplateDetailPage() {
                     <FlyingHeartsAndFlowers count={8} />
                   </div>
 
-                  {/* Inner Golden Filigree Border Frame */}
-                  <div className="absolute inset-2.5 sm:inset-4 rounded-[18px] sm:rounded-[24px] border pointer-events-none z-10" style={{ borderColor: `${themeBorder}80` }}>
-                    <div className="absolute -top-1.5 -left-1.5 w-3.5 h-3.5 border-t-2 border-l-2" style={{ borderColor: themeBorder }}></div>
-                    <div className="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 border-t-2 border-r-2" style={{ borderColor: themeBorder }}></div>
-                    <div className="absolute -bottom-1.5 -left-1.5 w-3.5 h-3.5 border-b-2 border-l-2" style={{ borderColor: themeBorder }}></div>
-                    <div className="absolute -bottom-1.5 -right-1.5 w-3.5 h-3.5 border-b-2 border-r-2" style={{ borderColor: themeBorder }}></div>
-                  </div>
-
-                  {/* GROUPED WEDDING TEXT (Centered in the Middle of Image, click-through for smooth touch swipe) */}
+                  {/* GROUPED WEDDING TEXT (Centered in the Middle of Image, click-through for smooth touch swipe, frameless) */}
                   {isAngkorAncient ? (
                     <div className="relative z-10 pointer-events-none w-full h-full flex flex-col justify-center items-center p-3 sm:p-6 text-center">
-                      <div className="space-y-2.5 sm:space-y-3.5 max-w-lg mx-auto w-full my-auto px-2">
-                        {/* Title: Styled Container ONLY for សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍ */}
-                        <div>
-                          <div className="inline-flex items-center justify-center gap-2 px-5 py-2 sm:px-7 sm:py-2.5 rounded-2xl bg-black/60 backdrop-blur-md border border-amber-400/80 shadow-[0_4px_25px_rgba(0,0,0,0.75)] relative">
-                            {/* 4 Antique Gold Corner Accents on Title Badge */}
-                            <div className="absolute top-1 left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-amber-300 pointer-events-none" />
-                            <div className="absolute top-1 right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-amber-300 pointer-events-none" />
-                            <div className="absolute bottom-1 left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-amber-300 pointer-events-none" />
-                            <div className="absolute bottom-1 right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-amber-300 pointer-events-none" />
-
-                            <span className="text-amber-300 text-xs">✤</span>
-                            <h1 className="font-moul text-base sm:text-lg md:text-xl text-amber-200 tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">
-                              សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍
-                            </h1>
-                            <span className="text-amber-300 text-xs">✤</span>
-                          </div>
+                      <div className="space-y-2 sm:space-y-3 max-w-lg mx-auto w-full my-auto px-2">
+                        {/* Title: សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍ (Kh Ang Kouteok Font) */}
+                        <div className="mb-1">
+                          <h1 className="font-kouteok text-sm sm:text-base md:text-xl text-amber-200 tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                            សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍
+                          </h1>
                         </div>
 
-                        {/* Groom Section - Floating directly on photo with solid royal gold color (no transparency) */}
+                        {/* Groom Section - Floating directly on photo with solid royal gold color (Kh Ang Kouteok Font) */}
                         <div>
-                          <div className="font-moul text-xl sm:text-2xl md:text-[26px] text-amber-200 tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-100 transition-colors">
+                          <div className="font-kouteok text-xl sm:text-2xl md:text-[30px] text-amber-200 tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-100 transition-colors">
                             {groomName}
                           </div>
                         </div>
 
                         {/* Central Sacred Lotus & Ampersand */}
-                        <div className="flex items-center justify-center gap-3 my-1">
-                          <div className="h-[1.5px] w-10 sm:w-16 bg-gradient-to-r from-transparent via-amber-300 to-amber-400 drop-shadow" />
-                          <div className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-amber-950/80 border border-amber-300/80 shadow-[0_0_10px_rgba(245,158,11,0.8)]">
-                            <span className="font-serif italic text-xs font-bold text-amber-300">&</span>
+                        <div className="flex items-center justify-center gap-2.5 my-0.5 sm:my-1">
+                          <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-16 bg-gradient-to-r from-transparent via-amber-300 to-amber-400 drop-shadow" />
+                          <div className="flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-amber-950/80 border border-amber-300/80 shadow-[0_0_10px_rgba(245,158,11,0.8)]">
+                            <span className="font-serif italic text-[11px] sm:text-xs font-bold text-amber-300">&</span>
                           </div>
-                          <div className="h-[1.5px] w-10 sm:w-16 bg-gradient-to-l from-transparent via-amber-300 to-amber-400 drop-shadow" />
+                          <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-16 bg-gradient-to-l from-transparent via-amber-300 to-amber-400 drop-shadow" />
                         </div>
 
-                        {/* Bride Section - Floating directly on photo with solid royal gold color (no transparency) */}
+                        {/* Bride Section - Floating directly on photo with solid royal gold color (Kh Ang Kouteok Font) */}
                         <div>
-                          <div className="font-moul text-xl sm:text-2xl md:text-[26px] text-amber-200 tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-100 transition-colors">
+                          <div className="font-kouteok text-xl sm:text-2xl md:text-[30px] text-amber-200 tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-100 transition-colors">
                             {brideName}
                           </div>
                         </div>
                       </div>
                     </div>
                   ) : (
-                    <div className="relative z-10 pointer-events-none w-full h-full flex flex-col justify-center items-center p-4 sm:p-8 text-center">
-                      <div className="space-y-2.5 sm:space-y-3.5 max-w-lg mx-auto w-full my-auto px-2">
-                        {/* Title: សិរីមង្គលអាពាហ៍ពិពាហ៍ */}
+                    <div className="relative z-10 pointer-events-none w-full h-full flex flex-col justify-center items-center p-3 sm:p-6 text-center">
+                      <div className="space-y-2 sm:space-y-3 max-w-lg mx-auto w-full my-auto px-2">
+                        {/* Title: សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍ / សិរីមង្គលអាពាហ៍ពិពាហ៍ */}
                         <div>
-                          <h1 className={`${templateFont} text-xl sm:text-2xl md:text-3xl text-amber-200 tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]`}>
-                            {activeTemplate.id === 'emerald-jade' ? 'សិរីសួស្តីអាពាហ៍ពិពាហ៍' : 'សិរីមង្គលអាពាហ៍ពិពាហ៍'}
+                          <h1 className={`${templateFont} text-sm sm:text-base md:text-2xl text-amber-200 tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]`}>
+                            {isRoyalLacquer || activeTemplate.id === 'traditional-crimson-angkoreach' || isAngkorAncient
+                              ? 'សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍'
+                              : isAngkorHeritage || isFloralRomance || isModern || activeTemplate.id === 'emerald-jade'
+                              ? 'សិរីសួស្តីអាពាហ៍ពិពាហ៍'
+                              : 'សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍'}
                           </h1>
                         </div>
 
-                        {/* Center Couple Names: Styled in each template's unique font (scaled smaller a bit) */}
+                        {/* Center Couple Names: Styled in each template's unique font */}
                         <div className="py-0.5">
-                          <div className={`${groomBrideFont} text-xl sm:text-2xl md:text-3xl text-white tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]`}>
+                          <div className={`${groomBrideFont} text-xl sm:text-2xl md:text-3xl text-white tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] leading-relaxed`}>
                             {groomName}
                           </div>
                           <div className="flex items-center justify-center gap-2 my-0.5">
-                            <span className="font-serif italic text-base sm:text-lg text-amber-300 font-bold drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">&</span>
+                            <span className="font-serif italic text-xs sm:text-sm text-amber-300 font-bold drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">&</span>
                           </div>
-                          <div className={`${groomBrideFont} text-xl sm:text-2xl md:text-3xl text-white tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]`}>
+                          <div className={`${groomBrideFont} text-xl sm:text-2xl md:text-3xl text-white tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] leading-relaxed`}>
                             {brideName}
                           </div>
                         </div>
@@ -1305,8 +1324,7 @@ export function TemplateDetailPage() {
                             <img
                               src={photo.src}
                               alt={photo.caption}
-                              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
-                            />
+                              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108" decoding="async" loading="lazy" />
                             {/* Subtle Elegant Hover Gradient Overlay with Caption (No blur) */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3.5 sm:p-4 text-white text-center">
                               <p className="text-xs sm:text-sm font-semibold tracking-wide drop-shadow-md">
@@ -1348,8 +1366,7 @@ export function TemplateDetailPage() {
                         <img
                           src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`https://theab-digital.app/gift/${activeTemplate.id}`)}`}
                           alt="Scan to Gift QR Code"
-                          className="w-32 h-32 sm:w-36 sm:h-36 object-contain rounded-lg"
-                        />
+                          className="w-32 h-32 sm:w-36 sm:h-36 object-contain rounded-lg" decoding="async" loading="lazy" />
                       </div>
 
                       <p className="text-xs sm:text-[13px] font-bold text-stone-800 leading-tight">
@@ -1646,8 +1663,7 @@ export function TemplateDetailPage() {
             <img
               src={activePhoto.src}
               alt={activePhoto.caption || 'រូបថតអនុស្សារីយ៍'}
-              className="max-h-[75vh] w-auto object-contain rounded-2xl border border-stone-700"
-            />
+              className="max-h-[75vh] w-auto object-contain rounded-2xl border border-stone-700" decoding="async" />
             <p className="text-white text-xs sm:text-sm font-semibold mt-3">
               {activePhoto.caption}
             </p>

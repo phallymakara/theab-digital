@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
   Heart,
   Calendar,
@@ -20,11 +21,16 @@ import {
   Image as ImageIcon,
   ChevronLeft,
   ChevronRight,
-  ShieldCheck
+  ShieldCheck,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 import { FlyingHeartsAndFlowers } from '../../FlyingHeartsAndFlowers';
 
 export function EmeraldRadiantDiamondTemplate({ data = {}, invitationData = {}, invitation = {}, activeTemplate = {} }) {
+  // Isolated template audio («ភ្ជាប់និស្ស័យ» - NISAI)
+  const { isPlaying, toggleAudio } = useTemplateAudio();
+
   const groom = data.groomName || invitation.groomName || invitationData.groomName || activeTemplate?.demoGroom || 'ជា វឌ្ឍនៈ';
   const bride = data.brideName || invitation.brideName || invitationData.brideName || activeTemplate?.demoBride || 'ម៉េង សុភ័ក្ត្រា';
   
@@ -222,42 +228,41 @@ export function EmeraldRadiantDiamondTemplate({ data = {}, invitationData = {}, 
                 src={imgUrl}
                 alt={`Haute Joaillerie Khmer Couple ${idx + 1}`}
                 className="w-full h-full object-cover object-center filter brightness-[0.92] contrast-[1.08]"
-                loading={idx === 0 ? 'eager' : 'lazy'}
-              />
+                loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
               {/* Haute Joaillerie Prismatic Sapphire Vignette */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#021824] via-[#021824]/40 to-black/35 pointer-events-none" />
             </div>
           ))}
         </div>
 
-        {/* Stationary Centered Typography Directly on Photo (Kh Ang Komutt B Font, No Container) */}
-        <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-center p-6 text-center">
-          <div className="space-y-3.5 w-full px-4">
+        {/* Stationary Centered Typography Directly on Photo (Kh Ang Komutt B Font, Scaled for mobile readability, frameless) */}
+        <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-center p-4 sm:p-6 text-center">
+          <div className="space-y-2.5 sm:space-y-3 w-full max-w-md mx-auto px-2 sm:px-4">
             {/* Top Haute Joaillerie Brand Accent */}
             <div className="flex items-center justify-center gap-2 mb-1">
-              <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-cyan-300" />
-              <span className="font-sans text-[11px] sm:text-xs tracking-[0.35em] text-cyan-200 font-semibold uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+              <div className="h-[1px] w-6 sm:w-8 bg-gradient-to-r from-transparent to-cyan-300" />
+              <span className="font-sans text-[10px] sm:text-xs tracking-[0.35em] text-cyan-200 font-semibold uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                 ✦ HAUTE JOAILLERIE ✦
               </span>
-              <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-cyan-300" />
+              <div className="h-[1px] w-6 sm:w-8 bg-gradient-to-l from-transparent to-cyan-300" />
             </div>
 
             {/* Groom Name in Kh Ang Komutt B Font */}
-            <div className="font-komutt text-3xl sm:text-4xl md:text-5xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
+            <div className="font-komutt text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
               {groom}
             </div>
 
             {/* Central Diamond Facet Connector */}
-            <div className="flex items-center justify-center gap-3 my-1">
-              <div className="h-[1.5px] w-12 bg-gradient-to-r from-transparent via-cyan-300 to-amber-300 drop-shadow"></div>
-              <div className="flex items-center justify-center w-7 h-7 rotate-45 border border-cyan-300/80 bg-cyan-950/80 shadow-[0_0_12px_rgba(34,211,238,0.8)]">
-                <Gem className="-rotate-45 w-4 h-4 text-cyan-200 fill-cyan-400/30" />
+            <div className="flex items-center justify-center gap-2.5 my-0.5 sm:my-1">
+              <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-12 bg-gradient-to-r from-transparent via-cyan-300 to-amber-300 drop-shadow"></div>
+              <div className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rotate-45 border border-cyan-300/80 bg-cyan-950/80 shadow-[0_0_12px_rgba(34,211,238,0.8)]">
+                <Gem className="-rotate-45 w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-200 fill-cyan-400/30" />
               </div>
-              <div className="h-[1.5px] w-12 bg-gradient-to-l from-transparent via-cyan-300 to-amber-300 drop-shadow"></div>
+              <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-12 bg-gradient-to-l from-transparent via-cyan-300 to-amber-300 drop-shadow"></div>
             </div>
 
             {/* Bride Name in Kh Ang Komutt B Font */}
-            <div className="font-komutt text-3xl sm:text-4xl md:text-5xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
+            <div className="font-komutt text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
               {bride}
             </div>
 
@@ -601,8 +606,7 @@ export function EmeraldRadiantDiamondTemplate({ data = {}, invitationData = {}, 
                 <img
                   src={photo.src}
                   alt={photo.caption}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" decoding="async" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
                   <span className="text-[10px] text-amber-200 font-bold font-komutt">ចុចដើម្បីមើលរូបធំ ✦</span>
                 </div>
@@ -649,7 +653,7 @@ export function EmeraldRadiantDiamondTemplate({ data = {}, invitationData = {}, 
             className="w-40 h-40 mx-auto my-3.5 p-2 bg-white shadow-xl flex items-center justify-center border-2 border-amber-300 cursor-pointer relative group"
           >
             {qrCodeImage ? (
-              <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" />
+              <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" decoding="async" loading="lazy" />
             ) : (
               <QrCode className="w-32 h-32 text-stone-900" />
             )}
@@ -886,7 +890,7 @@ export function EmeraldRadiantDiamondTemplate({ data = {}, invitationData = {}, 
             <p className="text-xs text-cyan-200 mb-3 font-mono">{bankName}</p>
             <div className="w-48 h-48 mx-auto p-2 bg-white rounded-xl flex items-center justify-center mb-3 border-2 border-amber-300">
               {qrCodeImage ? (
-                <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" />
+                <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" decoding="async" loading="lazy" />
               ) : (
                 <QrCode className="w-40 h-40 text-stone-900" />
               )}
@@ -939,14 +943,39 @@ export function EmeraldRadiantDiamondTemplate({ data = {}, invitationData = {}, 
             <img
               src={selectedPhoto}
               alt="Enlarged Prewedding"
-              className="w-full h-auto max-h-[85vh] object-contain border-2 border-cyan-400/80 shadow-2xl"
-            />
+              className="w-full h-auto max-h-[85vh] object-contain border-2 border-cyan-400/80 shadow-2xl" decoding="async" />
             <p className="text-center text-xs text-cyan-200 font-komutt mt-3">
               ចុចទីតាំងណាក៏បានដើម្បីបិទ ✦
             </p>
           </div>
         </div>
       )}
+
+      {/* Floating Audio Toggle - Isolated Template Soundtrack («ភ្ជាប់និស្ស័យ» - NISAI) */}
+      <div className="fixed bottom-5 right-5 z-40">
+        <button
+          type="button"
+          onClick={toggleAudio}
+          className={`px-3.5 py-2.5 rounded-full flex items-center gap-2 border backdrop-blur-md shadow-2xl transition-all duration-300 text-xs font-medium cursor-pointer ${
+            isPlaying
+              ? 'bg-cyan-800 text-white border-cyan-400 shadow-cyan-500/30 ring-2 ring-cyan-400/40'
+              : 'bg-white/90 text-stone-800 border-cyan-300 hover:text-black'
+          }`}
+          title="ភ្លេងមង្គល «ភ្ជាប់និស្ស័យ»"
+        >
+          {isPlaying ? (
+            <>
+              <Volume2 className="w-4 h-4 animate-pulse text-cyan-200" />
+              <span className="font-kantumruy font-bold">កំពុងចាក់ «ភ្ជាប់និស្ស័យ»</span>
+            </>
+          ) : (
+            <>
+              <VolumeX className="w-4 h-4 text-stone-500" />
+              <span className="font-kantumruy">ចាក់ភ្លេងមង្គល</span>
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 }

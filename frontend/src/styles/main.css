@@ -2,6 +2,52 @@
 
 @import "./fonts.css";
 
+@theme {
+  --color-theabGold: #D4AF37;
+  --color-theabGold-50: #FDFBF4;
+  --color-theabGold-100: #FAF4E3;
+  --color-theabGold-200: #F2E4BA;
+  --color-theabGold-300: #E9D28F;
+  --color-theabGold-400: #DFC066;
+  --color-theabGold-500: #D4AF37;
+  --color-theabGold-600: #B69225;
+  --color-theabGold-700: #8C6F19;
+  --color-theabGold-800: #624D11;
+  --color-theabGold-900: #3D3008;
+
+  --color-theabCrimson: #881337;
+  --color-theabCrimson-50: #FFF1F2;
+  --color-theabCrimson-100: #FFE4E6;
+  --color-theabCrimson-600: #BE123C;
+  --color-theabCrimson-800: #881337;
+  --color-theabCrimson-900: #4C0519;
+
+  --font-angkor: Moul, Moulpali, Preahvihear, serif;
+  --font-toathmor: Moul, Moulpali, 'Kh Ang Komutt B', Preahvihear, serif;
+  --font-komutt-a: 'Kh Ang Komutt A', 'Kh Ang Komutt B', Moul, 'Kantumruy Pro', serif;
+  --font-komuttA: 'Kh Ang Komutt A', 'Kh Ang Komutt B', Moul, 'Kantumruy Pro', serif;
+  --font-phalluch: 'KH PhalLuch 002', 'Kantumruy Pro', sans-serif;
+  --font-komutt: 'Kh Ang Komutt B', 'Kantumruy Pro', sans-serif;
+  --font-kouteok: 'Kh Ang Kouteok', 'Kantumruy Pro', sans-serif;
+  --font-mokha: 'Asvadek Mokha', Moul, 'Kantumruy Pro', sans-serif;
+  --font-momo: 'ASvadek Momo', 'ASvadek Momo W', 'Kantumruy Pro', sans-serif;
+  --font-moul: Moul, serif;
+  --font-moulpali: Moulpali, serif;
+  --font-preahvihear: Preahvihear, cursive, sans-serif;
+  --font-suwannaphum: Suwannaphum, serif;
+  --font-kantumruy: 'Kantumruy Pro', sans-serif;
+  --font-battambang: Battambang, sans-serif;
+  --font-koulen: 'Koulen', cursive, sans-serif;
+  --font-serifTrad: Cinzel, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
 /* ==========================================================================
    DIGITAL THEAB DESIGN SYSTEM & LUXURY KHMER AESTHETICS
    ========================================================================== */

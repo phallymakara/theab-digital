@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
 import { CEREMONY_DATA } from '../data/templates';
-import { TRADITIONAL_TEMPLATES, RoyalLacquerTemplate } from '../components/templates/traditional';
+import { TRADITIONAL_TEMPLATES, RoyalGoldTemplate } from '../components/templates/traditional';
 import { FLORAL_TEMPLATES } from '../components/templates/floral';
 import { EMERALD_TEMPLATES } from '../components/templates/emerald';
 import { MODERN_TEMPLATES } from '../components/templates/modern';
@@ -31,7 +31,10 @@ import {
   Image as ImageIcon,
   Heart,
   QrCode,
-  Users
+  Users,
+  Music,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 
 // Khmer Date Formatter Helper
@@ -68,21 +71,152 @@ const GALAXY_PHONE = {
   ratioLabel: '20:9'
 };
 
+// Helper to construct clean isolated initial form data for any template
+function getInitialFormDataForTemplate(template) {
+  const defaultRawDate = '2027-01-10';
+  const defaultKhmerDate = template?.demoDate || formatKhmerWeddingDate(defaultRawDate);
+
+  const heroList = (
+    template?.bgImage
+      ? [template.bgImage, ...(template.heroImages || []).filter((img) => img !== template.bgImage)]
+      : (template?.heroImages && template.heroImages.length > 0
+          ? template.heroImages
+          : [
+              '/images/templates/modern_wedding_aisle.jpg',
+              '/images/templates/emerald_diamond_prewedding.jpg',
+              '/images/templates/emerald_nature_prewedding.jpg',
+              '/images/templates/emerald_glasshouse_prewedding.jpg',
+              '/images/templates/emerald_noir_prewedding.jpg'
+            ])
+  ).slice(0, 5);
+
+  const galleryList = (
+    template?.galleryPhotos && template.galleryPhotos.length > 0
+      ? template.galleryPhotos
+      : [
+          { id: 1, src: heroList[0] || '/images/templates/emerald_diamond_prewedding.jpg', caption: 'អនុស្សាវរីយ៍សច្ចាស្នេហ៍' },
+          { id: 2, src: heroList[1] || '/images/templates/emerald_nature_prewedding.jpg', caption: 'ស្នាមញញឹមនៃសុភមង្គល' },
+          { id: 3, src: heroList[2] || '/images/templates/emerald_glasshouse_prewedding.jpg', caption: 'ពន្លឺថ្ងៃជះលើសូត្រមាស' },
+          { id: 4, src: heroList[3] || '/images/templates/emerald_noir_prewedding.jpg', caption: 'រាត្រីសមោសរដ៏ផ្អែមល្ហែម' },
+          { id: 5, src: heroList[4] || '/images/templates/emerald_malachite_prewedding.jpg', caption: 'ចិញ្ចៀនពេជ្រសច្ចាស្នេហ៍' },
+          { id: 6, src: heroList[0] || '/images/templates/modern_wedding_aisle.jpg', caption: 'ចំណងអាពាហ៍ពិពាហ៍អមតៈ' }
+        ]
+  ).slice(0, 12);
+
+  const groomFather = template?.demoGroomParents?.split?.(' និង ')?.[0] || 'លោក ចាន់ សុផល';
+  const groomMother = template?.demoGroomParents?.split?.(' និង ')?.[1] || 'លោកស្រី ម៉ៅ សុខា';
+  const brideFather = template?.demoBrideParents?.split?.(' និង ')?.[0] || 'លោក តែ គឹមសុង';
+  const brideMother = template?.demoBrideParents?.split?.(' និង ')?.[1] || 'លោកស្រី លឹម គន្ធី';
+
+  return {
+    groomName: template?.demoGroom || 'សុខ វិបុល',
+    groomTitle: 'កូនប្រុសនាម',
+    brideName: template?.demoBride || 'ជា សុជាតា',
+    brideTitle: 'កូនស្រីនាម',
+    bgImage: template?.bgImage || '',
+    heroImages: heroList,
+
+    groomFather,
+    groomMother,
+    groomResidence: 'រាជធានីភ្នំពេញ',
+    brideFather,
+    brideMother,
+    brideResidence: 'រាជធានីភ្នំពេញ',
+
+    weddingDateRaw: defaultRawDate,
+    ceremonyDateKh: defaultKhmerDate,
+    ceremonyTime: template?.demoTime || 'ម៉ោង ០៥:០០ ល្ងាច',
+
+    programs: [
+      { num: 1, time: '០៦:៣០ ព្រឹក', title: 'ជួបជុំភ្ញៀវកិត្តិយសដើម្បីរៀបចំហែចំនូន', desc: 'ជួបជុំបងប្អូនញាតិមិត្តជិតឆ្ងាយរៀបចំគ្រឿងដង្វាយសូត្រមាស' },
+      { num: 2, time: '០៧:០០ ព្រឹក', title: 'ពិធីហែចំនូនចូលរោងជ័យមង្គល', desc: 'ក្បួនហែផ្លែឈើ និងគ្រឿងបណ្ណាការចូលគេហដ្ឋានមង្គល' },
+      { num: 3, time: '០៨:០០ ព្រឹក', title: 'ពិធីចុះសំបុត្រអាពាហ៍ពិពាហ៍ផ្លូវការ និងសែនដូនតា', desc: 'ចុះកិច្ចសន្យាអាពាហ៍ពិពាហ៍ចំពោះមុខអាជ្ញាធរ និងសែនព្រេនបុព្វការីជន' },
+      { num: 4, time: '០៨:៣០ ព្រឹក', title: 'ពិធីកាត់សក់បង្កក់សិរីមង្គល', desc: 'កាត់សក់ជម្រះចង្រៃ និងប្រសិទ្ធពរជ័យសិរីសួស្តី' },
+      { num: 5, time: '០៩:៣០ ព្រឹក', title: 'ពិធីសំពះផ្ទឹម ចងដៃសូត្រមាស បង្វិលពពិល ព្រះថោងតោងស្បៃ', desc: 'សំពះផ្ទឹមក្រងសីមា ចងខ្សែអំបោះក្រហម និងបង្វិលពពិលជ័យ' },
+      { num: 6, time: '១១:៣០ ថ្ងៃត្រង់', title: 'អញ្ជើញភ្ញៀវកិត្តិយសពិសារអាហារថ្ងៃត្រង់', desc: 'ពិសារអាហារសាមគ្គីជួបជុំគ្រួសារ និងភ្ញៀវកិត្តិយស' },
+      { num: 7, time: '០៥:០០ ល្ងាច', title: 'ទទួលបដិសណ្ឋារកិច្ចភ្ញៀវកិត្តិយស និងរាត្រីសមោសរ', desc: 'ពិសារភោជនាហារពេលរាត្រី និងរីករាយជាមួយតន្ត្រីសម័យអភិជន' }
+    ],
+
+    locationName: template?.demoLocation || 'សណ្ឋាគារ រ៉ូសវូដ ភ្នំពេញ (Rosewood Phnom Penh - Grand Ballroom)',
+    locationAddress: 'អគារ វឌ្ឍនៈ កាពីតាល់ មហាវិថីព្រះមុនីវង្ស សង្កាត់វត្តភ្នំ រាជធានីភ្នំពេញ',
+    googleMapsUrl: 'https://maps.google.com/?q=Rosewood+Phnom+Penh',
+
+    galleryPhotos: galleryList,
+
+    bankName: 'ABA Bank',
+    accountName: `${template?.demoGroom || 'CHAN RITHISAK'} & ${template?.demoBride || 'TEA PICHCHINDA'}`,
+    accountNumber: '000 987 654',
+    qrCodeImage: 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=ABA000987654',
+
+    phoneGroom: '012 345 678',
+    phoneBride: '098 765 432',
+    telegramLink: 'https://t.me/theab_invitation',
+    telegramUsername: '@theab_invitation'
+  };
+}
+
 export function TemplateCustomizerPage() {
   const params = useParams({ strict: false });
   const navigate = useNavigate();
-  const { selectedTemplate, setSelectedTemplate, addToast } = useApp();
+  const { selectedTemplate, setSelectedTemplate, addToast, isAudioPlaying, toggleAudio, playAudio, stopAudio } = useApp();
+
+  // Play authentic wedding song on entrance, stop when leaving
+  useEffect(() => {
+    playAudio?.();
+    return () => {
+      stopAudio?.();
+    };
+  }, []);
 
   // Find template by ID from params or AppContext or fallback
   const weddingTemplates = CEREMONY_DATA.wedding.templates || [];
-  const [selectedTemplateId, setSelectedTemplateId] = useState(params?.templateId || selectedTemplate?.id || 'royal-gold');
+  const currentTemplateId = params?.templateId || selectedTemplate?.id || 'royal-gold';
   const [selectedHeroIndex, setSelectedHeroIndex] = useState(0);
   const [hasCustomHeroImages, setHasCustomHeroImages] = useState(false);
 
   const activeTemplate =
-    weddingTemplates.find((t) => t.id === selectedTemplateId) ||
-    weddingTemplates.find((t) => t.id === (params?.templateId || selectedTemplate?.id)) ||
+    weddingTemplates.find((t) => t.id === currentTemplateId) ||
     weddingTemplates[0];
+
+  const templateFont =
+    activeTemplate.font ||
+    activeTemplate.fontFamily ||
+    (activeTemplate.id === 'royal-gold' ? 'font-komutt-a' :
+     activeTemplate.id === 'angkor-heritage' ? 'font-phalluch' :
+     activeTemplate.id === 'floral-romance' ? 'font-kouteok' :
+     activeTemplate.id === 'traditional-royal-lacquer' ? 'font-momo' :
+     activeTemplate.id === 'traditional-crimson-angkoreach' ? 'font-kouteok' :
+     activeTemplate.id === 'floral-editorial-magazine' ? 'font-phalluch' :
+     activeTemplate.id === 'floral-golden-orchid' ? 'font-koulen' :
+     activeTemplate.category === 'modern' ? 'font-komutt' :
+     'font-komutt-a');
+
+  // Isolated template form state dictionary: templateId -> formData
+  const [templateForms, setTemplateForms] = useState({});
+  const [formData, _setFormData] = useState(() => getInitialFormDataForTemplate(activeTemplate));
+
+  const setFormData = (updater) => {
+    _setFormData((prev) => {
+      const next = typeof updater === 'function' ? updater(prev) : updater;
+      setTemplateForms((forms) => ({
+        ...forms,
+        [currentTemplateId]: next
+      }));
+      return next;
+    });
+  };
+
+  // Synchronize isolated form data whenever current template changes
+  useEffect(() => {
+    _setFormData((prev) => {
+      if (templateForms[currentTemplateId]) {
+        return templateForms[currentTemplateId];
+      }
+      return getInitialFormDataForTemplate(activeTemplate);
+    });
+    setSelectedHeroIndex(0);
+    setHasCustomHeroImages(false);
+  }, [currentTemplateId]);
 
   // Mobile Tab state ('form' or 'preview')
   const [mobileTab, setMobileTab] = useState('form');
@@ -104,103 +238,6 @@ export function TemplateCustomizerPage() {
     // Forward outer canvas mouse wheel to scroll inside the mockup
     targetRef.scrollTop += e.deltaY;
   };
-
-  // Initial raw date synchronized with Khmer formatted date
-  const defaultRawDate = '2027-01-10';
-  const defaultKhmerDate = formatKhmerWeddingDate(defaultRawDate);
-
-  // Form State initialized with active template's rich data (strictly clamped to max 5 hero images)
-  const [formData, setFormData] = useState({
-    // 1. Groom & Bride Names & Hero Images (strictly clamped to 5)
-    groomName: activeTemplate.demoGroom || 'សុខ វិបុល',
-    groomTitle: 'កូនប្រុសនាម',
-    brideName: activeTemplate.demoBride || 'ជា សុជាតា',
-    brideTitle: 'កូនស្រីនាម',
-    bgImage: activeTemplate.bgImage || '',
-    heroImages: (
-      activeTemplate.bgImage
-        ? [activeTemplate.bgImage, ...(activeTemplate.heroImages || []).filter((img) => img !== activeTemplate.bgImage)]
-        : (activeTemplate.heroImages && activeTemplate.heroImages.length > 0
-          ? activeTemplate.heroImages
-          : [
-              '/images/templates/modern_wedding_aisle.jpg',
-              '/images/templates/emerald_diamond_prewedding.jpg',
-              '/images/templates/emerald_nature_prewedding.jpg',
-              '/images/templates/emerald_glasshouse_prewedding.jpg',
-              '/images/templates/emerald_noir_prewedding.jpg'
-            ])
-    ).slice(0, 5),
-
-    // 2. Parents' Info
-    groomFather: 'លោក ចាន់ សុផល',
-    groomMother: 'លោកស្រី ម៉ៅ សុខា',
-    groomResidence: 'រាជធានីភ្នំពេញ',
-    brideFather: 'លោក តែ គឹមសុង',
-    brideMother: 'លោកស្រី លឹម គន្ធី',
-    brideResidence: 'រាជធានីភ្នំពេញ',
-
-    // 3. Calendar & Date
-    weddingDateRaw: defaultRawDate,
-    ceremonyDateKh: defaultKhmerDate,
-    ceremonyTime: 'ម៉ោង ០៥:០០ ល្ងាច',
-
-    // 4. Ceremony Programs (Standard 7 Khmer Milestones)
-    programs: [
-      { num: 1, time: '០៦:៣០ ព្រឹក', title: 'ជួបជុំភ្ញៀវកិត្តិយសដើម្បីរៀបចំហែចំនូន', desc: 'ជួបជុំបងប្អូនញាតិមិត្តជិតឆ្ងាយរៀបចំគ្រឿងដង្វាយសូត្រមាស' },
-      { num: 2, time: '០៧:០០ ព្រឹក', title: 'ពិធីហែចំនូនចូលរោងជ័យមង្គល', desc: 'ក្បួនហែផ្លែឈើ និងគ្រឿងបណ្ណាការចូលគេហដ្ឋានមង្គល' },
-      { num: 3, time: '០៨:០០ ព្រឹក', title: 'ពិធីចុះសំបុត្រអាពាហ៍ពិពាហ៍ផ្លូវការ និងសែនដូនតា', desc: 'ចុះកិច្ចសន្យាអាពាហ៍ពិពាហ៍ចំពោះមុខអាជ្ញាធរ និងសែនព្រេនបុព្វការីជន' },
-      { num: 4, time: '០៨:៣០ ព្រឹក', title: 'ពិធីកាត់សក់បង្កក់សិរីមង្គល', desc: 'កាត់សក់ជម្រះចង្រៃ និងប្រសិទ្ធពរជ័យសិរីសួស្តី' },
-      { num: 5, time: '០៩:៣០ ព្រឹក', title: 'ពិធីសំពះផ្ទឹម ចងដៃសូត្រមាស បង្វិលពពិល ព្រះថោងតោងស្បៃ', desc: 'សំពះផ្ទឹមក្រងសីមា ចងខ្សែអំបោះក្រហម និងបង្វិលពពិលជ័យ' },
-      { num: 6, time: '១១:៣០ ថ្ងៃត្រង់', title: 'អញ្ជើញភ្ញៀវកិត្តិយសពិសារអាហារថ្ងៃត្រង់', desc: 'ពិសារអាហារសាមគ្គីជួបជុំគ្រួសារ និងភ្ញៀវកិត្តិយស' },
-      { num: 7, time: '០៥:០០ ល្ងាច', title: 'ទទួលបដិសណ្ឋារកិច្ចភ្ញៀវកិត្តិយស និងរាត្រីសមោសរ', desc: 'ពិសារភោជនាហារពេលរាត្រី និងរីករាយជាមួយតន្ត្រីសម័យអភិជន' }
-    ],
-
-    // 5. Ceremony Venue & Location
-    locationName: activeTemplate.demoLocation || 'សណ្ឋាគារ រ៉ូសវូដ ភ្នំពេញ (Rosewood Phnom Penh - Grand Ballroom)',
-    locationAddress: 'អគារ វឌ្ឍនៈ កាពីតាល់ មហាវិថីព្រះមុនីវង្ស សង្កាត់វត្តភ្នំ រាជធានីភ្នំពេញ',
-    googleMapsUrl: 'https://maps.google.com/?q=Rosewood+Phnom+Penh',
-
-    // 6. Pre-wedding Photo Gallery (Max 12 pics)
-    galleryPhotos: (activeTemplate.galleryPhotos && activeTemplate.galleryPhotos.length > 0
-      ? activeTemplate.galleryPhotos
-      : [
-          { id: 1, src: '/images/templates/emerald_diamond_prewedding.jpg', caption: 'អនុស្សាវរីយ៍សច្ចាស្នេហ៍' },
-          { id: 2, src: '/images/templates/emerald_nature_prewedding.jpg', caption: 'ស្នាមញញឹមនៃសុភមង្គល' },
-          { id: 3, src: '/images/templates/emerald_glasshouse_prewedding.jpg', caption: 'ពន្លឺថ្ងៃជះលើសូត្រមាស' },
-          { id: 4, src: '/images/templates/emerald_noir_prewedding.jpg', caption: 'រាត្រីសមោសរដ៏ផ្អែមល្ហែម' },
-          { id: 5, src: '/images/templates/emerald_malachite_prewedding.jpg', caption: 'ចិញ្ចៀនពេជ្រសច្ចាស្នេហ៍' },
-          { id: 6, src: '/images/templates/modern_wedding_aisle.jpg', caption: 'ចំណងអាពាហ៍ពិពាហ៍អមតៈ' }
-        ]
-    ).slice(0, 12),
-
-    // 7. Digital Gift & Bank QR
-    bankName: 'ABA Bank',
-    accountName: 'CHAN RITHISAK & TEA PICHCHINDA',
-    accountNumber: '000 987 654',
-    qrCodeImage: 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=ABA000987654',
-
-    // 8. Host Phone & Telegram
-    phoneGroom: '012 345 678',
-    phoneBride: '098 765 432',
-    telegramLink: 'https://t.me/theab_invitation',
-    telegramUsername: '@theab_invitation'
-  });
-
-  // Synchronize template's own background image when template changes (if user has not custom-uploaded images)
-  useEffect(() => {
-    if (!hasCustomHeroImages && activeTemplate?.id) {
-      const templateHeroImages = activeTemplate.bgImage
-        ? [activeTemplate.bgImage, ...(activeTemplate.heroImages || []).filter((img) => img !== activeTemplate.bgImage)]
-        : (activeTemplate.heroImages && activeTemplate.heroImages.length > 0 ? activeTemplate.heroImages : []);
-      if (templateHeroImages.length > 0) {
-        setFormData((prev) => ({
-          ...prev,
-          heroImages: templateHeroImages.slice(0, 5)
-        }));
-        setSelectedHeroIndex(0);
-      }
-    }
-  }, [activeTemplate.id, activeTemplate.bgImage, hasCustomHeroImages]);
 
   // Handle Date Change
   const handleDateChange = (e) => {
@@ -362,10 +399,10 @@ export function TemplateCustomizerPage() {
     EMERALD_TEMPLATES[activeTemplate.id] ||
     EMERALD_TEMPLATES[activeTemplate.cardStyle] ||
     (activeTemplate.category === 'traditional' ? TRADITIONAL_TEMPLATES['royal-gold'] : null) ||
-    (activeTemplate.category === 'floral' ? FLORAL_TEMPLATES['floral-romance'] : null) ||
+    (activeTemplate.category === 'floral' ? FLORAL_TEMPLATES['floral-botanical-glasshouse'] : null) ||
     (activeTemplate.category === 'emerald' ? EMERALD_TEMPLATES['emerald-jade'] : null) ||
     (activeTemplate.category === 'modern' ? MODERN_TEMPLATES['modern-champagne-silk'] : null) ||
-    RoyalLacquerTemplate;
+    RoyalGoldTemplate;
 
   // Selected background image chosen by user (custom bgImage, or from hero buttons, or default template backdrop)
   const chosenHeroImage =
@@ -460,6 +497,12 @@ export function TemplateCustomizerPage() {
             <span className="hidden sm:inline">ត្រឡប់ទៅជ្រើសរើសគំរូ</span>
             <span className="sm:hidden">ថយក្រោយ</span>
           </button>
+
+          {/* Active Template Badge with authentic font */}
+          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <span className={templateFont}>គំរូ៖ {activeTemplate.name}</span>
+          </div>
         </div>
 
         {/* Center Mobile View Switcher (Visible on Mobile only) */}
@@ -484,14 +527,26 @@ export function TemplateCustomizerPage() {
           </button>
         </div>
 
-        {/* Right Action: Share Invitation Button */}
+        {/* Right Action: Audio Toggle & Share Invitation Button */}
         <div className="flex items-center gap-2">
           <button
-            onClick={handleSaveAndRent}
-            className="flex items-center gap-1.5 px-4 sm:px-5 py-2 rounded-full bg-theabCrimson hover:bg-rose-900 active:scale-95 text-white font-bold text-xs sm:text-sm shadow-md shadow-rose-950/20 hover:shadow-lg transition-all cursor-pointer font-kantumruy"
+            onClick={toggleAudio}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-full border text-xs font-bold transition-all active:scale-95 cursor-pointer font-kantumruy ${
+              isAudioPlaying
+                ? 'bg-amber-500/15 border-amber-400 text-amber-900 shadow-xs'
+                : 'bg-stone-100 hover:bg-stone-200 border-stone-200 text-stone-600'
+            }`}
+            title={isAudioPlaying ? 'ចុចដើម្បីបិទភ្លេង «ភ្ជាប់និស្ស័យ»' : 'ចុចដើម្បីចាក់ភ្លេង «ភ្ជាប់និស្ស័យ»'}
           >
-            <Share2 className="w-4 h-4 text-rose-200" />
-            <span>ចែករំលែក</span>
+            <Music className={`w-3.5 h-3.5 ${isAudioPlaying ? 'text-amber-600 animate-pulse' : 'text-stone-400'}`} />
+            <span className="hidden sm:inline">{isAudioPlaying ? 'ភ្លេង «ភ្ជាប់និស្ស័យ»' : 'ចាក់ភ្លេង'}</span>
+          </button>
+          <button
+            onClick={handleSaveAndRent}
+            className={`flex items-center gap-1.5 px-4 sm:px-5 py-2 rounded-full ${activeTemplate.primaryGradient || 'bg-theabCrimson hover:bg-rose-900'} active:scale-95 text-white font-bold text-xs sm:text-sm shadow-md shadow-amber-950/20 hover:shadow-lg transition-all cursor-pointer ${templateFont}`}
+          >
+            <Share2 className="w-4 h-4 text-amber-200" />
+            <span>រក្សាទុក & ចែករំលែក</span>
           </button>
         </div>
       </header>
@@ -514,7 +569,7 @@ export function TemplateCustomizerPage() {
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 1.
               </span>
-              <h3 className="font-kantumruy text-sm sm:text-base font-bold text-stone-900">
+              <h3 className={`${templateFont} text-sm sm:text-base font-bold text-stone-900`}>
                 ឈ្មោះកូនកំលោះ & កូនក្រមុំ
               </h3>
             </div>
@@ -585,7 +640,7 @@ export function TemplateCustomizerPage() {
                               : 'border-stone-200 hover:border-amber-400 bg-stone-100 opacity-80 hover:opacity-100'
                           }`}
                         >
-                          <img src={imgSrc} alt={`Hero ${idx + 1}`} className="w-full h-full object-cover" />
+                          <img src={imgSrc} alt={`Hero ${idx + 1}`} className="w-full h-full object-cover" decoding="async" />
                           <span
                             role="button"
                             onClick={(e) => {
@@ -627,7 +682,7 @@ export function TemplateCustomizerPage() {
                 {/* Custom Background Image Preview */}
                 {formData.bgImage && (
                   <div className="relative aspect-[16/9] w-full max-w-[220px] rounded-xl overflow-hidden border-2 border-amber-500 shadow-xs group">
-                    <img src={formData.bgImage} alt="Background" className="w-full h-full object-cover" />
+                    <img src={formData.bgImage} alt="Background" className="w-full h-full object-cover" decoding="async" />
                     <div className="absolute inset-x-0 bottom-0 bg-black/60 py-0.5 text-center">
                       <span className="text-[10px] text-amber-200 font-kantumruy font-bold">ផ្ទៃខាងក្រោយកំពុងប្រើ</span>
                     </div>
@@ -651,7 +706,7 @@ export function TemplateCustomizerPage() {
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 2.
               </span>
-              <h3 className="font-kantumruy text-sm sm:text-base font-bold text-stone-900">
+              <h3 className={`${templateFont} text-sm sm:text-base font-bold text-stone-900`}>
                 ឪពុកម្ដាយកូនកំលោះ & ឪពុកម្ដាយកូនក្រមុំ
               </h3>
             </div>
@@ -745,7 +800,7 @@ export function TemplateCustomizerPage() {
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 3.
               </span>
-              <h3 className="font-kantumruy text-sm sm:text-base font-bold text-stone-900">
+              <h3 className={`${templateFont} text-sm sm:text-base font-bold text-stone-900`}>
                 ប្រតិទិន & កាលបរិច្ឆេទ
               </h3>
             </div>
@@ -785,7 +840,7 @@ export function TemplateCustomizerPage() {
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 4.
               </span>
-              <h3 className="font-kantumruy text-sm sm:text-base font-bold text-stone-900">
+              <h3 className={`${templateFont} text-sm sm:text-base font-bold text-stone-900`}>
                 កម្មវិធីពិធីការ
               </h3>
             </div>
@@ -848,7 +903,7 @@ export function TemplateCustomizerPage() {
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 5.
               </span>
-              <h3 className="font-kantumruy text-sm sm:text-base font-bold text-stone-900">
+              <h3 className={`${templateFont} text-sm sm:text-base font-bold text-stone-900`}>
                 ទីតាំងពិធី
               </h3>
             </div>
@@ -901,7 +956,7 @@ export function TemplateCustomizerPage() {
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 6.
               </span>
-              <h3 className="font-kantumruy text-sm sm:text-base font-bold text-stone-900">
+              <h3 className={`${templateFont} text-sm sm:text-base font-bold text-stone-900`}>
                 វិចិត្រសាលរូបថត
               </h3>
             </div>
@@ -921,7 +976,7 @@ export function TemplateCustomizerPage() {
                     key={photo.id || idx}
                     className="group relative aspect-square rounded-xl overflow-hidden border border-stone-200 bg-stone-100 shadow-2xs"
                   >
-                    <img src={photo.src} alt="Gallery" className="w-full h-full object-cover" />
+                    <img src={photo.src} alt="Gallery" className="w-full h-full object-cover" decoding="async" loading="lazy" />
                     <button
                       onClick={() => removeGalleryPhoto(photo.id)}
                       className="absolute top-1 right-1 p-1 rounded-full bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 cursor-pointer"
@@ -959,7 +1014,7 @@ export function TemplateCustomizerPage() {
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 7.
               </span>
-              <h3 className="font-kantumruy text-sm sm:text-base font-bold text-stone-900">
+              <h3 className={`${templateFont} text-sm sm:text-base font-bold text-stone-900`}>
                 ជូនចំណងដៃ & គណនីធនាគារ
               </h3>
             </div>
@@ -1017,7 +1072,7 @@ export function TemplateCustomizerPage() {
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 8.
               </span>
-              <h3 className="font-kantumruy text-sm sm:text-base font-bold text-stone-900">
+              <h3 className={`${templateFont} text-sm sm:text-base font-bold text-stone-900`}>
                 លេខទូរស័ព្ទ & តេលេក្រាមម្ចាស់កម្មវិធី
               </h3>
             </div>
@@ -1104,8 +1159,10 @@ export function TemplateCustomizerPage() {
           {/* Preview Viewport Canvas (Does NOT scroll outside - only content inside scrolls) */}
           <div
             onWheel={handleOuterWheel}
-            className={`flex-1 min-h-0 h-full overflow-hidden flex justify-center relative select-auto ${
-              previewDevice === 'mobile' ? 'items-start p-0 sm:pt-4 sm:px-4 sm:pb-3' : 'items-stretch p-0'
+            className={`flex-1 min-h-0 h-full w-full overflow-hidden flex items-center justify-center relative select-auto ${
+              previewDevice === 'mobile'
+                ? 'p-0 sm:p-4 md:p-6 lg:p-6'
+                : 'p-0 sm:p-3'
             }`}
           >
             {/* Ambient Background Glow of the Template / Chosen Hero Background */}
@@ -1118,14 +1175,17 @@ export function TemplateCustomizerPage() {
             <div className="absolute inset-0 bg-stone-950/75 pointer-events-none" />
 
             {previewDevice === 'mobile' ? (
-              /* Mobile Viewport: Edge-to-edge on smartphone screens, realistic framed mockup on tablet & computer */
+              /* Mobile Viewport: Centered and responsive for all screen sizes */
               <div
-                className="w-full h-full sm:h-[min(820px,calc(100vh-80px))] sm:min-h-[480px] max-w-full sm:max-w-[390px] rounded-none sm:rounded-[42px] border-0 sm:border-[8px] sm:border-stone-800 shadow-none sm:shadow-[0_25px_60px_rgba(0,0,0,0.95)] overflow-hidden bg-stone-950 relative flex flex-col transition-all duration-300 shrink-0"
+                className="w-full h-full sm:h-[min(820px,calc(100%-1rem))] sm:max-h-[calc(100%-1rem)] max-w-full sm:max-w-[385px] rounded-none sm:rounded-[42px] border-0 sm:border-[8px] sm:border-stone-800 ring-0 sm:ring-1 sm:ring-white/15 shadow-none sm:shadow-[0_25px_60px_rgba(0,0,0,0.95)] overflow-hidden bg-stone-950 relative flex flex-col transition-all duration-300 shrink-0 my-auto mx-auto"
               >
                 {/* Samsung Galaxy Punch Hole Front Camera */}
                 <div className="hidden sm:flex absolute top-3 left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full border border-white/20 z-40 pointer-events-none items-center justify-center shadow-sm">
                   <div className="w-1.5 h-1.5 rounded-full bg-[#111] border border-cyan-500/20" />
                 </div>
+
+                {/* Modern Gesture Bar Home Indicator */}
+                <div className="hidden sm:block absolute bottom-1.5 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/35 rounded-full z-40 pointer-events-none backdrop-blur-xs" />
 
                 {/* Template Main Background Pinned in Mockup View */}
                 <div
@@ -1143,13 +1203,15 @@ export function TemplateCustomizerPage() {
                 >
                   {TemplateComponent ? (
                     <TemplateComponent
+                      key={currentTemplateId}
                       data={liveTemplateData}
                       invitation={liveInvitation}
                       invitationData={liveInvitation}
                       activeTemplate={liveActiveTemplate}
                     />
                   ) : (
-                    <RoyalLacquerTemplate
+                    <RoyalGoldTemplate
+                      key={currentTemplateId}
                       data={liveTemplateData}
                       invitation={liveInvitation}
                       invitationData={liveInvitation}
@@ -1159,8 +1221,8 @@ export function TemplateCustomizerPage() {
                 </div>
               </div>
             ) : (
-              /* Computer Viewport: Wraps entire height (h-full) but constrained centered width (max-w-2xl) */
-              <div className="w-full max-w-2xl h-full bg-stone-950 shadow-2xl border-x border-white/10 overflow-hidden relative flex flex-col shrink-0">
+              /* Computer Viewport: Centered and responsive for all screen sizes */
+              <div className="w-full max-w-2xl h-full sm:h-[calc(100%-1.5rem)] sm:max-h-[calc(100%-1.5rem)] rounded-none sm:rounded-2xl bg-stone-950 shadow-2xl border-x sm:border border-white/10 overflow-hidden relative flex flex-col shrink-0 my-auto mx-auto">
                 {/* Template Main Background Pinned in Computer View */}
                 <div
                   className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700 pointer-events-none scale-105"
@@ -1176,13 +1238,15 @@ export function TemplateCustomizerPage() {
                 >
                   {TemplateComponent ? (
                     <TemplateComponent
+                      key={currentTemplateId}
                       data={liveTemplateData}
                       invitation={liveInvitation}
                       invitationData={liveInvitation}
                       activeTemplate={liveActiveTemplate}
                     />
                   ) : (
-                    <RoyalLacquerTemplate
+                    <RoyalGoldTemplate
+                      key={currentTemplateId}
                       data={liveTemplateData}
                       invitation={liveInvitation}
                       invitationData={liveInvitation}
@@ -1204,7 +1268,7 @@ export function TemplateCustomizerPage() {
               <CheckCircle2 className="w-9 h-9" />
             </div>
 
-            <h3 className="font-kantumruy text-2xl text-stone-900 font-bold">
+            <h3 className={`${templateFont} text-2xl text-stone-900 font-bold`}>
               ព័ត៌មានធៀបត្រូវបានរក្សាទុករួចរាល់!
             </h3>
 

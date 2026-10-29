@@ -262,34 +262,34 @@ export function KhmerFloatingBackground({ count = 32 }) {
 
   return (
     <div
-      className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none"
+      className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none transform-gpu"
       aria-hidden="true"
     >
       {particles.map((p) => {
         let content;
         if (p.isHeart) {
           if (p.heartType === 'royalheart') {
-            content = <KhmerRoyalHeart size={p.size} id={p.id} className="drop-shadow-[0_2px_10px_rgba(244,63,94,0.3)]" />;
+            content = <KhmerRoyalHeart size={p.size} id={p.id} className="drop-shadow-xs" />;
           } else {
             content = <FlyingRomanticHeart size={p.size} variant={parseInt(p.id.replace(/\D/g, '') || '0', 10)} />;
           }
         } else {
           // Translucent Khmer flowers
           if (p.flowerType === 'rumduol') {
-            content = <KhmerRumduol size={p.size} id={p.id} className="drop-shadow-[0_2px_8px_rgba(212,175,55,0.2)]" />;
+            content = <KhmerRumduol size={p.size} id={p.id} className="drop-shadow-xs" />;
           } else if (p.flowerType === 'pkachan') {
-            content = <KhmerPkaChan size={p.size} id={p.id} className="drop-shadow-[0_2px_8px_rgba(212,175,55,0.2)]" />;
+            content = <KhmerPkaChan size={p.size} id={p.id} className="drop-shadow-xs" />;
           } else if (p.flowerType === 'lotus') {
-            content = <KhmerLotusBloom size={p.size} id={p.id} className="drop-shadow-[0_2px_8px_rgba(244,63,94,0.2)]" />;
+            content = <KhmerLotusBloom size={p.size} id={p.id} className="drop-shadow-xs" />;
           } else {
-            content = <KhmerJasminePetal size={Math.round(p.size * 0.75)} id={p.id} className="drop-shadow-[0_2px_6px_rgba(212,175,55,0.2)]" />;
+            content = <KhmerJasminePetal size={Math.round(p.size * 0.75)} id={p.id} className="drop-shadow-xs" />;
           }
         }
 
         return (
           <div
             key={p.id}
-            className={`absolute will-change-transform ${p.animClass}`}
+            className={`absolute will-change-transform transform-gpu ${p.animClass}`}
             style={{
               left: p.left,
               top: p.top,

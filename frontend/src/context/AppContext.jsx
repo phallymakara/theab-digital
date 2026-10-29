@@ -27,10 +27,13 @@ export function AppProvider({ children }) {
     } catch (_) {}
   };
 
-  // Audio reference
+  // Audio reference (Single authentic wedding song: «ភ្ជាប់និស្ស័យ» - NISAI)
   const [audio] = useState(() => {
     const a = new Audio('/audio/nisai_wedding_song.mp3');
     a.loop = true;
+    if (typeof window !== 'undefined') {
+      window.__THEAB_AUDIO__ = a;
+    }
     return a;
   });
 
@@ -178,6 +181,18 @@ export function AppProvider({ children }) {
       addToast('បានបិទភ្លេង', 'info');
     }
   };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.__THEAB_AUDIO_PLAYING__ = isAudioPlaying;
+      window.__THEAB_TOGGLE_AUDIO__ = toggleAudio;
+      window.__THEAB_PLAY_AUDIO__ = playAudio;
+      window.__THEAB_PAUSE_AUDIO__ = pauseAudio;
+      window.__THEAB_STOP_AUDIO__ = stopAudio;
+      window.__THEAB_RESTART_AUDIO__ = restartAndPlayAudio;
+      window.dispatchEvent(new CustomEvent('theab_audio_change', { detail: { isPlaying: isAudioPlaying } }));
+    }
+  }, [isAudioPlaying, audio]);
 
   const addToast = (message, type = 'info', duration = 3000) => {
     const id = Date.now() + Math.random();

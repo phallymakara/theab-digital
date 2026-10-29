@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
   Heart,
   Calendar,
@@ -142,10 +143,8 @@ export default function RomdoulMoonlightTemplate({
   // Lightbox Modal State
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
-  // Audio State & Synthesizer
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioContextRef = useRef(null);
-  const timerRef = useRef(null);
+  // Fully isolated template audio («ភ្ជាប់និស្ស័យ» - NISAI)
+  const { isPlaying, toggleAudio } = useTemplateAudio();
 
   // Canvas Firefly / Starlight Particles
   const canvasRef = useRef(null);
@@ -278,77 +277,7 @@ export default function RomdoulMoonlightTemplate({
     }, 800);
   };
 
-  // Ambient Nocturne Harp & Chime Synthesizer
-  const toggleAudio = () => {
-    if (isPlaying) {
-      if (timerRef.current) clearInterval(timerRef.current);
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-        audioContextRef.current = null;
-      }
-      setIsPlaying(false);
-      return;
-    }
 
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      const ctx = new AudioCtx();
-      audioContextRef.current = ctx;
-
-      const notes = [293.66, 349.23, 392.00, 440.00, 523.25, 587.33, 698.46];
-      let step = 0;
-
-      const playPluck = () => {
-        if (!audioContextRef.current || audioContextRef.current.state === 'closed') return;
-        const now = ctx.currentTime;
-        const note = notes[step % notes.length];
-        step++;
-
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(note, now);
-
-        const shimmerOsc = ctx.createOscillator();
-        const shimmerGain = ctx.createGain();
-        shimmerOsc.type = 'triangle';
-        shimmerOsc.frequency.setValueAtTime(note * 2, now);
-
-        gain.gain.setValueAtTime(0, now);
-        gain.gain.linearRampToValueAtTime(0.08, now + 0.05);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
-
-        shimmerGain.gain.setValueAtTime(0, now);
-        shimmerGain.gain.linearRampToValueAtTime(0.03, now + 0.08);
-        shimmerGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8);
-
-        osc.connect(gain);
-        shimmerOsc.connect(shimmerGain);
-        gain.connect(ctx.destination);
-        shimmerGain.connect(ctx.destination);
-
-        osc.start(now);
-        shimmerOsc.start(now);
-        osc.stop(now + 2.6);
-        shimmerOsc.stop(now + 2.0);
-      };
-
-      playPluck();
-      timerRef.current = setInterval(playPluck, 1100);
-      setIsPlaying(true);
-    } catch {
-      setIsPlaying(false);
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-      }
-    };
-  }, []);
 
   // Canvas Starlight & Glowing Fireflies Simulation
   useEffect(() => {
@@ -470,17 +399,17 @@ export default function RomdoulMoonlightTemplate({
               ? 'bg-amber-500/20 text-amber-300 border-amber-400/60 shadow-amber-500/20 ring-2 ring-amber-400/30'
               : 'bg-slate-900/70 text-slate-300 border-slate-700/80 hover:text-white'
           }`}
-          title="តន្ត្រីពន្លឺចន្ទរំដួល (Moonlight Ambient)"
+          title="ភ្លេងមង្គល «ភ្ជាប់និស្ស័យ»"
         >
           {isPlaying ? (
             <>
               <Volume2 className="w-4 h-4 animate-pulse text-amber-300" />
-              <span>តន្ត្រីរាត្រីមនោរម្យ</span>
+              <span>ភ្លេង «ភ្ជាប់និស្ស័យ»</span>
             </>
           ) : (
             <>
               <VolumeX className="w-4 h-4 text-slate-400" />
-              <span>បើកតន្ត្រី</span>
+              <span>ចាក់ភ្លេងមង្គល</span>
             </>
           )}
         </button>
@@ -505,43 +434,41 @@ export default function RomdoulMoonlightTemplate({
                 src={imgUrl}
                 alt={`Khmer Prewedding ${idx + 1}`}
                 className="w-full h-full object-cover object-center"
-                loading={idx === 0 ? 'eager' : 'lazy'}
-              />
+                loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
               {/* Deep Midnight Gradient Overlay for crystal clear typography contrast */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#070B14] via-[#070B14]/45 to-black/50 pointer-events-none" />
-              <div className="absolute inset-0 ring-1 ring-inset ring-amber-300/20 pointer-events-none" />
             </div>
           ))}
         </div>
 
-        {/* Stationary Centered Typography Directly on Photo */}
-        <div className="absolute inset-0 z-20 pointer-events-none flex flex-col items-center justify-center p-6 text-center">
-          <div className="space-y-3 w-full max-w-md mx-auto px-4">
+        {/* Stationary Centered Typography Directly on Photo (Scaled for mobile readability, frameless) */}
+        <div className="absolute inset-0 z-20 pointer-events-none flex flex-col items-center justify-center p-4 sm:p-6 text-center">
+          <div className="space-y-2.5 sm:space-y-3 w-full max-w-md mx-auto px-2 sm:px-4">
             {/* Top Celestial Emblem */}
             <div className="flex items-center justify-center gap-2 mb-1">
               <span className="text-amber-300 text-xs drop-shadow-[0_0_8px_#F59E0B]">✦</span>
-              <span className="font-suwannaphum text-xs sm:text-sm text-amber-200 tracking-widest drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+              <span className="font-suwannaphum text-[11px] sm:text-xs md:text-sm text-amber-200 tracking-widest drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
                 សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍
               </span>
               <span className="text-amber-300 text-xs drop-shadow-[0_0_8px_#F59E0B]">✦</span>
             </div>
 
             {/* Groom Name in font-suwannaphum */}
-            <h1 className="font-suwannaphum text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-rose-200">
+            <h1 className="font-suwannaphum text-2xl sm:text-3xl md:text-4xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-rose-200">
               {groomName}
             </h1>
 
             {/* Ampersand Divider */}
-            <div className="flex items-center justify-center gap-3 my-1">
-              <div className="h-[1.5px] w-14 bg-gradient-to-r from-transparent via-amber-300 to-amber-200 drop-shadow" />
-              <div className="w-8 h-8 rounded-full bg-slate-950/80 border border-amber-300/80 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.7)] backdrop-blur-sm">
-                <span className="font-serifTrad italic text-amber-300 text-xs font-bold">~ & ~</span>
+            <div className="flex items-center justify-center gap-2.5 my-0.5 sm:my-1">
+              <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-14 bg-gradient-to-r from-transparent via-amber-300 to-amber-200 drop-shadow" />
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-950/80 border border-amber-300/80 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.7)] backdrop-blur-sm">
+                <span className="font-serifTrad italic text-amber-300 text-[10px] sm:text-xs font-bold">~ & ~</span>
               </div>
-              <div className="h-[1.5px] w-14 bg-gradient-to-l from-transparent via-amber-300 to-amber-200 drop-shadow" />
+              <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-14 bg-gradient-to-l from-transparent via-amber-300 to-amber-200 drop-shadow" />
             </div>
 
             {/* Bride Name in font-suwannaphum */}
-            <h1 className="font-suwannaphum text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-rose-200">
+            <h1 className="font-suwannaphum text-2xl sm:text-3xl md:text-4xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-rose-200">
               {brideName}
             </h1>
 
@@ -932,8 +859,7 @@ export default function RomdoulMoonlightTemplate({
                   src={photo.src}
                   alt={photo.caption}
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                  loading="lazy"
-                />
+                  loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-2.5">
                   <p className="text-[10px] text-amber-200 line-clamp-2 font-suwannaphum">
                     {photo.caption}
@@ -964,8 +890,7 @@ export default function RomdoulMoonlightTemplate({
                 <img
                   src={selectedPhoto.src}
                   alt={selectedPhoto.caption}
-                  className="w-full h-full object-contain"
-                />
+                  className="w-full h-full object-contain" decoding="async" />
               </div>
               <div className="p-4 text-center bg-slate-900 border-t border-slate-800">
                 <p className="font-suwannaphum text-sm text-amber-200 font-semibold">
@@ -1004,8 +929,7 @@ export default function RomdoulMoonlightTemplate({
                 <img
                   src={qrCodeImage}
                   alt="QR Code"
-                  className="w-full h-full object-contain rounded-xl"
-                />
+                  className="w-full h-full object-contain rounded-xl" decoding="async" loading="lazy" />
               ) : (
                 <div className="w-full h-full bg-slate-100 flex flex-col items-center justify-center text-slate-800 text-[10px] font-mono text-center p-1 border border-slate-300 rounded-xl">
                   <span className="font-bold text-xs text-blue-900">{bankName}</span>
@@ -1357,8 +1281,7 @@ export default function RomdoulMoonlightTemplate({
               <img
                 src={qrCodeImage}
                 alt="QR Code"
-                className="w-full aspect-square object-contain rounded-xl border border-slate-700 bg-white p-2"
-              />
+                className="w-full aspect-square object-contain rounded-xl border border-slate-700 bg-white p-2" decoding="async" loading="lazy" />
             ) : (
               <div className="w-full aspect-square bg-slate-900 rounded-xl border border-slate-700 flex flex-col items-center justify-center text-amber-300 p-4">
                 <span className="font-bold text-sm mb-1">{bankName}</span>

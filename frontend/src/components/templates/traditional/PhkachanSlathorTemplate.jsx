@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { plengKarSynth } from './PinpeatAudio';
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import { TraditionalHeroSection } from './TraditionalHeroSection';
 import {
   Calendar,
@@ -59,7 +59,7 @@ export function PhkachanSlathorTemplate({
         { num: '៧', time: '០៥:០០ ល្ងាច', title: 'ទទួលបដិសណ្ឋារកិច្ចភ្ញៀវកិត្តិយស ពិសាភោជនាហារ' }
       ];
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { isPlaying, toggleMusic } = useTemplateAudio();
   const [copied, setCopied] = useState(false);
   const [activePhoto, setActivePhoto] = useState(null);
   const [showQrModal, setShowQrModal] = useState(false);
@@ -93,10 +93,7 @@ export function PhkachanSlathorTemplate({
     return () => clearInterval(timer);
   }, []);
 
-  const toggleMusic = () => {
-    const res = plengKarSynth.toggle();
-    setIsPlaying(res);
-  };
+
 
   const copyAccount = (acc) => {
     navigator.clipboard.writeText(acc);
@@ -195,8 +192,7 @@ export function PhkachanSlathorTemplate({
               <img
                 src={preweddingImg}
                 alt={`${groom} & ${bride}`}
-                className="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-700"
-              />
+                className="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-700" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-stone-900/40 via-transparent to-transparent"></div>
             </div>
           </header>
@@ -305,8 +301,7 @@ export function PhkachanSlathorTemplate({
                   <img
                     src={photo.src || photo}
                     alt={photo.caption || 'Prewedding'}
-                    className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
-                  />
+                    className="w-full h-full object-cover group-hover:scale-110 transition duration-500" decoding="async" loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-900/40 to-transparent opacity-80"></div>
                   <p className="absolute bottom-1.5 inset-x-1 text-center text-[10px] font-bold text-[#FFF6D1] truncate">
                     {photo.caption || 'អនុស្សាវរីយ៍'}
@@ -331,7 +326,7 @@ export function PhkachanSlathorTemplate({
                     onClick={() => setShowQrModal(true)}
                     className="w-32 h-32 mx-auto mb-3 p-1.5 rounded-xl bg-white border border-[#D4AF37] cursor-pointer hover:scale-105 transition shadow-sm"
                   >
-                    <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain rounded-lg" />
+                    <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain rounded-lg" decoding="async" loading="lazy" />
                     <span className="text-[9px] text-[#8E6514] font-bold block mt-0.5">ចុចដើម្បីពង្រីក QR</span>
                   </div>
                 )}
@@ -494,7 +489,7 @@ export function PhkachanSlathorTemplate({
             >
               <X className="w-4 h-4" />
             </button>
-            <img src={activePhoto.src || activePhoto} alt={activePhoto.caption || 'Prewedding'} className="w-full rounded-xl object-contain max-h-[70vh]" />
+            <img src={activePhoto.src || activePhoto} alt={activePhoto.caption || 'Prewedding'} className="w-full rounded-xl object-contain max-h-[70vh]" decoding="async" />
             <p className="text-center text-xs text-[#F6DE84] mt-2 font-semibold">{activePhoto.caption || 'អនុស្សាវរីយ៍'}</p>
           </div>
         </div>
@@ -516,7 +511,7 @@ export function PhkachanSlathorTemplate({
             <h3 className="font-moul text-[#8E6514] text-sm mb-1">ស្កេនដើម្បីជូនចំណងដៃ</h3>
             <p className="text-xs text-stone-500 mb-4">{bankName}</p>
             <div className="p-2 bg-stone-50 rounded-2xl border border-stone-200 mb-4">
-              <img src={qrCodeImage} alt="QR Code Enlarged" className="w-full h-auto rounded-xl object-contain max-h-[350px]" />
+              <img src={qrCodeImage} alt="QR Code Enlarged" className="w-full h-auto rounded-xl object-contain max-h-[350px]" decoding="async" loading="lazy" />
             </div>
             <p className="font-bold text-xs text-stone-800 uppercase">{accountName}</p>
             <p className="text-base font-mono font-bold text-[#8E6514] my-1">{accountNumber}</p>

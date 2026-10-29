@@ -25,8 +25,7 @@ export function CeremonySelectionPage() {
           <img
             src="/logo/theab_digital.png"
             alt="Digital Theab Logo"
-            className="w-24 h-24 sm:w-32 sm:h-32 object-contain drop-shadow-md mx-auto"
-          />
+            className="w-24 h-24 sm:w-32 sm:h-32 object-contain drop-shadow-md mx-auto" decoding="async" />
         </div>
 
         {/* Traditional Floral Header Motif (Responsive size & spacing) */}

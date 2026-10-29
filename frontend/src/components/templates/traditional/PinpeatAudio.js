@@ -1,78 +1,70 @@
-// Web Audio API Synthesizer for Authentic Traditional Khmer Pleng Kar (Wedding Music) & Auspicious Chimes
-class PlengKarSynthesizer {
+// Authentic Traditional Khmer Wedding Music («ភ្ជាប់និស្ស័យ» - NISAI)
+// Exclusively uses the original wedding soundtrack and eliminates all artificial synthesizer audio.
+class PlengKarAudioPlayer {
   constructor() {
-    this.ctx = null;
-    this.isPlaying = false;
-    this.intervalId = null;
+    this.audio = null;
   }
 
-  init() {
-    if (!this.ctx) {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      this.ctx = new AudioCtx();
+  getAudio() {
+    if (typeof window !== 'undefined' && window.__THEAB_AUDIO__) {
+      return window.__THEAB_AUDIO__;
     }
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
+    if (!this.audio && typeof Audio !== 'undefined') {
+      this.audio = new Audio('/audio/nisai_wedding_song.mp3');
+      this.audio.loop = true;
     }
+    return this.audio;
   }
 
-  // Play single warm chime or wedding bell
-  playNote(freq, type = 'sine', duration = 1.3, gainValue = 0.12) {
-    if (!this.ctx) return;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-
-    gain.gain.setValueAtTime(gainValue, this.ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
-
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
-
-    osc.start();
-    osc.stop(this.ctx.currentTime + duration);
+  get isPlaying() {
+    if (typeof window !== 'undefined' && typeof window.__THEAB_AUDIO_PLAYING__ === 'boolean') {
+      return window.__THEAB_AUDIO_PLAYING__;
+    }
+    const a = this.getAudio();
+    return a ? !a.paused : false;
   }
 
-  // Khmer wedding auspicious pentatonic melody (ភ្លេងការមង្គល)
-  playMelody() {
-    const scale = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25];
-    let step = 0;
-
-    this.intervalId = setInterval(() => {
-      if (!this.isPlaying) return;
-      const note = scale[step % scale.length];
-      this.playNote(note, 'triangle', 1.8, 0.10);
-      if (step % 2 === 0) {
-        this.playNote(scale[(step + 2) % scale.length] * 0.5, 'sine', 2.2, 0.07);
-      }
-      step++;
-    }, 650);
-  }
-
-  toggle() {
-    this.init();
-    if (this.isPlaying) {
-      this.stop();
-      return false;
-    } else {
-      this.isPlaying = true;
-      this.playMelody();
-      return true;
+  play() {
+    if (typeof window !== 'undefined' && typeof window.__THEAB_PLAY_AUDIO__ === 'function') {
+      window.__THEAB_PLAY_AUDIO__();
+      return;
+    }
+    const a = this.getAudio();
+    if (a) {
+      a.play().catch(() => {});
     }
   }
 
   stop() {
-    this.isPlaying = false;
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-      this.intervalId = null;
+    if (typeof window !== 'undefined' && typeof window.__THEAB_PAUSE_AUDIO__ === 'function') {
+      window.__THEAB_PAUSE_AUDIO__();
+      return;
+    }
+    const a = this.getAudio();
+    if (a) {
+      try {
+        a.pause();
+      } catch (_) {}
+    }
+  }
+
+  toggle() {
+    if (typeof window !== 'undefined' && typeof window.__THEAB_TOGGLE_AUDIO__ === 'function') {
+      window.__THEAB_TOGGLE_AUDIO__();
+      return !window.__THEAB_AUDIO_PLAYING__;
+    }
+    const a = this.getAudio();
+    if (!a) return false;
+    if (a.paused) {
+      a.play().catch(() => {});
+      return true;
+    } else {
+      a.pause();
+      return false;
     }
   }
 }
 
-export const plengKarSynth = new PlengKarSynthesizer();
-// Backwards compatibility alias
+export const plengKarSynth = new PlengKarAudioPlayer();
 export const pinpeatSynth = plengKarSynth;
 export default plengKarSynth;

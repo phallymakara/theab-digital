@@ -38,10 +38,8 @@ export class AppController {
       this.dashboardModel
     );
 
-    // Audio element
-    this.audio = new Audio(
-      'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=traditional-asian-instrumental-wedding-112191.mp3'
-    );
+    // Audio element (Use authentic wedding song only: «ភ្ជាប់និស្ស័យ» - NISAI)
+    this.audio = new Audio('/audio/nisai_wedding_song.mp3');
     this.audio.loop = true;
 
     // 3. Views

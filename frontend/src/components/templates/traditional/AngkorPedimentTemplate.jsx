@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
-import { plengKarSynth } from './PinpeatAudio';
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
   Calendar,
   Clock,
@@ -68,7 +68,7 @@ export function AngkorPedimentTemplate({
         { id: 4, src: '/images/templates/angkor-ancient-royalty/ancient_1.jpg', caption: 'សិរីមង្គលមហានគរ' }
       ]);
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { isPlaying, toggleMusic } = useTemplateAudio();
   const [copied, setCopied] = useState(false);
   const [activePhoto, setActivePhoto] = useState(null);
   const [showQrModal, setShowQrModal] = useState(false);
@@ -94,10 +94,7 @@ export function AngkorPedimentTemplate({
     return () => clearInterval(t);
   }, []);
 
-  const toggleMusic = () => {
-    const res = plengKarSynth.toggle();
-    setIsPlaying(res);
-  };
+
 
   const copyAccount = (acc) => {
     navigator.clipboard.writeText(acc);
@@ -177,7 +174,7 @@ export function AngkorPedimentTemplate({
             className="my-6 max-w-sm mx-auto overflow-hidden border-2 border-[#C59B27] shadow-xl relative group bg-stone-100"
             style={{ clipPath: 'polygon(6% 0%, 94% 0%, 100% 6%, 100% 94%, 94% 100%, 6% 100%, 0% 94%, 0% 6%)' }}
           >
-            <img src={preweddingImg} alt={`${groom} & ${bride}`} className="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-700" />
+            <img src={preweddingImg} alt={`${groom} & ${bride}`} className="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-700" decoding="async" />
             <div className="absolute inset-0 bg-gradient-to-t from-stone-900/40 via-transparent to-transparent"></div>
           </div>
 
@@ -247,7 +244,7 @@ export function AngkorPedimentTemplate({
                 onClick={() => setActivePhoto(p.src || p)}
                 className="group rounded-2xl overflow-hidden border-2 border-[#C59B27]/40 bg-stone-100 cursor-pointer hover:border-[#8C6813] transition relative aspect-[4/5] shadow-xs"
               >
-                <img src={p.src || p} alt={p.caption || 'Prewedding'} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                <img src={p.src || p} alt={p.caption || 'Prewedding'} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" decoding="async" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-900/70 via-transparent to-transparent flex items-end p-2 justify-center">
                   <span className="text-[11px] font-semibold text-[#FFF9D2] truncate">{p.caption || 'អនុស្សាវរីយ៍'}</span>
                 </div>
@@ -282,7 +279,7 @@ export function AngkorPedimentTemplate({
                 onClick={() => setShowQrModal(true)}
                 className="w-36 h-36 mx-auto mb-3 p-1.5 rounded-xl bg-white border border-[#C59B27] cursor-pointer hover:scale-105 transition shadow-sm"
               >
-                <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain rounded-lg" />
+                <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain rounded-lg" decoding="async" loading="lazy" />
                 <span className="text-[9px] text-[#8C6813] font-bold block mt-0.5">ចុចដើម្បីពង្រីក QR</span>
               </div>
             )}
@@ -433,7 +430,7 @@ export function AngkorPedimentTemplate({
             >
               <X className="w-6 h-6" />
             </button>
-            <img src={activePhoto} alt="Enlarged" className="w-full rounded-2xl border-2 border-[#D4AF37] object-contain shadow-2xl" />
+            <img src={activePhoto} alt="Enlarged" className="w-full rounded-2xl border-2 border-[#D4AF37] object-contain shadow-2xl" decoding="async" />
           </div>
         </div>
       )}
@@ -454,7 +451,7 @@ export function AngkorPedimentTemplate({
             <h3 className="font-moul text-[#8C6813] text-sm mb-1">ស្កេនដើម្បីជូនចំណងដៃ</h3>
             <p className="text-xs text-stone-500 mb-4">{bankName}</p>
             <div className="p-2 bg-stone-50 rounded-2xl border border-stone-200 mb-4">
-              <img src={qrCodeImage} alt="QR Code Enlarged" className="w-full h-auto rounded-xl object-contain max-h-[350px]" />
+              <img src={qrCodeImage} alt="QR Code Enlarged" className="w-full h-auto rounded-xl object-contain max-h-[350px]" decoding="async" loading="lazy" />
             </div>
             <p className="font-bold text-xs text-stone-800 uppercase">{accountName}</p>
             <p className="text-base font-mono font-bold text-[#8C6813] my-1">{accountNumber}</p>

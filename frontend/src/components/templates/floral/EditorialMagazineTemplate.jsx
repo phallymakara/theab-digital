@@ -23,78 +23,7 @@ import {
   Phone
 } from 'lucide-react';
 
-// Soft Harp & Celesta Pentatonic Melody Synthesizer (from pentatonic romantic scale)
-class EditorialFloralAudio {
-  constructor() {
-    this.ctx = null;
-    this.isPlaying = false;
-    this.timer = null;
-    this.noteIdx = 0;
-  }
-
-  init() {
-    if (!this.ctx) {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      this.ctx = new AudioCtx();
-    }
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
-    }
-  }
-
-  playSoftHarpTone(freq, duration = 2.0) {
-    if (!this.ctx) return;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-
-    gain.gain.setValueAtTime(0.001, this.ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.09, this.ctx.currentTime + 0.08);
-    gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
-
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
-    osc.start();
-    osc.stop(this.ctx.currentTime + duration);
-  }
-
-  start() {
-    this.init();
-    if (this.isPlaying) return;
-    this.isPlaying = true;
-
-    // Gentle Pentatonic romantic notes: C4, D4, E4, G4, A4, C5
-    const notes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
-
-    this.timer = setInterval(() => {
-      const freq = notes[this.noteIdx % notes.length];
-      this.playSoftHarpTone(freq, 2.0);
-      this.noteIdx = (this.noteIdx + Math.floor(Math.random() * 3) + 1) % notes.length;
-    }, 1100);
-  }
-
-  stop() {
-    this.isPlaying = false;
-    if (this.timer) {
-      clearInterval(this.timer);
-      this.timer = null;
-    }
-  }
-
-  toggle() {
-    if (this.isPlaying) {
-      this.stop();
-      return false;
-    } else {
-      this.start();
-      return true;
-    }
-  }
-}
-
-export const editorialFloralAudio = new EditorialFloralAudio();
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 
 export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTemplate = {} }) {
   const groom = data.groomName || invitation.groomName || activeTemplate?.demoGroom || 'កុសល វឌ្ឍនៈ';
@@ -129,7 +58,7 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
       ];
 
   const [activeTab, setActiveTab] = useState('cover'); // 'cover' | 'letter' | 'agenda' | 'lookbook' | 'rsvp'
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { isPlaying, toggleMusic } = useTemplateAudio();
   const [copied, setCopied] = useState(false);
   const [activePhoto, setActivePhoto] = useState(null);
   const [showQrModal, setShowQrModal] = useState(false);
@@ -221,10 +150,7 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
     };
   }, []);
 
-  const toggleMusic = () => {
-    const res = editorialFloralAudio.toggle();
-    setIsPlaying(res);
-  };
+
 
   const copyAccount = (acc) => {
     navigator.clipboard.writeText(acc);
@@ -304,8 +230,7 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
           <img
             src={preweddingImg}
             alt="Editorial Wedding"
-            className="w-full h-full object-cover object-top scale-100"
-          />
+            className="w-full h-full object-cover object-top scale-100" decoding="async" />
 
           {/* Vignette Gradients */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 pointer-events-none"></div>
@@ -322,26 +247,26 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
 
           {/* Large Magazine Title in Editorial Typography */}
           <div className="absolute top-10 inset-x-0 text-center z-10 pointer-events-none">
-            <div className="font-serifTrad text-5xl sm:text-6xl font-extrabold tracking-[0.18em] text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
+            <div className="font-serifTrad text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-[0.18em] text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
               VOGUE
             </div>
-            <div className="font-serifTrad text-xs tracking-[0.45em] text-amber-200 font-semibold uppercase -mt-1 drop-shadow">
+            <div className="font-serifTrad text-[11px] sm:text-xs tracking-[0.45em] text-amber-200 font-semibold uppercase -mt-1 drop-shadow">
               WEDDING CELEBRATION
             </div>
           </div>
 
           {/* Couple Feature Headline in KH PhalLuch 002 Font */}
-          <div className="absolute bottom-6 inset-x-5 z-10 text-white text-center">
+          <div className="absolute bottom-6 inset-x-4 sm:inset-x-5 z-10 text-white text-center">
             <div className="inline-flex items-center gap-2 mb-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30">
               <span className="text-amber-300 text-xs">❖</span>
-              <span className="font-phalluch text-xs text-amber-100 tracking-wider">
+              <span className="font-phalluch text-[11px] sm:text-xs text-amber-100 tracking-wider">
                 សិរីមង្គលអាពាហ៍ពិពាហ៍
               </span>
               <span className="text-amber-300 text-xs">❖</span>
             </div>
 
-            <h1 className="font-phalluch text-3xl sm:text-4xl text-white tracking-wide drop-shadow-[0_3px_12px_rgba(0,0,0,0.9)] leading-relaxed">
-              {groom} <span className="font-serifTrad italic text-2xl text-amber-200">&</span> {bride}
+            <h1 className="font-phalluch text-xl sm:text-2xl md:text-3xl text-white tracking-wide drop-shadow-[0_3px_12px_rgba(0,0,0,0.9)] leading-relaxed">
+              {groom} <span className="font-serifTrad italic text-base sm:text-xl text-amber-200">&</span> {bride}
             </h1>
 
             <p className="text-xs font-serifTrad tracking-[0.2em] text-amber-100/90 uppercase mt-1">
@@ -523,8 +448,7 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
                       src={item.src}
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
+                      loading="lazy" decoding="async" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3 text-white">
                       <p className="text-xs font-serifTrad font-bold">{item.title}</p>
                       <p className="text-[10px] text-amber-200">{item.subtitle}</p>
@@ -560,8 +484,7 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
                     className="w-full h-auto rounded-lg object-contain"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
-                    }}
-                  />
+                    }} decoding="async" loading="lazy" />
                   <span className="text-[10px] text-stone-400 mt-1 block">ចុចដើម្បីពង្រីក QR</span>
                 </div>
 
@@ -767,7 +690,7 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
             >
               <X className="w-4 h-4" />
             </button>
-            <img src={activePhoto.src} alt={activePhoto.title} className="w-full rounded-xl object-contain max-h-[70vh]" />
+            <img src={activePhoto.src} alt={activePhoto.title} className="w-full rounded-xl object-contain max-h-[70vh]" decoding="async" />
             <p className="text-center text-xs text-white mt-2 font-serifTrad">{activePhoto.title}</p>
           </div>
         </div>
@@ -794,8 +717,7 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
             <img
               src={qrCodeImage || '/images/aba_qr.png'}
               alt="QR Code"
-              className="w-full aspect-square object-contain rounded-xl border border-stone-200"
-            />
+              className="w-full aspect-square object-contain rounded-xl border border-stone-200" decoding="async" loading="lazy" />
             <p className="text-xs font-serifTrad font-bold text-stone-900 mt-3">
               {accountNumber}
             </p>

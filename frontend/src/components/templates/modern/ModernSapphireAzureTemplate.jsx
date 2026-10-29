@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
   Calendar,
   Clock,
@@ -107,9 +108,8 @@ export function ModernSapphireAzureTemplate({
   };
 
   const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioContextRef = useRef(null);
-  const timerRef = useRef(null);
+  // Fully isolated template audio («ភ្ជាប់និស្ស័យ» - NISAI)
+  const { isPlaying, toggleAudio } = useTemplateAudio();
 
   const [timeLeft, setTimeLeft] = useState({ days: 806, hours: 16, minutes: 40, seconds: 20 });
 
@@ -130,57 +130,7 @@ export function ModernSapphireAzureTemplate({
     return () => clearInterval(interval);
   }, []);
 
-  const toggleMusic = () => {
-    if (isPlaying) {
-      if (timerRef.current) clearInterval(timerRef.current);
-      if (audioContextRef.current) audioContextRef.current.close();
-      audioContextRef.current = null;
-      setIsPlaying(false);
-    } else {
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        const ctx = new AudioCtx();
-        audioContextRef.current = ctx;
 
-        const notes = [440, 523.25, 659.25, 783.99, 659.25, 523.25];
-        let noteIndex = 0;
-
-        const playNote = () => {
-          if (!audioContextRef.current || audioContextRef.current.state === 'closed') return;
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(notes[noteIndex % notes.length], ctx.currentTime);
-
-          gain.gain.setValueAtTime(0.001, ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.14, ctx.currentTime + 0.1);
-          gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.8);
-
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start();
-          osc.stop(ctx.currentTime + 0.8);
-
-          noteIndex++;
-        };
-
-        playNote();
-        timerRef.current = setInterval(playNote, 850);
-        setIsPlaying(true);
-      } catch (_) {
-        setIsPlaying(false);
-      }
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-      if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
-        audioContextRef.current.close();
-      }
-    };
-  }, []);
 
   // Download .ics Calendar Event
   const downloadCalendarEvent = () => {
@@ -259,11 +209,12 @@ export function ModernSapphireAzureTemplate({
 
       {/* Floating Audio Controller */}
       <button
-        onClick={toggleMusic}
+        onClick={toggleAudio}
         className="fixed bottom-5 right-5 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#0E162E]/90 border border-sky-400/40 text-sky-200 text-xs font-semibold shadow-[0_4px_20px_rgba(56,189,248,0.35)] backdrop-blur-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+        title="ភ្លេងមង្គល «ភ្ជាប់និស្ស័យ»"
       >
         <Music className={`w-4 h-4 text-sky-400 ${isPlaying ? 'animate-bounce' : ''}`} />
-        <span>{isPlaying ? 'តន្ត្រីត្បូងកណ្តៀង (កំពុងចាក់)' : 'ចាក់តន្ត្រី'}</span>
+        <span>{isPlaying ? 'ភ្លេង «ភ្ជាប់និស្ស័យ»' : 'ចាក់ភ្លេងមង្គល'}</span>
       </button>
 
       {/* 1. HERO SECTION (Snap Carousel) - Responsive aspect ratio for all phone heights */}
@@ -298,13 +249,13 @@ export function ModernSapphireAzureTemplate({
           ))}
         </div>
 
-        {/* Hero Content */}
-        <div className="relative z-20 w-full h-full flex flex-col justify-between p-6 sm:p-8 text-center pointer-events-none">
+        {/* Hero Content (Scaled for mobile readability, frameless) */}
+        <div className="relative z-20 w-full h-full flex flex-col justify-between p-4 sm:p-8 text-center pointer-events-none">
           {/* Top Sapphire Star Seal (Pure Khmer Header, No English subtitle) */}
-          <div className="mt-8 flex flex-col items-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/70 border border-sky-400/50 backdrop-blur-md shadow-[0_4px_25px_rgba(56,189,248,0.35)]">
+          <div className="mt-6 sm:mt-8 flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-blue-950/70 border border-sky-400/50 backdrop-blur-md shadow-[0_4px_25px_rgba(56,189,248,0.35)]">
               <Gem className="w-3.5 h-3.5 text-sky-300" />
-              <span className="font-komutt text-xs sm:text-sm tracking-wider bg-gradient-to-r from-white via-sky-200 to-blue-200 bg-clip-text text-transparent">
+              <span className="font-komutt text-[11px] sm:text-xs md:text-sm tracking-wider bg-gradient-to-r from-white via-sky-200 to-blue-200 bg-clip-text text-transparent">
                 សិរីសួស្តីអាពាហ៍ពិពាហ៍អភិជន
               </span>
               <Gem className="w-3.5 h-3.5 text-sky-300" />
@@ -312,18 +263,18 @@ export function ModernSapphireAzureTemplate({
           </div>
 
           {/* Names in Kh Ang Komutt */}
-          <div className="my-auto space-y-3">
-            <h1 className="font-komutt text-3xl sm:text-4xl md:text-5xl bg-gradient-to-b from-[#FFFFFF] via-[#BAE6FD] to-[#38BDF8] bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
+          <div className="my-auto space-y-2.5 sm:space-y-3">
+            <h1 className="font-komutt text-2xl sm:text-3xl md:text-4xl bg-gradient-to-b from-[#FFFFFF] via-[#BAE6FD] to-[#38BDF8] bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
               {groomName}
             </h1>
-            <div className="flex items-center justify-center gap-3">
-              <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-sky-400" />
-              <div className="w-7 h-7 rounded-full bg-blue-950/80 border border-sky-400/60 flex items-center justify-center shadow-[0_0_12px_rgba(56,189,248,0.6)]">
-                <span className="font-serifTrad italic text-xs font-bold text-sky-300">&</span>
+            <div className="flex items-center justify-center gap-2.5 my-0.5 sm:my-1">
+              <div className="h-[1px] w-10 sm:w-12 bg-gradient-to-r from-transparent to-sky-400" />
+              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-950/80 border border-sky-400/60 flex items-center justify-center shadow-[0_0_12px_rgba(56,189,248,0.6)]">
+                <span className="font-serifTrad italic text-[11px] sm:text-xs font-bold text-sky-300">&</span>
               </div>
-              <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-sky-400" />
+              <div className="h-[1px] w-10 sm:w-12 bg-gradient-to-l from-transparent to-sky-400" />
             </div>
-            <h1 className="font-komutt text-3xl sm:text-4xl md:text-5xl bg-gradient-to-b from-[#FFFFFF] via-[#BAE6FD] to-[#38BDF8] bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
+            <h1 className="font-komutt text-2xl sm:text-3xl md:text-4xl bg-gradient-to-b from-[#FFFFFF] via-[#BAE6FD] to-[#38BDF8] bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
               {brideName}
             </h1>
           </div>
@@ -333,7 +284,7 @@ export function ModernSapphireAzureTemplate({
             <p className="font-kantumruy text-sm text-sky-200/90 drop-shadow">
               {weddingDate}
             </p>
-            <p className="font-suwannaphum text-xs text-sky-300/80 tracking-wide mt-0.5">
+            <p className="font-komutt text-xs text-sky-300/80 tracking-wide mt-0.5">
               {weddingLocation}
             </p>
           </div>
@@ -395,16 +346,16 @@ export function ModernSapphireAzureTemplate({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
           <div className="p-5 rounded-2xl bg-[#0E162E]/80 border border-sky-500/20 backdrop-blur-sm">
             <p className="text-[11px] font-semibold text-sky-300 tracking-wider uppercase mb-2">មាតាបិតាខាងកូនប្រុស</p>
-            <p className="font-suwannaphum text-base text-white font-bold">{groomFather}</p>
-            <p className="font-suwannaphum text-base text-white font-bold">{groomMother}</p>
+            <p className="font-komutt text-base text-white font-bold">{groomFather}</p>
+            <p className="font-komutt text-base text-white font-bold">{groomMother}</p>
             <div className="mt-3 pt-3 border-t border-sky-500/20">
               <p className="text-xs text-sky-300/90">កូនប្រុសនាម: <span className="font-bold text-sky-100">{groomName}</span></p>
             </div>
           </div>
           <div className="p-5 rounded-2xl bg-[#0E162E]/80 border border-sky-500/20 backdrop-blur-sm">
             <p className="text-[11px] font-semibold text-sky-300 tracking-wider uppercase mb-2">មាតាបិតាខាងកូនស្រី</p>
-            <p className="font-suwannaphum text-base text-white font-bold">{brideFather}</p>
-            <p className="font-suwannaphum text-base text-white font-bold">{brideMother}</p>
+            <p className="font-komutt text-base text-white font-bold">{brideFather}</p>
+            <p className="font-komutt text-base text-white font-bold">{brideMother}</p>
             <div className="mt-3 pt-3 border-t border-sky-500/20">
               <p className="text-xs text-sky-300/90">កូនស្រីនាម: <span className="font-bold text-sky-100">{brideName}</span></p>
             </div>
@@ -493,7 +444,7 @@ export function ModernSapphireAzureTemplate({
                     {prog.time}
                   </span>
                 </div>
-                <h3 className="font-suwannaphum text-sm font-bold text-white mt-1">{prog.title}</h3>
+                <h3 className="font-komutt text-sm font-bold text-white mt-1">{prog.title}</h3>
                 <p className="text-xs text-sky-200/70 mt-0.5">{prog.desc}</p>
               </div>
             </div>
@@ -508,7 +459,7 @@ export function ModernSapphireAzureTemplate({
             <MapPin className="w-6 h-6" />
           </div>
           <h2 className="font-komutt text-xl text-sky-100 mb-1">ទីតាំងប្រារព្ធពិធី</h2>
-          <p className="font-suwannaphum text-base font-bold text-white">{weddingLocation}</p>
+          <p className="font-komutt text-base font-bold text-white">{weddingLocation}</p>
           <p className="text-xs text-sky-200/70 mt-1 max-w-sm mx-auto">{locationAddress}</p>
           <div className="mt-5 flex justify-center">
             <a
@@ -540,8 +491,7 @@ export function ModernSapphireAzureTemplate({
               <img
                 src={photo.src}
                 alt={photo.caption}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" decoding="async" loading="lazy" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
                 <p className="text-[11px] text-white font-medium line-clamp-1">{photo.caption}</p>
               </div>
@@ -565,8 +515,7 @@ export function ModernSapphireAzureTemplate({
           <img
             src={selectedPhoto}
             alt="Preview"
-            className="max-w-full max-h-[85vh] rounded-2xl object-contain border border-sky-500/30 shadow-2xl"
-          />
+            className="max-w-full max-h-[85vh] rounded-2xl object-contain border border-sky-500/30 shadow-2xl" decoding="async" />
         </div>
       )}
 
@@ -629,8 +578,7 @@ export function ModernSapphireAzureTemplate({
                 <img
                   src={qrCodeImage}
                   alt="Bank QR"
-                  className="w-44 h-44 object-contain"
-                />
+                  className="w-44 h-44 object-contain" decoding="async" loading="lazy" />
               ) : (
                 <img
                   src={
@@ -639,8 +587,7 @@ export function ModernSapphireAzureTemplate({
                       : 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=ACLEDA123456789'
                   }
                   alt="Bank QR"
-                  className="w-40 h-40 object-contain"
-                />
+                  className="w-40 h-40 object-contain" decoding="async" loading="lazy" />
               )}
             </div>
             <p className="text-xs font-bold text-white">{accountName}</p>
@@ -677,7 +624,7 @@ export function ModernSapphireAzureTemplate({
           {rsvpSubmitted ? (
             <div className="p-6 rounded-2xl bg-sky-500/10 border border-sky-400/40 text-center space-y-2">
               <CheckCircle className="w-10 h-10 text-emerald-400 mx-auto" />
-              <h3 className="font-suwannaphum text-base font-bold text-white">អរគុណសម្រាប់ការឆ្លើយតប!</h3>
+              <h3 className="font-komutt text-base font-bold text-white">អរគុណសម្រាប់ការឆ្លើយតប!</h3>
               <p className="text-xs text-sky-200/80">យើងខ្ញុំពិតជារំភើប និងទន្ទឹងរង់ចាំវត្តមានដ៏ខ្ពង់ខ្ពស់របស់អ្នក។</p>
             </div>
           ) : (
@@ -789,7 +736,7 @@ export function ModernSapphireAzureTemplate({
           {wishes.map((w) => (
             <div key={w.id} className="p-4 rounded-2xl bg-[#0E162E]/60 border border-sky-500/20">
               <div className="flex justify-between items-center mb-1">
-                <span className="font-suwannaphum text-xs font-bold text-sky-200">{w.name}</span>
+                <span className="font-komutt text-xs font-bold text-sky-200">{w.name}</span>
                 <span className="text-[10px] text-sky-300/60">{w.date}</span>
               </div>
               <p className="text-xs text-sky-100/90 leading-relaxed">{w.text}</p>
@@ -837,7 +784,7 @@ export function ModernSapphireAzureTemplate({
 
       {/* Footer */}
       <footer className="text-center py-6 border-t border-sky-500/20 text-xs text-sky-300/70">
-        <p className="font-suwannaphum text-xs text-sky-200 font-bold">សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍អភិជន</p>
+        <p className="font-komutt text-xs text-sky-200 font-bold">សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍អភិជន</p>
         <p className="text-[10px] mt-1 text-sky-400/50">Designed with love by Theab Digital</p>
       </footer>
     </div>

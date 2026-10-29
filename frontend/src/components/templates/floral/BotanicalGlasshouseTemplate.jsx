@@ -2,90 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { Calendar, Clock, MapPin, Music, Heart, Send, Copy, Check, X, Sparkles, ChevronLeft, ChevronRight, Volume2, VolumeX, Phone, MessageCircle, QrCode } from 'lucide-react';
 
-// Gentle Acoustic Floral Romantic Melody Synthesizer (Cello + Flute + Harp arpeggios)
-class FloralRomanticAudio {
-  constructor() {
-    this.ctx = null;
-    this.isPlaying = false;
-    this.timer = null;
-    this.noteIdx = 0;
-  }
-
-  init() {
-    if (!this.ctx) {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      this.ctx = new AudioContext();
-    }
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
-    }
-  }
-
-  // Romantic Waltz progression in D Major (D - F# - A - D - B - G)
-  playPluck(freq, duration = 1.6, type = 'sine', gainVal = 0.12) {
-    if (!this.ctx) return;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-
-    // Warm soft envelope for harp & acoustic strings
-    gain.gain.setValueAtTime(0.001, this.ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(gainVal, this.ctx.currentTime + 0.08);
-    gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
-
-    osc.connect(gain);
-    gain.connect(this.ctx.destination);
-    osc.start();
-    osc.stop(this.ctx.currentTime + duration);
-  }
-
-  start() {
-    this.init();
-    if (this.isPlaying) return;
-    this.isPlaying = true;
-
-    // Canon in D / Romantic Botanical Garden Melody (Hz)
-    const melody = [
-      293.66, 369.99, 440.00, 587.33,
-      220.00, 277.18, 329.63, 440.00,
-      246.94, 293.66, 369.99, 493.88,
-      185.00, 220.00, 293.66, 369.99,
-      196.00, 246.94, 293.66, 392.00,
-      146.83, 220.00, 293.66, 440.00
-    ];
-
-    this.timer = setInterval(() => {
-      const freq = melody[this.noteIdx % melody.length];
-      this.playPluck(freq, 1.4, 'sine', 0.09);
-      // Soft bass harmony on downbeat
-      if (this.noteIdx % 4 === 0) {
-        this.playPluck(freq / 2, 2.2, 'triangle', 0.07);
-      }
-      this.noteIdx++;
-    }, 450);
-  }
-
-  stop() {
-    this.isPlaying = false;
-    if (this.timer) {
-      clearInterval(this.timer);
-      this.timer = null;
-    }
-  }
-
-  toggle() {
-    if (this.isPlaying) {
-      this.stop();
-      return false;
-    } else {
-      this.start();
-      return true;
-    }
-  }
-}
-
-export const floralRomanticAudio = new FloralRomanticAudio();
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 
 export function BotanicalGlasshouseTemplate({
   data = {},
@@ -147,7 +64,7 @@ export function BotanicalGlasshouseTemplate({
   const [activeHeroIdx, setActiveHeroIdx] = useState(0);
   const heroScrollRef = useRef(null);
 
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { isPlaying, toggleMusic } = useTemplateAudio();
   const [copied, setCopied] = useState(false);
   const [activePhoto, setActivePhoto] = useState(null);
   const [showQrModal, setShowQrModal] = useState(false);
@@ -202,10 +119,7 @@ export function BotanicalGlasshouseTemplate({
     }
   };
 
-  const toggleMusic = () => {
-    const res = floralRomanticAudio.toggle();
-    setIsPlaying(res);
-  };
+
 
   const copyAccount = (acc) => {
     navigator.clipboard.writeText(acc);
@@ -274,8 +188,7 @@ export function BotanicalGlasshouseTemplate({
                   src={imgUrl}
                   alt={`Prewedding ${idx + 1}`}
                   className="w-full h-full object-cover object-center"
-                  loading={idx === 0 ? 'eager' : 'lazy'}
-                />
+                  loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
                 {/* Dreamy Botanical Light Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1E2E23]/80 via-transparent to-black/25 pointer-events-none"></div>
 
@@ -288,8 +201,8 @@ export function BotanicalGlasshouseTemplate({
                     </span>
                     <span className="h-[1px] w-6 bg-white/70"></span>
                   </div>
-                  <h1 className="font-preahvihear text-3xl sm:text-4xl text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] tracking-wide">
-                    {groom} <span className="text-amber-200 text-2xl font-serifTrad italic">&</span> {bride}
+                  <h1 className="font-preahvihear text-xl sm:text-2xl md:text-3xl text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] tracking-wide">
+                    {groom} <span className="text-amber-200 text-lg sm:text-xl font-serifTrad italic">&</span> {bride}
                   </h1>
                 </div>
               </div>
@@ -542,8 +455,7 @@ export function BotanicalGlasshouseTemplate({
                     src={item.src || item}
                     alt={item.caption || 'Prewedding'}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
+                    loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2.5">
                     <p className="text-[11px] text-white leading-tight font-preahvihear">
                       {item.caption || 'អនុស្សាវរីយ៍'}
@@ -577,8 +489,7 @@ export function BotanicalGlasshouseTemplate({
                   <img
                     src={qrCodeImage}
                     alt="Bank QR"
-                    className="w-full h-auto rounded-lg object-contain"
-                  />
+                    className="w-full h-auto rounded-lg object-contain" decoding="async" loading="lazy" />
                   <span className="text-[9px] text-[#354E3E] font-bold block mt-1">ចុចដើម្បីពង្រីក QR</span>
                 </div>
               )}
@@ -787,7 +698,7 @@ export function BotanicalGlasshouseTemplate({
             >
               <X className="w-4 h-4" />
             </button>
-            <img src={activePhoto.src || activePhoto} alt={activePhoto.caption || 'Prewedding'} className="w-full rounded-xl object-contain max-h-[70vh]" />
+            <img src={activePhoto.src || activePhoto} alt={activePhoto.caption || 'Prewedding'} className="w-full rounded-xl object-contain max-h-[70vh]" decoding="async" />
             <p className="text-center text-xs text-amber-200 mt-2 font-preahvihear">{activePhoto.caption || 'អនុស្សាវរីយ៍'}</p>
           </div>
         </div>
@@ -809,7 +720,7 @@ export function BotanicalGlasshouseTemplate({
             <h3 className="font-preahvihear text-[#23372B] text-base mb-1">ស្កេនដើម្បីជូនចំណងដៃ</h3>
             <p className="text-xs text-[#5B8067] mb-4">{bankName}</p>
             <div className="p-2 bg-stone-50 rounded-2xl border border-stone-200 mb-4">
-              <img src={qrCodeImage} alt="QR Code Enlarged" className="w-full h-auto rounded-xl object-contain max-h-[350px]" />
+              <img src={qrCodeImage} alt="QR Code Enlarged" className="w-full h-auto rounded-xl object-contain max-h-[350px]" decoding="async" loading="lazy" />
             </div>
             <p className="font-bold text-xs text-stone-800 uppercase">{accountName}</p>
             <p className="text-base font-mono font-bold text-[#354E3E] my-1">{accountNumber}</p>

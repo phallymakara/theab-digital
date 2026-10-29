@@ -24,7 +24,7 @@ export class HeaderView extends BaseView {
         <div class="container-max h-16 flex items-center justify-between">
           <!-- Logo & Brand -->
           <div id="brand-logo" class="flex items-center gap-3 cursor-pointer">
-            <img src="/logo/theab_digital.png" alt="Digital Theab Logo" class="w-10 h-10 object-contain drop-shadow-xs" />
+            <img src="/logo/theab_digital.png" alt="Digital Theab Logo" class="w-10 h-10 object-contain drop-shadow-xs" decoding="async" />
 
             <div>
               <span class="font-moul text-base tracking-wide text-theabCrimson block leading-tight">ឌីជីថលធៀប</span>

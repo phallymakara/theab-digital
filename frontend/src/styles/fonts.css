@@ -1,6 +1,7 @@
 /* ==========================================================================
    DIGITAL THEAB - TYPOGRAPHY & CUSTOM KHMER FONTS
    Organized font-face declarations and designer credits
+   Fonts organized by family in /fonts/khmer/<family>/ with WOFF2/WOFF/TTF
    ========================================================================== */
 
 /* 1. KH PhalLuch 002 by Designer Yeun PhalLuch (យឺន ផល្លុច - AKbalthom)
@@ -9,14 +10,93 @@
    -------------------------------------------------------------------------- */
 @font-face {
   font-family: 'KH PhalLuch 002';
-  src: url('/fonts/KH PhalLuch 002.ttf') format('truetype');
+  src: local('KH PhalLuch 002'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.woff2') format('woff2'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.woff') format('woff'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.ttf') format('truetype'),
+       url('/fonts/KH PhalLuch 002.ttf') format('truetype');
   font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'KH PhalLuch 002';
+  src: local('KH PhalLuch 002'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.woff2') format('woff2'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.woff') format('woff'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.ttf') format('truetype'),
+       url('/fonts/KH PhalLuch 002.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'KH PhalLuch 002';
+  src: local('KH PhalLuch 002'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.woff2') format('woff2'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.woff') format('woff'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.ttf') format('truetype'),
+       url('/fonts/KH PhalLuch 002.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'KH PhalLuch 002';
+  src: local('KH PhalLuch 002'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.woff2') format('woff2'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.woff') format('woff'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.ttf') format('truetype'),
+       url('/fonts/KH PhalLuch 002.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'KH PhalLuch 002';
+  src: local('KH PhalLuch 002'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.woff2') format('woff2'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.woff') format('woff'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.ttf') format('truetype'),
+       url('/fonts/KH PhalLuch 002.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'KH PhalLuch 002';
+  src: local('KH PhalLuch 002'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.woff2') format('woff2'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.woff') format('woff'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.ttf') format('truetype'),
+       url('/fonts/KH PhalLuch 002.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'KH PhalLuch 002';
+  src: local('KH PhalLuch 002'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.woff2') format('woff2'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.woff') format('woff'),
+       url('/fonts/khmer/phalluch/kh-phalluch-002.ttf') format('truetype'),
+       url('/fonts/KH PhalLuch 002.ttf') format('truetype');
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
 .font-phalluch {
   font-family: 'KH PhalLuch 002', 'Kantumruy Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* 2. Kh Ang Komutt B by Designer Yong Yeang (យ៉ុង យាង - អង្គ ពានរេន្ទ្រ)
@@ -25,49 +105,318 @@
    -------------------------------------------------------------------------- */
 @font-face {
   font-family: 'Kh Ang Komutt B';
-  src: url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-.font-komutt {
-  font-family: 'Kh Ang Komutt B', 'Kantumruy Pro', sans-serif;
-}
-
-/* 3. Kh Ang Kouteok by Designer Yong Yeang (យ៉ុង យាង - អង្គ ពានរេន្ទ្រ)
-   Ref: https://www.khmerfonts.info/designer.php?id=79
-   Used for: Romantic Floral Romance (មនោសញ្ចេតនាផ្កាស្រស់)
-   -------------------------------------------------------------------------- */
-@font-face {
-  font-family: 'Kh Ang Kouteok';
-  src: url('/fonts/Kh Ang Kouteok.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-.font-kouteok {
-  font-family: 'Kh Ang Kouteok', 'Kantumruy Pro', sans-serif;
-}
-
-/* 4. Kh Ang Komutt A by Designer Yong Yeang (យ៉ុង យាង - អង្គ ពានរេន្ទ្រ)
-   Ref: https://www.khmerfonts.info/designer.php?id=79
-   Used for: Classic Khmer Crimson (មង្គលក្រហមប្រពៃណី)
-   -------------------------------------------------------------------------- */
-@font-face {
-  font-family: 'Kh Ang Komutt A';
-  src: local('Kh Ang Komutt A'),
-       url('/fonts/Kh Ang Komutt A.ttf') format('truetype'),
-       url('/fonts/Kh-Ang-Komutt-A.ttf') format('truetype'),
+  src: local('Kh Ang Komutt B'),
+       local('Kh Ang Komutt A'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/Kh Ang Komutt B.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype'),
        url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Kh Ang Komutt B';
+  src: local('Kh Ang Komutt B'),
+       local('Kh Ang Komutt A'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/Kh Ang Komutt B.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype'),
+       url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Komutt B';
+  src: local('Kh Ang Komutt B'),
+       local('Kh Ang Komutt A'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/Kh Ang Komutt B.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype'),
+       url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Komutt B';
+  src: local('Kh Ang Komutt B'),
+       local('Kh Ang Komutt A'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/Kh Ang Komutt B.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype'),
+       url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Komutt B';
+  src: local('Kh Ang Komutt B'),
+       local('Kh Ang Komutt A'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/Kh Ang Komutt B.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype'),
+       url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Komutt B';
+  src: local('Kh Ang Komutt B'),
+       local('Kh Ang Komutt A'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/Kh Ang Komutt B.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype'),
+       url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Komutt B';
+  src: local('Kh Ang Komutt B'),
+       local('Kh Ang Komutt A'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/Kh Ang Komutt B.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype'),
+       url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-komutt {
+  font-family: 'Kh Ang Komutt B', 'Kh Ang Komutt A', 'Kantumruy Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* 3. Kh Ang Kouteok by Designer Yong Yeang (យ៉ុង យាង - អង្គ ពានរេន្ទ្រ)
+   Ref: https://www.khmerfonts.info/designer.php?id=79
+   Used for: Romantic Floral Romance (មនោសញ្ចេតនាផ្កាស្រស់), Angkor Ancient & Crimson
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Kh Ang Kouteok';
+  src: local('Kh Ang Kouteok'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.woff2') format('woff2'),
+       url('/fonts/Kh Ang Kouteok.woff2') format('woff2'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.woff') format('woff'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.ttf') format('truetype'),
+       url('/fonts/Kh Ang Kouteok.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Kouteok';
+  src: local('Kh Ang Kouteok'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.woff2') format('woff2'),
+       url('/fonts/Kh Ang Kouteok.woff2') format('woff2'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.woff') format('woff'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.ttf') format('truetype'),
+       url('/fonts/Kh Ang Kouteok.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Kouteok';
+  src: local('Kh Ang Kouteok'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.woff2') format('woff2'),
+       url('/fonts/Kh Ang Kouteok.woff2') format('woff2'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.woff') format('woff'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.ttf') format('truetype'),
+       url('/fonts/Kh Ang Kouteok.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Kouteok';
+  src: local('Kh Ang Kouteok'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.woff2') format('woff2'),
+       url('/fonts/Kh Ang Kouteok.woff2') format('woff2'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.woff') format('woff'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.ttf') format('truetype'),
+       url('/fonts/Kh Ang Kouteok.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Kouteok';
+  src: local('Kh Ang Kouteok'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.woff2') format('woff2'),
+       url('/fonts/Kh Ang Kouteok.woff2') format('woff2'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.woff') format('woff'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.ttf') format('truetype'),
+       url('/fonts/Kh Ang Kouteok.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Kouteok';
+  src: local('Kh Ang Kouteok'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.woff2') format('woff2'),
+       url('/fonts/Kh Ang Kouteok.woff2') format('woff2'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.woff') format('woff'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.ttf') format('truetype'),
+       url('/fonts/Kh Ang Kouteok.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Kouteok';
+  src: local('Kh Ang Kouteok'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.woff2') format('woff2'),
+       url('/fonts/Kh Ang Kouteok.woff2') format('woff2'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.woff') format('woff'),
+       url('/fonts/khmer/kouteok/kh-ang-kouteok.ttf') format('truetype'),
+       url('/fonts/Kh Ang Kouteok.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-kouteok {
+  font-family: 'Kh Ang Kouteok', 'Kantumruy Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* 4. Kh Ang Komutt A by Designer Yong Yeang (យ៉ុង យាង - អង្គ ពានរេន្ទ្រ)
+   Ref: https://www.khmerfonts.info/designer.php?id=79
+   Used for: Royal Golden Heritage (មង្គលសិរីមាសប្រណិត)
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Kh Ang Komutt A';
+  src: local('Kh Ang Komutt A'),
+       local('Kh Ang Komutt B'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/Kh Ang Komutt B.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype'),
+       url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Komutt A';
+  src: local('Kh Ang Komutt A'),
+       local('Kh Ang Komutt B'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/Kh Ang Komutt B.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype'),
+       url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Komutt A';
+  src: local('Kh Ang Komutt A'),
+       local('Kh Ang Komutt B'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/Kh Ang Komutt B.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype'),
+       url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Komutt A';
+  src: local('Kh Ang Komutt A'),
+       local('Kh Ang Komutt B'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/Kh Ang Komutt B.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype'),
+       url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Komutt A';
+  src: local('Kh Ang Komutt A'),
+       local('Kh Ang Komutt B'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/Kh Ang Komutt B.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype'),
+       url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Komutt A';
+  src: local('Kh Ang Komutt A'),
+       local('Kh Ang Komutt B'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/Kh Ang Komutt B.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype'),
+       url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kh Ang Komutt A';
+  src: local('Kh Ang Komutt A'),
+       local('Kh Ang Komutt B'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/Kh Ang Komutt B.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype'),
+       url('/fonts/Kh Ang Komutt B.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 .font-komutt-a {
   font-family: 'Kh Ang Komutt A', 'Kh Ang Komutt B', 'Moul', 'Kantumruy Pro', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* 5. Kh Ang Toathmor Kbach by Designer Yong Yeang (យ៉ុង យាង - អង្គ ពានរេន្ទ្រ)
@@ -77,8 +426,9 @@
 @font-face {
   font-family: 'Kh Ang Toathmor Kbach';
   src: local('Kh Ang Toathmor Kbach'),
-       url('/fonts/Kh Ang Toathmor Kbach.ttf') format('truetype'),
-       url('/fonts/Kh-Ang-Toathmor-Kbach.ttf') format('truetype');
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff2') format('woff2'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.woff') format('woff'),
+       url('/fonts/khmer/komutt/kh-ang-komutt-b.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -92,9 +442,68 @@
   font-family: 'Asvadek Mokha';
   src: local('Asvadek Mokha'),
        local('AsvadekMokha'),
-       url('/fonts/Asvadek Mokha.ttf') format('truetype'),
-       url('/fonts/Asvadek-Mokha.ttf') format('truetype');
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.woff2') format('woff2'),
+       url('/fonts/Asvadek Mokha.woff2') format('woff2'),
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.woff') format('woff'),
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.ttf') format('truetype'),
+       url('/fonts/Asvadek Mokha.ttf') format('truetype');
   font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asvadek Mokha';
+  src: local('Asvadek Mokha'),
+       local('AsvadekMokha'),
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.woff2') format('woff2'),
+       url('/fonts/Asvadek Mokha.woff2') format('woff2'),
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.woff') format('woff'),
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.ttf') format('truetype'),
+       url('/fonts/Asvadek Mokha.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asvadek Mokha';
+  src: local('Asvadek Mokha'),
+       local('AsvadekMokha'),
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.woff2') format('woff2'),
+       url('/fonts/Asvadek Mokha.woff2') format('woff2'),
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.woff') format('woff'),
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.ttf') format('truetype'),
+       url('/fonts/Asvadek Mokha.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asvadek Mokha';
+  src: local('Asvadek Mokha'),
+       local('AsvadekMokha'),
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.woff2') format('woff2'),
+       url('/fonts/Asvadek Mokha.woff2') format('woff2'),
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.woff') format('woff'),
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.ttf') format('truetype'),
+       url('/fonts/Asvadek Mokha.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Asvadek Mokha';
+  src: local('Asvadek Mokha'),
+       local('AsvadekMokha'),
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.woff2') format('woff2'),
+       url('/fonts/Asvadek Mokha.woff2') format('woff2'),
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.woff') format('woff'),
+       url('/fonts/khmer/asvadek-mokha/asvadek-mokha.ttf') format('truetype'),
+       url('/fonts/Asvadek Mokha.ttf') format('truetype');
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -103,14 +512,141 @@
   font-family: 'Asvadek Mokha', 'Moul', 'Preahvihear', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .font-asvadek-mokha {
   font-family: 'Asvadek Mokha', 'Moul', 'Preahvihear', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
+/* 7. ASvadek Momo by Designer Nou Sovannarout (នូ សុវណ្ណារោត - ASvadek)
+   Ref: https://www.khmerfonts.info/designer.php?id=52
+   Used for: Royal Lacquer Gold Heritage (មង្គលរាជវាំងលា័ក្ខមាស)
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'ASvadek Momo';
+  src: local('ASvadek Momo'),
+       local('ASvadek Momo W'),
+       local('ASvadekMomoW'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.woff2') format('woff2'),
+       url('/fonts/ASvadek Momo.woff2') format('woff2'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.woff') format('woff'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.ttf') format('truetype'),
+       url('/fonts/ASvadek Momo.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ASvadek Momo';
+  src: local('ASvadek Momo'),
+       local('ASvadek Momo W'),
+       local('ASvadekMomoW'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.woff2') format('woff2'),
+       url('/fonts/ASvadek Momo.woff2') format('woff2'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.woff') format('woff'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.ttf') format('truetype'),
+       url('/fonts/ASvadek Momo.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ASvadek Momo';
+  src: local('ASvadek Momo'),
+       local('ASvadek Momo W'),
+       local('ASvadekMomoW'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.woff2') format('woff2'),
+       url('/fonts/ASvadek Momo.woff2') format('woff2'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.woff') format('woff'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.ttf') format('truetype'),
+       url('/fonts/ASvadek Momo.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ASvadek Momo';
+  src: local('ASvadek Momo'),
+       local('ASvadek Momo W'),
+       local('ASvadekMomoW'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.woff2') format('woff2'),
+       url('/fonts/ASvadek Momo.woff2') format('woff2'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.woff') format('woff'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.ttf') format('truetype'),
+       url('/fonts/ASvadek Momo.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ASvadek Momo';
+  src: local('ASvadek Momo'),
+       local('ASvadek Momo W'),
+       local('ASvadekMomoW'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.woff2') format('woff2'),
+       url('/fonts/ASvadek Momo.woff2') format('woff2'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.woff') format('woff'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.ttf') format('truetype'),
+       url('/fonts/ASvadek Momo.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ASvadek Momo';
+  src: local('ASvadek Momo'),
+       local('ASvadek Momo W'),
+       local('ASvadekMomoW'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.woff2') format('woff2'),
+       url('/fonts/ASvadek Momo.woff2') format('woff2'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.woff') format('woff'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.ttf') format('truetype'),
+       url('/fonts/ASvadek Momo.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ASvadek Momo';
+  src: local('ASvadek Momo'),
+       local('ASvadek Momo W'),
+       local('ASvadekMomoW'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.woff2') format('woff2'),
+       url('/fonts/ASvadek Momo.woff2') format('woff2'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.woff') format('woff'),
+       url('/fonts/khmer/asvadek-momo/asvadek-momo.ttf') format('truetype'),
+       url('/fonts/ASvadek Momo.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-momo {
+  font-family: 'ASvadek Momo', 'ASvadek Momo W', 'Kantumruy Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.font-asvadek-momo {
+  font-family: 'ASvadek Momo', 'ASvadek Momo W', 'Kantumruy Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* 8. Standard Google Khmer Fonts (Moul, Moulpali, Koulen, etc.)
+   -------------------------------------------------------------------------- */
 .font-moul {
   font-family: 'Moul', 'Moulpali', serif;
   -webkit-font-smoothing: antialiased;
@@ -151,4 +687,3 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-

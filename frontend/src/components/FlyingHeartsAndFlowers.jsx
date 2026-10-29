@@ -2,19 +2,19 @@ import React, { useMemo } from 'react';
 import { Heart, Flower2 } from 'lucide-react';
 
 const HEART_COLORS = [
-  'text-amber-200 fill-amber-400 drop-shadow-[0_2px_8px_rgba(212,175,55,0.7)]',
-  'text-yellow-100 fill-amber-300 drop-shadow-[0_2px_8px_rgba(245,158,11,0.65)]',
-  'text-amber-300 fill-yellow-500 drop-shadow-[0_2px_8px_rgba(212,175,55,0.75)]',
-  'text-amber-100 fill-amber-400 drop-shadow-[0_2px_6px_rgba(245,158,11,0.6)]',
-  'text-yellow-200 fill-amber-500 drop-shadow-[0_2px_8px_rgba(212,175,55,0.7)]',
+  'text-amber-200 fill-amber-400 drop-shadow-xs',
+  'text-yellow-100 fill-amber-300 drop-shadow-xs',
+  'text-amber-300 fill-yellow-500 drop-shadow-xs',
+  'text-amber-100 fill-amber-400 drop-shadow-xs',
+  'text-yellow-200 fill-amber-500 drop-shadow-xs',
 ];
 
 const FLOWER_COLORS = [
-  'text-amber-100 fill-amber-300 drop-shadow-[0_2px_6px_rgba(212,175,55,0.7)]',
-  'text-yellow-200 fill-amber-400 drop-shadow-[0_2px_6px_rgba(245,158,11,0.65)]',
-  'text-amber-200 fill-yellow-400 drop-shadow-[0_2px_6px_rgba(212,175,55,0.7)]',
-  'text-yellow-100 fill-amber-200 drop-shadow-[0_2px_6px_rgba(254,243,199,0.75)]',
-  'text-amber-300 fill-amber-500 drop-shadow-[0_2px_6px_rgba(212,175,55,0.7)]',
+  'text-amber-100 fill-amber-300 drop-shadow-xs',
+  'text-yellow-200 fill-amber-400 drop-shadow-xs',
+  'text-amber-200 fill-yellow-400 drop-shadow-xs',
+  'text-yellow-100 fill-amber-200 drop-shadow-xs',
+  'text-amber-300 fill-amber-500 drop-shadow-xs',
 ];
 
 // Multi-directional smooth flight animation classes
@@ -75,11 +75,11 @@ export function FlyingHeartsAndFlowers({ count = 8 }) {
   }, [count]);
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-10 select-none opacity-70">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-10 select-none opacity-70 transform-gpu">
       {particles.map((p) => (
         <div
           key={p.id}
-          className={`absolute will-change-transform ${p.animClass} ${p.colorClass}`}
+          className={`absolute will-change-transform transform-gpu ${p.animClass} ${p.colorClass}`}
           style={{
             left: p.left,
             top: p.top,

@@ -95,41 +95,30 @@ export function TraditionalHeroSection({
         <FlyingHeartsAndFlowers count={8} />
       </div>
 
-      {/* Decorative Traditional Filigree Inner Frame */}
-      <div
-        className="absolute inset-3 sm:inset-5 rounded-[22px] border pointer-events-none z-10"
-        style={{ borderColor: `${themeBorder}80` }}
-      >
-        <div className="absolute -top-1.5 -left-1.5 w-4 h-4 border-t-2 border-l-2" style={{ borderColor: themeBorder }}></div>
-        <div className="absolute -top-1.5 -right-1.5 w-4 h-4 border-t-2 border-r-2" style={{ borderColor: themeBorder }}></div>
-        <div className="absolute -bottom-1.5 -left-1.5 w-4 h-4 border-b-2 border-l-2" style={{ borderColor: themeBorder }}></div>
-        <div className="absolute -bottom-1.5 -right-1.5 w-4 h-4 border-b-2 border-r-2" style={{ borderColor: themeBorder }}></div>
-      </div>
-
       {/* Centered Couple Presentation on Hero Photo */}
-      <div className="relative z-20 pointer-events-none w-full h-full flex flex-col justify-center items-center p-4 sm:p-6 text-center">
-        <div className="space-y-3 sm:space-y-4 max-w-lg mx-auto w-full my-auto px-2">
+      <div className="relative z-20 pointer-events-none w-full h-full flex flex-col justify-center items-center p-3 sm:p-6 text-center">
+        <div className="space-y-2.5 sm:space-y-4 max-w-lg mx-auto w-full my-auto px-2">
           {/* Top Auspicious Title Badge with unique bespoke historical styling */}
           <div className="flex justify-center w-full">
             <TraditionalBadgeComponent
               templateId={templateId}
               title={badgeText}
-              size="lg"
+              size="md"
             />
           </div>
 
           {/* Groom Name */}
-          <div className="pt-2">
-            <div className={`${fontNames} text-2xl sm:text-3xl md:text-4xl text-amber-100 tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.98)] leading-relaxed`}>
+          <div className="pt-1.5">
+            <div className={`${fontNames} text-xl sm:text-2xl md:text-3xl text-amber-100 tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.98)] leading-relaxed`}>
               {groom}
             </div>
           </div>
 
           {/* Central Knot / Connector - Unique to each historical template */}
           {/* Central Knot / Connector - Authentic Khmer 'និង' with traditional filigree */}
-          <div className="flex items-center justify-center gap-3 my-1">
-            <div className="h-[1.5px] w-12 sm:w-16 bg-gradient-to-r from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
-            <div className={`px-3.5 py-0.5 rounded-full border-2 flex items-center justify-center shadow-lg backdrop-blur-md ${
+          <div className="flex items-center justify-center gap-2.5 my-0.5 sm:my-1">
+            <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-16 bg-gradient-to-r from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
+            <div className={`px-3 py-0.5 rounded-full border flex items-center justify-center shadow-lg backdrop-blur-md ${
               templateId === 'traditional-crimson-angkoreach'
                 ? 'bg-[#3B0712]/90 border-red-400 text-amber-200 shadow-red-500/50'
                 : templateId === 'traditional-indigo-hol'
@@ -144,18 +133,18 @@ export function TraditionalHeroSection({
                 ? 'bg-[#14100D]/90 border-amber-400 text-amber-200 shadow-amber-600/50'
                 : 'bg-black/80 border-amber-300 text-amber-200 shadow-amber-400/50'
             }`}>
-              <span className={`font-moul text-[11px] sm:text-xs tracking-wider drop-shadow ${
+              <span className={`${templateId === 'royal-gold' ? 'font-komutt-a' : 'font-moul'} text-[10px] sm:text-xs tracking-wider drop-shadow ${
                 templateId === 'traditional-ivory-parchment' ? 'text-amber-900' : 'text-amber-200'
               }`}>
                 និង
               </span>
             </div>
-            <div className="h-[1.5px] w-12 sm:w-16 bg-gradient-to-l from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
+            <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-16 bg-gradient-to-l from-transparent via-amber-300 to-amber-400 drop-shadow"></div>
           </div>
 
           {/* Bride Name */}
           <div>
-            <div className={`${fontNames} text-2xl sm:text-3xl md:text-4xl text-amber-100 tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.98)] leading-relaxed`}>
+            <div className={`${fontNames} text-xl sm:text-2xl md:text-3xl text-amber-100 tracking-wide drop-shadow-[0_2px_10px_rgba(0,0,0,0.98)] leading-relaxed`}>
               {bride}
             </div>
           </div>

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
   Heart,
   Calendar,
@@ -18,11 +19,16 @@ import {
   MessageCircle,
   ArrowUp,
   Award,
-  ShieldCheck
+  ShieldCheck,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 import { FlyingHeartsAndFlowers } from '../../FlyingHeartsAndFlowers';
 
 export function EmeraldMalachiteSealTemplate({ data = {}, invitationData = {}, invitation = {}, activeTemplate = {} }) {
+  // Isolated template audio («ភ្ជាប់និស្ស័យ» - NISAI)
+  const { isPlaying, toggleAudio } = useTemplateAudio();
+
   const groom = data.groomName || invitation.groomName || invitationData.groomName || activeTemplate?.demoGroom || 'កែវ សម្បត្តិរាជ';
   const bride = data.brideName || invitation.brideName || invitationData.brideName || activeTemplate?.demoBride || 'ទេព កល្យាណី';
 
@@ -215,43 +221,41 @@ export function EmeraldMalachiteSealTemplate({ data = {}, invitationData = {}, i
                 src={imgUrl}
                 alt={`Royal Malachite Prewedding ${idx + 1}`}
                 className="w-full h-full object-cover object-center"
-                loading={idx === 0 ? 'eager' : 'lazy'}
-              />
+                loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
               {/* Rich Malachite & Antique Gold Vignette */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#021A13] via-[#021A13]/40 to-black/35 pointer-events-none" />
-              <div className="absolute inset-0 ring-1 ring-inset ring-amber-300/30 pointer-events-none" />
             </div>
           ))}
         </div>
 
-        {/* Stationary Centered Typography in Kh Ang Komutt B directly on photo */}
-        <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-center p-6 text-center">
-          <div className="space-y-3 w-full px-4">
+        {/* Stationary Centered Typography in Kh Ang Komutt B directly on photo (Scaled for mobile readability, frameless) */}
+        <div className="absolute inset-0 z-10 pointer-events-none flex flex-col items-center justify-center p-4 sm:p-6 text-center">
+          <div className="space-y-2.5 sm:space-y-3 w-full max-w-md mx-auto px-2 sm:px-4">
             {/* Top Royal Wax Seal Crest */}
             <div className="flex items-center justify-center gap-2 mb-1">
               <span className="text-amber-300 text-xs">⚜</span>
-              <span className="font-komutt text-xs sm:text-sm text-amber-200 tracking-widest drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+              <span className="font-komutt text-[11px] sm:text-xs md:text-sm text-amber-200 tracking-widest drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                 មរកតក្សត្រាត្រាជ័រកែវ
               </span>
               <span className="text-amber-300 text-xs">⚜</span>
             </div>
 
             {/* Groom Name in Kh Ang Komutt B */}
-            <h1 className="font-komutt text-3xl sm:text-4xl md:text-5xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
+            <h1 className="font-komutt text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
               {groom}
             </h1>
 
             {/* Antique Royal Ampersand Emblem */}
-            <div className="flex items-center justify-center gap-3 my-1">
-              <div className="h-[1.5px] w-14 bg-gradient-to-r from-transparent via-emerald-400 to-amber-300 drop-shadow" />
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 border border-amber-200 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.8)]">
-                <span className="font-serif italic text-emerald-950 text-xs font-black">✦ & ✦</span>
+            <div className="flex items-center justify-center gap-2.5 my-0.5 sm:my-1">
+              <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-14 bg-gradient-to-r from-transparent via-emerald-400 to-amber-300 drop-shadow" />
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 border border-amber-200 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.8)]">
+                <span className="font-serif italic text-emerald-950 text-[10px] sm:text-xs font-black">✦ & ✦</span>
               </div>
-              <div className="h-[1.5px] w-14 bg-gradient-to-l from-transparent via-emerald-400 to-amber-300 drop-shadow" />
+              <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-14 bg-gradient-to-l from-transparent via-emerald-400 to-amber-300 drop-shadow" />
             </div>
 
             {/* Bride Name in Kh Ang Komutt B */}
-            <h1 className="font-komutt text-3xl sm:text-4xl md:text-5xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
+            <h1 className="font-komutt text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-relaxed">
               {bride}
             </h1>
 
@@ -566,8 +570,7 @@ export function EmeraldMalachiteSealTemplate({ data = {}, invitationData = {}, i
                   src={photo.src}
                   alt={photo.caption}
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
+                  loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent opacity-85 group-hover:opacity-100 transition-opacity flex items-end p-2.5">
                   <p className="text-[10px] text-emerald-100 font-suwannaphum line-clamp-1">
                     {photo.caption}
@@ -614,8 +617,7 @@ export function EmeraldMalachiteSealTemplate({ data = {}, invitationData = {}, i
                 <img
                   src={qrCodeImage}
                   alt="QR Code"
-                  className="w-40 h-40 mx-auto object-contain"
-                />
+                  className="w-40 h-40 mx-auto object-contain" decoding="async" loading="lazy" />
               ) : (
                 <QrCode className="w-40 h-40 mx-auto text-stone-900" />
               )}
@@ -901,7 +903,7 @@ export function EmeraldMalachiteSealTemplate({ data = {}, invitationData = {}, i
             <p className="text-xs text-emerald-200 mb-3 font-mono">{bankName}</p>
             <div className="w-48 h-48 mx-auto p-2 bg-white rounded-xl flex items-center justify-center mb-3 border-2 border-amber-400">
               {qrCodeImage ? (
-                <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" />
+                <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" decoding="async" loading="lazy" />
               ) : (
                 <QrCode className="w-40 h-40 text-stone-900" />
               )}
@@ -952,8 +954,7 @@ export function EmeraldMalachiteSealTemplate({ data = {}, invitationData = {}, i
             <img
               src={selectedPhoto}
               alt="Preview"
-              className="w-full max-h-[70vh] object-contain bg-black"
-            />
+              className="w-full max-h-[70vh] object-contain bg-black" decoding="async" />
             <div className="p-4 text-center">
               <button
                 type="button"
@@ -966,6 +967,32 @@ export function EmeraldMalachiteSealTemplate({ data = {}, invitationData = {}, i
           </div>
         </div>
       )}
+
+      {/* Floating Audio Toggle - Isolated Template Soundtrack («ភ្ជាប់និស្ស័យ» - NISAI) */}
+      <div className="fixed bottom-5 right-5 z-40">
+        <button
+          type="button"
+          onClick={toggleAudio}
+          className={`px-3.5 py-2.5 rounded-full flex items-center gap-2 border backdrop-blur-md shadow-2xl transition-all duration-300 text-xs font-medium cursor-pointer ${
+            isPlaying
+              ? 'bg-emerald-900 text-white border-amber-400 shadow-emerald-500/30 ring-2 ring-amber-400/40'
+              : 'bg-white/90 text-stone-800 border-amber-300 hover:text-black'
+          }`}
+          title="ភ្លេងមង្គល «ភ្ជាប់និស្ស័យ»"
+        >
+          {isPlaying ? (
+            <>
+              <Volume2 className="w-4 h-4 animate-pulse text-amber-200" />
+              <span className="font-kantumruy font-bold">កំពុងចាក់ «ភ្ជាប់និស្ស័យ»</span>
+            </>
+          ) : (
+            <>
+              <VolumeX className="w-4 h-4 text-stone-500" />
+              <span className="font-kantumruy">ចាក់ភ្លេងមង្គល</span>
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 }

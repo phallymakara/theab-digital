@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
   Heart,
   Calendar,
@@ -34,7 +35,7 @@ import {
  * -------------------------------------------------------------
  * Theme: "អភិជនរាត្រីពេជ្រខ្មៅ" (Modern Noir Diamond & Platinum Chic)
  * Category: អភិជនទំនើប (modern)
- * Typography: font-suwannaphum (headings/names) + font-serifTrad (Cinzel) + font-kantumruy (body)
+ * Typography: font-komutt (headings/names) + font-serifTrad (Cinzel) + font-kantumruy (body)
  * Aesthetic: High-Fashion Black-Tie Gala, Obsidian Night, Frosted Platinum Glass, Luminous Diamond Sparkles
  */
 
@@ -124,10 +125,8 @@ export function ModernNoirDiamondTemplate({
   // Lightbox Modal State
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
-  // Audio Synthesizer State (Nocturne Platinum Chimes)
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioContextRef = useRef(null);
-  const timerRef = useRef(null);
+  // Fully isolated template audio («ភ្ជាប់និស្ស័យ» - NISAI)
+  const { isPlaying, toggleAudio } = useTemplateAudio();
 
   // Live Countdown (Target: Jan 10, 2027)
   const [timeLeft, setTimeLeft] = useState({ days: 807, hours: 19, minutes: 20, seconds: 30 });
@@ -211,65 +210,7 @@ export function ModernNoirDiamondTemplate({
     setGuestText('');
   };
 
-  // Ambient Nocturne Platinum Synthesizer
-  const toggleAudio = () => {
-    if (isPlaying) {
-      if (timerRef.current) clearInterval(timerRef.current);
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-        audioContextRef.current = null;
-      }
-      setIsPlaying(false);
-      return;
-    }
 
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      const ctx = new AudioCtx();
-      audioContextRef.current = ctx;
-
-      // Nocturne Diamond pentatonic (Eb minor / Gb major)
-      const notes = [311.13, 369.99, 415.30, 466.16, 554.37, 622.25, 739.99];
-      let step = 0;
-
-      const playChime = () => {
-        if (!audioContextRef.current || audioContextRef.current.state === 'closed') return;
-        const now = ctx.currentTime;
-        const note = notes[step % notes.length];
-        step++;
-
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(note, now);
-
-        gain.gain.setValueAtTime(0, now);
-        gain.gain.linearRampToValueAtTime(0.08, now + 0.05);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.6);
-
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc.start(now);
-        osc.stop(now + 2.7);
-      };
-
-      playChime();
-      timerRef.current = setInterval(playChime, 1150);
-      setIsPlaying(true);
-    } catch {
-      setIsPlaying(false);
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-      }
-    };
-  }, []);
 
   // Download .ics Calendar Event
   const downloadCalendarEvent = () => {
@@ -318,17 +259,17 @@ export function ModernNoirDiamondTemplate({
               ? 'bg-slate-800 text-cyan-300 border-cyan-400/60 shadow-cyan-500/20 ring-2 ring-cyan-400/30'
               : 'bg-slate-900/80 text-slate-300 border-slate-700 hover:text-white'
           }`}
-          title="តន្ត្រីរាត្រីពេជ្រខ្មៅ (Noir Diamond Ambient)"
+          title="ភ្លេងមង្គល «ភ្ជាប់និស្ស័យ»"
         >
           {isPlaying ? (
             <>
               <Volume2 className="w-4 h-4 animate-pulse text-cyan-300" />
-              <span>តន្ត្រីរាត្រីពេជ្រ</span>
+              <span>ភ្លេង «ភ្ជាប់និស្ស័យ»</span>
             </>
           ) : (
             <>
               <VolumeX className="w-4 h-4 text-slate-400" />
-              <span>បើកតន្ត្រី</span>
+              <span>ចាក់ភ្លេងមង្គល</span>
             </>
           )}
         </button>
@@ -353,49 +294,47 @@ export function ModernNoirDiamondTemplate({
                 src={imgUrl}
                 alt={`Noir Diamond Prewedding ${idx + 1}`}
                 className="w-full h-full object-cover object-center"
-                loading={idx === 0 ? 'eager' : 'lazy'}
-              />
+                loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
               {/* Balanced Dark Vignette for High-Contrast Typography */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#050811] via-[#050811]/45 to-black/55 pointer-events-none" />
-              <div className="absolute inset-0 ring-1 ring-inset ring-slate-400/20 pointer-events-none" />
             </div>
           ))}
         </div>
 
-        {/* Stationary Centered Typography Directly on Photo */}
-        <div className="absolute inset-0 z-20 pointer-events-none flex flex-col items-center justify-center p-6 text-center">
-          <div className="space-y-3 w-full max-w-md mx-auto px-4">
+        {/* Stationary Centered Typography Directly on Photo (Scaled for mobile readability, frameless) */}
+        <div className="absolute inset-0 z-20 pointer-events-none flex flex-col items-center justify-center p-4 sm:p-6 text-center">
+          <div className="space-y-2.5 sm:space-y-3 w-full max-w-md mx-auto px-2 sm:px-4">
             {/* Top Aristocrat Diamond Emblem */}
             <div className="flex items-center justify-center gap-2 mb-1">
               <span className="text-cyan-300 text-xs drop-shadow-[0_0_8px_#38BDF8]">✦</span>
-              <span className="font-suwannaphum text-xs sm:text-sm text-slate-200 tracking-widest drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
-                សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍
+              <span className="font-komutt text-[11px] sm:text-xs md:text-sm text-slate-200 tracking-widest drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                សិរីសួស្តីអាពាហ៍ពិពាហ៍
               </span>
               <span className="text-cyan-300 text-xs drop-shadow-[0_0_8px_#38BDF8]">✦</span>
             </div>
 
-            {/* Groom Name in font-suwannaphum */}
-            <h1 className="font-suwannaphum text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-100">
+            {/* Groom Name in font-komutt */}
+            <h1 className="font-komutt text-2xl sm:text-3xl md:text-4xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-100">
               {groomName}
             </h1>
 
             {/* Diamond Ampersand Divider */}
-            <div className="flex items-center justify-center gap-3 my-1">
-              <div className="h-[1.5px] w-14 bg-gradient-to-r from-transparent via-cyan-400 to-slate-200 drop-shadow" />
-              <div className="w-8 h-8 rounded-full bg-slate-900/90 border border-cyan-400/80 flex items-center justify-center shadow-[0_0_15px_rgba(56,189,248,0.6)] backdrop-blur-sm">
-                <span className="font-serifTrad italic text-cyan-300 text-xs font-bold">~ & ~</span>
+            <div className="flex items-center justify-center gap-2.5 my-0.5 sm:my-1">
+              <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-14 bg-gradient-to-r from-transparent via-cyan-400 to-slate-200 drop-shadow" />
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-900/90 border border-cyan-400/80 flex items-center justify-center shadow-[0_0_15px_rgba(56,189,248,0.6)] backdrop-blur-sm">
+                <span className="font-serifTrad italic text-cyan-300 text-[10px] sm:text-xs font-bold">~ & ~</span>
               </div>
-              <div className="h-[1.5px] w-14 bg-gradient-to-l from-transparent via-cyan-400 to-slate-200 drop-shadow" />
+              <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-14 bg-gradient-to-l from-transparent via-cyan-400 to-slate-200 drop-shadow" />
             </div>
 
-            {/* Bride Name in font-suwannaphum */}
-            <h1 className="font-suwannaphum text-3xl sm:text-4xl md:text-5xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-100">
+            {/* Bride Name in font-komutt */}
+            <h1 className="font-komutt text-2xl sm:text-3xl md:text-4xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-100">
               {brideName}
             </h1>
 
             {/* Date & Location Subtitle */}
             <div className="pt-2">
-              <p className="text-xs sm:text-sm text-cyan-200/90 font-medium tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] font-suwannaphum">
+              <p className="text-xs sm:text-sm text-cyan-200/90 font-medium tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] font-komutt">
                 {weddingDate}
               </p>
               <p className="text-[11px] sm:text-xs text-slate-300 mt-1 drop-shadow font-light">
@@ -454,7 +393,7 @@ export function ModernNoirDiamondTemplate({
               <span>Honorable Parents Blessing</span>
               <Diamond className="w-3.5 h-3.5 text-cyan-400" />
             </div>
-            <h2 className="font-suwannaphum text-2xl sm:text-3xl font-bold text-white">
+            <h2 className="font-komutt text-2xl sm:text-3xl font-bold text-white">
               សេចក្តីគោរពអញ្ជើញ និងពរជ័យមាតាបិតា
             </h2>
             <p className="text-xs text-slate-300 max-w-md mx-auto leading-relaxed">
@@ -468,8 +407,8 @@ export function ModernNoirDiamondTemplate({
               <span className="text-[11px] text-cyan-300 font-serifTrad uppercase tracking-wider block mb-1">
                 ខាងកូនប្រុស
               </span>
-              <p className="font-suwannaphum text-sm sm:text-base font-semibold text-slate-100">{groomFather}</p>
-              <p className="font-suwannaphum text-sm sm:text-base font-semibold text-slate-100">{groomMother}</p>
+              <p className="font-komutt text-sm sm:text-base font-semibold text-slate-100">{groomFather}</p>
+              <p className="font-komutt text-sm sm:text-base font-semibold text-slate-100">{groomMother}</p>
             </div>
 
             {/* Bride's Parents */}
@@ -477,8 +416,8 @@ export function ModernNoirDiamondTemplate({
               <span className="text-[11px] text-cyan-300 font-serifTrad uppercase tracking-wider block mb-1">
                 ខាងកូនស្រី
               </span>
-              <p className="font-suwannaphum text-sm sm:text-base font-semibold text-slate-100">{brideFather}</p>
-              <p className="font-suwannaphum text-sm sm:text-base font-semibold text-slate-100">{brideMother}</p>
+              <p className="font-komutt text-sm sm:text-base font-semibold text-slate-100">{brideFather}</p>
+              <p className="font-komutt text-sm sm:text-base font-semibold text-slate-100">{brideMother}</p>
             </div>
           </div>
         </div>
@@ -495,7 +434,7 @@ export function ModernNoirDiamondTemplate({
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
           </div>
 
-          <h2 className="font-suwannaphum text-2xl sm:text-3xl font-bold text-white">
+          <h2 className="font-komutt text-2xl sm:text-3xl font-bold text-white">
             សេចក្តីគោរពអញ្ជើញ
           </h2>
 
@@ -503,7 +442,7 @@ export function ModernNoirDiamondTemplate({
             ដើម្បីប្រសិទ្ធពរជ័យ សិរីសួស្តី ជ័យមង្គល វិបុលសុខ មហាប្រសើរ ក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍នៃកូនប្រុស-កូនស្រីរបស់យើងខ្ញុំ ដែលនឹងប្រព្រឹត្តទៅតាមគន្លងប្រពៃណីព្រះពុទ្ធសាសនា និងទំនៀមខ្មែរបុរាណ។ វត្តមានដ៏ឧត្តុង្គឧត្តមរបស់លោកអ្នក គឺជាកិត្តិយសដ៏ថ្លៃថ្លាបំផុតសម្រាប់គ្រួសារយើងខ្ញុំទាំងពីរ។
           </p>
 
-          <div className="pt-2 flex items-center justify-center gap-2 text-xs text-cyan-300 font-suwannaphum">
+          <div className="pt-2 flex items-center justify-center gap-2 text-xs text-cyan-300 font-komutt">
             <span>សូមអរគុណយ៉ាងជ្រាលជ្រៅចំពោះវត្តមានដ៏មានតម្លៃ!</span>
           </div>
         </div>
@@ -516,10 +455,10 @@ export function ModernNoirDiamondTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-slate-900/90 border border-slate-700/80 shadow-2xl space-y-8">
           <div className="text-center space-y-1">
             <span className="text-xs text-cyan-300 uppercase tracking-widest font-serifTrad">Event Countdown & Date</span>
-            <h2 className="font-suwannaphum text-2xl sm:text-3xl font-bold text-white">
+            <h2 className="font-komutt text-2xl sm:text-3xl font-bold text-white">
               កាលបរិច្ឆេទ & ការរាប់ថយក្រោយ
             </h2>
-            <p className="text-xs text-slate-400 font-suwannaphum">{weddingDate}</p>
+            <p className="text-xs text-slate-400 font-komutt">{weddingDate}</p>
           </div>
 
           {/* Real-Time Live Countdown Timer */}
@@ -528,25 +467,25 @@ export function ModernNoirDiamondTemplate({
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-slate-100">
                 {timeLeft.days}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-suwannaphum">ថ្ងៃ</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt">ថ្ងៃ</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-slate-100">
                 {timeLeft.hours}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-suwannaphum">ម៉ោង</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt">ម៉ោង</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-slate-100">
                 {timeLeft.minutes}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-suwannaphum">នាទី</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt">នាទី</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-cyan-400 animate-pulse">
                 {timeLeft.seconds}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-suwannaphum">វិនាទី</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt">វិនាទី</span>
             </div>
           </div>
 
@@ -619,7 +558,7 @@ export function ModernNoirDiamondTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-slate-900/90 border border-slate-800 shadow-2xl space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-cyan-300 uppercase tracking-widest font-serifTrad">Full Wedding Schedule</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-white">កាលវិភាគពិធីការទាំង ៧ កម្មវិធី</h2>
+            <h2 className="font-komutt text-2xl font-bold text-white">កាលវិភាគពិធីការទាំង ៧ កម្មវិធី</h2>
           </div>
 
           <div className="space-y-3.5">
@@ -633,7 +572,7 @@ export function ModernNoirDiamondTemplate({
                 </div>
                 <div className="flex-1">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                    <h4 className="font-suwannaphum font-bold text-white text-sm sm:text-base">
+                    <h4 className="font-komutt font-bold text-white text-sm sm:text-base">
                       {prog.title}
                     </h4>
                     <span className="text-xs text-cyan-300 font-serifTrad font-semibold shrink-0">
@@ -659,7 +598,7 @@ export function ModernNoirDiamondTemplate({
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
           </div>
 
-          <h2 className="font-suwannaphum text-2xl sm:text-3xl font-bold text-white">
+          <h2 className="font-komutt text-2xl sm:text-3xl font-bold text-white">
             សេចក្តីថ្លែងអំណរគុណ
           </h2>
 
@@ -667,7 +606,7 @@ export function ModernNoirDiamondTemplate({
             យើងខ្ញុំជាគូស្វាមីភរិយាថ្មី រួមជាមួយមាតាបិតាទាំងសងខាង សូមលំឱនកាយវាចាចិត្តថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅបំផុត ចំពោះវត្តមានដ៏ឧត្តុង្គឧត្តម ពេលវេលាដ៏មានតម្លៃ និងពរជ័យសព្ទសាធុការពររបស់ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាងកញ្ញា ដែលបានផ្តល់កិត្តិយសអញ្ជើញមកចូលរួមជាសាក្សីនៃសេចក្តីស្រឡាញ់របស់យើងខ្ញុំ។
           </p>
 
-          <div className="pt-2 text-xs text-cyan-200/90 font-suwannaphum">
+          <div className="pt-2 text-xs text-cyan-200/90 font-komutt">
             «សូមទេវតាថែរក្សា និងប្រទានពរជ័យឱ្យលោកអ្នកជួបតែសេចក្តីសុខ ចម្រើនជានិច្ចនិរន្តរ៍»
           </div>
         </div>
@@ -680,7 +619,7 @@ export function ModernNoirDiamondTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-slate-900/90 border border-slate-800 shadow-2xl space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-cyan-300 uppercase tracking-widest font-serifTrad">Venue & Directions</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-white">ទីតាំងប្រារព្ធពិធី</h2>
+            <h2 className="font-komutt text-2xl font-bold text-white">ទីតាំងប្រារព្ធពិធី</h2>
           </div>
 
           <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -711,7 +650,7 @@ export function ModernNoirDiamondTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-slate-900/90 border border-slate-800 shadow-2xl space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-cyan-300 uppercase tracking-widest font-serifTrad">Memories & Portraits</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-white">កម្រងរូបភាពអនុស្សាវរីយ៍</h2>
+            <h2 className="font-komutt text-2xl font-bold text-white">កម្រងរូបភាពអនុស្សាវរីយ៍</h2>
             <p className="text-xs text-slate-400">ចុចលើរូបភាពដើម្បីមើលទំហំធំពេញអេក្រង់</p>
           </div>
 
@@ -726,10 +665,9 @@ export function ModernNoirDiamondTemplate({
                   src={photo.src}
                   alt={photo.caption}
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                  loading="lazy"
-                />
+                  loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-2.5">
-                  <p className="text-[10px] text-cyan-200 line-clamp-2 font-suwannaphum">
+                  <p className="text-[10px] text-cyan-200 line-clamp-2 font-komutt">
                     {photo.caption}
                   </p>
                 </div>
@@ -758,11 +696,10 @@ export function ModernNoirDiamondTemplate({
                 <img
                   src={selectedPhoto.src}
                   alt={selectedPhoto.caption}
-                  className="w-full h-full object-contain"
-                />
+                  className="w-full h-full object-contain" decoding="async" />
               </div>
               <div className="p-4 text-center bg-slate-900 border-t border-slate-800">
-                <p className="font-suwannaphum text-sm text-cyan-200 font-semibold">
+                <p className="font-komutt text-sm text-cyan-200 font-semibold">
                   {selectedPhoto.caption}
                 </p>
               </div>
@@ -781,7 +718,7 @@ export function ModernNoirDiamondTemplate({
               <Gift className="w-4 h-4 text-cyan-400" />
               <span>Digital Wedding Envelope</span>
             </div>
-            <h2 className="font-suwannaphum text-2xl font-bold text-white">
+            <h2 className="font-komutt text-2xl font-bold text-white">
               អាំងប៉ាវ & ចំណងដៃពរជ័យ
             </h2>
             <p className="text-xs text-slate-400 max-w-sm mx-auto">
@@ -796,7 +733,7 @@ export function ModernNoirDiamondTemplate({
             >
               {qrCodeImage ? (
                 <>
-                  <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" />
+                  <img src={qrCodeImage} alt="QR Code" className="w-full h-full object-contain" decoding="async" loading="lazy" />
                   <div className="absolute inset-0 bg-black/40 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span className="text-[10px] text-white font-bold bg-black/70 px-2 py-1 rounded">ចុចដើម្បីពង្រីក</span>
                   </div>
@@ -843,7 +780,7 @@ export function ModernNoirDiamondTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-slate-900/90 border border-slate-800 shadow-2xl">
           <div className="text-center space-y-1 mb-6">
             <span className="text-xs text-cyan-300 uppercase tracking-widest font-serifTrad">RSVP Confirmation</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-white">ការបញ្ជាក់វត្តមានចូលរួម</h2>
+            <h2 className="font-komutt text-2xl font-bold text-white">ការបញ្ជាក់វត្តមានចូលរួម</h2>
             <p className="text-xs text-slate-400 max-w-sm mx-auto">
               សូមមេត្តាឆ្លើយតបមុនថ្ងៃទី ២៥ ខែធ្នូ ដើម្បីជួយសម្រួលដល់ការរៀបចំតុទទួលភ្ញៀវ
             </p>
@@ -852,7 +789,7 @@ export function ModernNoirDiamondTemplate({
           {rsvpSubmitted ? (
             <div className="p-6 rounded-2xl bg-cyan-950/60 border border-cyan-500/40 text-center space-y-2">
               <CheckCircle className="w-8 h-8 text-cyan-400 mx-auto" />
-              <h3 className="font-suwannaphum text-lg font-bold text-white">
+              <h3 className="font-komutt text-lg font-bold text-white">
                 អរគុណសម្រាប់ការបញ្ជាក់វត្តមាន!
               </h3>
               <p className="text-xs text-cyan-200/80">
@@ -862,7 +799,7 @@ export function ModernNoirDiamondTemplate({
           ) : (
             <form onSubmit={handleRsvpSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-suwannaphum">
+                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-komutt">
                   ឈ្មោះពេញរបស់អ្នក *
                 </label>
                 <input
@@ -876,14 +813,14 @@ export function ModernNoirDiamondTemplate({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-suwannaphum">
+                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-komutt">
                   វត្តមានចូលរួម
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
                     onClick={() => setRsvpAttending('yes')}
-                    className={`py-2.5 rounded-xl text-xs font-bold font-suwannaphum transition border cursor-pointer ${
+                    className={`py-2.5 rounded-xl text-xs font-bold font-komutt transition border cursor-pointer ${
                       rsvpAttending === 'yes'
                         ? 'bg-cyan-500 text-slate-950 border-cyan-400 shadow-md'
                         : 'bg-slate-950/60 text-slate-300 border-slate-700 hover:border-slate-600'
@@ -894,7 +831,7 @@ export function ModernNoirDiamondTemplate({
                   <button
                     type="button"
                     onClick={() => setRsvpAttending('no')}
-                    className={`py-2.5 rounded-xl text-xs font-bold font-suwannaphum transition border cursor-pointer ${
+                    className={`py-2.5 rounded-xl text-xs font-bold font-komutt transition border cursor-pointer ${
                       rsvpAttending === 'no'
                         ? 'bg-slate-800 text-white border-slate-700 shadow-md'
                         : 'bg-slate-950/60 text-slate-300 border-slate-700 hover:border-slate-600'
@@ -907,7 +844,7 @@ export function ModernNoirDiamondTemplate({
 
               {rsvpAttending === 'yes' && (
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-suwannaphum">
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-komutt">
                     ចំនួនភ្ញៀវចូលរួម
                   </label>
                   <select
@@ -925,7 +862,7 @@ export function ModernNoirDiamondTemplate({
               )}
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-suwannaphum">
+                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-komutt">
                   លេខទូរស័ព្ទ (ជាជម្រើស)
                 </label>
                 <input
@@ -938,7 +875,7 @@ export function ModernNoirDiamondTemplate({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-suwannaphum">
+                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-komutt">
                   ចំណាំបន្ថែម / ពាក្យជូនពរ
                 </label>
                 <textarea
@@ -968,7 +905,7 @@ export function ModernNoirDiamondTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-slate-900/90 border border-slate-800 shadow-2xl space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-cyan-300 uppercase tracking-widest font-serifTrad">Guest Wishes</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-white">សៀវភៅកត់ត្រាពរជ័យឌីជីថល</h2>
+            <h2 className="font-komutt text-2xl font-bold text-white">សៀវភៅកត់ត្រាពរជ័យឌីជីថល</h2>
             <p className="text-xs text-slate-400">ផ្ញើសារជូនពរដល់គូស្វាមីភរិយាថ្មី</p>
           </div>
 
@@ -1003,7 +940,7 @@ export function ModernNoirDiamondTemplate({
             {wishes.map((w) => (
               <div key={w.id} className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="font-suwannaphum font-semibold text-cyan-200 text-xs">
+                  <span className="font-komutt font-semibold text-cyan-200 text-xs">
                     {w.name}
                   </span>
                   <span className="text-[10px] text-slate-500 font-serifTrad">{w.time}</span>
@@ -1022,7 +959,7 @@ export function ModernNoirDiamondTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-slate-900/90 border border-slate-800 shadow-2xl space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-cyan-300 uppercase tracking-widest font-serifTrad">Contact & Inquiries</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-white">ទំនាក់ទំនងម្ចាស់កម្មវិធី</h2>
+            <h2 className="font-komutt text-2xl font-bold text-white">ទំនាក់ទំនងម្ចាស់កម្មវិធី</h2>
             <p className="text-xs text-slate-400">សម្រាប់ព័ត៌មានបន្ថែម ឬការសាកសួរទីតាំង</p>
           </div>
 
@@ -1096,7 +1033,7 @@ export function ModernNoirDiamondTemplate({
           </button>
         </div>
 
-        <p className="font-suwannaphum text-slate-200">
+        <p className="font-komutt text-slate-200">
           សូមអរគុណយ៉ាងជ្រាលជ្រៅចំពោះវត្តមាន និងពរជ័យដ៏ថ្លៃថ្លារបស់លោកអ្នក!
         </p>
 
@@ -1115,12 +1052,12 @@ export function ModernNoirDiamondTemplate({
             onClick={(e) => e.stopPropagation()}
             className="max-w-xs w-full bg-slate-900 border border-slate-700 rounded-3xl p-5 text-center shadow-2xl relative"
           >
-            <h4 className="font-suwannaphum text-base font-bold text-cyan-300 mb-1">
+            <h4 className="font-komutt text-base font-bold text-cyan-300 mb-1">
               {bankName}
             </h4>
             <p className="text-xs text-slate-300 font-mono mb-3">{accountName} • {accountNumber}</p>
             <div className="p-3 bg-white rounded-2xl inline-block shadow-inner mb-4">
-              <img src={qrCodeImage} alt="QR Code Large" className="w-56 h-56 object-contain" />
+              <img src={qrCodeImage} alt="QR Code Large" className="w-56 h-56 object-contain" decoding="async" loading="lazy" />
             </div>
             <button
               type="button"
