@@ -160,10 +160,10 @@ function GoldWeddingMotif({ type, size = 20, id }) {
   );
 }
 
-export function TemplateDetailPage() {
+export function TemplateDetailPage({ templateId: propTemplateId, isModal = false, onClose }) {
   const navigate = useNavigate();
   const params = useParams({ strict: false }) || {};
-  const templateId = params.templateId || 'royal-gold';
+  const templateId = propTemplateId || params.templateId || 'royal-gold';
   const isGuestView =
     typeof window !== 'undefined' &&
     (new URLSearchParams(window.location.search).get('mode') === 'guest' ||
@@ -663,6 +663,10 @@ export function TemplateDetailPage() {
           <div className="pointer-events-auto">
             <button
               onClick={() => {
+                if (onClose) {
+                  onClose();
+                  return;
+                }
                 if (window.self !== window.top) {
                   window.parent.postMessage({ type: 'CLOSE_PREVIEW_MODAL' }, '*');
                   return;
@@ -730,6 +734,7 @@ export function TemplateDetailPage() {
   <button
               onClick={() => {
                 isNavigatingToCustomizer.current = true;
+                if (onClose) onClose();
                 if (window.self !== window.top) {
                   window.parent.postMessage({
                     type: 'SELECT_TEMPLATE',

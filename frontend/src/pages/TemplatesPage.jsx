@@ -1,3 +1,4 @@
+import { TemplateDetailPage } from './TemplateDetailPage';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
@@ -866,12 +867,11 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
             className="relative w-full max-w-2xl h-screen h-[100dvh] shadow-2xl overflow-hidden bg-stone-950 border-x border-stone-800/80 flex flex-col animate-scaleUp z-10"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Direct Live Template View via Iframe */}
-            <iframe
-              key={previewTemplate.id}
-              src={isGuest ? `/${previewTemplate.id}/preview?mode=guest` : `/${previewTemplate.id}/preview`}
-              title={previewTemplate.name}
-              className="w-full h-full border-0 bg-stone-950"
+            {/* Direct Live Template View Component (Zero-latency, No Iframe, No 404) */}
+            <TemplateDetailPage
+              templateId={previewTemplate.id}
+              isModal={true}
+              onClose={() => setPreviewTemplate(null)}
             />
           </div>
         </div>
