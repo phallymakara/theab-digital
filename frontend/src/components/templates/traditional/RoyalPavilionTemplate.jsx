@@ -1,3 +1,5 @@
+import TemplateGoogleMap from '../../TemplateGoogleMap';
+import TemplateGratitudeNote from '../../TemplateGratitudeNote';
 import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
@@ -19,13 +21,13 @@ export function RoyalPavilionTemplate({
   const locationName = data.ceremonyLocation || invitation.weddingLocation || activeTemplate?.demoLocation || 'មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)';
   const address = data.locationAddress || data.ceremonyAddress || invitation.locationAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
   const googleMapsUrl = data.googleMapsUrl || invitation.googleMapsUrl || 'https://maps.google.com/?q=The+Premier+Center+Sen+Sok';
-  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/traditional_royal_pavilion_prewedding.jpg';
+  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/traditional_royal_pavilion_prewedding.webp';
 
   // Bank & Digital Gift
   const bankName = data.bankName || invitation.bankName || 'ABA PAY / BAKONG';
   const accountName = data.accountName || invitation.accountName || `${groom} & ${bride}`;
   const accountNumber = data.accountNumber || invitation.accountNumber || '012 345 678';
-  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || null;
+  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || '/images/aba_qr.webp';
 
   // Host Contacts
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation.hostPhoneGroom || '012 345 678';
@@ -108,11 +110,11 @@ export function RoyalPavilionTemplate({
     ? data.galleryPhotos
     : (activeTemplate?.galleryPhotos || [
         { id: 1, src: preweddingImg, caption: 'ព្រះពន្លាមាស ហោរាសាស្ត្រមង្គល' },
-        { id: 2, src: '/images/templates/angkor-heritage/angkor_1.jpg', caption: 'មង្គលសិរីមាសប្រណិត' },
-        { id: 3, src: '/images/templates/angkor-heritage/angkor_2.jpg', caption: 'អនុស្សាវរីយ៍ផ្កាស្រស់រ៉ូមែនទិក' },
-        { id: 4, src: '/images/templates/angkor-ancient-royalty/ancient_1.jpg', caption: 'ភាពថ្លៃថ្នូរ និងសេចក្តីសុខក្សេមក្សាន្ត' },
-        { id: 5, src: '/images/templates/angkor-ancient-royalty/ancient_2.jpg', caption: 'កេរដំណែលប្រពៃណីខ្មែរអង្គរ' },
-        { id: 6, src: '/images/templates/traditional_crimson_angkoreach_prewedding.jpg', caption: 'ភាពទាន់សម័យ និងស៊ីវិល័យ' }
+        { id: 2, src: '/images/templates/angkor-heritage/angkor_1.webp', caption: 'មង្គលសិរីមាសប្រណិត' },
+        { id: 3, src: '/images/templates/angkor-heritage/angkor_2.webp', caption: 'អនុស្សាវរីយ៍ផ្កាស្រស់រ៉ូមែនទិក' },
+        { id: 4, src: '/images/templates/angkor-ancient-royalty/ancient_1.webp', caption: 'ភាពថ្លៃថ្នូរ និងសេចក្តីសុខក្សេមក្សាន្ត' },
+        { id: 5, src: '/images/templates/angkor-ancient-royalty/ancient_2.webp', caption: 'កេរដំណែលប្រពៃណីខ្មែរអង្គរ' },
+        { id: 6, src: '/images/templates/traditional_crimson_angkoreach_prewedding.webp', caption: 'ភាពទាន់សម័យ និងស៊ីវិល័យ' }
       ]);
 
   return (
@@ -528,29 +530,18 @@ export function RoyalPavilionTemplate({
           </div>
         </section>
 
-        {/* 8. LOCATION */}
-        <section className="mt-10 px-4">
-          <div
-            className="rounded-3xl p-6 bg-white/95 backdrop-blur-md text-center relative shadow-md border-2 border-[#E5BE53]/80"
-            style={{ outline: '1px dashed rgba(229, 190, 83, 0.45)', outlineOffset: '-7px' }}
-          >
-            <h3 className="font-moul text-base text-[#92400E] mb-1">ទីតាំងប្រារព្ធពិធីមង្គល</h3>
-            <p className="font-bold text-sm text-stone-900 mt-2 font-moul leading-relaxed">
-              {locationName}
-            </p>
-            <p className="text-xs text-stone-600 mt-1 mb-4">
-              {address}
-            </p>
-            <a
-              href={googleMapsUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#B45309] via-[#FFFDE8] to-[#E5BE53] text-stone-900 font-bold text-xs uppercase shadow-md hover:brightness-105 active:scale-95 transition"
-            >
-              <MapPin className="w-4 h-4" />
-              <span>បើកមើលក្នុង Google Maps</span>
-            </a>
-          </div>
+        {/* Gratitude & Apology (អរគុណ & អធ្យាស្រ័យ) */}
+        <TemplateGratitudeNote isDark={false} accentColor="#B45309" fontFamily="font-moul" />
+
+        {/* 8. LOCATION & MAP DISPLAY (ទីតាំងពិធី & address) */}
+        <section className="mt-6 px-4">
+          <TemplateGoogleMap
+            locationName={locationName}
+            address={address}
+            googleMapsUrl={googleMapsUrl}
+            accentColor="#B45309"
+            fontFamily="font-moul"
+          />
         </section>
 
         {/* 9. RSVP & WISHES ACCORDION BOOK */}

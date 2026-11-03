@@ -76,6 +76,11 @@ export function AppProvider({ children }) {
   };
 
   const playAudio = () => {
+    if (typeof window !== 'undefined' && window.__THEAB_ACTIVE_AUDIO__) {
+      try {
+        window.__THEAB_ACTIVE_AUDIO__.pause();
+      } catch (_) {}
+    }
     shouldPlayRef.current = true;
     clearPendingGesture();
     audio.play().then(() => {
@@ -111,6 +116,11 @@ export function AppProvider({ children }) {
   };
 
   const restartAndPlayAudio = () => {
+    if (typeof window !== 'undefined' && window.__THEAB_ACTIVE_AUDIO__) {
+      try {
+        window.__THEAB_ACTIVE_AUDIO__.pause();
+      } catch (_) {}
+    }
     shouldPlayRef.current = true;
     clearPendingGesture();
     try {

@@ -1,3 +1,5 @@
+import TemplateGoogleMap from '../../TemplateGoogleMap';
+import TemplateGratitudeNote from '../../TemplateGratitudeNote';
 import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { Calendar, Clock, MapPin, Music, Heart, Send, Copy, Check, X, Sparkles, ChevronLeft, ChevronRight, Volume2, VolumeX, Phone, MessageCircle, QrCode } from 'lucide-react';
@@ -19,13 +21,13 @@ export function BotanicalGlasshouseTemplate({
   const locationName = data.ceremonyLocation || invitation.weddingLocation || activeTemplate?.demoLocation || 'សួនរុក្ខជាតិបូតានិក ហ្គ្រេនផាឡេស (Botanical Glasshouse Hall)';
   const address = data.locationAddress || data.ceremonyAddress || invitation.locationAddress || 'មហាវិថីសម្តេចតេជោ (៦០ម៉ែត្រ) រាជធានីភ្នំពេញ';
   const googleMapsUrl = data.googleMapsUrl || invitation.googleMapsUrl || 'https://maps.google.com/?q=Botanical+Glasshouse+Hall';
-  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/floral_botanical_prewedding.jpg';
+  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/floral_botanical_prewedding.webp';
 
   // Bank & Gift
   const bankName = data.bankName || invitation.bankName || 'ABA BANK / BAKONG';
   const accountName = data.accountName || invitation.accountName || `${groom} & ${bride}`;
   const accountNumber = data.accountNumber || invitation.accountNumber || '001 888 999';
-  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || null;
+  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || '/images/aba_qr.webp';
 
   // Host contacts
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation.hostPhoneGroom || '012 345 678';
@@ -46,10 +48,10 @@ export function BotanicalGlasshouseTemplate({
   const heroList = (data.heroImages && data.heroImages.length > 0)
     ? data.heroImages
     : (activeTemplate?.heroImages || [
-        '/images/templates/floral_botanical_prewedding.jpg',
-        '/images/templates/floral-romance/floral_1.jpg',
-        '/images/templates/floral-romance/floral_2.jpg',
-        '/images/templates/floral-romance/floral_3.jpg'
+        '/images/templates/floral_botanical_prewedding.webp',
+        '/images/templates/floral-romance/floral_1.webp',
+        '/images/templates/floral-romance/floral_2.webp',
+        '/images/templates/floral-romance/floral_3.webp'
       ]);
 
   // Gallery Photos
@@ -57,8 +59,8 @@ export function BotanicalGlasshouseTemplate({
     ? data.galleryPhotos
     : (activeTemplate?.galleryPhotos || [
         { id: 1, src: preweddingImg, caption: 'សួនផ្កាកុលាបបារាំងមនោរម្យ' },
-        { id: 2, src: '/images/templates/floral-romance/floral_1.jpg', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
-        { id: 3, src: '/images/templates/floral-romance/floral_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' }
+        { id: 2, src: '/images/templates/floral-romance/floral_1.webp', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
+        { id: 3, src: '/images/templates/floral-romance/floral_2.webp', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' }
       ]);
 
   const [activeHeroIdx, setActiveHeroIdx] = useState(0);
@@ -408,28 +410,14 @@ export function BotanicalGlasshouseTemplate({
               6. CEREMONY LOCATION & GOOGLE MAPS
               ========================================================================= */}
           <section className="mt-8">
-            <div className="p-5 rounded-3xl bg-white border border-[#4A6753]/20 shadow-sm text-center">
-              <div className="w-10 h-10 rounded-full mx-auto bg-[#F7F4EE] border border-[#4A6753]/30 flex items-center justify-center text-[#354E3E] mb-2">
-                <MapPin className="w-5 h-5" />
-              </div>
-              <h4 className="font-preahvihear text-base text-[#23372B] mb-1">
-                {locationName}
-              </h4>
-              <p className="text-xs text-stone-500 max-w-sm mx-auto mb-4">
-                {address}
-              </p>
-
-              <a
-                href={googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#354E3E] text-white text-xs font-semibold shadow hover:bg-[#283C30] active:scale-95 transition-all cursor-pointer"
-              >
-                <MapPin className="w-3.5 h-3.5 text-amber-200" />
-                <span>បើកមើលទីតាំងលើ Google Maps</span>
-              </a>
-            </div>
-          </section>
+            <TemplateGratitudeNote isDark={false} accentColor="#354E3E" fontFamily="font-preahvihear" />
+            <TemplateGoogleMap
+              locationName={locationName}
+              address={address}
+              googleMapsUrl={googleMapsUrl}
+              accentColor="#354E3E"
+              fontFamily="font-preahvihear"
+            /></section>
 
           {/* =========================================================================
               7. PREWEDDING MEMORY GALLERY

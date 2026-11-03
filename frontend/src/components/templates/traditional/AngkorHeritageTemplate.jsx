@@ -1,3 +1,5 @@
+import TemplateGoogleMap from '../../TemplateGoogleMap';
+import TemplateGratitudeNote from '../../TemplateGratitudeNote';
 import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
@@ -78,11 +80,11 @@ export function AngkorHeritageTemplate({
     : (activeTemplate?.heroImages && activeTemplate.heroImages.length > 0
         ? activeTemplate.heroImages
         : [
-            '/images/templates/angkor-heritage/angkor_1.jpg',
-            '/images/templates/angkor-heritage/angkor_2.jpg',
-            '/images/templates/angkor-heritage/angkor_3.jpg',
-            '/images/templates/angkor-heritage/angkor_4.jpg',
-            '/images/templates/angkor-heritage/angkor_5.jpg'
+            '/images/templates/angkor-heritage/angkor_1.webp',
+            '/images/templates/angkor-heritage/angkor_2.webp',
+            '/images/templates/angkor-heritage/angkor_3.webp',
+            '/images/templates/angkor-heritage/angkor_4.webp',
+            '/images/templates/angkor-heritage/angkor_5.webp'
           ]);
 
   // 3. Gallery Photos
@@ -91,11 +93,11 @@ export function AngkorHeritageTemplate({
     : (activeTemplate?.galleryPhotos && activeTemplate.galleryPhotos.length > 0
         ? activeTemplate.galleryPhotos
         : [
-            { id: 1, src: heroImages[0] || '/images/templates/angkor-heritage/angkor_1.jpg', caption: 'កេរដំណែលប្រាសាទអង្គរដ៏មហិមា' },
-            { id: 2, src: heroImages[1] || '/images/templates/angkor-heritage/angkor_2.jpg', caption: 'មោទនភាពវប្បធម៌ខ្មែរបុរាណ' },
-            { id: 3, src: heroImages[2] || '/images/templates/angkor-heritage/angkor_3.jpg', caption: 'សិរីមង្គលមហានគរ' },
-            { id: 4, src: heroImages[3] || '/images/templates/angkor-heritage/angkor_4.jpg', caption: 'ក្បាច់ចម្លាក់អង្គរដ៏ពិសិដ្ឋ' },
-            { id: 5, src: heroImages[4] || heroImages[0] || '/images/templates/angkor-heritage/angkor_5.jpg', caption: 'សច្ចាប្រណិធានស្នេហ៍មុខប្រាសាទ' }
+            { id: 1, src: heroImages[0] || '/images/templates/angkor-heritage/angkor_1.webp', caption: 'កេរដំណែលប្រាសាទអង្គរដ៏មហិមា' },
+            { id: 2, src: heroImages[1] || '/images/templates/angkor-heritage/angkor_2.webp', caption: 'មោទនភាពវប្បធម៌ខ្មែរបុរាណ' },
+            { id: 3, src: heroImages[2] || '/images/templates/angkor-heritage/angkor_3.webp', caption: 'សិរីមង្គលមហានគរ' },
+            { id: 4, src: heroImages[3] || '/images/templates/angkor-heritage/angkor_4.webp', caption: 'ក្បាច់ចម្លាក់អង្គរដ៏ពិសិដ្ឋ' },
+            { id: 5, src: heroImages[4] || heroImages[0] || '/images/templates/angkor-heritage/angkor_5.webp', caption: 'សច្ចាប្រណិធានស្នេហ៍មុខប្រាសាទ' }
           ]);
 
   // 4. Ceremony Programs
@@ -115,7 +117,7 @@ export function AngkorHeritageTemplate({
   const bankName = data.bankName || invitation.bankName || 'ABA Bank';
   const accountName = data.accountName || invitation.accountName || `${groom} & ${bride}`;
   const accountNumber = data.accountNumber || invitation.accountNumber || '000 876 543';
-  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=ABA000876543';
+  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || '/images/aba_qr.webp';
 
   // 6. Host Contacts
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation.hostPhoneGroom || '012 888 999';
@@ -456,27 +458,14 @@ export function AngkorHeritageTemplate({
           </div>
           <AngkorHeritageDivider />
 
-          <div className={`p-4 sm:p-5 relative ${cardBoxClass} text-center space-y-3`}>
-            <AngkorCornerBrackets />
-            <p className="font-phalluch text-sm sm:text-base text-stone-800 font-bold">
-              {locationName}
-            </p>
-            <p className="text-xs text-stone-600 max-w-md mx-auto leading-relaxed">
-              {address}
-            </p>
-            <div>
-              <a
-                href={googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-800 via-[#8C6F19] to-stone-900 hover:brightness-110 text-white text-xs font-bold shadow-md active:scale-95 transition-all cursor-pointer"
-              >
-                <ExternalLink className="w-3.5 h-3.5 text-amber-200" />
-                <span className="font-phalluch">មើលទីតាំងលើ Google Maps</span>
-              </a>
-            </div>
-          </div>
-        </section>
+          <TemplateGratitudeNote isDark={false} accentColor="#8C6F19" fontFamily="font-phalluch" />
+          <TemplateGoogleMap
+            locationName={locationName}
+            address={address}
+            googleMapsUrl={googleMapsUrl}
+            accentColor="#8C6F19"
+            fontFamily="font-phalluch"
+          /></section>
 
         {/* 6. PHOTO GALLERY */}
         <section className="py-2 text-center">

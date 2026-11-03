@@ -1,3 +1,4 @@
+import { TemplateGoogleMap } from '../../TemplateGoogleMap';
 import React, { useState, useEffect, useRef } from 'react';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
@@ -66,7 +67,7 @@ export function ModernNoirDiamondTemplate({
   const bankName = data?.bankName || 'ABA Bank';
   const accountName = data?.accountName || 'CHAN RITHYSAK';
   const accountNumber = data?.accountNumber || '010 888 999';
-  const qrCodeImage = data?.qrCodeImage || null;
+  const qrCodeImage = data?.qrCodeImage || '/images/aba_qr.webp';
   const phoneGroom = data?.phoneGroom || data?.hostPhoneGroom || '012 345 678';
   const phoneBride = data?.phoneBride || data?.hostPhoneBride || '098 765 432';
   const telegramLink = data?.telegramLink || 'https://t.me/theabdigital';
@@ -78,23 +79,23 @@ export function ModernNoirDiamondTemplate({
     : (activeTemplate?.heroImages && activeTemplate.heroImages.length >= 5)
     ? activeTemplate.heroImages
     : [
-        '/images/templates/modern-noir/noir_1.jpg',
-        '/images/templates/modern-noir/noir_2.jpg',
-        '/images/templates/modern-noir/noir_3.jpg',
-        '/images/templates/modern-noir/noir_4.jpg',
-        '/images/templates/modern-noir/noir_5.jpg'
+        '/images/templates/modern-noir/noir_1.webp',
+        '/images/templates/modern-noir/noir_2.webp',
+        '/images/templates/modern-noir/noir_3.webp',
+        '/images/templates/modern-noir/noir_4.webp',
+        '/images/templates/modern-noir/noir_5.webp'
       ];
 
   // 6 Prewedding Gallery Photos
   const galleryPhotos = (data?.galleryPhotos && data.galleryPhotos.length > 0)
     ? data.galleryPhotos
     : (activeTemplate?.galleryPhotos || [
-        { id: 1, src: '/images/templates/modern-noir/noir_1.jpg', caption: 'រាត្រីពេជ្រខ្មៅ និងសច្ចាស្នេហ៍អភិជន' },
-        { id: 2, src: '/images/templates/modern-noir/noir_2.jpg', caption: 'រចនាបថ Black-Tie Gala ទាន់សម័យ' },
-        { id: 3, src: '/images/templates/modern-noir/noir_3.jpg', caption: 'រស្មីពេជ្រចិន្តា និងភាពថ្លៃថ្នូរ' },
-        { id: 4, src: '/images/templates/modern-noir/noir_4.jpg', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់កម្រិតខ្ពស់' },
-        { id: 5, src: '/images/templates/modern-noir/noir_5.jpg', caption: 'ចិញ្ចៀនពេជ្រផ្លាទីនសច្ចាស្នេហ៍' },
-        { id: 6, src: '/images/templates/modern-noir/gallery_1.jpg', caption: 'ចំណងអាពាហ៍ពិពាហ៍អមតៈ' }
+        { id: 1, src: '/images/templates/modern-noir/noir_1.webp', caption: 'រាត្រីពេជ្រខ្មៅ និងសច្ចាស្នេហ៍អភិជន' },
+        { id: 2, src: '/images/templates/modern-noir/noir_2.webp', caption: 'រចនាបថ Black-Tie Gala ទាន់សម័យ' },
+        { id: 3, src: '/images/templates/modern-noir/noir_3.webp', caption: 'រស្មីពេជ្រចិន្តា និងភាពថ្លៃថ្នូរ' },
+        { id: 4, src: '/images/templates/modern-noir/noir_4.webp', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់កម្រិតខ្ពស់' },
+        { id: 5, src: '/images/templates/modern-noir/noir_5.webp', caption: 'ចិញ្ចៀនពេជ្រផ្លាទីនសច្ចាស្នេហ៍' },
+        { id: 6, src: '/images/templates/modern-noir/gallery_1.webp', caption: 'ចំណងអាពាហ៍ពិពាហ៍អមតៈ' }
       ]);
 
   // Hero Snap Carousel State

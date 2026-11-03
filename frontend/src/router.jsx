@@ -42,6 +42,13 @@ const weddingRoute = createRoute({
   component: () => <TemplatesPage ceremonyType="wedding" />,
 });
 
+// Route: /guest/wedding (Guest View-Only Wedding Templates Gallery)
+const guestWeddingRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/guest/wedding',
+  component: () => <TemplatesPage ceremonyType="wedding" isGuestMode={true} />,
+});
+
 // Route: /engagement (Engagement Templates Gallery)
 const engagementRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -109,6 +116,7 @@ const customizeRoute = createRoute({
 const routeTree = rootRoute.addChildren([
   indexRoute,
   weddingRoute,
+  guestWeddingRoute,
   engagementRoute,
   housewarmingRoute,
   invitationRoute,

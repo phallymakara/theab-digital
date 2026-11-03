@@ -1,3 +1,4 @@
+import { TemplateGoogleMap } from '../../TemplateGoogleMap';
 import React, { useState, useRef, useEffect } from 'react';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
@@ -44,7 +45,7 @@ export function EmeraldPalaceHeritageTemplate({ data = {}, invitationData = {}, 
   const bankName = data.bankName || invitation?.bankName || 'ABA BANK / BAKONG';
   const accountName = data.accountName || invitation?.accountName || `${groom} & ${bride}`;
   const accountNumber = data.accountNumber || invitation?.accountNumber || '012 345 678';
-  const qrCodeImage = data.qrCodeImage || invitation?.qrCodeImage || null;
+  const qrCodeImage = data.qrCodeImage || invitation?.qrCodeImage || '/images/aba_qr.webp';
 
   // Host Contacts
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation?.hostPhoneGroom || '012 345 678';
@@ -58,11 +59,11 @@ export function EmeraldPalaceHeritageTemplate({ data = {}, invitationData = {}, 
   const heroList = (data.heroImages && data.heroImages.length > 0)
     ? data.heroImages
     : [
-        data.bgImage || '/images/templates/emerald_jade_prewedding.jpg',
-        '/images/templates/emerald-jade/emerald_1.jpg',
-        '/images/templates/emerald-jade/emerald_2.jpg',
-        '/images/templates/emerald-jade/emerald_3.jpg',
-        '/images/templates/emerald-jade/emerald_4.jpg'
+        data.bgImage || '/images/templates/emerald_jade_prewedding.webp',
+        '/images/templates/emerald-jade/emerald_1.webp',
+        '/images/templates/emerald-jade/emerald_2.webp',
+        '/images/templates/emerald-jade/emerald_3.webp',
+        '/images/templates/emerald-jade/emerald_4.webp'
       ];
 
   const [activeHeroIdx, setActiveHeroIdx] = useState(0);
@@ -116,12 +117,12 @@ export function EmeraldPalaceHeritageTemplate({ data = {}, invitationData = {}, 
   const galleryPhotos = (data.galleryPhotos && data.galleryPhotos.length > 0)
     ? data.galleryPhotos
     : [
-        { id: 1, src: '/images/templates/emerald_jade_prewedding.jpg', caption: 'រាជវាំងមរកតសិរីសួស្តី' },
-        { id: 2, src: '/images/templates/emerald-jade/emerald_1.jpg', caption: 'សេចក្តីសុខក្សេមក្សាន្តត្រជាក់ត្រជុំ' },
-        { id: 3, src: '/images/templates/emerald-jade/emerald_2.jpg', caption: 'រស្មីមាសត្បូងមរកត' },
-        { id: 4, src: '/images/templates/emerald-jade/emerald_3.jpg', caption: 'មកុដមង្គលវិមានកែវ' },
-        { id: 5, src: '/images/templates/emerald-jade/emerald_4.jpg', caption: 'អនុស្សាវរីយ៍សិរីមង្គល' },
-        { id: 6, src: '/images/templates/emerald_nature_prewedding.jpg', caption: 'សច្ចាស្នេហ៍ជានិរន្តរ៍' }
+        { id: 1, src: '/images/templates/emerald_jade_prewedding.webp', caption: 'រាជវាំងមរកតសិរីសួស្តី' },
+        { id: 2, src: '/images/templates/emerald-jade/emerald_1.webp', caption: 'សេចក្តីសុខក្សេមក្សាន្តត្រជាក់ត្រជុំ' },
+        { id: 3, src: '/images/templates/emerald-jade/emerald_2.webp', caption: 'រស្មីមាសត្បូងមរកត' },
+        { id: 4, src: '/images/templates/emerald-jade/emerald_3.webp', caption: 'មកុដមង្គលវិមានកែវ' },
+        { id: 5, src: '/images/templates/emerald-jade/emerald_4.webp', caption: 'អនុស្សាវរីយ៍សិរីមង្គល' },
+        { id: 6, src: '/images/templates/emerald_nature_prewedding.webp', caption: 'សច្ចាស្នេហ៍ជានិរន្តរ៍' }
       ];
 
   // 7 Standard Ceremony Milestones

@@ -1,3 +1,4 @@
+import { TemplateGoogleMap } from '../../TemplateGoogleMap';
 import React, { useState, useEffect, useRef } from 'react';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
@@ -46,7 +47,7 @@ export function EmeraldNatureHeirloomTemplate({ data = {}, invitationData = {}, 
   const bankName = data.bankName || invitation?.bankName || 'ABA PAY / BAKONG';
   const accountName = data.accountName || invitation?.accountName || `${groom} & ${bride}`;
   const accountNumber = data.accountNumber || invitation?.accountNumber || '012 345 678';
-  const qrCodeImage = data.qrCodeImage || invitation?.qrCodeImage || null;
+  const qrCodeImage = data.qrCodeImage || invitation?.qrCodeImage || '/images/aba_qr.webp';
 
   // Host Contacts
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation?.hostPhoneGroom || '012 345 678';
@@ -57,11 +58,11 @@ export function EmeraldNatureHeirloomTemplate({ data = {}, invitationData = {}, 
   const heroList = (data.heroImages && data.heroImages.length > 0)
     ? data.heroImages
     : [
-        data.bgImage || '/images/templates/emerald_nature_prewedding.jpg',
-        '/images/templates/emerald-nature/nature_1.jpg',
-        '/images/templates/emerald-nature/nature_2.jpg',
-        '/images/templates/emerald-nature/nature_4.jpg',
-        '/images/templates/emerald-nature/nature_5.jpg'
+        data.bgImage || '/images/templates/emerald_nature_prewedding.webp',
+        '/images/templates/emerald-nature/nature_1.webp',
+        '/images/templates/emerald-nature/nature_2.webp',
+        '/images/templates/emerald-nature/nature_4.webp',
+        '/images/templates/emerald-nature/nature_5.webp'
       ];
 
   const [activeHeroIdx, setActiveHeroIdx] = useState(0);
@@ -115,12 +116,12 @@ export function EmeraldNatureHeirloomTemplate({ data = {}, invitationData = {}, 
   const galleryPhotos = (data.galleryPhotos && data.galleryPhotos.length > 0)
     ? data.galleryPhotos
     : [
-        { id: 1, src: '/images/templates/emerald_nature_prewedding.jpg', caption: 'ស្នេហ៍ផ្អែមល្ហែមរវាងគូស្នេហ៍' },
-        { id: 2, src: '/images/templates/emerald-nature/nature_1.jpg', caption: 'មង្គលសិរីមាសប្រណិត' },
-        { id: 3, src: '/images/templates/emerald-nature/nature_2.jpg', caption: 'អនុស្សាវរីយ៍ផ្កាស្រស់រ៉ូមែនទិក' },
-        { id: 4, src: '/images/templates/emerald-nature/nature_3.jpg', caption: 'ភាពថ្លៃថ្នូរ និងសេចក្តីសុខក្សេមក្សាន្ត' },
-        { id: 5, src: '/images/templates/traditional_lacquer_gold_prewedding.jpg', caption: 'កេរដំណែលប្រពៃណីខ្មែរអង្គរ' },
-        { id: 6, src: '/images/templates/crimson_classic_prewedding.jpg', caption: 'ភាពទាន់សម័យ និងស៊ីវិល័យ' }
+        { id: 1, src: '/images/templates/emerald_nature_prewedding.webp', caption: 'ស្នេហ៍ផ្អែមល្ហែមរវាងគូស្នេហ៍' },
+        { id: 2, src: '/images/templates/emerald-nature/nature_1.webp', caption: 'មង្គលសិរីមាសប្រណិត' },
+        { id: 3, src: '/images/templates/emerald-nature/nature_2.webp', caption: 'អនុស្សាវរីយ៍ផ្កាស្រស់រ៉ូមែនទិក' },
+        { id: 4, src: '/images/templates/emerald-nature/nature_3.webp', caption: 'ភាពថ្លៃថ្នូរ និងសេចក្តីសុខក្សេមក្សាន្ត' },
+        { id: 5, src: '/images/templates/traditional_lacquer_gold_prewedding.webp', caption: 'កេរដំណែលប្រពៃណីខ្មែរអង្គរ' },
+        { id: 6, src: '/images/templates/crimson_classic_prewedding.webp', caption: 'ភាពទាន់សម័យ និងស៊ីវិល័យ' }
       ];
 
   // 7 Standard Ceremony Milestones

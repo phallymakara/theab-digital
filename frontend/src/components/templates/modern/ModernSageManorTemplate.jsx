@@ -1,3 +1,5 @@
+import TemplateGoogleMap from '../../TemplateGoogleMap';
+import TemplateGratitudeNote from '../../TemplateGratitudeNote';
 import React, { useState, useEffect, useRef } from 'react';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
@@ -55,7 +57,7 @@ export function ModernSageManorTemplate({
   const bankName = data?.bankName || 'ABA Bank';
   const accountName = data?.accountName || 'OUM ROTANAKPANHA & MEN SOPHORN';
   const accountNumber = data?.accountNumber || '000 789 123';
-  const qrCodeImage = data?.qrCodeImage || null;
+  const qrCodeImage = data?.qrCodeImage || '/images/aba_qr.webp';
   const phoneGroom = data?.phoneGroom || data?.hostPhoneGroom || '012 345 678';
   const phoneBride = data?.phoneBride || data?.hostPhoneBride || '098 765 432';
   const telegramLink = data?.telegramLink || 'https://t.me/theabdigital';
@@ -65,22 +67,22 @@ export function ModernSageManorTemplate({
     : (activeTemplate?.heroImages && activeTemplate.heroImages.length >= 5)
     ? activeTemplate.heroImages
     : [
-        '/images/templates/modern-sage/sage_1.jpg',
-        '/images/templates/modern-sage/sage_2.jpg',
-        '/images/templates/modern-sage/sage_3.jpg',
-        '/images/templates/modern-sage/sage_4.jpg',
-        '/images/templates/modern-sage/sage_5.jpg'
+        '/images/templates/modern-sage/sage_1.webp',
+        '/images/templates/modern-sage/sage_2.webp',
+        '/images/templates/modern-sage/sage_3.webp',
+        '/images/templates/modern-sage/sage_4.webp',
+        '/images/templates/modern-sage/sage_5.webp'
       ];
 
   const galleryPhotos = (data?.galleryPhotos && data.galleryPhotos.length > 0)
     ? data.galleryPhotos
     : (activeTemplate?.galleryPhotos || [
-        { id: 1, src: '/images/templates/modern-sage/sage_1.jpg', caption: 'វិមានកញ្ចក់បៃតង និងក្តីស្រឡាញ់រ៉ូមែនទិក' },
-        { id: 2, src: '/images/templates/modern-sage/sage_2.jpg', caption: 'អនុស្សាវរីយ៍សួនវិមានអភិជន' },
-        { id: 3, src: '/images/templates/modern-sage/sage_3.jpg', caption: 'ពន្លឺថ្ងៃជះលើសូត្រមាសបៃតងខ្ចី' },
-        { id: 4, src: '/images/templates/modern-sage/sage_4.jpg', caption: 'សច្ចាស្នេហ៍អមតៈ' },
-        { id: 5, src: '/images/templates/modern-sage/sage_5.jpg', caption: 'ចិញ្ចៀនពេជ្រផ្លាទីនត្បូងមរកត' },
-        { id: 6, src: '/images/templates/modern-sage/sage_1.jpg', caption: 'ចំណងអាពាហ៍ពិពាហ៍អមតៈ' }
+        { id: 1, src: '/images/templates/modern-sage/sage_1.webp', caption: 'វិមានកញ្ចក់បៃតង និងក្តីស្រឡាញ់រ៉ូមែនទិក' },
+        { id: 2, src: '/images/templates/modern-sage/sage_2.webp', caption: 'អនុស្សាវរីយ៍សួនវិមានអភិជន' },
+        { id: 3, src: '/images/templates/modern-sage/sage_3.webp', caption: 'ពន្លឺថ្ងៃជះលើសូត្រមាសបៃតងខ្ចី' },
+        { id: 4, src: '/images/templates/modern-sage/sage_4.webp', caption: 'សច្ចាស្នេហ៍អមតៈ' },
+        { id: 5, src: '/images/templates/modern-sage/sage_5.webp', caption: 'ចិញ្ចៀនពេជ្រផ្លាទីនត្បូងមរកត' },
+        { id: 6, src: '/images/templates/modern-sage/sage_1.webp', caption: 'ចំណងអាពាហ៍ពិពាហ៍អមតៈ' }
       ]);
 
   const [activeHeroIdx, setActiveHeroIdx] = useState(0);
@@ -448,28 +450,17 @@ export function ModernSageManorTemplate({
         </div>
       </section>
 
-      {/* 6. LOCATION */}
-      <section className="max-w-xl mx-auto px-4 py-8">
-        <div className="p-6 rounded-3xl bg-gradient-to-b from-[#182C22] to-[#0D1C14] border border-emerald-400/30 text-center shadow-[0_10px_35px_rgba(0,0,0,0.7)]">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-400/40 flex items-center justify-center mx-auto mb-3 text-emerald-300">
-            <MapPin className="w-6 h-6" />
-          </div>
-          <h2 className="font-komutt text-xl text-emerald-100 mb-1">ទីតាំងប្រារព្ធពិធី</h2>
-          <p className="font-komutt text-base font-bold text-white">{weddingLocation}</p>
-          <p className="text-xs text-emerald-200/70 mt-1 max-w-sm mx-auto">{locationAddress}</p>
-          <div className="mt-5 flex justify-center">
-            <a
-              href={googleMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 text-stone-950 font-bold text-xs shadow-lg hover:brightness-110 active:scale-95 transition-all"
-            >
-              <Navigation className="w-4 h-4" />
-              <span>បើកមើលលើ Google Maps</span>
-            </a>
-          </div>
-        </div>
-      </section>
+      {/* 6. GRATITUDE & LOCATION DISPLAY */}
+      <section className="max-w-xl mx-auto px-4 py-8 space-y-6">
+        <TemplateGratitudeNote isDark={true} accentColor="#34d399" fontFamily="font-komutt" />
+        <TemplateGoogleMap
+          locationName={weddingLocation}
+          address={locationAddress}
+          googleMapsUrl={googleMapsUrl}
+          isDark={true}
+          accentColor="#34d399"
+          fontFamily="font-komutt"
+        /></section>
 
       {/* 7. PHOTO GALLERY */}
       <section className="max-w-xl mx-auto px-4 py-8">
@@ -579,7 +570,7 @@ export function ModernSageManorTemplate({
                 <img
                   src={
                     activeBankTab === 'aba'
-                      ? 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=ABA000789123'
+                      ? '/images/aba_qr.webp'
                       : 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=ACLEDA987321654'
                   }
                   alt="Bank QR"

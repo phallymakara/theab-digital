@@ -40,7 +40,7 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-amber-500',
         description: 'រចនាបថប្រពៃណីខ្មែររាជវាំង រំលេចក្បាច់ភ្ញីទេសពណ៌មាសលើផ្ទៃក្រហមមង្គល យ៉ាងស័ក្តិសមឥតខ្ចោះសម្រាប់មង្គលការបែបប្រពៃណីខ្មែរដ៏រុងរឿង។',
         previewBg: 'bg-[#FCFAF6]',
-        bgImage: '/images/templates/royal_gold_prewedding.jpg',
+        bgImage: '/images/templates/royal_gold_prewedding.webp',
         hasFlyingFlowers: true,
         flyEffect: 'gold-petals',
         demoGroom: 'សុខ វិបុល',
@@ -49,176 +49,20 @@ export const CEREMONY_DATA = {
         cardBorder: 'border-amber-300/80 hover:border-amber-500',
         features: ['ក្បាច់ភ្ញីទេសមាស', 'ភ្លេងមង្គលបុរាណ', 'ប្រព័ន្ធ RSVP ឆ្លាតវៃ', 'Google Maps'],
         heroImages: [
-          '/images/templates/royal-gold/gold_1.jpg',
-          '/images/templates/royal-gold/gold_2.jpg',
-          '/images/templates/royal-gold/gold_3.jpg',
-          '/images/templates/royal-gold/gold_4.jpg',
-          '/images/templates/royal-gold/gold_5.jpg',
-          '/images/templates/royal-gold/gold_6.jpg'
+          '/images/templates/royal-gold/gold_1.webp',
+          '/images/templates/royal-gold/gold_2.webp',
+          '/images/templates/royal-gold/gold_3.webp',
+          '/images/templates/royal-gold/gold_4.webp',
+          '/images/templates/royal-gold/gold_5.webp',
+          '/images/templates/royal-gold/gold_6.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/royal-gold/gold_1.jpg', caption: 'ស្នេហ៍ផ្អែមល្ហែមរវាងគូស្នេហ៍' },
-          { id: 2, src: '/images/templates/royal-gold/gold_2.jpg', caption: 'មង្គលសិរីមាសប្រណិត' },
-          { id: 3, src: '/images/templates/royal-gold/gold_3.jpg', caption: 'អនុស្សាវរីយ៍ផ្កាស្រស់រ៉ូមែនទិក' },
-          { id: 4, src: '/images/templates/royal-gold/gold_4.jpg', caption: 'ភាពថ្លៃថ្នូរ និងសេចក្តីសុខក្សេមក្សាន្ត' },
-          { id: 5, src: '/images/templates/royal-gold/gold_5.jpg', caption: 'កេរដំណែលប្រពៃណីខ្មែរអង្គរ' },
-          { id: 6, src: '/images/templates/royal-gold/gold_6.jpg', caption: 'ភាពទាន់សម័យ និងស៊ីវិល័យ' }
-        ]
-      },
-      {
-        id: 'floral-romance',
-        name: 'មនោសញ្ចេតនាផ្កាស្រស់',
-        subtitle: 'Romantic Floral Romance',
-        category: 'floral',
-        tag: 'ផ្កាស្រស់រ៉ូមែនទិក',
-        tagColor: 'bg-rose-100 text-rose-900 border-rose-300',
-        themeColor: 'crimson',
-        primaryGradient: 'bg-gradient-to-r from-rose-800 via-rose-700 to-rose-900',
-        borderColor: '#881337',
-        titleColor: '#881337',
-        font: 'font-kouteok',
-        fontFamily: 'font-kouteok',
-        badgeBg: 'bg-rose-600',
-        description: 'រចនាបថផ្ការំដួល និងផ្កាម្លិះស្រស់បំព្រង ផ្សំផ្គុំជាមួយពណ៌ផ្កាឈូកស្រាល និងក្រហមរំលេចភាពផ្អែមល្ហែម និងសេចក្តីស្រឡាញ់ដ៏បរិសុទ្ធ។',
-        previewBg: 'bg-[#FFF9FA]',
-        bgImage: '/images/templates/floral_romance_prewedding.jpg',
-        hasFlyingFlowers: true,
-        flyEffect: 'hearts',
-        cardStyle: 'romantic-frosted',
-        demoGroom: 'លី ម៉េងហុង',
-        demoBride: 'ចាន់ ធីតា',
-        demoDate: 'ថ្ងៃសៅរ៍ ទី២៨ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
-        cardBorder: 'border-rose-200 hover:border-rose-400',
-        features: ['ក្បាច់ផ្ការំដួល & ម្លិះ', 'កាលវិភាគពិធីមង្គល', 'រាប់ថយក្រោយ (Countdown)', 'ចែករំលែក Telegram'],
-        heroImages: [
-          '/images/templates/floral-romance/floral_1.jpg',
-          '/images/templates/floral-romance/floral_2.jpg',
-          '/images/templates/floral-romance/floral_3.jpg',
-          '/images/templates/floral-romance/floral_4.jpg',
-          '/images/templates/floral-romance/floral_5.jpg',
-          '/images/templates/floral-romance/floral_6.jpg'
-        ],
-        galleryPhotos: [
-          { id: 1, src: '/images/templates/floral-romance/floral_1.jpg', caption: 'ផ្កាស្រស់រំលេចស្នេហ៍ផ្អែមល្ហែម' },
-          { id: 2, src: '/images/templates/floral-romance/floral_2.jpg', caption: 'ស្នាមញញឹមពោរពេញដោយក្តីស្រឡាញ់' },
-          { id: 3, src: '/images/templates/floral-romance/floral_3.jpg', caption: 'អនុស្សាវរីយ៍សួនផ្កាអមតៈ' },
-          { id: 4, src: '/images/templates/floral-romance/floral_4.jpg', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
-          { id: 5, src: '/images/templates/floral-romance/floral_5.jpg', caption: 'ផ្កាម្លិះក្រអូបសិរីសួស្តី' },
-          { id: 6, src: '/images/templates/floral-romance/floral_6.jpg', caption: 'ក្តីសុខក្សេមក្សាន្តគូស្វាមីភរិយា' }
-        ]
-      },
-      {
-        id: 'floral-botanical-glasshouse',
-        name: 'មហាសួនផ្កាកុលាបមនោរម្យ',
-        subtitle: 'Botanical Glasshouse & Champagne Peony',
-        category: 'floral',
-        tag: 'ផ្កាស្រស់រ៉ូមែនទិក',
-        tagColor: 'bg-emerald-50 text-emerald-900 border-emerald-300',
-        themeColor: 'gold',
-        primaryGradient: 'bg-gradient-to-r from-[#23372B] via-[#354E3E] to-[#4A6753]',
-        borderColor: '#4A6753',
-        titleColor: '#23372B',
-        font: 'font-preahvihear',
-        fontFamily: 'font-preahvihear',
-        badgeBg: 'bg-[#354E3E]',
-        description: 'រចនាបថសួនកញ្ចក់បូតានិកបែបអឺរ៉ុបអភិជន រំលេចផ្កាកុលាបសាច់ក្រែម ផ្កាពីអូនី និងស្លឹកយូកាលីបទូស ផ្ដល់នូវបរិយាកាសផ្អែមល្ហែម ស៊ីវិល័យ និងរ៉ូមែនទិកកម្រិតខ្ពស់។',
-        previewBg: 'bg-[#FAF7F2]',
-        bgImage: '/images/templates/floral_botanical_prewedding.jpg',
-        hasFlyingFlowers: true,
-        flyEffect: 'hearts',
-        cardStyle: 'floral-glasshouse',
-        demoGroom: 'លី ម៉េងហុង',
-        demoBride: 'ចាន់ ធីតា',
-        demoDate: 'ថ្ងៃសៅរ៍ ទី២៨ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
-        demoLocation: 'សួនរុក្ខជាតិបូតានិក ហ្គ្រេនផាឡេស (Botanical Glasshouse Hall)',
-        cardBorder: 'border-[#4A6753]/40 hover:border-[#4A6753]',
-        features: ['សួនកញ្ចក់អភិជនបូតានិក', 'អក្សរឆ្លាក់បែបព្រះវិហារ', 'តន្ត្រីមនោសញ្ចេតនាពិរោះ', 'សៀវភៅពរជ័យ & RSVP'],
-        heroImages: [
-          '/images/templates/floral_botanical_prewedding.jpg',
-          '/images/templates/floral-romance/floral_1.jpg',
-          '/images/templates/floral-romance/floral_2.jpg',
-          '/images/templates/floral-romance/floral_3.jpg'
-        ],
-        galleryPhotos: [
-          { id: 1, src: '/images/templates/floral_botanical_prewedding.jpg', caption: 'សួនផ្កាកុលាបបារាំងមនោរម្យ' },
-          { id: 2, src: '/images/templates/floral-romance/floral_1.jpg', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
-          { id: 3, src: '/images/templates/floral-romance/floral_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' }
-        ]
-      },
-      {
-        id: 'floral-khmer-blossom',
-        name: 'មន្តស្នេហ៍ផ្កាម្លិះ និងកុលាបមង្គល',
-        subtitle: 'Khmer Romance Pavilion & Jasmine Blossom',
-        category: 'floral',
-        tag: 'ផ្កាស្រស់រ៉ូមែនទិក',
-        tagColor: 'bg-rose-50 text-rose-900 border-rose-300',
-        themeColor: 'crimson',
-        primaryGradient: 'bg-gradient-to-r from-[#881337] via-[#9F1239] to-[#E06D7B]',
-        borderColor: '#E06D7B',
-        titleColor: '#C84B5B',
-        font: 'font-moulpali',
-        fontFamily: 'font-moulpali',
-        badgeBg: 'bg-[#C84B5B]',
-        description: 'រចនាបថគូស្នេហ៍ខ្មែរក្នុងសួនផ្កាម្លិះ និងកុលាបព្រលឹម រំលេចអក្សរមូលបាលីយ៉ាងវិចិត្រ អមដោយតន្ត្រីរ៉ូមែនទិកពិរោះរណ្តំ និងការបាចផ្កាប្រសិទ្ធពរជ័យ។',
-        previewBg: 'bg-[#FFF7F4]',
-        bgImage: '/images/templates/floral_cambodian_blossom_prewedding.jpg',
-        hasFlyingFlowers: true,
-        flyEffect: 'hearts',
-        cardStyle: 'floral-khmer-blossom',
-        demoGroom: 'សុខ វិបុល',
-        demoBride: 'ជា សុជាតា',
-        demoDate: 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
-        demoLocation: 'សាលមង្គលសួនផ្ការំដួល ឌឹ ព្រេមៀ សែនសុខ (អគារ C)',
-        cardBorder: 'border-rose-300/80 hover:border-rose-500',
-        features: ['គូស្នេហ៍ខ្មែរផ្កាស្រស់', 'អក្សរមូលបាលីប្រណិត', 'តន្ត្រីផ្កាម្លិះពិរោះ', 'បាចផ្កាប្រសិទ្ធពរជ័យ'],
-        heroImages: [
-          '/images/templates/floral_cambodian_blossom_prewedding.jpg',
-          '/images/templates/floral-romance/floral_1.jpg',
-          '/images/templates/floral-romance/floral_2.jpg',
-          '/images/templates/floral-romance/floral_3.jpg'
-        ],
-        galleryPhotos: [
-          { id: 1, src: '/images/templates/floral_cambodian_blossom_prewedding.jpg', caption: 'មន្តស្នេហ៍ផ្កាម្លិះ និងកុលាបមង្គល' },
-          { id: 2, src: '/images/templates/floral-romance/floral_1.jpg', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
-          { id: 3, src: '/images/templates/floral-romance/floral_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' }
-        ]
-      },
-      {
-        id: 'floral-editorial-magazine',
-        name: 'ទស្សនាវដ្តីមង្គលផ្កាស្រស់',
-        subtitle: 'Haute Couture Floral & Editorial Journal',
-        category: 'floral',
-        tag: 'ផ្កាស្រស់រ៉ូមែនទិក',
-        tagColor: 'bg-stone-100 text-stone-900 border-stone-300',
-        themeColor: 'modern',
-        primaryGradient: 'bg-gradient-to-r from-stone-950 via-stone-800 to-stone-950',
-        borderColor: '#1C1917',
-        titleColor: '#1C1917',
-        font: 'font-phalluch',
-        fontFamily: 'font-phalluch',
-        badgeBg: 'bg-stone-900',
-        description: 'រចនាបថទស្សនាវដ្តីមង្គលការម៉ូដទាន់សម័យ (Editorial Lookbook) រំលេចអក្សរផល្លុចបែបសិល្បៈ កម្រងរូបថត Haute Couture និងផ្កាធ្លាក់លើអេក្រង់។',
-        previewBg: 'bg-[#FDFBF7]',
-        bgImage: '/images/templates/floral_editorial_magazine_prewedding.jpg',
-        hasFlyingFlowers: true,
-        flyEffect: 'hearts',
-        cardStyle: 'floral-editorial-magazine',
-        demoGroom: 'កុសល វឌ្ឍនៈ',
-        demoBride: 'សារ៉ា ទេវី',
-        demoDate: 'ថ្ងៃសៅរ៍ ទី១៩ ខែធ្នូ ឆ្នាំ២០២៦',
-        demoLocation: 'សណ្ឋាគារ រ៉ូសវូដ ភ្នំពេញ (Rosewood Phnom Penh Salon)',
-        cardBorder: 'border-stone-300/80 hover:border-stone-900',
-        features: ['ទម្រង់ទស្សនាវដ្តី Vogue', 'អក្សរផល្លុច Yeun PhalLuch', 'ផ្កាកុលាបធ្លាក់ Live Canvas', 'កាតាប Chapters ឆ្លាតវៃ'],
-        heroImages: [
-          '/images/templates/floral_editorial_magazine_prewedding.jpg',
-          '/images/templates/floral_cambodian_blossom_prewedding.jpg',
-          '/images/templates/floral-romance/floral_1.jpg',
-          '/images/templates/floral-romance/floral_2.jpg'
-        ],
-        galleryPhotos: [
-          { id: 1, src: '/images/templates/floral_editorial_magazine_prewedding.jpg', caption: 'The Wedding Cover • Phnom Penh' },
-          { id: 2, src: '/images/templates/floral_cambodian_blossom_prewedding.jpg', caption: 'Khmer Pavilions & Jasmine Flowers' },
-          { id: 3, src: '/images/templates/floral-romance/floral_1.jpg', caption: 'Cascading Arch of Orchids & Roses' }
+          { id: 1, src: '/images/templates/royal-gold/gold_1.webp', caption: 'ស្នេហ៍ផ្អែមល្ហែមរវាងគូស្នេហ៍' },
+          { id: 2, src: '/images/templates/royal-gold/gold_2.webp', caption: 'មង្គលសិរីមាសប្រណិត' },
+          { id: 3, src: '/images/templates/royal-gold/gold_3.webp', caption: 'អនុស្សាវរីយ៍ផ្កាស្រស់រ៉ូមែនទិក' },
+          { id: 4, src: '/images/templates/royal-gold/gold_4.webp', caption: 'ភាពថ្លៃថ្នូរ និងសេចក្តីសុខក្សេមក្សាន្ត' },
+          { id: 5, src: '/images/templates/royal-gold/gold_5.webp', caption: 'កេរដំណែលប្រពៃណីខ្មែរអង្គរ' },
+          { id: 6, src: '/images/templates/royal-gold/gold_6.webp', caption: 'ភាពទាន់សម័យ និងស៊ីវិល័យ' }
         ]
       },
       {
@@ -232,12 +76,12 @@ export const CEREMONY_DATA = {
         primaryGradient: 'bg-gradient-to-r from-[#070B14] via-[#111827] to-[#070B14]',
         borderColor: '#E0A96D',
         titleColor: '#FDE68A',
-        font: 'font-suwannaphum',
-        fontFamily: 'font-suwannaphum',
+        font: 'font-komutt-a',
+        fontFamily: 'font-komutt-a',
         badgeBg: 'bg-indigo-900',
         description: 'រចនាបថរាត្រីផ្ការំដួលក្រោមពន្លឺចន្ទពេញវង់ អមដោយចលនាហើរនៃកូនអំពិលអំពែកភ្លឺផ្លេក កាតរឿងរ៉ាវស្នេហា ៤ ដំណាក់កាល និងការបង្ហោះគោមជូនពរឡើងលើមេឃ។',
         previewBg: 'bg-[#070B14]',
-        bgImage: '/images/templates/romdoul-moonlight/hero_1.jpg',
+        bgImage: '/images/templates/romdoul-moonlight/hero_1.webp',
         hasFlyingFlowers: true,
         flyEffect: 'sparkles',
         cardStyle: 'floral-romdoul-moonlight',
@@ -246,57 +90,21 @@ export const CEREMONY_DATA = {
         demoDate: 'ថ្ងៃសៅរ៍ ទី១៩ ខែធ្នូ ឆ្នាំ២០២៦',
         demoLocation: 'សណ្ឋាគារ សូហ្វីតែល ភ្នំពេញ ភូគីត្រា (Sofitel Phnom Penh)',
         cardBorder: 'border-amber-400/40 hover:border-amber-300',
-        features: ['អក្សរឆ្លាក់បែបសុវណ្ណភូមិ', 'បង្ហោះគោមជូនពរឌីជីថល', 'រឿងរ៉ាវស្នេហា ៤ ដំណាក់កាល', 'តន្ត្រីរាត្រី Nocturne Chime'],
+        features: ['ពុម្ពអក្សរ Kh Ang Komutt A', 'បង្ហោះគោមជូនពរឌីជីថល', 'រឿងរ៉ាវស្នេហា ៤ ដំណាក់កាល', 'តន្ត្រីរាត្រី Nocturne Chime'],
         heroImages: [
-          '/images/templates/romdoul-moonlight/hero_1.jpg',
-          '/images/templates/romdoul-moonlight/hero_2.jpg',
-          '/images/templates/romdoul-moonlight/hero_3.jpg',
-          '/images/templates/romdoul-moonlight/hero_4.jpg',
-          '/images/templates/romdoul-moonlight/hero_5.jpg'
+          '/images/templates/romdoul-moonlight/hero_1.webp',
+          '/images/templates/romdoul-moonlight/hero_2.webp',
+          '/images/templates/romdoul-moonlight/hero_3.webp',
+          '/images/templates/romdoul-moonlight/hero_4.webp',
+          '/images/templates/romdoul-moonlight/hero_5.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/romdoul-moonlight/hero_1.jpg', caption: 'រាត្រីផ្ការំដួល និងពន្លឺចន្ទពេញវង់' },
-          { id: 2, src: '/images/templates/romdoul-moonlight/hero_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' },
-          { id: 3, src: '/images/templates/romdoul-moonlight/hero_3.jpg', caption: 'កម្រងផ្កាអ័រគីដេទឹកមាសសច្ចាស្នេហ៍' },
-          { id: 4, src: '/images/templates/romdoul-moonlight/hero_4.jpg', caption: 'ក្លិនផ្កាឡាវែនឌ័រក្រោមពន្លឺចន្ទ្រា' },
-          { id: 5, src: '/images/templates/romdoul-moonlight/hero_5.jpg', caption: 'សួនផ្កាបូតានិកមនោរម្យ' },
-          { id: 6, src: '/images/templates/romdoul-moonlight/gallery_1.jpg', caption: 'អនុស្សាវរីយ៍សិរីសួស្តីអមតៈ' }
-        ]
-      },
-      {
-        id: 'floral-golden-orchid',
-        name: 'ផ្កាអ័រគីដេវិមានកែវ',
-        subtitle: 'Golden Orchid & Glasshouse Luxury Conservatory',
-        category: 'floral',
-        tag: 'ផ្កាស្រស់រ៉ូមែនទិក',
-        tagColor: 'bg-amber-100 text-amber-900 border-amber-300',
-        themeColor: 'gold',
-        primaryGradient: 'bg-gradient-to-r from-[#FAF7F0] via-[#F5E6BE] to-[#FAF7F0]',
-        borderColor: '#D4AF37',
-        titleColor: '#8C6F19',
-        font: 'font-koulen',
-        fontFamily: 'font-koulen',
-        badgeBg: 'bg-amber-600',
-        description: 'រចនាបថវិមានកញ្ចក់ផ្កាអ័រគីដេទឹកមាស និងផ្កា Phalaenopsis ពណ៌សប្រណិត រំលេចអក្សរកូលែនបែបស្ថាបត្យកម្មទាន់សម័យ ចលនាផ្កាបែកផ្កាពេលចុច និងប្រព័ន្ធ RSVP រៀបចំតុភ្ញៀវ។',
-        previewBg: 'bg-[#FAF7F0]',
-        bgImage: '/images/templates/floral_golden_orchid_prewedding.jpg',
-        hasFlyingFlowers: true,
-        flyEffect: 'gold-dust',
-        cardStyle: 'floral-golden-orchid',
-        demoGroom: 'កែវ សិទ្ធិពង្ស',
-        demoBride: 'អ៊ុំ ម៉ាលីកា',
-        demoDate: 'ថ្ងៃអាទិត្យ ទី១០ ខែមករា ឆ្នាំ២០២៧',
-        demoLocation: 'វិមានកញ្ចក់ Grand Glasshouse (The Premier Center Sen Sok)',
-        cardBorder: 'border-amber-300/80 hover:border-amber-500',
-        features: ['អក្សរស្ថាបត្យកម្មកូលែន (Koulen)', 'ផ្កាធ្លាក់ពេលចុចអេក្រង់', 'ប្រព័ន្ធ RSVP & រៀបចំតុ', 'ស្រោមសំបុត្រមាស ABA QR'],
-        heroImages: [
-          '/images/templates/floral_golden_orchid_prewedding.jpg',
-          '/images/templates/floral_romdoul_moonlight_prewedding.jpg',
-          '/images/templates/floral_botanical_prewedding.jpg'
-        ],
-        galleryPhotos: [
-          { id: 1, src: '/images/templates/floral_golden_orchid_prewedding.jpg', caption: 'វិមានកញ្ចក់ និងផ្កាអ័រគីដេទឹកមាស' },
-          { id: 2, src: '/images/templates/floral_botanical_prewedding.jpg', caption: 'សួនផ្កាអភិជនបូតានិក' }
+          { id: 1, src: '/images/templates/romdoul-moonlight/hero_1.webp', caption: 'រាត្រីផ្ការំដួល និងពន្លឺចន្ទពេញវង់' },
+          { id: 2, src: '/images/templates/romdoul-moonlight/hero_2.webp', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' },
+          { id: 3, src: '/images/templates/romdoul-moonlight/hero_3.webp', caption: 'កម្រងផ្កាអ័រគីដេទឹកមាសសច្ចាស្នេហ៍' },
+          { id: 4, src: '/images/templates/romdoul-moonlight/hero_4.webp', caption: 'ក្លិនផ្កាឡាវែនឌ័រក្រោមពន្លឺចន្ទ្រា' },
+          { id: 5, src: '/images/templates/romdoul-moonlight/hero_5.webp', caption: 'សួនផ្កាបូតានិកមនោរម្យ' },
+          { id: 6, src: '/images/templates/romdoul-moonlight/gallery_1.webp', caption: 'អនុស្សាវរីយ៍សិរីសួស្តីអមតៈ' }
         ]
       },
       {
@@ -315,7 +123,7 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-emerald-700',
         description: 'រចនាបថពណ៌បៃតងត្បូងមរកតរាជវាំង តំណាងឱ្យសេចក្តីសុខក្សេមក្សាន្ត ភាពត្រជាក់ត្រជុំ ថ្កុំថ្កើង និងមរតកសិរីសួស្តីនៃគូស្វាមីភរិយាថ្មី។',
         previewBg: 'bg-[#F4FBF7]',
-        bgImage: '/images/templates/emerald_jade_prewedding.jpg',
+        bgImage: '/images/templates/emerald_jade_prewedding.webp',
         hasFlyingFlowers: true,
         flyEffect: 'emerald-lotus',
         cardStyle: 'emerald-jade',
@@ -325,17 +133,17 @@ export const CEREMONY_DATA = {
         demoDate: 'ថ្ងៃអាទិត្យ ទី០៦ ខែធ្នូ ឆ្នាំ២០២៦',
         features: ['ក្បាច់រាជវាំងត្បូងមរកត', 'តារាងកាលវិភាគព្រះបរមរាជវាំង', 'សំបុត្រអញ្ជើញហត្ថលេខាមាស', 'RSVP & ជូនពរឌីជីថល'],
         heroImages: [
-          '/images/templates/emerald_jade_prewedding.jpg',
-          '/images/templates/emerald-jade/emerald_1.jpg',
-          '/images/templates/emerald-jade/emerald_2.jpg',
-          '/images/templates/emerald-jade/emerald_3.jpg',
-          '/images/templates/emerald-jade/emerald_4.jpg'
+          '/images/templates/emerald_jade_prewedding.webp',
+          '/images/templates/emerald-jade/emerald_1.webp',
+          '/images/templates/emerald-jade/emerald_2.webp',
+          '/images/templates/emerald-jade/emerald_3.webp',
+          '/images/templates/emerald-jade/emerald_4.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/emerald-jade/emerald_1.jpg', caption: 'រាជវាំងមរកតសិរីសួស្តី' },
-          { id: 2, src: '/images/templates/emerald-jade/emerald_2.jpg', caption: 'សេចក្តីសុខក្សេមក្សាន្តត្រជាក់ត្រជុំ' },
-          { id: 3, src: '/images/templates/emerald-jade/emerald_3.jpg', caption: 'រស្មីមាសត្បូងមរកត' },
-          { id: 4, src: '/images/templates/emerald-jade/emerald_4.jpg', caption: 'មកុដមង្គលវិមានកែវ' }
+          { id: 1, src: '/images/templates/emerald-jade/emerald_1.webp', caption: 'រាជវាំងមរកតសិរីសួស្តី' },
+          { id: 2, src: '/images/templates/emerald-jade/emerald_2.webp', caption: 'សេចក្តីសុខក្សេមក្សាន្តត្រជាក់ត្រជុំ' },
+          { id: 3, src: '/images/templates/emerald-jade/emerald_3.webp', caption: 'រស្មីមាសត្បូងមរកត' },
+          { id: 4, src: '/images/templates/emerald-jade/emerald_4.webp', caption: 'មកុដមង្គលវិមានកែវ' }
         ]
       },
       {
@@ -354,7 +162,7 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-cyan-800',
         description: 'រចនាបថគ្រាប់ពេជ្រចរណៃចែងចាំង និងត្បូងមរកត Emerald-Cut បែប Haute Joaillerie ស៊ីវិល័យ បង្ហាញពីភាពថ្លៃថ្នូរ ឧត្តមភាព និងសេចក្តីស្នេហាដ៏រឹងមាំ។',
         previewBg: 'bg-[#F0F9FF]',
-        bgImage: '/images/templates/emerald_diamond_prewedding.jpg',
+        bgImage: '/images/templates/emerald_diamond_prewedding.webp',
         hasFlyingFlowers: true,
         flyEffect: 'gold-sparkles',
         cardStyle: 'emerald-radiant-diamond',
@@ -364,19 +172,19 @@ export const CEREMONY_DATA = {
         demoDate: 'ថ្ងៃសៅរ៍ ទី១២ ខែធ្នូ ឆ្នាំ២០២៦',
         features: ['សំបុត្រអញ្ជើញ VIP Diamond Ticket', 'តារាងពេលវេលា Jewel-Cut Facet', 'ស្រោមសំបុត្រឌីជីថល ABA QR', 'វិចិត្រសាល Haute Joaillerie'],
         heroImages: [
-          '/images/templates/emerald_diamond_prewedding.jpg',
-          '/images/templates/emerald-diamond/diamond_1.jpg',
-          '/images/templates/emerald-diamond/diamond_2.jpg',
-          '/images/templates/emerald-diamond/diamond_4.jpg',
-          '/images/templates/emerald-diamond/diamond_5.jpg'
+          '/images/templates/emerald_diamond_prewedding.webp',
+          '/images/templates/emerald-diamond/diamond_1.webp',
+          '/images/templates/emerald-diamond/diamond_2.webp',
+          '/images/templates/emerald-diamond/diamond_4.webp',
+          '/images/templates/emerald-diamond/diamond_5.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/emerald_diamond_prewedding.jpg', caption: 'រស្មីពេជ្រចិន្តាត្បូងមរកត' },
-          { id: 2, src: '/images/templates/emerald-diamond/diamond_1.jpg', caption: 'វិមានអភិជន Haute Joaillerie' },
-          { id: 3, src: '/images/templates/emerald-diamond/diamond_2.jpg', caption: 'សេចក្តីស្នេហាចែងចាំងអស់កាលជានិច្ច' },
-          { id: 4, src: '/images/templates/emerald-diamond/diamond_4.jpg', caption: 'កេរដំណែលត្បូងមរកតចរណៃ' },
-          { id: 5, src: '/images/templates/emerald-diamond/diamond_5.jpg', caption: 'ចិញ្ចៀនពេជ្រសច្ចាស្នេហ៍ជានិរន្តរ៍' },
-          { id: 6, src: '/images/templates/modern_luxury_prewedding.jpg', caption: 'ភាពស៊ីវិល័យកម្រិតកំពូល' }
+          { id: 1, src: '/images/templates/emerald_diamond_prewedding.webp', caption: 'រស្មីពេជ្រចិន្តាត្បូងមរកត' },
+          { id: 2, src: '/images/templates/emerald-diamond/diamond_1.webp', caption: 'វិមានអភិជន Haute Joaillerie' },
+          { id: 3, src: '/images/templates/emerald-diamond/diamond_2.webp', caption: 'សេចក្តីស្នេហាចែងចាំងអស់កាលជានិច្ច' },
+          { id: 4, src: '/images/templates/emerald-diamond/diamond_4.webp', caption: 'កេរដំណែលត្បូងមរកតចរណៃ' },
+          { id: 5, src: '/images/templates/emerald-diamond/diamond_5.webp', caption: 'ចិញ្ចៀនពេជ្រសច្ចាស្នេហ៍ជានិរន្តរ៍' },
+          { id: 6, src: '/images/templates/modern_luxury_prewedding.webp', caption: 'ភាពស៊ីវិល័យកម្រិតកំពូល' }
         ]
       },
       {
@@ -395,7 +203,7 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-emerald-800',
         description: 'រចនាបថម្លប់ត្រជាក់នៃរុក្ខជាតិត្បូងបៃតងព្រៃសិរី និងវល្លិមាសធម្មជាតិ បង្ហាញពីភាពក្សេមក្សាន្ត ភាពស្រស់បំព្រង និងសេចក្តីស្រឡាញ់ចម្រើនលូតលាស់ជានិរន្តរ៍។',
         previewBg: 'bg-[#F2FBF6]',
-        bgImage: '/images/templates/emerald_nature_prewedding.jpg',
+        bgImage: '/images/templates/emerald_nature_prewedding.webp',
         hasFlyingFlowers: true,
         flyEffect: 'green-leaves',
         cardStyle: 'emerald-nature-heirloom',
@@ -405,16 +213,16 @@ export const CEREMONY_DATA = {
         demoDate: 'ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦',
         features: ['សៀវភៅកំណត់ហេតុស្នេហា Storybook', 'នាឡិការាប់ថយក្រោយ Live Countdown', 'កម្រងពរជ័យមាតាបិតា Laurel Wreath', 'ដើមឈើពរជ័យ Wishing Tree'],
         heroImages: [
-          '/images/templates/emerald_nature_prewedding.jpg',
-          '/images/templates/emerald-nature/nature_1.jpg',
-          '/images/templates/emerald-nature/nature_2.jpg',
-          '/images/templates/emerald-nature/nature_4.jpg',
-          '/images/templates/emerald-nature/nature_5.jpg'
+          '/images/templates/emerald_nature_prewedding.webp',
+          '/images/templates/emerald-nature/nature_1.webp',
+          '/images/templates/emerald-nature/nature_2.webp',
+          '/images/templates/emerald-nature/nature_4.webp',
+          '/images/templates/emerald-nature/nature_5.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/emerald_nature_prewedding.jpg', caption: 'ម្លប់ត្រជាក់ធម្មជាតិត្បូងបៃតង' },
-          { id: 2, src: '/images/templates/emerald-nature/nature_2.jpg', caption: 'សួនមង្គលរុក្ខជាតិត្បូងមរតក' },
-          { id: 3, src: '/images/templates/emerald-nature/nature_3.jpg', caption: 'សេចក្តីស្នេហាដ៏ស្រស់បំព្រង' }
+          { id: 1, src: '/images/templates/emerald_nature_prewedding.webp', caption: 'ម្លប់ត្រជាក់ធម្មជាតិត្បូងបៃតង' },
+          { id: 2, src: '/images/templates/emerald-nature/nature_2.webp', caption: 'សួនមង្គលរុក្ខជាតិត្បូងមរតក' },
+          { id: 3, src: '/images/templates/emerald-nature/nature_3.webp', caption: 'សេចក្តីស្នេហាដ៏ស្រស់បំព្រង' }
         ]
       },
       {
@@ -433,7 +241,7 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-emerald-800',
         description: 'រចនាបថវិមានកែវរស្មីចន្ទ្រា និងស៊ុមទ្វារកោងវិមានរាជវាំង រំលេចពន្លឺផ្កាយក្រោមមេឃរាត្រី និងចង្កៀងគ្រីស្តាល់ ផ្ដល់នូវភាពរ៉ូមែនទិកអភិជនកម្រិតកំពូល។',
         previewBg: 'bg-[#F2FBF7]',
-        bgImage: '/images/templates/emerald_glasshouse_prewedding.jpg',
+        bgImage: '/images/templates/emerald_glasshouse_prewedding.webp',
         hasFlyingFlowers: true,
         flyEffect: 'emerald-lotus',
         cardStyle: 'emerald-glasshouse-moonlight',
@@ -443,19 +251,19 @@ export const CEREMONY_DATA = {
         demoDate: 'ថ្ងៃសៅរ៍ ទី២៦ ខែធ្នូ ឆ្នាំ២០២៦',
         features: ['ស៊ុមទ្វារកោងវិមានកែវ Cathedral Arch', 'អក្សរពុម្ពខ្មែរ Kh Ang Komutt B', 'ប្រតិទិនរស្មីចន្ទ្រា & Live Countdown', 'វិចិត្រសាល Prewedding ៦ សន្លឹក'],
         heroImages: [
-          '/images/templates/emerald_glasshouse_prewedding.jpg',
-          '/images/templates/emerald-glasshouse/glasshouse_2.jpg',
-          '/images/templates/emerald-glasshouse/glasshouse_3.jpg',
-          '/images/templates/emerald-glasshouse/glasshouse_4.jpg',
-          '/images/templates/emerald-glasshouse/glasshouse_5.jpg'
+          '/images/templates/emerald_glasshouse_prewedding.webp',
+          '/images/templates/emerald-glasshouse/glasshouse_2.webp',
+          '/images/templates/emerald-glasshouse/glasshouse_3.webp',
+          '/images/templates/emerald-glasshouse/glasshouse_4.webp',
+          '/images/templates/emerald-glasshouse/glasshouse_5.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/emerald_glasshouse_prewedding.jpg', caption: 'វិមានកែវរស្មីចន្ទ្រាសិរីសួស្តី' },
-          { id: 2, src: '/images/templates/emerald-glasshouse/glasshouse_2.jpg', caption: 'ស្នាមញញឹមរំលេចសេចក្តីស្រឡាញ់' },
-          { id: 3, src: '/images/templates/emerald-glasshouse/glasshouse_3.jpg', caption: 'គន្លងគូស្វាមីក្រោមពន្លឺចន្ទ្រា' },
-          { id: 4, src: '/images/templates/emerald-glasshouse/glasshouse_4.jpg', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្នុងវិមានមរកត' },
-          { id: 5, src: '/images/templates/emerald-glasshouse/glasshouse_5.jpg', caption: 'ចិញ្ចៀនពេជ្រត្បូងមរកតសច្ចាស្នេហ៍' },
-          { id: 6, src: '/images/templates/emerald_jade_prewedding.jpg', caption: 'អនុស្សាវរីយ៍សិរីមង្គលអមតៈ' }
+          { id: 1, src: '/images/templates/emerald_glasshouse_prewedding.webp', caption: 'វិមានកែវរស្មីចន្ទ្រាសិរីសួស្តី' },
+          { id: 2, src: '/images/templates/emerald-glasshouse/glasshouse_2.webp', caption: 'ស្នាមញញឹមរំលេចសេចក្តីស្រឡាញ់' },
+          { id: 3, src: '/images/templates/emerald-glasshouse/glasshouse_3.webp', caption: 'គន្លងគូស្វាមីក្រោមពន្លឺចន្ទ្រា' },
+          { id: 4, src: '/images/templates/emerald-glasshouse/glasshouse_4.webp', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្នុងវិមានមរកត' },
+          { id: 5, src: '/images/templates/emerald-glasshouse/glasshouse_5.webp', caption: 'ចិញ្ចៀនពេជ្រត្បូងមរកតសច្ចាស្នេហ៍' },
+          { id: 6, src: '/images/templates/emerald_jade_prewedding.webp', caption: 'អនុស្សាវរីយ៍សិរីមង្គលអមតៈ' }
         ]
       },
       {
@@ -474,7 +282,7 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-zinc-900',
         description: 'រចនាបថទស្សនាវដ្តីវិចិត្រសាល Haute Couture រំលេចក្រណាត់សូត្រខ្មៅ និងវ៉េឡួរមរកត ជាមួយបន្ទាត់ឌិនមាស Hairline និងអក្សរពុម្ព Kh Ang Komutt B។',
         previewBg: 'bg-[#030E0A]',
-        bgImage: '/images/templates/emerald_noir_prewedding.jpg',
+        bgImage: '/images/templates/emerald_noir_prewedding.webp',
         hasFlyingFlowers: true,
         flyEffect: 'gold-sparkles',
         cardStyle: 'emerald-noir-editorial',
@@ -484,19 +292,19 @@ export const CEREMONY_DATA = {
         demoDate: 'ថ្ងៃអាទិត្យ ទី១៨ ខែធ្នូ ឆ្នាំ២០២៨',
         features: ['សន្លឹកទស្សនាវដ្តី Editorial Folio', 'អក្សរពុម្ពខ្មែរ Kh Ang Komutt B', 'ប្រតិទិនរស្មីចន្ទ្រា & Live Countdown', 'វិចិត្រសាល Haute Couture ៦ សន្លឹក'],
         heroImages: [
-          '/images/templates/emerald_noir_prewedding.jpg',
-          '/images/templates/emerald-noir/noir_2.jpg',
-          '/images/templates/emerald-noir/noir_3.jpg',
-          '/images/templates/emerald-noir/noir_4.jpg',
-          '/images/templates/emerald-noir/noir_5.jpg'
+          '/images/templates/emerald_noir_prewedding.webp',
+          '/images/templates/emerald-noir/noir_2.webp',
+          '/images/templates/emerald-noir/noir_3.webp',
+          '/images/templates/emerald-noir/noir_4.webp',
+          '/images/templates/emerald-noir/noir_5.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/emerald_noir_prewedding.jpg', caption: 'មរកតសូត្រខ្មៅវិចិត្រសាល Haute Couture' },
-          { id: 2, src: '/images/templates/emerald-noir/noir_2.jpg', caption: 'ភាពស្និទ្ធស្នាលនៃសេចក្តីស្រឡាញ់ស្ងប់ស្ងាត់' },
-          { id: 3, src: '/images/templates/emerald-noir/noir_3.jpg', caption: 'រាត្រីរ៉ូមែនទិកលើអគារខ្ពស់នៃរាជធានី' },
-          { id: 4, src: '/images/templates/emerald-noir/noir_4.jpg', caption: 'សម្លៀកបំពាក់កាត់កងបែប Haute Joaillerie' },
-          { id: 5, src: '/images/templates/emerald-noir/noir_5.jpg', caption: 'ចិញ្ចៀនពេជ្រត្បូងមរកតចរណៃ' },
-          { id: 6, src: '/images/templates/emerald_glasshouse_prewedding.jpg', caption: 'អនុស្សាវរីយ៍សិរីមង្គលអមតៈ' }
+          { id: 1, src: '/images/templates/emerald_noir_prewedding.webp', caption: 'មរកតសូត្រខ្មៅវិចិត្រសាល Haute Couture' },
+          { id: 2, src: '/images/templates/emerald-noir/noir_2.webp', caption: 'ភាពស្និទ្ធស្នាលនៃសេចក្តីស្រឡាញ់ស្ងប់ស្ងាត់' },
+          { id: 3, src: '/images/templates/emerald-noir/noir_3.webp', caption: 'រាត្រីរ៉ូមែនទិកលើអគារខ្ពស់នៃរាជធានី' },
+          { id: 4, src: '/images/templates/emerald-noir/noir_4.webp', caption: 'សម្លៀកបំពាក់កាត់កងបែប Haute Joaillerie' },
+          { id: 5, src: '/images/templates/emerald-noir/noir_5.webp', caption: 'ចិញ្ចៀនពេជ្រត្បូងមរកតចរណៃ' },
+          { id: 6, src: '/images/templates/emerald_glasshouse_prewedding.webp', caption: 'អនុស្សាវរីយ៍សិរីមង្គលអមតៈ' }
         ]
       },
       {
@@ -515,7 +323,7 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-amber-700',
         description: 'រចនាបថថ្មម៉ាបត្បូងមរកត Malachite រាជវាំង រំលេចត្រាជ័រមាស 3D-embossed និងស៊ុម Cartouche បង្ហាញពីឧត្តមភាព កិត្តិយស និងសេចក្តីថ្លៃថ្នូរកម្រិតកំពូល។',
         previewBg: 'bg-[#F2FBF6]',
-        bgImage: '/images/templates/emerald_malachite_prewedding.jpg',
+        bgImage: '/images/templates/emerald_malachite_prewedding.webp',
         hasFlyingFlowers: true,
         flyEffect: 'emerald-lotus',
         cardStyle: 'emerald-malachite-seal',
@@ -525,61 +333,19 @@ export const CEREMONY_DATA = {
         demoDate: 'ថ្ងៃអាទិត្យ ទី១៨ ខែធ្នូ ឆ្នាំ២០២៨',
         features: ['ត្រាជ័រមាស 3D Gilded Wax Seal', 'ស៊ុមមេដាយក្សត្រា Cartouche', 'ប្រតិទិនរស្មីមាស & Live Countdown', 'វិចិត្រសាលរាជត្រកូល ៦ សន្លឹក'],
         heroImages: [
-          '/images/templates/emerald_malachite_prewedding.jpg',
-          '/images/templates/emerald-malachite/malachite_2.jpg',
-          '/images/templates/emerald-malachite/malachite_3.jpg',
-          '/images/templates/emerald-malachite/malachite_4.jpg',
-          '/images/templates/emerald-malachite/malachite_5.jpg'
+          '/images/templates/emerald_malachite_prewedding.webp',
+          '/images/templates/emerald-malachite/malachite_2.webp',
+          '/images/templates/emerald-malachite/malachite_3.webp',
+          '/images/templates/emerald-malachite/malachite_4.webp',
+          '/images/templates/emerald-malachite/malachite_5.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/emerald_malachite_prewedding.jpg', caption: 'មរកតក្សត្រាត្រាជ័រកែវ ព្រះបរមរាជវាំង' },
-          { id: 2, src: '/images/templates/emerald-malachite/malachite_2.jpg', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្រោមម្លប់វិមាន' },
-          { id: 3, src: '/images/templates/emerald-malachite/malachite_3.jpg', caption: 'ស្នាមញញឹមរំលេចសិរីមង្គលអមតៈ' },
-          { id: 4, src: '/images/templates/emerald-malachite/malachite_4.jpg', caption: 'គន្លងគូស្វាមីភរិយាក្នុងវិមានកែវ' },
-          { id: 5, src: '/images/templates/emerald-malachite/malachite_5.jpg', caption: 'ចិញ្ចៀនពេជ្រត្បូងមរកតសច្ចាស្នេហ៍' },
-          { id: 6, src: '/images/templates/emerald_jade_prewedding.jpg', caption: 'កេរ្តិ៍ដំណែលត្បូងមរកតរាជវាំង' }
-        ]
-      },
-      {
-        id: 'modern-champagne-silk',
-        name: 'អភិជនសូត្រទឹកមាស',
-        subtitle: 'Modern Champagne Silk & Gold Aristocrat',
-        category: 'modern',
-        tag: 'អភិជនទំនើប',
-        tagColor: 'bg-amber-100 text-amber-900 border-amber-300',
-        themeColor: 'gold',
-        primaryGradient: 'bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900',
-        borderColor: '#B45309',
-        titleColor: '#B45309',
-        font: 'font-komutt',
-        fontFamily: 'font-komutt',
-        badgeBg: 'bg-stone-800',
-        description: 'រចនាបថបែបទាន់សម័យអភិជនសូត្រមាស Champagne Ivory & Soft Pearl បង្ហាញភាពស៊ីវិល័យ ត្រាសច្ចាស្នេហ៍ Monogram និងតន្ត្រី Piano Chimes រណ្តំចិត្ត។',
-        previewBg: 'bg-[#FAF8F5]',
-        bgImage: '/images/templates/modern-champagne/champagne_1.jpg',
-        hasFlyingFlowers: true,
-        flyEffect: 'gold-sparkles',
-        cardStyle: 'modern-champagne-silk',
-        cardBorder: 'border-amber-300/80 hover:border-amber-500',
-        demoGroom: 'វ៉ាន់ សុភ័ក្ត្រ',
-        demoBride: 'ម៉ៅ ពិសី',
-        demoDate: 'ថ្ងៃសៅរ៍ ទី១៩ ខែធ្នូ ឆ្នាំ២០២៦',
-        demoLocation: 'សាលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សេនសក (The Premier Center Sen Sok)',
-        features: ['ត្រាសច្ចាស្នេហ៍ Monogram', 'អក្សរឆ្លាក់បែបសុវណ្ណភូមិ', 'តន្ត្រី Piano Chimes', 'ប្រព័ន្ធ RSVP & QR កូដ'],
-        heroImages: [
-          '/images/templates/modern-champagne/champagne_1.jpg',
-          '/images/templates/modern-champagne/champagne_2.jpg',
-          '/images/templates/modern-champagne/champagne_3.jpg',
-          '/images/templates/modern-champagne/champagne_4.jpg',
-          '/images/templates/modern-champagne/champagne_5.jpg'
-        ],
-        galleryPhotos: [
-          { id: 1, src: '/images/templates/modern-champagne/champagne_1.jpg', caption: 'ភាពស៊ីវិល័យ និងសច្ចាស្នេហ៍អភិជន' },
-          { id: 2, src: '/images/templates/modern-champagne/champagne_2.jpg', caption: 'រចនាបថ Editorial Lookbook សូត្រមាស' },
-          { id: 3, src: '/images/templates/modern-champagne/champagne_3.jpg', caption: 'ផ្កាអ័រគីដេទឹកមាស និងស្នាមញញឹមរស្មី' },
-          { id: 4, src: '/images/templates/modern-champagne/champagne_4.jpg', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់ដ៏បរិសុទ្ធ' },
-          { id: 5, src: '/images/templates/modern-champagne/champagne_5.jpg', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្នុងវិមានស្នេហ៍' },
-          { id: 6, src: '/images/templates/modern-champagne/gallery_1.jpg', caption: 'ចំណងអាពាហ៍ពិពាហ៍អមតៈ' }
+          { id: 1, src: '/images/templates/emerald_malachite_prewedding.webp', caption: 'មរកតក្សត្រាត្រាជ័រកែវ ព្រះបរមរាជវាំង' },
+          { id: 2, src: '/images/templates/emerald-malachite/malachite_2.webp', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្រោមម្លប់វិមាន' },
+          { id: 3, src: '/images/templates/emerald-malachite/malachite_3.webp', caption: 'ស្នាមញញឹមរំលេចសិរីមង្គលអមតៈ' },
+          { id: 4, src: '/images/templates/emerald-malachite/malachite_4.webp', caption: 'គន្លងគូស្វាមីភរិយាក្នុងវិមានកែវ' },
+          { id: 5, src: '/images/templates/emerald-malachite/malachite_5.webp', caption: 'ចិញ្ចៀនពេជ្រត្បូងមរកតសច្ចាស្នេហ៍' },
+          { id: 6, src: '/images/templates/emerald_jade_prewedding.webp', caption: 'កេរ្តិ៍ដំណែលត្បូងមរកតរាជវាំង' }
         ]
       },
       {
@@ -598,7 +364,7 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-slate-800',
         description: 'រចនាបថរាត្រីសមោសរ Black-Tie Gala ទំនើបកម្រិតខ្ពស់ ពណ៌ Obsidian Black និងពន្លឺពេជ្រផ្លាទីនភ្លឺចែងចាំង ត្រា Diamond Emblem និងកាលវិភាគពិធីការប្រណិត។',
         previewBg: 'bg-[#050811]',
-        bgImage: '/images/templates/modern-noir/noir_1.jpg',
+        bgImage: '/images/templates/modern-noir/noir_1.webp',
         hasFlyingFlowers: true,
         flyEffect: 'sparkles',
         cardStyle: 'modern-noir-diamond',
@@ -609,19 +375,19 @@ export const CEREMONY_DATA = {
         demoLocation: 'សណ្ឋាគារ រ៉ូសវូដ ភ្នំពេញ (Rosewood Phnom Penh - Grand Ballroom)',
         features: ['ត្រាពេជ្រ Diamond Emblem', 'Black-Tie Haute Couture', 'តន្ត្រី Nocturne Chimes', 'ប្រព័ន្ធ RSVP & ABA QR'],
         heroImages: [
-          '/images/templates/modern-noir/noir_1.jpg',
-          '/images/templates/modern-noir/noir_2.jpg',
-          '/images/templates/modern-noir/noir_3.jpg',
-          '/images/templates/modern-noir/noir_4.jpg',
-          '/images/templates/modern-noir/noir_5.jpg'
+          '/images/templates/modern-noir/noir_1.webp',
+          '/images/templates/modern-noir/noir_2.webp',
+          '/images/templates/modern-noir/noir_3.webp',
+          '/images/templates/modern-noir/noir_4.webp',
+          '/images/templates/modern-noir/noir_5.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/modern-noir/noir_1.jpg', caption: 'រាត្រីពេជ្រខ្មៅ និងសច្ចាស្នេហ៍អភិជន' },
-          { id: 2, src: '/images/templates/modern-noir/noir_2.jpg', caption: 'រចនាបថ Black-Tie Gala ទាន់សម័យ' },
-          { id: 3, src: '/images/templates/modern-noir/noir_3.jpg', caption: 'រស្មីពេជ្រចិន្តា និងភាពថ្លៃថ្នូរ' },
-          { id: 4, src: '/images/templates/modern-noir/noir_4.jpg', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់កម្រិតខ្ពស់' },
-          { id: 5, src: '/images/templates/modern-noir/noir_5.jpg', caption: 'ចិញ្ចៀនពេជ្រផ្លាទីនសច្ចាស្នេហ៍' },
-          { id: 6, src: '/images/templates/modern-noir/gallery_1.jpg', caption: 'ចំណងអាពាហ៍ពិពាហ៍អមតៈ' }
+          { id: 1, src: '/images/templates/modern-noir/noir_1.webp', caption: 'រាត្រីពេជ្រខ្មៅ និងសច្ចាស្នេហ៍អភិជន' },
+          { id: 2, src: '/images/templates/modern-noir/noir_2.webp', caption: 'រចនាបថ Black-Tie Gala ទាន់សម័យ' },
+          { id: 3, src: '/images/templates/modern-noir/noir_3.webp', caption: 'រស្មីពេជ្រចិន្តា និងភាពថ្លៃថ្នូរ' },
+          { id: 4, src: '/images/templates/modern-noir/noir_4.webp', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់កម្រិតខ្ពស់' },
+          { id: 5, src: '/images/templates/modern-noir/noir_5.webp', caption: 'ចិញ្ចៀនពេជ្រផ្លាទីនសច្ចាស្នេហ៍' },
+          { id: 6, src: '/images/templates/modern-noir/gallery_1.webp', caption: 'ចំណងអាពាហ៍ពិពាហ៍អមតៈ' }
         ]
       },
       {
@@ -640,7 +406,7 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-stone-800',
         description: 'រចនាបថបែបទាន់សម័យ សាមញ្ញតែប្រណិត (Minimalist Chic) បង្ហាញភាពស៊ីវិល័យ ស្រឡះភ្នែក ងាយស្រួលអាន និងរហ័សទាន់ចិត្តលើទូរស័ព្ទដៃ។',
         previewBg: 'bg-[#FAF9F5]',
-        bgImage: '/images/templates/modern-champagne/champagne_1.jpg',
+        bgImage: '/images/templates/modern-champagne/champagne_1.webp',
         hasFlyingFlowers: true,
         flyEffect: 'gold-sparkles',
         cardStyle: 'modern-champagne-silk',
@@ -651,18 +417,18 @@ export const CEREMONY_DATA = {
         demoLocation: 'សាលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សេនសក (The Premier Center Sen Sok)',
         features: ['រចនាបថ Minimalist', 'QR Code ផ្ទាល់ខ្លួន', 'ផែនទីពិធីការ', 'ចំណុចប្រទាក់លឿន'],
         heroImages: [
-          '/images/templates/modern-champagne/champagne_1.jpg',
-          '/images/templates/modern-luxury/modern_luxury_hero_2.jpg',
-          '/images/templates/modern-champagne/champagne_3.jpg',
-          '/images/templates/modern-champagne/champagne_4.jpg',
-          '/images/templates/modern-champagne/champagne_5.jpg'
+          '/images/templates/modern-champagne/champagne_1.webp',
+          '/images/templates/modern-luxury/modern_luxury_hero_2.webp',
+          '/images/templates/modern-champagne/champagne_3.webp',
+          '/images/templates/modern-champagne/champagne_4.webp',
+          '/images/templates/modern-champagne/champagne_5.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/modern-champagne/champagne_1.jpg', caption: 'ភាពស៊ីវិល័យ និងទាន់សម័យ' },
-          { id: 2, src: '/images/templates/modern-luxury/modern_luxury_hero_2.jpg', caption: 'រចនាបថអភិជនប្រណីត' },
-          { id: 3, src: '/images/templates/modern-champagne/champagne_3.jpg', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់' },
-          { id: 4, src: '/images/templates/modern-champagne/champagne_4.jpg', caption: 'ភាពស្រស់បំព្រង និងថ្លៃថ្នូរ' },
-          { id: 5, src: '/images/templates/modern-champagne/champagne_5.jpg', caption: 'និស្ស័យស្នេហ៍អមតៈ' }
+          { id: 1, src: '/images/templates/modern-champagne/champagne_1.webp', caption: 'ភាពស៊ីវិល័យ និងទាន់សម័យ' },
+          { id: 2, src: '/images/templates/modern-luxury/modern_luxury_hero_2.webp', caption: 'រចនាបថអភិជនប្រណីត' },
+          { id: 3, src: '/images/templates/modern-champagne/champagne_3.webp', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់' },
+          { id: 4, src: '/images/templates/modern-champagne/champagne_4.webp', caption: 'ភាពស្រស់បំព្រង និងថ្លៃថ្នូរ' },
+          { id: 5, src: '/images/templates/modern-champagne/champagne_5.webp', caption: 'និស្ស័យស្នេហ៍អមតៈ' }
         ]
       },
       {
@@ -681,7 +447,7 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-rose-950',
         description: 'រចនាបថបែបទាន់សម័យអភិជនពណ៌កុលាបមាស Rose Gold Royale & Warm Copper Blush បង្ហាញភាពផ្អែមល្ហែម ស៊ីវិល័យ និងមនោសញ្ចេតនាជ្រាលជ្រៅ។',
         previewBg: 'bg-[#180E10]',
-        bgImage: '/images/templates/modern_rosegold_prewedding.jpg',
+        bgImage: '/images/templates/modern_rosegold_prewedding.webp',
         hasFlyingFlowers: true,
         flyEffect: 'gold-sparkles',
         cardStyle: 'modern-rosegold-royale',
@@ -692,18 +458,18 @@ export const CEREMONY_DATA = {
         demoLocation: 'សណ្ឋាគារ ហៃយ៉ាត់ រីជិនស៊ី ភ្នំពេញ (Hyatt Regency Phnom Penh - Regency Ballroom)',
         features: ['ត្រាកុលាបមាស Rose Gold Seal', 'Haute Couture Lookbook', 'តន្ត្រី Romance Harp Chimes', 'ប្រព័ន្ធ RSVP & ABA QR'],
         heroImages: [
-          '/images/templates/modern-rosegold/rosegold_1.jpg',
-          '/images/templates/modern-rosegold/rosegold_2.jpg',
-          '/images/templates/modern-rosegold/rosegold_3.jpg',
-          '/images/templates/modern-rosegold/rosegold_4.jpg',
-          '/images/templates/modern-rosegold/rosegold_5.jpg'
+          '/images/templates/modern-rosegold/rosegold_1.webp',
+          '/images/templates/modern-rosegold/rosegold_2.webp',
+          '/images/templates/modern-rosegold/rosegold_3.webp',
+          '/images/templates/modern-rosegold/rosegold_4.webp',
+          '/images/templates/modern-rosegold/rosegold_5.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/modern-rosegold/rosegold_1.jpg', caption: 'រស្មីកុលាបមាស និងសច្ចាស្នេហ៍អភិជន' },
-          { id: 2, src: '/images/templates/modern-rosegold/rosegold_2.jpg', caption: 'រចនាបថ Haute Couture Rose Gold' },
-          { id: 3, src: '/images/templates/modern-rosegold/rosegold_3.jpg', caption: 'ភាពផ្អែមល្ហែមក្នុងរាត្រីសមោសរ' },
-          { id: 4, src: '/images/templates/modern-rosegold/rosegold_4.jpg', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់ដ៏បរិសុទ្ធ' },
-          { id: 5, src: '/images/templates/modern-rosegold/rosegold_5.jpg', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្នុងវិមានស្នេហ៍' }
+          { id: 1, src: '/images/templates/modern-rosegold/rosegold_1.webp', caption: 'រស្មីកុលាបមាស និងសច្ចាស្នេហ៍អភិជន' },
+          { id: 2, src: '/images/templates/modern-rosegold/rosegold_2.webp', caption: 'រចនាបថ Haute Couture Rose Gold' },
+          { id: 3, src: '/images/templates/modern-rosegold/rosegold_3.webp', caption: 'ភាពផ្អែមល្ហែមក្នុងរាត្រីសមោសរ' },
+          { id: 4, src: '/images/templates/modern-rosegold/rosegold_4.webp', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់ដ៏បរិសុទ្ធ' },
+          { id: 5, src: '/images/templates/modern-rosegold/rosegold_5.webp', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្នុងវិមានស្នេហ៍' }
         ]
       },
       {
@@ -722,7 +488,7 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-blue-950',
         description: 'រចនាបថរាត្រីសមោសរអភិជនត្បូងកណ្តៀង Royal Sapphire Azure & Mirror Platinum បង្ហាញភាពថ្លៃថ្នូរ រាជានុភាព និងភាពរ៉ូមែនទិកកម្រិតខ្ពស់។',
         previewBg: 'bg-[#070B18]',
-        bgImage: '/images/templates/modern_sapphire_prewedding.jpg',
+        bgImage: '/images/templates/modern_sapphire_prewedding.webp',
         hasFlyingFlowers: true,
         flyEffect: 'sparkles',
         cardStyle: 'modern-sapphire-azure',
@@ -733,18 +499,18 @@ export const CEREMONY_DATA = {
         demoLocation: 'សណ្ឋាគារ រ៉ូសវូដ ភ្នំពេញ (Rosewood Phnom Penh - Grand Ballroom)',
         features: ['ត្រាត្បូងកណ្តៀង Star Sapphire', 'Black-Tie Sapphire Gala', 'តន្ត្រី Nocturne Azure Chimes', 'ប្រព័ន្ធ RSVP & ABA QR'],
         heroImages: [
-          '/images/templates/modern-sapphire/sapphire_1.jpg',
-          '/images/templates/modern-sapphire/sapphire_2.jpg',
-          '/images/templates/modern-sapphire/sapphire_3.jpg',
-          '/images/templates/modern-sapphire/sapphire_4.jpg',
-          '/images/templates/modern-sapphire/sapphire_5.jpg'
+          '/images/templates/modern-sapphire/sapphire_1.webp',
+          '/images/templates/modern-sapphire/sapphire_2.webp',
+          '/images/templates/modern-sapphire/sapphire_3.webp',
+          '/images/templates/modern-sapphire/sapphire_4.webp',
+          '/images/templates/modern-sapphire/sapphire_5.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/modern-sapphire/sapphire_1.jpg', caption: 'រស្មីត្បូងកណ្តៀង និងសច្ចាស្នេហ៍អភិជន' },
-          { id: 2, src: '/images/templates/modern-sapphire/sapphire_2.jpg', caption: 'រាត្រីសមោសរ Royal Sapphire Gala' },
-          { id: 3, src: '/images/templates/modern-sapphire/sapphire_3.jpg', caption: 'ពន្លឺពេជ្រចិន្តា និងភាពថ្លៃថ្នូរ' },
-          { id: 4, src: '/images/templates/modern-sapphire/sapphire_4.jpg', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់កម្រិតខ្ពស់' },
-          { id: 5, src: '/images/templates/modern-sapphire/sapphire_5.jpg', caption: 'ចិញ្ចៀនពេជ្រផ្លាទីនសច្ចាស្នេហ៍' }
+          { id: 1, src: '/images/templates/modern-sapphire/sapphire_1.webp', caption: 'រស្មីត្បូងកណ្តៀង និងសច្ចាស្នេហ៍អភិជន' },
+          { id: 2, src: '/images/templates/modern-sapphire/sapphire_2.webp', caption: 'រាត្រីសមោសរ Royal Sapphire Gala' },
+          { id: 3, src: '/images/templates/modern-sapphire/sapphire_3.webp', caption: 'ពន្លឺពេជ្រចិន្តា និងភាពថ្លៃថ្នូរ' },
+          { id: 4, src: '/images/templates/modern-sapphire/sapphire_4.webp', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់កម្រិតខ្ពស់' },
+          { id: 5, src: '/images/templates/modern-sapphire/sapphire_5.webp', caption: 'ចិញ្ចៀនពេជ្រផ្លាទីនសច្ចាស្នេហ៍' }
         ]
       },
       {
@@ -763,7 +529,7 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-emerald-950',
         description: 'រចនាបថបែបទាន់សម័យវិមានកញ្ចក់បៃតង Whisper Sage Green & Brushed Champagne Leaf បង្ហាញភាពស្រស់ស្រាយ ធម្មជាតិស្ងប់ស្ងាត់ និងប្រណិតភាព។',
         previewBg: 'bg-[#0E1A14]',
-        bgImage: '/images/templates/modern_sage_prewedding.jpg',
+        bgImage: '/images/templates/modern_sage_prewedding.webp',
         hasFlyingFlowers: true,
         flyEffect: 'gold-sparkles',
         cardStyle: 'modern-sage-manor',
@@ -774,18 +540,18 @@ export const CEREMONY_DATA = {
         demoLocation: 'សណ្ឋាគារ សូហ្វីតែល ភ្នំពេញ ភូគីត្រា (Sofitel Phnom Penh Phokeethra - Grand Ballroom)',
         features: ['ត្រាវិមានកញ្ចក់ Conservatory Seal', 'Fine-Art Botanical Gallery', 'តន្ត្រី Acoustic Serenade', 'ប្រព័ន្ធ RSVP & ABA QR'],
         heroImages: [
-          '/images/templates/modern-sage/sage_1.jpg',
-          '/images/templates/modern-sage/sage_2.jpg',
-          '/images/templates/modern-sage/sage_3.jpg',
-          '/images/templates/modern-sage/sage_4.jpg',
-          '/images/templates/modern-sage/sage_5.jpg'
+          '/images/templates/modern-sage/sage_1.webp',
+          '/images/templates/modern-sage/sage_2.webp',
+          '/images/templates/modern-sage/sage_3.webp',
+          '/images/templates/modern-sage/sage_4.webp',
+          '/images/templates/modern-sage/sage_5.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/modern-sage/sage_1.jpg', caption: 'វិមានកញ្ចក់បៃតង និងសច្ចាស្នេហ៍អភិជន' },
-          { id: 2, src: '/images/templates/modern-sage/sage_2.jpg', caption: 'រចនាបថ Fine-Art Botanical Manor' },
-          { id: 3, src: '/images/templates/modern-sage/sage_3.jpg', caption: 'ស្លឹកអូលីវមង្គល និងពន្លឺថ្ងៃធម្មជាតិ' },
-          { id: 4, src: '/images/templates/modern-sage/sage_4.jpg', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់ដ៏បរិសុទ្ធ' },
-          { id: 5, src: '/images/templates/modern-sage/sage_5.jpg', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្នុងវិមានស្នេហ៍' }
+          { id: 1, src: '/images/templates/modern-sage/sage_1.webp', caption: 'វិមានកញ្ចក់បៃតង និងសច្ចាស្នេហ៍អភិជន' },
+          { id: 2, src: '/images/templates/modern-sage/sage_2.webp', caption: 'រចនាបថ Fine-Art Botanical Manor' },
+          { id: 3, src: '/images/templates/modern-sage/sage_3.webp', caption: 'ស្លឹកអូលីវមង្គល និងពន្លឺថ្ងៃធម្មជាតិ' },
+          { id: 4, src: '/images/templates/modern-sage/sage_4.webp', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់ដ៏បរិសុទ្ធ' },
+          { id: 5, src: '/images/templates/modern-sage/sage_5.webp', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្នុងវិមានស្នេហ៍' }
         ]
       },
       {
@@ -804,7 +570,7 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-amber-800',
         description: 'រចនាបថលើកតម្កើងអរិយធម៌ខ្មែរដ៏មហិមា រំលេចក្បាច់ផ្កាចន្ទន៍ និងក្បាច់អង្គរបុរាណ សម្រាប់ពិធីមង្គលការដែលបង្កប់នូវមោទនភាពជាតិ។',
         previewBg: 'bg-[#FAF6EE]',
-        bgImage: '/images/templates/angkor_heritage_prewedding.jpg',
+        bgImage: '/images/templates/angkor_heritage_prewedding.webp',
         hasFlyingFlowers: true,
         flyEffect: 'angkor-gold-petals',
         cardStyle: 'angkor-heritage',
@@ -814,18 +580,18 @@ export const CEREMONY_DATA = {
         demoDate: 'ថ្ងៃអាទិត្យ ទី១០ ខែមករា ឆ្នាំ២០២៧',
         features: ['ក្បាច់អង្គរវត្តបុរាណ', 'ភ្លេងការប្រពៃណី', 'ពាក្យប្រសិទ្ធពរជ័យ', 'ទាញយក QR ព្រីន'],
         heroImages: [
-          '/images/templates/angkor-heritage/angkor_1.jpg',
-          '/images/templates/angkor-heritage/angkor_2.jpg',
-          '/images/templates/angkor-heritage/angkor_3.jpg',
-          '/images/templates/angkor-heritage/angkor_4.jpg',
-          '/images/templates/angkor-heritage/angkor_5.jpg'
+          '/images/templates/angkor-heritage/angkor_1.webp',
+          '/images/templates/angkor-heritage/angkor_2.webp',
+          '/images/templates/angkor-heritage/angkor_3.webp',
+          '/images/templates/angkor-heritage/angkor_4.webp',
+          '/images/templates/angkor-heritage/angkor_5.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/angkor-heritage/angkor_1.jpg', caption: 'កេរដំណែលប្រាសាទអង្គរដ៏មហិមា' },
-          { id: 2, src: '/images/templates/angkor-heritage/angkor_2.jpg', caption: 'មោទនភាពវប្បធម៌ខ្មែរបុរាណ' },
-          { id: 3, src: '/images/templates/angkor-heritage/angkor_3.jpg', caption: 'សិរីមង្គលមហានគរ' },
-          { id: 4, src: '/images/templates/angkor-heritage/angkor_4.jpg', caption: 'ក្បាច់ចម្លាក់អង្គរដ៏ពិសិដ្ឋ' },
-          { id: 5, src: '/images/templates/angkor-heritage/angkor_5.jpg', caption: 'សច្ចាប្រណិធានស្នេហ៍មុខប្រាសាទ' }
+          { id: 1, src: '/images/templates/angkor-heritage/angkor_1.webp', caption: 'កេរដំណែលប្រាសាទអង្គរដ៏មហិមា' },
+          { id: 2, src: '/images/templates/angkor-heritage/angkor_2.webp', caption: 'មោទនភាពវប្បធម៌ខ្មែរបុរាណ' },
+          { id: 3, src: '/images/templates/angkor-heritage/angkor_3.webp', caption: 'សិរីមង្គលមហានគរ' },
+          { id: 4, src: '/images/templates/angkor-heritage/angkor_4.webp', caption: 'ក្បាច់ចម្លាក់អង្គរដ៏ពិសិដ្ឋ' },
+          { id: 5, src: '/images/templates/angkor-heritage/angkor_5.webp', caption: 'សច្ចាប្រណិធានស្នេហ៍មុខប្រាសាទ' }
         ]
       },
       {
@@ -844,7 +610,7 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-rose-800',
         description: 'រចនាបថប្រពៃណីខ្មែរសុទ្ធសាធ ដោយប្រើប្រាស់ពណ៌ក្រហមឈាមជ្រូក និងអក្សរមូលធំៗ ស្របតាមក្បួនខ្នាតលិខិតអញ្ជើញមង្គលការខ្មែរតាំងពីបុរាណ។',
         previewBg: 'bg-[#FFFDFB]',
-        bgImage: '/images/templates/crimson_classic_prewedding.jpg',
+        bgImage: '/images/templates/crimson_classic_prewedding.webp',
         hasFlyingFlowers: true,
         flyEffect: 'crimson-petals',
         cardStyle: 'crimson-classic',
@@ -854,18 +620,18 @@ export const CEREMONY_DATA = {
         demoDate: 'ថ្ងៃសៅរ៍ ទី២៣ ខែមករា ឆ្នាំ២០២៧',
         features: ['អក្សរមូលប្រពៃណីខ្មែរ', 'ពាក្យពេចន៍មាតាបិតា', 'គ្រប់គ្រងភ្ញៀវឆ្លើយតប', 'ស្កេនចូលរួម'],
         heroImages: [
-          '/images/templates/crimson-classic/crimson_1.jpg',
-          '/images/templates/crimson-classic/crimson_2.jpg',
-          '/images/templates/crimson-classic/crimson_3.jpg',
-          '/images/templates/crimson-classic/crimson_4.jpg',
-          '/images/templates/crimson-classic/crimson_5.jpg'
+          '/images/templates/crimson-classic/crimson_1.webp',
+          '/images/templates/crimson-classic/crimson_2.webp',
+          '/images/templates/crimson-classic/crimson_3.webp',
+          '/images/templates/crimson-classic/crimson_4.webp',
+          '/images/templates/crimson-classic/crimson_5.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/crimson-classic/crimson_1.jpg', caption: 'មង្គលក្រហមប្រពៃណីខ្មែរសុទ្ធ' },
-          { id: 2, src: '/images/templates/crimson-classic/crimson_2.jpg', caption: 'ជ័យមង្គលសិរីសួស្តីវិបុលសុខ' },
-          { id: 3, src: '/images/templates/crimson-classic/crimson_3.jpg', caption: 'សូត្រក្រហមមង្គលការ' },
-          { id: 4, src: '/images/templates/crimson-classic/crimson_4.jpg', caption: 'ក្បាច់ភ្ញីទេសមាសបុរាណ' },
-          { id: 5, src: '/images/templates/crimson-classic/crimson_5.jpg', caption: 'សុភមង្គលគូស្វាមីភរិយាថ្មី' }
+          { id: 1, src: '/images/templates/crimson-classic/crimson_1.webp', caption: 'មង្គលក្រហមប្រពៃណីខ្មែរសុទ្ធ' },
+          { id: 2, src: '/images/templates/crimson-classic/crimson_2.webp', caption: 'ជ័យមង្គលសិរីសួស្តីវិបុលសុខ' },
+          { id: 3, src: '/images/templates/crimson-classic/crimson_3.webp', caption: 'សូត្រក្រហមមង្គលការ' },
+          { id: 4, src: '/images/templates/crimson-classic/crimson_4.webp', caption: 'ក្បាច់ភ្ញីទេសមាសបុរាណ' },
+          { id: 5, src: '/images/templates/crimson-classic/crimson_5.webp', caption: 'សុភមង្គលគូស្វាមីភរិយាថ្មី' }
         ]
       },
       {
@@ -884,8 +650,8 @@ export const CEREMONY_DATA = {
         badgeBg: 'bg-[#8C6F19]',
         description: 'រចនាបថប្រពៃណីបុរាណសម័យអង្គរដ៏រុងរឿង រំលេចក្បាច់ចម្លាក់ថ្មប្រាសាទបុរាណ អមដោយសម្លៀកបំពាក់ក្សត្រខ្មែរ ម្កុដមាស និងស្បៃមាស ស័ក្តិសមបំផុតសម្រាប់មង្គលការប្រពៃណីខ្មែរបុរាណពិតៗ។',
         previewBg: 'bg-[#FAF4E8]',
-        bgImage: '/images/templates/angkor_ancient_royalty_prewedding.jpg',
-        bgBackdrop: '/images/templates/angkor_wat_scenery.jpg',
+        bgImage: '/images/templates/angkor_ancient_royalty_prewedding.webp',
+        bgBackdrop: '/images/templates/angkor_wat_scenery.webp',
         hasFlyingFlowers: true,
         flyEffect: 'angkor-ancient-petals',
         cardStyle: 'angkor-ancient-royalty',
@@ -895,95 +661,22 @@ export const CEREMONY_DATA = {
         demoDate: 'ថ្ងៃអាទិត្យ ទី១៤ ខែកុម្ភៈ ឆ្នាំ២០២៧',
         features: ['ពុម្ពអក្សរ Kh Ang Kouteok', 'ក្បាច់ចម្លាក់ថ្មបុរាណ', 'កាលវិភាគពិធីបុរាណ', 'RSVP & ផែនទី'],
         heroImages: [
-          '/images/templates/angkor-ancient-royalty/ancient_1.jpg',
-          '/images/templates/angkor-ancient-royalty/ancient_2.jpg',
-          '/images/templates/angkor-ancient-royalty/ancient_3.jpg',
-          '/images/templates/angkor-ancient-royalty/ancient_4.jpg',
-          '/images/templates/angkor-ancient-royalty/ancient_5.jpg'
+          '/images/templates/angkor-ancient-royalty/ancient_1.webp',
+          '/images/templates/angkor-ancient-royalty/ancient_2.webp',
+          '/images/templates/angkor-ancient-royalty/ancient_3.webp',
+          '/images/templates/angkor-ancient-royalty/ancient_4.webp',
+          '/images/templates/angkor-ancient-royalty/ancient_5.webp'
         ],
         galleryPhotos: [
-          { id: 1, src: '/images/templates/angkor-ancient-royalty/ancient_1.jpg', caption: 'មហានគរសិរីមង្គលក្សត្របុរាណ' },
-          { id: 2, src: '/images/templates/angkor-ancient-royalty/ancient_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីស្រឡាញ់មុខចម្លាក់អប្សរា' },
-          { id: 3, src: '/images/templates/angkor-ancient-royalty/ancient_3.jpg', caption: 'កិច្ចសំពះប្រសិទ្ធពរជ័យបុរាណ' },
-          { id: 4, src: '/images/templates/angkor-ancient-royalty/ancient_4.jpg', caption: 'ដំណើរគូស្នេហ៍លើស្ពានបុរាណអង្គរវត្ត' },
-          { id: 5, src: '/images/templates/angkor-ancient-royalty/ancient_5.jpg', caption: 'ពន្លឺមាសជះឆ្លងកាត់សរសរថ្មប្រាសាទបុរាណ' }
+          { id: 1, src: '/images/templates/angkor-ancient-royalty/ancient_1.webp', caption: 'មហានគរសិរីមង្គលក្សត្របុរាណ' },
+          { id: 2, src: '/images/templates/angkor-ancient-royalty/ancient_2.webp', caption: 'ស្នាមញញឹមរំលេចក្តីស្រឡាញ់មុខចម្លាក់អប្សរា' },
+          { id: 3, src: '/images/templates/angkor-ancient-royalty/ancient_3.webp', caption: 'កិច្ចសំពះប្រសិទ្ធពរជ័យបុរាណ' },
+          { id: 4, src: '/images/templates/angkor-ancient-royalty/ancient_4.webp', caption: 'ដំណើរគូស្នេហ៍លើស្ពានបុរាណអង្គរវត្ត' },
+          { id: 5, src: '/images/templates/angkor-ancient-royalty/ancient_5.webp', caption: 'ពន្លឺមាសជះឆ្លងកាត់សរសរថ្មប្រាសាទបុរាណ' }
         ]
       },
-      {
-        id: 'traditional-royal-lacquer',
-        name: 'មង្គលរាជវាំងលា័ក្ខមាស',
-        subtitle: 'Royal Lacquered Gold Heritage',
-        category: 'traditional',
-        tag: 'ប្រពៃណីបុរាណ',
-        tagColor: 'bg-amber-100 text-amber-950 border-amber-400',
-        themeColor: 'gold',
-        primaryGradient: 'bg-gradient-to-r from-[#B38728] via-[#FCF6BA] to-[#AA771C]',
-        borderColor: '#B38728',
-        titleColor: '#B38728',
-        font: 'font-momo',
-        fontFamily: 'font-momo',
-        badgeBg: 'bg-[#8C6813]',
-        description: 'រចនាបថប្រពៃណីខ្មែរបុរាណពណ៌លា័ក្ខសូត្រភ្លុក អមដោយទឹកមាសចែងចាំង តុបតែងក្បាច់ភ្ញីទេសយ៉ាងវិចិត្រ សម្រាប់ពិធីមង្គលការអភិជនបុរាណ។',
-        previewBg: 'bg-[#FCFAF6]',
-        bgImage: '/images/templates/traditional_lacquer_gold_prewedding.jpg',
-        bgBackdrop: '/images/templates/royal_throne_hall.jpg',
-        hasFlyingFlowers: true,
-        flyEffect: 'gold-petals',
-        cardStyle: 'traditional-royal-lacquer',
-        cardBorder: 'border-[#B38728]/80 hover:border-[#D4AF37]',
-        demoGroom: 'ហេង វឌ្ឍនា',
-        demoBride: 'កែវ ចរណៃ',
-        demoDate: 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
-        demoLocation: 'មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)',
-        features: ['ពុម្ពអក្សរ ASvadek Momo', 'ក្បាច់ភ្ញីទេសទឹកមាស', 'តារាងកម្មវិធីមង្គល', 'Google Maps & RSVP'],
-        heroImages: [
-          '/images/templates/traditional_lacquer_gold_prewedding.jpg',
-          '/images/templates/royal-gold/gold_1.jpg',
-          '/images/templates/royal-gold/gold_2.jpg'
-        ],
-        galleryPhotos: [
-          { id: 1, src: '/images/templates/traditional_lacquer_gold_prewedding.jpg', caption: 'មង្គលរាជវាំងលា័ក្ខមាស' },
-          { id: 2, src: '/images/templates/royal-gold/gold_1.jpg', caption: 'ស្នេហ៍ផ្អែមល្ហែមរវាងគូស្នេហ៍' },
-          { id: 3, src: '/images/templates/royal-gold/gold_2.jpg', caption: 'ភាពថ្លៃថ្នូរ និងសេចក្តីសុខក្សេមក្សាន្ត' }
-        ]
-      },
-      {
-        id: 'traditional-crimson-angkoreach',
-        name: 'មង្គលក្បាច់អង្គរាជ',
-        subtitle: 'Angkoreach Crimson & Silk Lattice',
-        category: 'traditional',
-        tag: 'ប្រពៃណីបុរាណ',
-        tagColor: 'bg-rose-100 text-rose-950 border-rose-400',
-        themeColor: 'crimson',
-        primaryGradient: 'bg-gradient-to-r from-[#BE123C] via-[#FDA4AF] to-[#D4AF37]',
-        borderColor: '#D4AF37',
-        titleColor: '#D4AF37',
-        font: 'font-kouteok',
-        fontFamily: 'font-kouteok',
-        badgeBg: 'bg-[#54141E]',
-        description: 'រចនាបថពណ៌ក្រហមឈាមជ្រូករំលេចក្បាច់អង្គរាជ និងក្រឡាសំណាញ់ពេជ្រសូត្រមាស បង្ហាញពីឧត្តមភាព និងសិរីសួស្តីកម្រិតខ្ពស់។',
-        previewBg: 'bg-[#FCF7F6]',
-        bgImage: '/images/templates/traditional_crimson_angkoreach_prewedding.jpg',
-        bgBackdrop: '/images/templates/royal_palace_interior.jpg',
-        hasFlyingFlowers: true,
-        flyEffect: 'gold-petals',
-        cardStyle: 'traditional-crimson-angkoreach',
-        cardBorder: 'border-[#D4AF37]/80 hover:border-[#F6E08A]',
-        demoGroom: 'ហេង វឌ្ឍនា',
-        demoBride: 'កែវ ចរណៃ',
-        demoDate: 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦',
-        demoLocation: 'មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)',
-        features: ['ពុម្ពអក្សរ Kh Ang Kouteok', 'ក្បាច់អង្គរាជមាស', 'រាប់ថយក្រោយ Countdown', 'ប្រព័ន្ធ RSVP ឆ្លាតវៃ'],
-        heroImages: [
-          '/images/templates/traditional_crimson_angkoreach_prewedding.jpg',
-          '/images/templates/crimson-classic/crimson_1.jpg',
-          '/images/templates/crimson-classic/crimson_2.jpg'
-        ],
-        galleryPhotos: [
-          { id: 1, src: '/images/templates/traditional_crimson_angkoreach_prewedding.jpg', caption: 'មង្គលក្បាច់អង្គរាជ' },
-          { id: 2, src: '/images/templates/crimson-classic/crimson_1.jpg', caption: 'ជ័យមង្គលសិរីសួស្តីវិបុលសុខ' },
-        ]
-      }
+
+
     ]
   },
 

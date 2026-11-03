@@ -1,3 +1,4 @@
+import { TemplateGoogleMap } from '../../TemplateGoogleMap';
 import React, { useState, useRef, useEffect } from 'react';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
@@ -46,7 +47,7 @@ export function EmeraldMalachiteSealTemplate({ data = {}, invitationData = {}, i
   const bankName = data.bankName || invitation?.bankName || 'ABA PAY / BAKONG';
   const accountName = data.accountName || invitation?.accountName || `${groom} & ${bride}`;
   const accountNumber = data.accountNumber || invitation?.accountNumber || '012 555 777';
-  const qrCodeImage = data.qrCodeImage || invitation?.qrCodeImage || null;
+  const qrCodeImage = data.qrCodeImage || invitation?.qrCodeImage || '/images/aba_qr.webp';
 
   // Host Contacts
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation?.hostPhoneGroom || '012 555 777';
@@ -57,11 +58,11 @@ export function EmeraldMalachiteSealTemplate({ data = {}, invitationData = {}, i
   const heroList = (data.heroImages && data.heroImages.length > 0)
     ? data.heroImages
     : [
-        '/images/templates/emerald_malachite_prewedding.jpg',
-        '/images/templates/emerald-malachite/malachite_2.jpg',
-        '/images/templates/emerald-malachite/malachite_3.jpg',
-        '/images/templates/emerald-malachite/malachite_4.jpg',
-        '/images/templates/emerald-malachite/malachite_5.jpg'
+        '/images/templates/emerald_malachite_prewedding.webp',
+        '/images/templates/emerald-malachite/malachite_2.webp',
+        '/images/templates/emerald-malachite/malachite_3.webp',
+        '/images/templates/emerald-malachite/malachite_4.webp',
+        '/images/templates/emerald-malachite/malachite_5.webp'
       ];
 
   const [activeHeroIdx, setActiveHeroIdx] = useState(0);
@@ -115,12 +116,12 @@ export function EmeraldMalachiteSealTemplate({ data = {}, invitationData = {}, i
   const galleryPhotos = (data.galleryPhotos && data.galleryPhotos.length > 0)
     ? data.galleryPhotos
     : [
-        { id: 1, src: '/images/templates/emerald_malachite_prewedding.jpg', caption: 'មរកតក្សត្រាត្រាជ័រកែវ ព្រះបរមរាជវាំង' },
-        { id: 2, src: '/images/templates/emerald-malachite/malachite_2.jpg', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្រោមម្លប់វិមាន' },
-        { id: 3, src: '/images/templates/emerald-malachite/malachite_3.jpg', caption: 'ស្នាមញញឹមរំលេចសិរីមង្គលអមតៈ' },
-        { id: 4, src: '/images/templates/emerald-malachite/malachite_4.jpg', caption: 'គន្លងគូស្វាមីភរិយាក្នុងវិមានកែវ' },
-        { id: 5, src: '/images/templates/emerald-malachite/malachite_5.jpg', caption: 'ចិញ្ចៀនពេជ្រត្បូងមរកតសច្ចាស្នេហ៍' },
-        { id: 6, src: '/images/templates/emerald_jade_prewedding.jpg', caption: 'កេរ្តិ៍ដំណែលត្បូងមរកតរាជវាំង' }
+        { id: 1, src: '/images/templates/emerald_malachite_prewedding.webp', caption: 'មរកតក្សត្រាត្រាជ័រកែវ ព្រះបរមរាជវាំង' },
+        { id: 2, src: '/images/templates/emerald-malachite/malachite_2.webp', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្រោមម្លប់វិមាន' },
+        { id: 3, src: '/images/templates/emerald-malachite/malachite_3.webp', caption: 'ស្នាមញញឹមរំលេចសិរីមង្គលអមតៈ' },
+        { id: 4, src: '/images/templates/emerald-malachite/malachite_4.webp', caption: 'គន្លងគូស្វាមីភរិយាក្នុងវិមានកែវ' },
+        { id: 5, src: '/images/templates/emerald-malachite/malachite_5.webp', caption: 'ចិញ្ចៀនពេជ្រត្បូងមរកតសច្ចាស្នេហ៍' },
+        { id: 6, src: '/images/templates/emerald_jade_prewedding.webp', caption: 'កេរ្តិ៍ដំណែលត្បូងមរកតរាជវាំង' }
       ];
 
   // 7 Standard Ceremony Milestones

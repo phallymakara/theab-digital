@@ -29,11 +29,21 @@ export function InvitationPreviewPage() {
     currentTheme,
     isAudioPlaying,
     toggleAudio,
+    playAudio,
+    stopAudio,
     addToast
   } = useApp();
 
   const ceremonyInfo = CEREMONY_DATA[ceremonyType] || CEREMONY_DATA.wedding;
   const data = invitationData;
+
+  // Play authentic wedding song by default on preview entrance
+  useEffect(() => {
+    playAudio?.();
+    return () => {
+      stopAudio?.();
+    };
+  }, []);
 
   // Countdown state
   const [timeLeft, setTimeLeft] = useState({

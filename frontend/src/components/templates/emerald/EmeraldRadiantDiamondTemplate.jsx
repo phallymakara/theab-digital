@@ -1,3 +1,4 @@
+import { TemplateGoogleMap } from '../../TemplateGoogleMap';
 import React, { useState, useEffect, useRef } from 'react';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
@@ -48,7 +49,7 @@ export function EmeraldRadiantDiamondTemplate({ data = {}, invitationData = {}, 
   const bankName = data.bankName || invitation?.bankName || 'ABA PAY / BAKONG';
   const accountName = data.accountName || invitation?.accountName || `${groom} & ${bride}`;
   const accountNumber = data.accountNumber || invitation?.accountNumber || '012 345 678';
-  const qrCodeImage = data.qrCodeImage || invitation?.qrCodeImage || null;
+  const qrCodeImage = data.qrCodeImage || invitation?.qrCodeImage || '/images/aba_qr.webp';
 
   // Host Contacts
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation?.hostPhoneGroom || '012 345 678';
@@ -59,11 +60,11 @@ export function EmeraldRadiantDiamondTemplate({ data = {}, invitationData = {}, 
   const heroList = (data.heroImages && data.heroImages.length > 0)
     ? data.heroImages
     : [
-        data.bgImage || '/images/templates/emerald_diamond_prewedding.jpg',
-        '/images/templates/emerald-diamond/diamond_1.jpg',
-        '/images/templates/emerald-diamond/diamond_2.jpg',
-        '/images/templates/emerald-diamond/diamond_4.jpg',
-        '/images/templates/emerald-diamond/diamond_5.jpg'
+        data.bgImage || '/images/templates/emerald_diamond_prewedding.webp',
+        '/images/templates/emerald-diamond/diamond_1.webp',
+        '/images/templates/emerald-diamond/diamond_2.webp',
+        '/images/templates/emerald-diamond/diamond_4.webp',
+        '/images/templates/emerald-diamond/diamond_5.webp'
       ];
 
   const [activeHeroIdx, setActiveHeroIdx] = useState(0);
@@ -117,12 +118,12 @@ export function EmeraldRadiantDiamondTemplate({ data = {}, invitationData = {}, 
   const galleryPhotos = (data.galleryPhotos && data.galleryPhotos.length > 0)
     ? data.galleryPhotos
     : [
-        { id: 1, src: '/images/templates/emerald_diamond_prewedding.jpg', caption: 'រស្មីពេជ្រចិន្តាត្បូងមរកត' },
-        { id: 2, src: '/images/templates/emerald-diamond/diamond_1.jpg', caption: 'វិមានអភិជន Haute Joaillerie' },
-        { id: 3, src: '/images/templates/emerald-diamond/diamond_2.jpg', caption: 'សេចក្តីស្នេហាចែងចាំងអស់កាលជានិច្ច' },
-        { id: 4, src: '/images/templates/emerald-diamond/diamond_4.jpg', caption: 'កេរដំណែលត្បូងមរកតចរណៃ' },
-        { id: 5, src: '/images/templates/emerald-diamond/diamond_5.jpg', caption: 'ចិញ្ចៀនពេជ្រសច្ចាស្នេហ៍ជានិរន្តរ៍' },
-        { id: 6, src: '/images/templates/modern_luxury_prewedding.jpg', caption: 'ភាពស៊ីវិល័យកម្រិតកំពូល' }
+        { id: 1, src: '/images/templates/emerald_diamond_prewedding.webp', caption: 'រស្មីពេជ្រចិន្តាត្បូងមរកត' },
+        { id: 2, src: '/images/templates/emerald-diamond/diamond_1.webp', caption: 'វិមានអភិជន Haute Joaillerie' },
+        { id: 3, src: '/images/templates/emerald-diamond/diamond_2.webp', caption: 'សេចក្តីស្នេហាចែងចាំងអស់កាលជានិច្ច' },
+        { id: 4, src: '/images/templates/emerald-diamond/diamond_4.webp', caption: 'កេរដំណែលត្បូងមរកតចរណៃ' },
+        { id: 5, src: '/images/templates/emerald-diamond/diamond_5.webp', caption: 'ចិញ្ចៀនពេជ្រសច្ចាស្នេហ៍ជានិរន្តរ៍' },
+        { id: 6, src: '/images/templates/modern_luxury_prewedding.webp', caption: 'ភាពស៊ីវិល័យកម្រិតកំពូល' }
       ];
 
   // 7 Haute Joaillerie Ceremony Milestones

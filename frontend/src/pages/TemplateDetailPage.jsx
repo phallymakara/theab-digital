@@ -1,3 +1,4 @@
+import TemplateGoogleMap from '../components/TemplateGoogleMap';
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
@@ -163,6 +164,10 @@ export function TemplateDetailPage() {
   const navigate = useNavigate();
   const params = useParams({ strict: false }) || {};
   const templateId = params.templateId || 'royal-gold';
+  const isGuestView =
+    typeof window !== 'undefined' &&
+    (new URLSearchParams(window.location.search).get('mode') === 'guest' ||
+      window.location.pathname.startsWith('/guest'));
 
   const {
     isAudioPlaying,
@@ -255,7 +260,7 @@ export function TemplateDetailPage() {
       ? 'font-koulen'
       : activeTemplate.cardStyle === 'floral-romdoul-moonlight' || activeTemplate.id === 'floral-romdoul-moonlight'
       ? 'font-suwannaphum'
-      : activeTemplate.cardStyle === 'floral-glasshouse' || activeTemplate.id === 'floral-botanical-glasshouse'
+      : activeTemplate.cardStyle === 'floral-glasshouse' 
       ? 'font-preahvihear'
       : activeTemplate.cardStyle === 'floral-khmer-blossom' || activeTemplate.id === 'floral-khmer-blossom'
       ? 'font-moulpali'
@@ -280,8 +285,8 @@ export function TemplateDetailPage() {
   const templateBackdropImage =
     activeTemplate.bgBackdrop ||
     (activeTemplate.id === 'angkor-heritage'
-      ? '/images/templates/angkor_wat_scenery.jpg'
-      : '/images/templates/modern_wedding_aisle.jpg');
+      ? '/images/templates/angkor_wat_scenery.webp'
+      : '/images/templates/modern_wedding_aisle.webp');
 
   // Theme accent colors
   const themeBorder = activeTemplate.borderColor || '#D4AF37';
@@ -407,7 +412,7 @@ export function TemplateDetailPage() {
 
   // Hero Multiple Prewedding Images with Horizontal Scroll (Belongs to each template's specific model couple)
   const [heroImages, setHeroImages] = useState(
-    activeTemplate?.heroImages || ['/images/templates/royal-gold/gold_1.jpg']
+    activeTemplate?.heroImages || ['/images/templates/royal-gold/gold_1.webp']
   );
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
   const heroScrollRef = useRef(null);
@@ -498,7 +503,7 @@ export function TemplateDetailPage() {
   const galleryPhotos = activeTemplate?.galleryPhotos || [
     {
       id: 1,
-      src: activeTemplate?.bgImage || '/images/templates/royal-gold/gold_1.jpg',
+      src: activeTemplate?.bgImage || '/images/templates/royal-gold/gold_1.webp',
       caption: 'ស្នេហ៍ផ្អែមល្ហែមរវាងគូស្នេហ៍'
     }
   ];
@@ -649,7 +654,7 @@ export function TemplateDetailPage() {
           THE UNIFIED WEDDING INVITATION CONTAINER (SAME EXACT SHELL AS ROYAL-GOLD)
           ========================================================================= */}
       <main
-        className={`w-full max-w-xl sm:max-w-2xl mx-auto ${isAngkorAncient ? 'border-x-[3px] shadow-[0_0_35px_rgba(197,160,89,0.35)] ring-1 ring-[#8C6F19]/40' : 'sm:border-x-2 border-stone-300/40'} border-y-0 overflow-hidden relative z-10 animate-fade shadow-2xl flex-1 h-full min-h-0 ${isTraditional || activeTemplate.id === 'floral-botanical-glasshouse' ? 'bg-[#FAF7F2]' : isEmerald ? (activeTemplate.id === 'emerald-radiant-diamond' ? 'bg-[#021824]' : activeTemplate.id === 'emerald-jade' ? 'bg-[#042A20]' : activeTemplate.id === 'emerald-glasshouse-moonlight' ? 'bg-[#031C17]' : activeTemplate.id === 'emerald-noir-editorial' ? 'bg-[#030E0A]' : activeTemplate.id === 'emerald-malachite-seal' ? 'bg-[#042017]' : 'bg-[#033022]') : 'bg-stone-900'} flex flex-col`}
+        className={`w-full max-w-xl sm:max-w-2xl mx-auto ${isAngkorAncient ? 'border-x-[3px] shadow-[0_0_35px_rgba(197,160,89,0.35)] ring-1 ring-[#8C6F19]/40' : 'sm:border-x-2 border-stone-300/40'} border-y-0 overflow-hidden relative z-10 animate-fade shadow-2xl flex-1 h-full min-h-0 ${isTraditional ? 'bg-[#FAF7F2]' : isEmerald ? (activeTemplate.id === 'emerald-radiant-diamond' ? 'bg-[#021824]' : activeTemplate.id === 'emerald-jade' ? 'bg-[#042A20]' : activeTemplate.id === 'emerald-glasshouse-moonlight' ? 'bg-[#031C17]' : activeTemplate.id === 'emerald-noir-editorial' ? 'bg-[#030E0A]' : activeTemplate.id === 'emerald-malachite-seal' ? 'bg-[#042017]' : 'bg-[#033022]') : 'bg-stone-900'} flex flex-col`}
         style={{ borderColor: themeBorder }}
       >
         {/* Top Floating Control Bar - Inside at Top of Container (Transparent background behind buttons) */}
@@ -721,7 +726,8 @@ export function TemplateDetailPage() {
             </button>
 
             {/* Select / Customize Template Button */}
-            <button
+            {!isGuestView && (
+  <button
               onClick={() => {
                 isNavigatingToCustomizer.current = true;
                 if (window.self !== window.top) {
@@ -739,6 +745,7 @@ export function TemplateDetailPage() {
               <Sparkles className="w-3.5 h-3.5 text-amber-200 shrink-0" />
               <span>ជ្រើសរើសគំរូ</span>
             </button>
+            )}
           </div>
         </header>
 
@@ -1249,50 +1256,13 @@ export function TemplateDetailPage() {
 
                   {/* 6. VENUE & GOOGLE MAPS (ទីតាំងពិធី) */}
                   <section className="px-1.5 sm:px-3 py-4 sm:py-5 relative z-10 text-center">
-                    <div className="flex items-center justify-center gap-1.5">
-                      <MapPin className="w-4 h-4" style={{ color: themeTitleColor }} />
-                      <h3 className={`${templateFont} text-sm sm:text-base tracking-wide`} style={{ color: themeTitleColor }}>
-                        ទីតាំងពិធី
-                      </h3>
-                    </div>
-
-                    <KhmerDivider isAncient={isAngkorAncient} />
-
-                    {/* Container wrapping Map & Address - Expanded Width */}
-                    <div className={`w-full max-w-full sm:max-w-2xl mx-auto rounded-2xl p-3.5 sm:p-5 mb-3 relative ${cardBoxClass}`}>
-                      {isAngkorAncient && <KhmerAncientCornerBrackets color="border-[#C5A059]" />}
-                      {/* Embedded Google Maps Preview Frame */}
-                      <div className="rounded-xl overflow-hidden border border-white/80 mb-3.5 h-48 sm:h-60 md:h-64 bg-stone-100 shadow-inner w-full">
-                        <iframe
-                          title="Venue Location Map"
-                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3908.7753177659496!2d104.87760987595568!3d11.567936188632668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310951a029c78829%3A0xb304726bf6025bc0!2sThe%20Premier%20Centre%20Sen%20Sok!5e0!3m2!1sen!2skh!4v1700000000000!5m2!1sen!2skh"
-                          className="w-full h-full border-0"
-                          loading="lazy"
-                          allowFullScreen
-                        />
-                      </div>
-
-                      {/* Venue & Street Address */}
-                      <div className="text-center mb-3.5 px-2">
-                        <p className={`${templateFont} text-sm sm:text-base font-bold text-stone-800 leading-snug`}>
-                          {activeTemplate.id === 'angkor-ancient-royalty' ? 'សាលប្រាសាទមាស សែនសុខ (អគារ A)' : 'មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)'}
-                        </p>
-                        <p className="text-xs sm:text-[13px] text-stone-600 leading-relaxed mt-1 max-w-lg mx-auto">
-                          ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ
-                        </p>
-                      </div>
-
-                      <a
-                        href="https://maps.app.goo.gl/gmxb8VaN78xgkFiu5"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-white text-xs sm:text-sm font-bold hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-md"
-                        style={{ backgroundColor: themeTitleColor }}
-                      >
-                        <ExternalLink className="w-3.5 h-3.5 text-amber-300" />
-                        <span>Link ទៅកាន់ Google Maps</span>
-                      </a>
-                    </div>
+                    <TemplateGoogleMap
+                      locationName={activeTemplate.id === 'angkor-ancient-royalty' ? 'សាលប្រាសាទមាស សែនសុខ (អគារ A)' : weddingLocation}
+                      address={activeTemplate.defaultAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ'}
+                      googleMapsUrl={activeTemplate.googleMapsUrl || 'https://maps.app.goo.gl/gmxb8VaN78xgkFiu5'}
+                      accentColor={themeTitleColor}
+                      fontFamily={templateFont}
+                    />
                   </section>
 
                   {/* 7. PHOTO GALLERY (រូបថតអនុស្សារីយ៍) */}
@@ -1364,7 +1334,7 @@ export function TemplateDetailPage() {
                       {/* QR Image Plate */}
                       <div className="p-3 bg-white/95 backdrop-blur-sm rounded-2xl border border-stone-100 shadow-inner inline-block mb-2.5">
                         <img
-                          src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(`https://theab-digital.app/gift/${activeTemplate.id}`)}`}
+                          src="/images/aba_qr.webp"
                           alt="Scan to Gift QR Code"
                           className="w-32 h-32 sm:w-36 sm:h-36 object-contain rounded-lg" decoding="async" loading="lazy" />
                       </div>

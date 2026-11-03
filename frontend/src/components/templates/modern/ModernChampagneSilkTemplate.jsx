@@ -1,3 +1,5 @@
+import TemplateGoogleMap from '../../TemplateGoogleMap';
+import TemplateGratitudeNote from '../../TemplateGratitudeNote';
 import React, { useState, useEffect, useRef } from 'react';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
@@ -65,7 +67,7 @@ export function ModernChampagneSilkTemplate({
   const bankName = data?.bankName || 'ABA Bank';
   const accountName = data?.accountName || 'VAN SOPHEAK';
   const accountNumber = data?.accountNumber || '012 345 678';
-  const qrCodeImage = data?.qrCodeImage || null;
+  const qrCodeImage = data?.qrCodeImage || '/images/aba_qr.webp';
   const phoneGroom = data?.phoneGroom || data?.hostPhoneGroom || '012 345 678';
   const phoneBride = data?.phoneBride || data?.hostPhoneBride || '098 765 432';
   const telegramLink = data?.telegramLink || 'https://t.me/theabdigital';
@@ -77,23 +79,23 @@ export function ModernChampagneSilkTemplate({
     : (activeTemplate?.heroImages && activeTemplate.heroImages.length >= 5)
     ? activeTemplate.heroImages
     : [
-        '/images/templates/modern-champagne/champagne_1.jpg',
-        '/images/templates/modern-champagne/champagne_2.jpg',
-        '/images/templates/modern-champagne/champagne_3.jpg',
-        '/images/templates/modern-champagne/champagne_4.jpg',
-        '/images/templates/modern-champagne/champagne_5.jpg'
+        '/images/templates/modern-champagne/champagne_1.webp',
+        '/images/templates/modern-champagne/champagne_2.webp',
+        '/images/templates/modern-champagne/champagne_3.webp',
+        '/images/templates/modern-champagne/champagne_4.webp',
+        '/images/templates/modern-champagne/champagne_5.webp'
       ];
 
   // 6 Prewedding Gallery Photos
   const galleryPhotos = (data?.galleryPhotos && data.galleryPhotos.length > 0)
     ? data.galleryPhotos
     : (activeTemplate?.galleryPhotos || [
-        { id: 1, src: '/images/templates/modern-champagne/champagne_1.jpg', caption: 'ភាពស៊ីវិល័យ និងសច្ចាស្នេហ៍អភិជន' },
-        { id: 2, src: '/images/templates/modern-champagne/champagne_2.jpg', caption: 'រចនាបថ Editorial Lookbook សូត្រមាស' },
-        { id: 3, src: '/images/templates/modern-champagne/champagne_3.jpg', caption: 'ផ្កាអ័រគីដេទឹកមាស និងស្នាមញញឹមរស្មី' },
-        { id: 4, src: '/images/templates/modern-champagne/champagne_4.jpg', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់ដ៏បរិសុទ្ធ' },
-        { id: 5, src: '/images/templates/modern-champagne/champagne_5.jpg', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្នុងវិមានស្នេហ៍' },
-        { id: 6, src: '/images/templates/modern-champagne/gallery_1.jpg', caption: 'ចំណងអាពាហ៍ពិពាហ៍អមតៈ' }
+        { id: 1, src: '/images/templates/modern-champagne/champagne_1.webp', caption: 'ភាពស៊ីវិល័យ និងសច្ចាស្នេហ៍អភិជន' },
+        { id: 2, src: '/images/templates/modern-champagne/champagne_2.webp', caption: 'រចនាបថ Editorial Lookbook សូត្រមាស' },
+        { id: 3, src: '/images/templates/modern-champagne/champagne_3.webp', caption: 'ផ្កាអ័រគីដេទឹកមាស និងស្នាមញញឹមរស្មី' },
+        { id: 4, src: '/images/templates/modern-champagne/champagne_4.webp', caption: 'អនុស្សាវរីយ៍នៃក្តីស្រឡាញ់ដ៏បរិសុទ្ធ' },
+        { id: 5, src: '/images/templates/modern-champagne/champagne_5.webp', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្នុងវិមានស្នេហ៍' },
+        { id: 6, src: '/images/templates/modern-champagne/gallery_1.webp', caption: 'ចំណងអាពាហ៍ពិពាហ៍អមតៈ' }
       ]);
 
   // Hero Snap Carousel State
@@ -620,25 +622,14 @@ export function ModernChampagneSilkTemplate({
             <h2 className="font-komutt text-2xl font-bold text-stone-900">ទីតាំងប្រារព្ធពិធី</h2>
           </div>
 
-          <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-xs text-amber-900 font-semibold">
-                <MapPin className="w-4 h-4 text-amber-600 shrink-0" />
-                <span>{weddingLocation}</span>
-              </div>
-              <p className="text-[11px] text-stone-500 pl-6">{locationAddress}</p>
-            </div>
-            <a
-              href={googleMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-amber-600 text-white font-semibold text-xs hover:bg-amber-700 transition duration-300 shadow-md shadow-amber-600/20 shrink-0"
-            >
-              <Navigation className="w-3.5 h-3.5" />
-              <span>បើកមើលផែនទី Google Maps</span>
-            </a>
-          </div>
-        </div>
+          <TemplateGratitudeNote isDark={false} accentColor="#d97706" fontFamily="font-komutt" />
+          <TemplateGoogleMap
+            locationName={weddingLocation}
+            address={locationAddress}
+            googleMapsUrl={googleMapsUrl}
+            accentColor="#d97706"
+            fontFamily="font-komutt"
+          /></div>
       </section>
 
       {/* =========================================================================

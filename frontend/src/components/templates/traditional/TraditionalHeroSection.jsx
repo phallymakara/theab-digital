@@ -8,7 +8,7 @@ export function TraditionalHeroSection({
   groom = 'ហេង វឌ្ឍនា',
   bride = 'កែវ ចរណៃ',
   images = [],
-  fallbackImage = '/images/templates/traditional_lacquer_gold_prewedding.jpg',
+  fallbackImage = '/images/templates/traditional_lacquer_gold_prewedding.webp',
   themeBorder = '#D4AF37',
   badgeText = 'សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍',
   fontNames = 'font-moul',
@@ -16,7 +16,7 @@ export function TraditionalHeroSection({
 }) {
   const heroList = (images && images.length > 0)
     ? images
-    : [fallbackImage, '/images/templates/royal-gold/gold_1.jpg', '/images/templates/royal-gold/gold_2.jpg'];
+    : [fallbackImage, '/images/templates/royal-gold/gold_1.webp', '/images/templates/royal-gold/gold_2.webp'];
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollRef = useRef(null);

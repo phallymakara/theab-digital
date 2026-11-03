@@ -1,27 +1,31 @@
-import { BotanicalGlasshouseTemplate } from './BotanicalGlasshouseTemplate';
-import { KhmerBlossomTemplate } from './KhmerBlossomTemplate';
-import { EditorialMagazineTemplate } from './EditorialMagazineTemplate';
 import RomdoulMoonlightTemplate from './RomdoulMoonlightTemplate';
-import GoldenOrchidTemplate from './GoldenOrchidTemplate';
+import { BotanicalGlasshouseTemplate } from './BotanicalGlasshouseTemplate';
+import { EditorialMagazineTemplate } from './EditorialMagazineTemplate';
 import { FloralRomanceTemplate } from './FloralRomanceTemplate';
+import GoldenOrchidTemplate from './GoldenOrchidTemplate';
+import { KhmerBlossomTemplate } from './KhmerBlossomTemplate';
 
 export {
-  BotanicalGlasshouseTemplate,
-  KhmerBlossomTemplate,
-  EditorialMagazineTemplate,
   RomdoulMoonlightTemplate,
+  BotanicalGlasshouseTemplate,
+  EditorialMagazineTemplate,
+  FloralRomanceTemplate,
   GoldenOrchidTemplate,
-  FloralRomanceTemplate
+  KhmerBlossomTemplate
 };
 
 export const FLORAL_TEMPLATES = {
-  'floral-romance': FloralRomanceTemplate,
-  'romantic-frosted': FloralRomanceTemplate,
-  'floral-botanical-glasshouse': BotanicalGlasshouseTemplate,
-  'floral-khmer-blossom': KhmerBlossomTemplate,
-  'floral-editorial-magazine': EditorialMagazineTemplate,
   'floral-romdoul-moonlight': RomdoulMoonlightTemplate,
-  'floral-golden-orchid': GoldenOrchidTemplate
+  'romdoul-moonlight': RomdoulMoonlightTemplate,
+  'floral-botanical-glasshouse': BotanicalGlasshouseTemplate,
+  'botanical-glasshouse': BotanicalGlasshouseTemplate,
+  'floral-editorial-magazine': EditorialMagazineTemplate,
+  'editorial-magazine': EditorialMagazineTemplate,
+  'floral-romance': FloralRomanceTemplate,
+  'floral-golden-orchid': GoldenOrchidTemplate,
+  'golden-orchid': GoldenOrchidTemplate,
+  'floral-cambodian-blossom': KhmerBlossomTemplate,
+  'khmer-blossom': KhmerBlossomTemplate
 };
 
 export default FLORAL_TEMPLATES;

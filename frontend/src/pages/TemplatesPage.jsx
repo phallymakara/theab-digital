@@ -20,7 +20,8 @@ import {
   Flower2
 } from 'lucide-react';
 
-export function TemplatesPage({ ceremonyType = 'wedding' }) {
+export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false }) {
+  const isGuest = isGuestMode || (typeof window !== 'undefined' && window.location.pathname.startsWith('/guest'));
   const navigate = useNavigate();
   const {
     selectCeremony,
@@ -39,11 +40,9 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
   const activeCategory = selectedCategory || 'all';
   const setActiveCategory = setSelectedCategory;
   const [previewTemplate, setPreviewTemplate] = useState(null);
-  const [iframeLoaded, setIframeLoaded] = useState(false);
   const categoryScrollRef = useRef(null);
 
   const openPreview = (tpl) => {
-    setIframeLoaded(false);
     setPreviewTemplate(tpl);
   };
 
@@ -72,7 +71,7 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
     setSelectedTemplate(template);
     setCurrentTheme(template.themeColor || 'crimson');
     addToast(`បានជ្រើសរើសគំរូ៖ "${template.name}"`, 'success');
-    restartAndPlayAudio?.();
+    stopAudio?.();
     navigate({ to: `/customize/${template.id}` });
   };
 
@@ -296,9 +295,9 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
 
                       {/* Couple Names - Modern Khmer Typographic Text Directly Floating on Photo */}
                       {tpl.cardStyle === 'floral-romdoul-moonlight' ? (
-                        /* Romdoul Moonlight Romance Style with font-suwannaphum */
+                        /* Romdoul Moonlight Romance Style with Kh Ang Komutt A */
                         <div className="text-center w-full relative z-20 my-auto px-4 py-2 flex flex-col justify-center items-center">
-                          <div className="font-suwannaphum text-lg sm:text-xl text-white font-bold leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-200 transition-colors truncate">
+                          <div className="font-komutt-a text-lg sm:text-xl text-white font-bold leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-200 transition-colors truncate">
                             {cardGroom}
                           </div>
 
@@ -308,7 +307,7 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                             <span className="h-[1px] w-8 bg-gradient-to-l from-transparent via-amber-300 to-amber-200"></span>
                           </div>
 
-                          <div className="font-suwannaphum text-lg sm:text-xl text-white font-bold leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-200 transition-colors truncate">
+                          <div className="font-komutt-a text-lg sm:text-xl text-white font-bold leading-relaxed tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] hover:text-amber-200 transition-colors truncate">
                             {cardBride}
                           </div>
                         </div>
@@ -802,26 +801,39 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
                         </p>
                       </div>
 
-                      {/* Action Buttons */}
-                      <div className="grid grid-cols-2 gap-2 pt-2 border-t border-stone-100">
-                        <button
-                          onClick={() => openPreview(tpl)}
-                          className="btn-secondary !rounded-full !py-1.5 text-xs flex items-center justify-center gap-1.5 cursor-pointer font-bold hover:bg-stone-100 active:scale-95 transition-all"
-                        >
-                          <Maximize2 className="w-3.5 h-3.5 text-stone-600" />
-                          <span>មើលគំរូផ្ទាល់</span>
-                        </button>
-                        <button
-                          onClick={() => handleSelectTemplate(tpl)}
-                          style={{
-                            backgroundColor: tpl.titleColor || (tpl.themeColor === 'gold' ? '#B69225' : tpl.borderColor),
-                          }}
-                          className="!rounded-full !py-1.5 text-xs text-white flex items-center justify-center gap-1.5 cursor-pointer font-bold shadow-sm hover:brightness-110 active:scale-95 transition-all duration-200"
-                        >
-                          <CheckCircle className="w-3.5 h-3.5 text-white" />
-                          <span>ជ្រើសរើស</span>
-                        </button>
-                      </div>
+                      {/* Action Buttons: Guest Mode has only 'មើលគំរូ', no 'ជ្រើសរើស' */}
+                      {isGuest ? (
+                        <div className="pt-2 border-t border-stone-100">
+                          <button
+                            type="button"
+                            onClick={() => openPreview(tpl)}
+                            className="w-full btn-secondary !rounded-full !py-2 text-xs flex items-center justify-center gap-1.5 cursor-pointer font-bold hover:bg-stone-100 active:scale-95 transition-all"
+                          >
+                            <Maximize2 className="w-3.5 h-3.5 text-stone-600" />
+                            <span>មើលគំរូ</span>
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 gap-2 pt-2 border-t border-stone-100">
+                          <button
+                            onClick={() => openPreview(tpl)}
+                            className="btn-secondary !rounded-full !py-1.5 text-xs flex items-center justify-center gap-1.5 cursor-pointer font-bold hover:bg-stone-100 active:scale-95 transition-all"
+                          >
+                            <Maximize2 className="w-3.5 h-3.5 text-stone-600" />
+                            <span>មើលគំរូផ្ទាល់</span>
+                          </button>
+                          <button
+                            onClick={() => handleSelectTemplate(tpl)}
+                            style={{
+                              backgroundColor: tpl.titleColor || (tpl.themeColor === 'gold' ? '#B69225' : tpl.borderColor),
+                            }}
+                            className="!rounded-full !py-1.5 text-xs text-white flex items-center justify-center gap-1.5 cursor-pointer font-bold shadow-sm hover:brightness-110 active:scale-95 transition-all duration-200"
+                          >
+                            <CheckCircle className="w-3.5 h-3.5 text-white" />
+                            <span>ជ្រើសរើស</span>
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 );
@@ -849,28 +861,17 @@ export function TemplatesPage({ ceremonyType = 'wedding' }) {
             <X className="w-5 h-5 text-stone-200 group-hover:text-white" />
           </button>
 
-          {/* Modal Container: Wraps entire height of the page */}
+                    {/* Modal Container: Wraps entire height of the page */}
           <div
             className="relative w-full max-w-2xl h-screen h-[100dvh] shadow-2xl overflow-hidden bg-stone-950 border-x border-stone-800/80 flex flex-col animate-scaleUp z-10"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Silky Smooth Gold Spinner Loader */}
-            {!iframeLoaded && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-stone-950/90 backdrop-blur-xs z-20 transition-opacity pointer-events-none">
-                <div className="w-10 h-10 border-2 border-amber-400/20 border-t-amber-400 rounded-full animate-spin mb-3 shadow-[0_0_15px_rgba(245,158,11,0.3)]"></div>
-                <span className="font-kantumruy text-xs text-amber-200/90 tracking-wider">កំពុងផ្ទុកគំរូធៀប...</span>
-              </div>
-            )}
-
-            {/* Direct Live Template View via Iframe with Smooth Fade-in */}
+            {/* Direct Live Template View via Iframe */}
             <iframe
               key={previewTemplate.id}
-              src={`/${previewTemplate.id}/preview`}
+              src={isGuest ? `/${previewTemplate.id}/preview?mode=guest` : `/${previewTemplate.id}/preview`}
               title={previewTemplate.name}
-              onLoad={() => setIframeLoaded(true)}
-              className={`w-full h-full border-0 bg-stone-950 transition-opacity duration-300 ${
-                iframeLoaded ? 'opacity-100' : 'opacity-0'
-              }`}
+              className="w-full h-full border-0 bg-stone-950"
             />
           </div>
         </div>

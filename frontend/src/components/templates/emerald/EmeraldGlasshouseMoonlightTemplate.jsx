@@ -1,3 +1,4 @@
+import { TemplateGoogleMap } from '../../TemplateGoogleMap';
 import React, { useState, useRef, useEffect } from 'react';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
@@ -48,7 +49,7 @@ export function EmeraldGlasshouseMoonlightTemplate({ data = {}, invitationData =
   const bankName = data.bankName || invitation?.bankName || 'ABA PAY / BAKONG';
   const accountName = data.accountName || invitation?.accountName || `${groom} & ${bride}`;
   const accountNumber = data.accountNumber || invitation?.accountNumber || '012 888 999';
-  const qrCodeImage = data.qrCodeImage || invitation?.qrCodeImage || null;
+  const qrCodeImage = data.qrCodeImage || invitation?.qrCodeImage || '/images/aba_qr.webp';
 
   // Host Contacts
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation?.hostPhoneGroom || '012 888 999';
@@ -59,11 +60,11 @@ export function EmeraldGlasshouseMoonlightTemplate({ data = {}, invitationData =
   const heroList = (data.heroImages && data.heroImages.length > 0)
     ? data.heroImages
     : [
-        '/images/templates/emerald_glasshouse_prewedding.jpg',
-        '/images/templates/emerald-glasshouse/glasshouse_2.jpg',
-        '/images/templates/emerald-glasshouse/glasshouse_3.jpg',
-        '/images/templates/emerald-glasshouse/glasshouse_4.jpg',
-        '/images/templates/emerald-glasshouse/glasshouse_5.jpg'
+        '/images/templates/emerald_glasshouse_prewedding.webp',
+        '/images/templates/emerald-glasshouse/glasshouse_2.webp',
+        '/images/templates/emerald-glasshouse/glasshouse_3.webp',
+        '/images/templates/emerald-glasshouse/glasshouse_4.webp',
+        '/images/templates/emerald-glasshouse/glasshouse_5.webp'
       ];
 
   const [activeHeroIdx, setActiveHeroIdx] = useState(0);
@@ -117,12 +118,12 @@ export function EmeraldGlasshouseMoonlightTemplate({ data = {}, invitationData =
   const galleryPhotos = (data.galleryPhotos && data.galleryPhotos.length > 0)
     ? data.galleryPhotos
     : [
-        { id: 1, src: '/images/templates/emerald_glasshouse_prewedding.jpg', caption: 'វិមានកែវរស្មីចន្ទ្រាសិរីសួស្តី' },
-        { id: 2, src: '/images/templates/emerald-glasshouse/glasshouse_2.jpg', caption: 'ស្នាមញញឹមរំលេចសេចក្តីស្រឡាញ់' },
-        { id: 3, src: '/images/templates/emerald-glasshouse/glasshouse_3.jpg', caption: 'គន្លងគូស្វាមីក្រោមពន្លឺចន្ទ្រា' },
-        { id: 4, src: '/images/templates/emerald-glasshouse/glasshouse_4.jpg', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្នុងវិមានមរកត' },
-        { id: 5, src: '/images/templates/emerald-glasshouse/glasshouse_5.jpg', caption: 'ចិញ្ចៀនពេជ្រត្បូងមរកតសច្ចាស្នេហ៍' },
-        { id: 6, src: '/images/templates/emerald_jade_prewedding.jpg', caption: 'អនុស្សាវរីយ៍សិរីមង្គលអមតៈ' }
+        { id: 1, src: '/images/templates/emerald_glasshouse_prewedding.webp', caption: 'វិមានកែវរស្មីចន្ទ្រាសិរីសួស្តី' },
+        { id: 2, src: '/images/templates/emerald-glasshouse/glasshouse_2.webp', caption: 'ស្នាមញញឹមរំលេចសេចក្តីស្រឡាញ់' },
+        { id: 3, src: '/images/templates/emerald-glasshouse/glasshouse_3.webp', caption: 'គន្លងគូស្វាមីក្រោមពន្លឺចន្ទ្រា' },
+        { id: 4, src: '/images/templates/emerald-glasshouse/glasshouse_4.webp', caption: 'សេចក្តីសុខក្សេមក្សាន្តក្នុងវិមានមរកត' },
+        { id: 5, src: '/images/templates/emerald-glasshouse/glasshouse_5.webp', caption: 'ចិញ្ចៀនពេជ្រត្បូងមរកតសច្ចាស្នេហ៍' },
+        { id: 6, src: '/images/templates/emerald_jade_prewedding.webp', caption: 'អនុស្សាវរីយ៍សិរីមង្គលអមតៈ' }
       ];
 
   // 7 Standard Ceremony Milestones

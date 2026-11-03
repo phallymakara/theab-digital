@@ -1,3 +1,6 @@
+import TemplateGoogleMap from '../../TemplateGoogleMap';
+import TemplateCountdown from '../../TemplateCountdown';
+import TemplateGratitudeNote from '../../TemplateGratitudeNote';
 import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import {
@@ -35,13 +38,13 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
   const locationName = data.ceremonyLocation || invitation.weddingLocation || activeTemplate?.demoLocation || 'សណ្ឋាគារ រ៉ូសវូដ ភ្នំពេញ (Rosewood Phnom Penh Salon)';
   const address = data.locationAddress || data.ceremonyAddress || invitation.locationAddress || 'អគារ វឌ្ឍនៈ កាពីតាល មហាវិថីព្រះមុនីវង្ស រាជធានីភ្នំពេញ';
   const googleMapsUrl = data.googleMapsUrl || invitation.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationName + ' ' + address)}`;
-  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/floral_editorial_magazine_prewedding.jpg';
+  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/floral_editorial_magazine_prewedding.webp';
 
   // Bank & Gift
   const bankName = data.bankName || invitation.bankName || 'ABA BANK / BAKONG';
   const accountName = data.accountName || invitation.accountName || `${groom} & ${bride}`;
   const accountNumber = data.accountNumber || invitation.accountNumber || '001 888 999';
-  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || null;
+  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || '/images/aba_qr.webp';
 
   // Host Contacts
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation.hostPhoneGroom || '012 345 678';
@@ -57,6 +60,17 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
         { time: '17:30 ល្ងាច', title: 'ពិធីពិសាភោជនាហារមង្គលការ', desc: 'ទទួលភ្ញៀវកិត្តិយសពិសាអាហារ និងរាំកម្សាន្ត' }
       ];
 
+  const heroImages = (data.heroImages && data.heroImages.length > 0)
+    ? data.heroImages
+    : (activeTemplate?.heroImages && activeTemplate.heroImages.length > 0)
+    ? activeTemplate.heroImages
+    : [
+        preweddingImg,
+        '/images/templates/floral-romance/floral_1.webp',
+        '/images/templates/floral-romance/floral_2.webp',
+        '/images/templates/floral-romance/floral_3.webp'
+      ];
+  const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
   const [activeTab, setActiveTab] = useState('cover'); // 'cover' | 'letter' | 'agenda' | 'lookbook' | 'rsvp'
   const { isPlaying, toggleMusic } = useTemplateAudio();
   const [copied, setCopied] = useState(false);
@@ -188,8 +202,8 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
         subtitle: 'Editorial Gallery'
       })) || [
         { id: 1, src: preweddingImg, title: 'The Wedding Cover', subtitle: 'Phnom Penh Editorial Look' },
-        { id: 2, src: '/images/templates/floral-romance/floral_1.jpg', title: 'The Serenade Arch', subtitle: 'Blush Hydrangeas' },
-        { id: 3, src: '/images/templates/floral-romance/floral_2.jpg', title: 'Sunset Silhouette', subtitle: 'Golden Hour Splendor' }
+        { id: 2, src: '/images/templates/floral-romance/floral_1.webp', title: 'The Serenade Arch', subtitle: 'Blush Hydrangeas' },
+        { id: 3, src: '/images/templates/floral-romance/floral_2.webp', title: 'Sunset Silhouette', subtitle: 'Golden Hour Splendor' }
       ]);
 
   return (
@@ -228,9 +242,37 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
             ========================================================================= */}
         <section className="relative w-full aspect-[3/4] bg-stone-900 overflow-hidden">
           <img
-            src={preweddingImg}
+            src={heroImages[currentHeroIdx] || preweddingImg}
             alt="Editorial Wedding"
-            className="w-full h-full object-cover object-top scale-100" decoding="async" />
+            className="w-full h-full object-cover object-top scale-100 transition-all duration-500" decoding="async" />
+          {heroImages.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={() => setCurrentHeroIdx((currentHeroIdx - 1 + heroImages.length) % heroImages.length)}
+                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-black/60 transition cursor-pointer"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setCurrentHeroIdx((currentHeroIdx + 1) % heroImages.length)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-black/60 transition cursor-pointer"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <div className="absolute bottom-2 inset-x-0 flex justify-center gap-1.5 z-20">
+                {heroImages.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setCurrentHeroIdx(i)}
+                    className={`h-1.5 rounded-full transition-all cursor-pointer ${i === currentHeroIdx ? 'w-5 bg-amber-400' : 'w-1.5 bg-white/50'}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
 
           {/* Vignette Gradients */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 pointer-events-none"></div>
@@ -406,19 +448,19 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
                 ))}
               </div>
 
-              {/* Location Card */}
-              <div className="p-5 rounded-3xl bg-stone-900 text-white text-center mt-5">
-                <MapPin className="w-5 h-5 text-amber-300 mx-auto mb-2" />
-                <h4 className="font-phalluch text-base text-amber-100 mb-1">{locationName}</h4>
-                <p className="text-xs text-stone-300 max-w-sm mx-auto mb-4">{address}</p>
-                <a
-                  href={googleMapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-stone-900 text-xs font-bold shadow hover:bg-amber-100 transition-colors cursor-pointer"
-                >
-                  <span>បើកមើលលើ Google Maps</span>
-                </a>
+              {/* Gratitude & Apology Section */}
+              <TemplateGratitudeNote isDark={true} accentColor="#f59e0b" fontFamily="font-phalluch" />
+
+              {/* Location Card with Embedded Google Map & Text Address */}
+              <div className="mt-4">
+                <TemplateGoogleMap
+                  locationName={locationName}
+                  address={address}
+                  googleMapsUrl={googleMapsUrl}
+                  isDark={true}
+                  accentColor="#f59e0b"
+                  fontFamily="font-phalluch"
+                />
               </div>
             </section>
           )}
@@ -479,7 +521,7 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
                   className="max-w-[190px] mx-auto p-3 bg-white rounded-2xl border border-stone-200 shadow-inner mb-3 cursor-pointer hover:border-stone-400 transition-all"
                 >
                   <img
-                    src={qrCodeImage || '/images/aba_qr.png'}
+                    src={qrCodeImage || '/images/aba_qr.webp'}
                     alt="QR Code"
                     className="w-full h-auto rounded-lg object-contain"
                     onError={(e) => {
@@ -715,7 +757,7 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
             <h4 className="font-phalluch text-sm text-stone-900 mb-1">{bankName}</h4>
             <p className="text-xs text-stone-500 mb-3">{accountName}</p>
             <img
-              src={qrCodeImage || '/images/aba_qr.png'}
+              src={qrCodeImage || '/images/aba_qr.webp'}
               alt="QR Code"
               className="w-full aspect-square object-contain rounded-xl border border-stone-200" decoding="async" loading="lazy" />
             <p className="text-xs font-serifTrad font-bold text-stone-900 mt-3">

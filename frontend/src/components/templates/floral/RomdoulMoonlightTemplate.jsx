@@ -1,3 +1,4 @@
+import { TemplateGoogleMap } from '../../TemplateGoogleMap';
 import React, { useState, useEffect, useRef } from 'react';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
@@ -38,7 +39,7 @@ import {
  * -------------------------------------------------------------
  * Theme: "រាត្រីផ្ការំដួលពន្លឺចន្ទ" (Romdoul Moonlight Starlight Union)
  * Category: ផ្កាស្រស់រ៉ូមែនទិក (floral)
- * Typography: font-suwannaphum (headings/names) + font-serifTrad (Cinzel) + font-kantumruy (body)
+ * Typography: font-komutt-a (headings/names) + font-serifTrad (Cinzel) + font-kantumruy (body)
  * Components:
  *   1. 5-Photo Khmer Prewedding Hero Snap Carousel with stationary centered typography
  *   2. Parents of Groom & Bride Blessing Section
@@ -83,7 +84,7 @@ export default function RomdoulMoonlightTemplate({
   const bankName = data?.bankName || invitation?.bankName || 'ABA BANK / BAKONG';
   const accountName = data?.accountName || invitation?.accountName || `${groomName} & ${brideName}`;
   const accountNumber = data?.accountNumber || invitation?.accountNumber || '001 234 567';
-  const qrCodeImage = data?.qrCodeImage || invitation?.qrCodeImage || null;
+  const qrCodeImage = data?.qrCodeImage || invitation?.qrCodeImage || '/images/aba_qr.webp';
 
   // Host Contacts
   const phoneGroom = data?.hostPhoneGroom || data?.phoneGroom || invitation?.hostPhoneGroom || '012 345 678';
@@ -96,23 +97,23 @@ export default function RomdoulMoonlightTemplate({
     : (activeTemplate?.heroImages && activeTemplate.heroImages.length >= 5)
     ? activeTemplate.heroImages
     : [
-        '/images/templates/romdoul-moonlight/hero_1.jpg',
-        '/images/templates/romdoul-moonlight/hero_2.jpg',
-        '/images/templates/romdoul-moonlight/hero_3.jpg',
-        '/images/templates/romdoul-moonlight/hero_4.jpg',
-        '/images/templates/romdoul-moonlight/hero_5.jpg'
+        '/images/templates/romdoul-moonlight/hero_1.webp',
+        '/images/templates/romdoul-moonlight/hero_2.webp',
+        '/images/templates/romdoul-moonlight/hero_3.webp',
+        '/images/templates/romdoul-moonlight/hero_4.webp',
+        '/images/templates/romdoul-moonlight/hero_5.webp'
       ];
 
   // 6 Prewedding Gallery Photos with captions
   const galleryPhotos = (data?.galleryPhotos && data.galleryPhotos.length > 0)
     ? data.galleryPhotos
     : (activeTemplate?.galleryPhotos || [
-        { id: 1, src: '/images/templates/romdoul-moonlight/hero_1.jpg', caption: 'រាត្រីផ្ការំដួល និងពន្លឺចន្ទពេញវង់' },
-        { id: 2, src: '/images/templates/romdoul-moonlight/hero_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' },
-        { id: 3, src: '/images/templates/romdoul-moonlight/hero_3.jpg', caption: 'កម្រងផ្កាអ័រគីដេទឹកមាសសច្ចាស្នេហ៍' },
-        { id: 4, src: '/images/templates/romdoul-moonlight/hero_4.jpg', caption: 'ក្លិនផ្កាឡាវែនឌ័រក្រោមពន្លឺចន្ទ្រា' },
-        { id: 5, src: '/images/templates/romdoul-moonlight/hero_5.jpg', caption: 'សួនផ្កាបូតានិកមនោរម្យ' },
-        { id: 6, src: '/images/templates/romdoul-moonlight/gallery_1.jpg', caption: 'អនុស្សាវរីយ៍សិរីសួស្តីអមតៈ' }
+        { id: 1, src: '/images/templates/romdoul-moonlight/hero_1.webp', caption: 'រាត្រីផ្ការំដួល និងពន្លឺចន្ទពេញវង់' },
+        { id: 2, src: '/images/templates/romdoul-moonlight/hero_2.webp', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' },
+        { id: 3, src: '/images/templates/romdoul-moonlight/hero_3.webp', caption: 'កម្រងផ្កាអ័រគីដេទឹកមាសសច្ចាស្នេហ៍' },
+        { id: 4, src: '/images/templates/romdoul-moonlight/hero_4.webp', caption: 'ក្លិនផ្កាឡាវែនឌ័រក្រោមពន្លឺចន្ទ្រា' },
+        { id: 5, src: '/images/templates/romdoul-moonlight/hero_5.webp', caption: 'សួនផ្កាបូតានិកមនោរម្យ' },
+        { id: 6, src: '/images/templates/romdoul-moonlight/gallery_1.webp', caption: 'អនុស្សាវរីយ៍សិរីសួស្តីអមតៈ' }
       ]);
 
   // Hero Snap Carousel State
@@ -447,14 +448,14 @@ export default function RomdoulMoonlightTemplate({
             {/* Top Celestial Emblem */}
             <div className="flex items-center justify-center gap-2 mb-1">
               <span className="text-amber-300 text-xs drop-shadow-[0_0_8px_#F59E0B]">✦</span>
-              <span className="font-suwannaphum text-[11px] sm:text-xs md:text-sm text-amber-200 tracking-widest drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+              <span className="font-komutt-a text-[11px] sm:text-xs md:text-sm text-amber-200 tracking-widest drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
                 សិរីសួស្តីមង្គលអាពាហ៍ពិពាហ៍
               </span>
               <span className="text-amber-300 text-xs drop-shadow-[0_0_8px_#F59E0B]">✦</span>
             </div>
 
-            {/* Groom Name in font-suwannaphum */}
-            <h1 className="font-suwannaphum text-2xl sm:text-3xl md:text-4xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-rose-200">
+            {/* Groom Name in font-komutt-a */}
+            <h1 className="font-komutt-a text-2xl sm:text-3xl md:text-4xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-rose-200">
               {groomName}
             </h1>
 
@@ -467,14 +468,14 @@ export default function RomdoulMoonlightTemplate({
               <div className="h-[1px] sm:h-[1.5px] w-10 sm:w-14 bg-gradient-to-l from-transparent via-amber-300 to-amber-200 drop-shadow" />
             </div>
 
-            {/* Bride Name in font-suwannaphum */}
-            <h1 className="font-suwannaphum text-2xl sm:text-3xl md:text-4xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-rose-200">
+            {/* Bride Name in font-komutt-a */}
+            <h1 className="font-komutt-a text-2xl sm:text-3xl md:text-4xl font-bold text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] leading-tight text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-rose-200">
               {brideName}
             </h1>
 
             {/* Date & Location Subtitle */}
             <div className="pt-2">
-              <p className="text-xs sm:text-sm text-amber-200/95 font-medium tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] font-suwannaphum">
+              <p className="text-xs sm:text-sm text-amber-200/95 font-medium tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] font-komutt-a">
                 {weddingDate}
               </p>
               <p className="text-[11px] sm:text-xs text-slate-300 mt-1 drop-shadow font-light">
@@ -535,7 +536,7 @@ export default function RomdoulMoonlightTemplate({
               <span>សិរីមង្គលមហាកិត្តិយស</span>
               <Sparkles className="w-3.5 h-3.5" />
             </div>
-            <h2 className="font-suwannaphum text-2xl sm:text-3xl font-bold text-amber-100">
+            <h2 className="font-komutt-a text-2xl sm:text-3xl font-bold text-amber-100">
               សេចក្តីគោរពអញ្ជើញ និងពរជ័យមាតាបិតា
             </h2>
             <p className="text-xs text-slate-300 max-w-md mx-auto leading-relaxed">
@@ -549,8 +550,8 @@ export default function RomdoulMoonlightTemplate({
               <span className="text-[11px] text-amber-300/80 font-serifTrad uppercase tracking-wider block mb-1">
                 ខាងកូនប្រុស
               </span>
-              <p className="font-suwannaphum text-sm sm:text-base font-semibold text-slate-100">{groomFather}</p>
-              <p className="font-suwannaphum text-sm sm:text-base font-semibold text-slate-100">{groomMother}</p>
+              <p className="font-komutt-a text-sm sm:text-base font-semibold text-slate-100">{groomFather}</p>
+              <p className="font-komutt-a text-sm sm:text-base font-semibold text-slate-100">{groomMother}</p>
             </div>
 
             {/* Bride's Parents */}
@@ -558,8 +559,8 @@ export default function RomdoulMoonlightTemplate({
               <span className="text-[11px] text-amber-300/80 font-serifTrad uppercase tracking-wider block mb-1">
                 ខាងកូនស្រី
               </span>
-              <p className="font-suwannaphum text-sm sm:text-base font-semibold text-slate-100">{brideFather}</p>
-              <p className="font-suwannaphum text-sm sm:text-base font-semibold text-slate-100">{brideMother}</p>
+              <p className="font-komutt-a text-sm sm:text-base font-semibold text-slate-100">{brideFather}</p>
+              <p className="font-komutt-a text-sm sm:text-base font-semibold text-slate-100">{brideMother}</p>
             </div>
           </div>
         </div>
@@ -576,7 +577,7 @@ export default function RomdoulMoonlightTemplate({
             <Stars className="w-3.5 h-3.5" />
           </div>
 
-          <h2 className="font-suwannaphum text-2xl sm:text-3xl font-bold text-amber-100">
+          <h2 className="font-komutt-a text-2xl sm:text-3xl font-bold text-amber-100">
             សេចក្តីគោរពអញ្ជើញ
           </h2>
 
@@ -584,7 +585,7 @@ export default function RomdoulMoonlightTemplate({
             ដើម្បីប្រសិទ្ធពរជ័យ សិរីសួស្តី ជ័យមង្គល វិបុលសុខ មហាប្រសើរ ក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍នៃកូនប្រុស-កូនស្រីរបស់យើងខ្ញុំ ដែលនឹងប្រព្រឹត្តទៅតាមគន្លងប្រពៃណីព្រះពុទ្ធសាសនា និងទំនៀមខ្មែរបុរាណ។ វត្តមានដ៏ឧត្តុង្គឧត្តមរបស់លោកអ្នក គឺជាកិត្តិយសដ៏ថ្លៃថ្លាបំផុតសម្រាប់គ្រួសារយើងខ្ញុំទាំងពីរ។
           </p>
 
-          <div className="pt-2 flex items-center justify-center gap-2 text-xs text-amber-300 font-suwannaphum">
+          <div className="pt-2 flex items-center justify-center gap-2 text-xs text-amber-300 font-komutt-a">
             <span>សូមអរគុណយ៉ាងជ្រាលជ្រៅចំពោះវត្តមានដ៏មានតម្លៃ!</span>
           </div>
         </div>
@@ -597,10 +598,10 @@ export default function RomdoulMoonlightTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-b from-[#0F172A] via-[#090E1A] to-[#060913] border border-amber-400/30 backdrop-blur-xl shadow-2xl space-y-8">
           <div className="text-center space-y-1">
             <span className="text-xs text-amber-300 uppercase tracking-widest font-serifTrad">Event Countdown & Date</span>
-            <h2 className="font-suwannaphum text-2xl sm:text-3xl font-bold text-amber-100">
+            <h2 className="font-komutt-a text-2xl sm:text-3xl font-bold text-amber-100">
               កាលបរិច្ឆេទ & ការរាប់ថយក្រោយ
             </h2>
-            <p className="text-xs text-slate-400 font-suwannaphum">{weddingDate}</p>
+            <p className="text-xs text-slate-400 font-komutt-a">{weddingDate}</p>
           </div>
 
           {/* Real-Time Live Countdown Timer */}
@@ -609,25 +610,25 @@ export default function RomdoulMoonlightTemplate({
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-200">
                 {timeLeft.days}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-suwannaphum">ថ្ងៃ</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt-a">ថ្ងៃ</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-amber-400/30">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-200">
                 {timeLeft.hours}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-suwannaphum">ម៉ោង</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt-a">ម៉ោង</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-amber-400/30">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-200">
                 {timeLeft.minutes}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-suwannaphum">នាទី</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt-a">នាទី</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-amber-400/30">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-400 animate-pulse">
                 {timeLeft.seconds}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-suwannaphum">វិនាទី</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt-a">វិនាទី</span>
             </div>
           </div>
 
@@ -701,7 +702,7 @@ export default function RomdoulMoonlightTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-slate-900/80 border border-slate-800 backdrop-blur-xl space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-amber-300 uppercase tracking-widest font-serifTrad">Full Wedding Schedule</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-white">កាលវិភាគពិធីការទាំង ៧ កម្មវិធី</h2>
+            <h2 className="font-komutt-a text-2xl font-bold text-white">កាលវិភាគពិធីការទាំង ៧ កម្មវិធី</h2>
           </div>
 
           <div className="space-y-3.5">
@@ -715,7 +716,7 @@ export default function RomdoulMoonlightTemplate({
                 </div>
                 <div className="flex-1">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                    <h4 className="font-suwannaphum font-bold text-white text-sm sm:text-base">
+                    <h4 className="font-komutt-a font-bold text-white text-sm sm:text-base">
                       {prog.title}
                     </h4>
                     <span className="text-xs text-amber-300 font-serifTrad font-semibold shrink-0">
@@ -733,7 +734,7 @@ export default function RomdoulMoonlightTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-b from-[#0A101D] to-[#060913] border border-amber-400/25 space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-amber-300 uppercase tracking-widest font-serifTrad">Love Story Chapters</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-white">ដំណើររឿងរ៉ាវនៃសេចក្តីស្រឡាញ់</h2>
+            <h2 className="font-komutt-a text-2xl font-bold text-white">ដំណើររឿងរ៉ាវនៃសេចក្តីស្រឡាញ់</h2>
             <p className="text-xs text-slate-400">ចុចលើដំណាក់កាលនីមួយៗ ដើម្បីអានដំណើរដើមទង</p>
           </div>
 
@@ -752,7 +753,7 @@ export default function RomdoulMoonlightTemplate({
                 <div className="text-xs sm:text-sm font-bold font-serifTrad mb-0.5">
                   {idx + 1}
                 </div>
-                <div className="text-[10px] sm:text-[11px] truncate font-suwannaphum">
+                <div className="text-[10px] sm:text-[11px] truncate font-komutt-a">
                   {m.title}
                 </div>
               </button>
@@ -766,7 +767,7 @@ export default function RomdoulMoonlightTemplate({
                 <span className="text-xs font-semibold text-amber-300 font-serifTrad block mb-1">
                   {milestones[activeMilestone].phase} • {milestones[activeMilestone].date}
                 </span>
-                <h3 className="font-suwannaphum text-xl font-bold text-white">
+                <h3 className="font-komutt-a text-xl font-bold text-white">
                   {milestones[activeMilestone].title}
                 </h3>
               </div>
@@ -792,7 +793,7 @@ export default function RomdoulMoonlightTemplate({
             <Sparkles className="w-3.5 h-3.5 text-amber-300" />
           </div>
 
-          <h2 className="font-suwannaphum text-2xl sm:text-3xl font-bold text-amber-100">
+          <h2 className="font-komutt-a text-2xl sm:text-3xl font-bold text-amber-100">
             សេចក្តីថ្លែងអំណរគុណ
           </h2>
 
@@ -800,7 +801,7 @@ export default function RomdoulMoonlightTemplate({
             យើងខ្ញុំជាគូស្វាមីភរិយាថ្មី រួមជាមួយមាតាបិតាទាំងសងខាង សូមលំឱនកាយវាចាចិត្តថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅបំផុត ចំពោះវត្តមានដ៏ឧត្តុង្គឧត្តម ពេលវេលាដ៏មានតម្លៃ និងពរជ័យសព្ទសាធុការពររបស់ ឯកឧត្តម លោកជំទាវ លោក លោកស្រី អ្នកនាងកញ្ញា ដែលបានផ្តល់កិត្តិយសអញ្ជើញមកចូលរួមជាសាក្សីនៃសេចក្តីស្រឡាញ់របស់យើងខ្ញុំ។
           </p>
 
-          <div className="pt-2 text-xs text-amber-200/90 font-suwannaphum">
+          <div className="pt-2 text-xs text-amber-200/90 font-komutt-a">
             «សូមទេវតាថែរក្សា និងប្រទានពរជ័យឱ្យលោកអ្នកជួបតែសេចក្តីសុខ ចម្រើនជានិច្ចនិរន្តរ៍»
           </div>
         </div>
@@ -813,7 +814,7 @@ export default function RomdoulMoonlightTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-slate-900/80 border border-slate-800 backdrop-blur-xl space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-amber-300 uppercase tracking-widest font-serifTrad">Venue & Directions</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-white">ទីតាំងប្រារព្ធពិធី</h2>
+            <h2 className="font-komutt-a text-2xl font-bold text-white">ទីតាំងប្រារព្ធពិធី</h2>
           </div>
 
           <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-amber-400/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -844,7 +845,7 @@ export default function RomdoulMoonlightTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-slate-900/80 border border-slate-800 space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-amber-300 uppercase tracking-widest font-serifTrad">Memories & Portraits</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-white">កម្រងរូបភាពអនុស្សាវរីយ៍</h2>
+            <h2 className="font-komutt-a text-2xl font-bold text-white">កម្រងរូបភាពអនុស្សាវរីយ៍</h2>
             <p className="text-xs text-slate-400">ចុចលើរូបភាពដើម្បីមើលទំហំធំពេញអេក្រង់</p>
           </div>
 
@@ -861,7 +862,7 @@ export default function RomdoulMoonlightTemplate({
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                   loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-2.5">
-                  <p className="text-[10px] text-amber-200 line-clamp-2 font-suwannaphum">
+                  <p className="text-[10px] text-amber-200 line-clamp-2 font-komutt-a">
                     {photo.caption}
                   </p>
                 </div>
@@ -893,7 +894,7 @@ export default function RomdoulMoonlightTemplate({
                   className="w-full h-full object-contain" decoding="async" />
               </div>
               <div className="p-4 text-center bg-slate-900 border-t border-slate-800">
-                <p className="font-suwannaphum text-sm text-amber-200 font-semibold">
+                <p className="font-komutt-a text-sm text-amber-200 font-semibold">
                   {selectedPhoto.caption}
                 </p>
               </div>
@@ -912,7 +913,7 @@ export default function RomdoulMoonlightTemplate({
               <Gift className="w-4 h-4 text-amber-400" />
               <span>ចំណងដៃមង្គលការឌីជីថល</span>
             </div>
-            <h2 className="font-suwannaphum text-2xl font-bold text-white">
+            <h2 className="font-komutt-a text-2xl font-bold text-white">
               អាំងប៉ាវ & ចំណងដៃពរជ័យ
             </h2>
             <p className="text-xs text-slate-400 max-w-sm mx-auto">
@@ -973,7 +974,7 @@ export default function RomdoulMoonlightTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-b from-[#0F172A] via-[#090D18] to-[#050811] border border-amber-400/30 backdrop-blur-xl shadow-2xl">
           <div className="text-center space-y-1 mb-6">
             <span className="text-xs text-amber-300 uppercase tracking-widest font-serifTrad">RSVP Confirmation</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-white">ការបញ្ជាក់វត្តមានចូលរួម</h2>
+            <h2 className="font-komutt-a text-2xl font-bold text-white">ការបញ្ជាក់វត្តមានចូលរួម</h2>
             <p className="text-xs text-slate-400 max-w-sm mx-auto">
               សូមមេត្តាឆ្លើយតបមុនថ្ងៃទី ០១ ខែធ្នូ ដើម្បីជួយសម្រួលដល់ការរៀបចំតុទទួលភ្ញៀវ
             </p>
@@ -982,7 +983,7 @@ export default function RomdoulMoonlightTemplate({
           {rsvpSubmitted ? (
             <div className="p-6 rounded-2xl bg-emerald-950/60 border border-emerald-500/40 text-center space-y-2">
               <CheckCircle className="w-8 h-8 text-emerald-400 mx-auto" />
-              <h3 className="font-suwannaphum text-lg font-bold text-emerald-200">
+              <h3 className="font-komutt-a text-lg font-bold text-emerald-200">
                 អរគុណសម្រាប់ការបញ្ជាក់វត្តមាន!
               </h3>
               <p className="text-xs text-emerald-300/80">
@@ -992,7 +993,7 @@ export default function RomdoulMoonlightTemplate({
           ) : (
             <form onSubmit={handleRsvpSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-suwannaphum">
+                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-komutt-a">
                   ឈ្មោះពេញរបស់អ្នក *
                 </label>
                 <input
@@ -1006,14 +1007,14 @@ export default function RomdoulMoonlightTemplate({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-suwannaphum">
+                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-komutt-a">
                   វត្តមានចូលរួម
                 </label>
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
                     onClick={() => setRsvpAttending('yes')}
-                    className={`py-2.5 rounded-xl text-xs font-bold font-suwannaphum transition border cursor-pointer ${
+                    className={`py-2.5 rounded-xl text-xs font-bold font-komutt-a transition border cursor-pointer ${
                       rsvpAttending === 'yes'
                         ? 'bg-amber-400 text-slate-950 border-amber-300 shadow-md'
                         : 'bg-slate-950/60 text-slate-300 border-slate-700 hover:border-slate-600'
@@ -1024,7 +1025,7 @@ export default function RomdoulMoonlightTemplate({
                   <button
                     type="button"
                     onClick={() => setRsvpAttending('no')}
-                    className={`py-2.5 rounded-xl text-xs font-bold font-suwannaphum transition border cursor-pointer ${
+                    className={`py-2.5 rounded-xl text-xs font-bold font-komutt-a transition border cursor-pointer ${
                       rsvpAttending === 'no'
                         ? 'bg-rose-500 text-white border-rose-400 shadow-md'
                         : 'bg-slate-950/60 text-slate-300 border-slate-700 hover:border-slate-600'
@@ -1037,7 +1038,7 @@ export default function RomdoulMoonlightTemplate({
 
               {rsvpAttending === 'yes' && (
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-suwannaphum">
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-komutt-a">
                     ចំនួនភ្ញៀវចូលរួម
                   </label>
                   <select
@@ -1055,7 +1056,7 @@ export default function RomdoulMoonlightTemplate({
               )}
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-suwannaphum">
+                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-komutt-a">
                   លេខទូរស័ព្ទ (ជាជម្រើស)
                 </label>
                 <input
@@ -1068,7 +1069,7 @@ export default function RomdoulMoonlightTemplate({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-suwannaphum">
+                <label className="block text-xs font-semibold text-slate-300 mb-1.5 font-komutt-a">
                   ចំណាំបន្ថែម / ពាក្យជូនពរ
                 </label>
                 <textarea
@@ -1097,7 +1098,7 @@ export default function RomdoulMoonlightTemplate({
       <section className="relative z-20 max-w-2xl mx-auto px-4 py-8">
         <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-b from-[#0F172A] via-[#090D18] to-[#050811] border border-amber-400/40 backdrop-blur-2xl shadow-2xl relative overflow-hidden">
           <div className="text-center space-y-2 mb-6">
-            <h2 className="font-suwannaphum text-2xl sm:text-3xl font-bold text-amber-100">
+            <h2 className="font-komutt-a text-2xl sm:text-3xl font-bold text-amber-100">
               បង្ហោះគោមជូនពរពន្លឺចន្ទ
             </h2>
             <p className="text-xs text-slate-300 max-w-sm mx-auto leading-relaxed">
@@ -1156,7 +1157,7 @@ export default function RomdoulMoonlightTemplate({
                   className="p-3.5 rounded-2xl bg-slate-950/80 border border-amber-400/20 text-xs space-y-1 relative group hover:border-amber-400/50 transition"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-suwannaphum font-semibold text-amber-200 text-xs">
+                    <span className="font-komutt-a font-semibold text-amber-200 text-xs">
                       {item.name}
                     </span>
                     <span className="text-[10px] text-slate-500 font-serifTrad">{item.time}</span>
@@ -1176,7 +1177,7 @@ export default function RomdoulMoonlightTemplate({
         <div className="rounded-3xl p-6 sm:p-8 bg-slate-900/80 border border-slate-800 backdrop-blur-xl space-y-6">
           <div className="text-center space-y-1">
             <span className="text-xs text-amber-300 uppercase tracking-widest font-serifTrad">Contact & Inquiries</span>
-            <h2 className="font-suwannaphum text-2xl font-bold text-white">ទំនាក់ទំនងម្ចាស់កម្មវិធី</h2>
+            <h2 className="font-komutt-a text-2xl font-bold text-white">ទំនាក់ទំនងម្ចាស់កម្មវិធី</h2>
             <p className="text-xs text-slate-400">សម្រាប់ព័ត៌មានបន្ថែម ឬការសាកសួរទីតាំង</p>
           </div>
 
@@ -1250,7 +1251,7 @@ export default function RomdoulMoonlightTemplate({
           </button>
         </div>
 
-        <p className="font-suwannaphum text-amber-200/80">
+        <p className="font-komutt-a text-amber-200/80">
           សូមអរគុណយ៉ាងជ្រាលជ្រៅចំពោះវត្តមាន និងពរជ័យដ៏ថ្លៃថ្លារបស់លោកអ្នក!
         </p>
 
@@ -1275,7 +1276,7 @@ export default function RomdoulMoonlightTemplate({
             >
               <X className="w-4 h-4" />
             </button>
-            <h4 className="font-suwannaphum text-sm text-amber-200 mb-1">{bankName}</h4>
+            <h4 className="font-komutt-a text-sm text-amber-200 mb-1">{bankName}</h4>
             <p className="text-xs text-slate-400 mb-3">{accountName}</p>
             {qrCodeImage ? (
               <img

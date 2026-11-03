@@ -1,3 +1,5 @@
+import TemplateGoogleMap from '../../TemplateGoogleMap';
+import TemplateGratitudeNote from '../../TemplateGratitudeNote';
 import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
@@ -79,12 +81,12 @@ export function RoyalGoldTemplate({
     : (activeTemplate?.heroImages && activeTemplate.heroImages.length > 0
         ? activeTemplate.heroImages
         : [
-            '/images/templates/royal-gold/gold_1.jpg',
-            '/images/templates/royal-gold/gold_2.jpg',
-            '/images/templates/royal-gold/gold_3.jpg',
-            '/images/templates/royal-gold/gold_4.jpg',
-            '/images/templates/royal-gold/gold_5.jpg',
-            '/images/templates/royal-gold/gold_6.jpg'
+            '/images/templates/royal-gold/gold_1.webp',
+            '/images/templates/royal-gold/gold_2.webp',
+            '/images/templates/royal-gold/gold_3.webp',
+            '/images/templates/royal-gold/gold_4.webp',
+            '/images/templates/royal-gold/gold_5.webp',
+            '/images/templates/royal-gold/gold_6.webp'
           ]);
 
   // 3. Gallery Photos
@@ -93,12 +95,12 @@ export function RoyalGoldTemplate({
     : (activeTemplate?.galleryPhotos && activeTemplate.galleryPhotos.length > 0
         ? activeTemplate.galleryPhotos
         : [
-            { id: 1, src: heroImages[0] || '/images/templates/royal-gold/gold_1.jpg', caption: 'ស្នេហ៍ផ្អែមល្ហែមរវាងគូស្នេហ៍' },
-            { id: 2, src: heroImages[1] || '/images/templates/royal-gold/gold_2.jpg', caption: 'មង្គលសិរីមាសប្រណិត' },
-            { id: 3, src: heroImages[2] || '/images/templates/royal-gold/gold_3.jpg', caption: 'អនុស្សាវរីយ៍ផ្កាស្រស់រ៉ូមែនទិក' },
-            { id: 4, src: heroImages[3] || '/images/templates/royal-gold/gold_4.jpg', caption: 'ភាពថ្លៃថ្នូរ និងសេចក្តីសុខក្សេមក្សាន្ត' },
-            { id: 5, src: heroImages[4] || '/images/templates/royal-gold/gold_5.jpg', caption: 'កេរដំណែលប្រពៃណីខ្មែរអង្គរ' },
-            { id: 6, src: heroImages[5] || heroImages[0] || '/images/templates/royal-gold/gold_6.jpg', caption: 'ភាពទាន់សម័យ និងស៊ីវិល័យ' }
+            { id: 1, src: heroImages[0] || '/images/templates/royal-gold/gold_1.webp', caption: 'ស្នេហ៍ផ្អែមល្ហែមរវាងគូស្នេហ៍' },
+            { id: 2, src: heroImages[1] || '/images/templates/royal-gold/gold_2.webp', caption: 'មង្គលសិរីមាសប្រណិត' },
+            { id: 3, src: heroImages[2] || '/images/templates/royal-gold/gold_3.webp', caption: 'អនុស្សាវរីយ៍ផ្កាស្រស់រ៉ូមែនទិក' },
+            { id: 4, src: heroImages[3] || '/images/templates/royal-gold/gold_4.webp', caption: 'ភាពថ្លៃថ្នូរ និងសេចក្តីសុខក្សេមក្សាន្ត' },
+            { id: 5, src: heroImages[4] || '/images/templates/royal-gold/gold_5.webp', caption: 'កេរដំណែលប្រពៃណីខ្មែរអង្គរ' },
+            { id: 6, src: heroImages[5] || heroImages[0] || '/images/templates/royal-gold/gold_6.webp', caption: 'ភាពទាន់សម័យ និងស៊ីវិល័យ' }
           ]);
 
   // 4. Ceremony Programs
@@ -118,7 +120,7 @@ export function RoyalGoldTemplate({
   const bankName = data.bankName || invitation.bankName || 'ABA Bank';
   const accountName = data.accountName || invitation.accountName || `${groom} & ${bride}`;
   const accountNumber = data.accountNumber || invitation.accountNumber || '000 987 654';
-  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=ABA000987654';
+  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || '/images/aba_qr.webp';
 
   // 6. Host Contacts
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation.hostPhoneGroom || '012 345 678';
@@ -460,27 +462,14 @@ export function RoyalGoldTemplate({
           </div>
           <KhmerGoldDivider />
 
-          <div className={`p-4 sm:p-5 relative ${cardBoxClass} text-center space-y-3`}>
-            <GoldCornerBrackets />
-            <p className="font-komutt-a text-sm sm:text-base text-stone-800 font-bold">
-              {locationName}
-            </p>
-            <p className="text-xs text-stone-600 max-w-md mx-auto leading-relaxed">
-              {address}
-            </p>
-            <div>
-              <a
-                href={googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:brightness-110 text-white text-xs font-bold shadow-md active:scale-95 transition-all cursor-pointer"
-              >
-                <ExternalLink className="w-3.5 h-3.5 text-amber-200" />
-                <span className="font-komutt-a">មើលទីតាំងលើ Google Maps</span>
-              </a>
-            </div>
-          </div>
-        </section>
+          <TemplateGratitudeNote isDark={false} accentColor="#B69225" fontFamily="font-komutt-a" />
+          <TemplateGoogleMap
+            locationName={locationName}
+            address={address}
+            googleMapsUrl={googleMapsUrl}
+            accentColor="#B69225"
+            fontFamily="font-komutt-a"
+          /></section>
 
         {/* 6. PHOTO GALLERY */}
         <section className="py-2 text-center">

@@ -1,3 +1,6 @@
+import TemplateGoogleMap from '../../TemplateGoogleMap';
+import TemplateCountdown from '../../TemplateCountdown';
+import TemplateGratitudeNote from '../../TemplateGratitudeNote';
 import React, { useState, useEffect, useRef } from 'react';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
@@ -58,14 +61,14 @@ export default function GoldenOrchidTemplate({
   const weddingTime = data?.ceremonyTime || invitation?.weddingTime || 'ម៉ោង ៤:៣០ រសៀល';
   const weddingLocation = data?.ceremonyLocation || invitation?.weddingLocation || activeTemplate?.demoLocation || 'វិមានកញ្ចក់ Grand Glasshouse Pavilion (The Premier Center Sen Sok)';
   const locationAddress = data?.locationAddress || data?.ceremonyAddress || invitation?.locationAddress || 'ផ្លូវ ១០០៣ សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
-  const preweddingImage = data?.preweddingPhoto || data?.bgImage || activeTemplate?.bgImage || invitation?.preweddingImage || '/images/templates/floral_golden_orchid_prewedding.jpg';
+  const preweddingImage = data?.preweddingPhoto || data?.bgImage || activeTemplate?.bgImage || invitation?.preweddingImage || '/images/templates/floral_golden_orchid_prewedding.webp';
   const googleMapsUrl = data?.googleMapsUrl || invitation?.googleMapsUrl || 'https://maps.google.com/?q=The+Premier+Center+Sen+Sok';
 
   // Bank & Gift
   const bankName = data?.bankName || invitation?.bankName || 'ABA & ACLEDA';
   const accountName = data?.accountName || invitation?.accountName || `${groomName} & ${brideName}`;
   const accountNumber = data?.accountNumber || invitation?.accountNumber || '012 999 888';
-  const qrCodeImage = data?.qrCodeImage || invitation?.qrCodeImage || null;
+  const qrCodeImage = data?.qrCodeImage || invitation?.qrCodeImage || '/images/aba_qr.webp';
 
   // Host Contacts
   const phoneGroom = data?.hostPhoneGroom || data?.phoneGroom || invitation?.hostPhoneGroom || '012 345 678';
@@ -85,8 +88,8 @@ export default function GoldenOrchidTemplate({
     ? data.galleryPhotos
     : (activeTemplate?.galleryPhotos || [
         { id: 1, src: preweddingImage, caption: 'Grand Glasshouse Orchid Luxury' },
-        { id: 2, src: '/images/templates/floral-romance/floral_1.jpg', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
-        { id: 3, src: '/images/templates/floral-romance/floral_2.jpg', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' }
+        { id: 2, src: '/images/templates/floral-romance/floral_1.webp', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
+        { id: 3, src: '/images/templates/floral-romance/floral_2.webp', caption: 'ស្នាមញញឹមរំលេចក្តីសង្ឃឹម' }
       ]);
 
   // Fully isolated template audio («ភ្ជាប់និស្ស័យ» - NISAI)
@@ -106,6 +109,31 @@ export default function GoldenOrchidTemplate({
   const [rsvpAttendance, setRsvpAttendance] = useState('attending');
   const [rsvpMessage, setRsvpMessage] = useState('');
   const [rsvpSubmitted, setRsvpSubmitted] = useState(false);
+  const heroImages = (data.heroImages && data.heroImages.length > 0)
+    ? data.heroImages
+    : (activeTemplate?.heroImages && activeTemplate.heroImages.length > 0)
+    ? activeTemplate.heroImages
+    : [
+        preweddingImage,
+        '/images/templates/floral-romance/floral_1.webp',
+        '/images/templates/floral-romance/floral_2.webp',
+        '/images/templates/floral-romance/floral_3.webp'
+      ];
+  const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
+
+  // Wishes state
+  const [wishes, setWishes] = useState([
+    { id: 1, name: 'ឯកឧត្តម សុខ វិបុល', text: 'សូមប្រសិទ្ធពរជ័យ សិរីសួស្តី ជ័យមង្គល វិបុលសុខគ្រប់ប្រការ!' },
+    { id: 2, name: 'លោកជំទាវ កែវ មុនី', text: 'សូមឱ្យចំណងស្នេហ៍គង់វង្ស និងស្រឡាញ់គ្នាដល់ចាស់កោងខ្នង!' },
+    { id: 3, name: 'បងប្អូន និងមិត្តភក្តិ', text: 'Happy Wedding! សូមឱ្យមានសុភមង្គល និងទ្រព្យសម្បត្តិហូរហៀរ!' }
+  ]);
+  const [wishInput, setWishInput] = useState({ name: '', text: '' });
+  const handleAddWish = (e) => {
+    e.preventDefault();
+    if (!wishInput.name.trim() || !wishInput.text.trim()) return;
+    setWishes([{ id: Date.now(), name: wishInput.name, text: wishInput.text }, ...wishes]);
+    setWishInput({ name: '', text: '' });
+  };
 
   // Digital Envelope Flap State
   const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false);
@@ -308,9 +336,37 @@ export default function GoldenOrchidTemplate({
           <div className="relative overflow-hidden shadow-[0_15px_40px_rgba(212,175,55,0.15)] w-full">
             <div className="relative overflow-hidden aspect-[896/1200] bg-stone-100 w-full">
               <img
-                src={preweddingImage}
+                src={heroImages[currentHeroIdx] || preweddingImage}
                 alt="Cambodian Couple in Golden Orchid Glasshouse"
                 className="w-full h-full object-cover object-center transform hover:scale-102 transition duration-700 ease-out" decoding="async" />
+              {heroImages.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setCurrentHeroIdx((currentHeroIdx - 1 + heroImages.length) % heroImages.length)}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-black/60 transition cursor-pointer"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCurrentHeroIdx((currentHeroIdx + 1) % heroImages.length)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-black/60 transition cursor-pointer"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                  <div className="absolute bottom-16 inset-x-0 flex justify-center gap-1.5 z-20">
+                    {heroImages.map((_, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => setCurrentHeroIdx(i)}
+                        className={`h-1.5 rounded-full transition-all cursor-pointer ${i === currentHeroIdx ? 'w-5 bg-amber-400' : 'w-1.5 bg-white/50'}`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
 
               {/* Bottom Glass Bar Over Image */}
               <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent backdrop-blur-[2px] text-white">

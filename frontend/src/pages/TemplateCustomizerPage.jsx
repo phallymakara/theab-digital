@@ -23,8 +23,6 @@ import {
   Plus,
   Eye,
   Edit3,
-  Smartphone,
-  Monitor,
   Share2,
   Download,
   Sparkles,
@@ -82,11 +80,11 @@ function getInitialFormDataForTemplate(template) {
       : (template?.heroImages && template.heroImages.length > 0
           ? template.heroImages
           : [
-              '/images/templates/modern_wedding_aisle.jpg',
-              '/images/templates/emerald_diamond_prewedding.jpg',
-              '/images/templates/emerald_nature_prewedding.jpg',
-              '/images/templates/emerald_glasshouse_prewedding.jpg',
-              '/images/templates/emerald_noir_prewedding.jpg'
+              '/images/templates/modern_wedding_aisle.webp',
+              '/images/templates/emerald_diamond_prewedding.webp',
+              '/images/templates/emerald_nature_prewedding.webp',
+              '/images/templates/emerald_glasshouse_prewedding.webp',
+              '/images/templates/emerald_noir_prewedding.webp'
             ])
   ).slice(0, 5);
 
@@ -94,12 +92,12 @@ function getInitialFormDataForTemplate(template) {
     template?.galleryPhotos && template.galleryPhotos.length > 0
       ? template.galleryPhotos
       : [
-          { id: 1, src: heroList[0] || '/images/templates/emerald_diamond_prewedding.jpg', caption: 'អនុស្សាវរីយ៍សច្ចាស្នេហ៍' },
-          { id: 2, src: heroList[1] || '/images/templates/emerald_nature_prewedding.jpg', caption: 'ស្នាមញញឹមនៃសុភមង្គល' },
-          { id: 3, src: heroList[2] || '/images/templates/emerald_glasshouse_prewedding.jpg', caption: 'ពន្លឺថ្ងៃជះលើសូត្រមាស' },
-          { id: 4, src: heroList[3] || '/images/templates/emerald_noir_prewedding.jpg', caption: 'រាត្រីសមោសរដ៏ផ្អែមល្ហែម' },
-          { id: 5, src: heroList[4] || '/images/templates/emerald_malachite_prewedding.jpg', caption: 'ចិញ្ចៀនពេជ្រសច្ចាស្នេហ៍' },
-          { id: 6, src: heroList[0] || '/images/templates/modern_wedding_aisle.jpg', caption: 'ចំណងអាពាហ៍ពិពាហ៍អមតៈ' }
+          { id: 1, src: heroList[0] || '/images/templates/emerald_diamond_prewedding.webp', caption: 'អនុស្សាវរីយ៍សច្ចាស្នេហ៍' },
+          { id: 2, src: heroList[1] || '/images/templates/emerald_nature_prewedding.webp', caption: 'ស្នាមញញឹមនៃសុភមង្គល' },
+          { id: 3, src: heroList[2] || '/images/templates/emerald_glasshouse_prewedding.webp', caption: 'ពន្លឺថ្ងៃជះលើសូត្រមាស' },
+          { id: 4, src: heroList[3] || '/images/templates/emerald_noir_prewedding.webp', caption: 'រាត្រីសមោសរដ៏ផ្អែមល្ហែម' },
+          { id: 5, src: heroList[4] || '/images/templates/emerald_malachite_prewedding.webp', caption: 'ចិញ្ចៀនពេជ្រសច្ចាស្នេហ៍' },
+          { id: 6, src: heroList[0] || '/images/templates/modern_wedding_aisle.webp', caption: 'ចំណងអាពាហ៍ពិពាហ៍អមតៈ' }
         ]
   ).slice(0, 12);
 
@@ -146,7 +144,7 @@ function getInitialFormDataForTemplate(template) {
     bankName: 'ABA Bank',
     accountName: `${template?.demoGroom || 'CHAN RITHISAK'} & ${template?.demoBride || 'TEA PICHCHINDA'}`,
     accountNumber: '000 987 654',
-    qrCodeImage: 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=ABA000987654',
+    qrCodeImage: '/images/aba_qr.webp',
 
     phoneGroom: '012 345 678',
     phoneBride: '098 765 432',
@@ -160,9 +158,9 @@ export function TemplateCustomizerPage() {
   const navigate = useNavigate();
   const { selectedTemplate, setSelectedTemplate, addToast, isAudioPlaying, toggleAudio, playAudio, stopAudio } = useApp();
 
-  // Play authentic wedding song on entrance, stop when leaving
+  // TemplateComponent manages its own isolated audio. Ensure AppContext audio is stopped so only one sound plays
   useEffect(() => {
-    playAudio?.();
+    stopAudio?.();
     return () => {
       stopAudio?.();
     };
@@ -221,15 +219,11 @@ export function TemplateCustomizerPage() {
   // Mobile Tab state ('form' or 'preview')
   const [mobileTab, setMobileTab] = useState('form');
 
-  // Preview device mode ('mobile' for Galaxy or 'full' for Full View)
-  const [previewDevice, setPreviewDevice] = useState('mobile');
-
-  // Preview internal scroll refs to ensure only inner container scrolls
-  const phoneScrollRef = useRef(null);
+  // Preview internal scroll ref to ensure only inner container scrolls
   const fullScrollRef = useRef(null);
 
   const handleOuterWheel = (e) => {
-    const targetRef = previewDevice === 'mobile' ? phoneScrollRef.current : fullScrollRef.current;
+    const targetRef = fullScrollRef.current;
     if (!targetRef) return;
     if (targetRef.contains(e.target)) {
       // Native inner scroll takes care of it
@@ -399,9 +393,9 @@ export function TemplateCustomizerPage() {
     EMERALD_TEMPLATES[activeTemplate.id] ||
     EMERALD_TEMPLATES[activeTemplate.cardStyle] ||
     (activeTemplate.category === 'traditional' ? TRADITIONAL_TEMPLATES['royal-gold'] : null) ||
-    (activeTemplate.category === 'floral' ? FLORAL_TEMPLATES['floral-botanical-glasshouse'] : null) ||
+    (activeTemplate.category === 'floral' ? FLORAL_TEMPLATES['floral-romdoul-moonlight'] : null) ||
     (activeTemplate.category === 'emerald' ? EMERALD_TEMPLATES['emerald-jade'] : null) ||
-    (activeTemplate.category === 'modern' ? MODERN_TEMPLATES['modern-champagne-silk'] : null) ||
+    (activeTemplate.category === 'modern' ? MODERN_TEMPLATES['modern-noir-diamond'] : null) ||
     RoyalGoldTemplate;
 
   // Selected background image chosen by user (custom bgImage, or from hero buttons, or default template backdrop)
@@ -498,11 +492,7 @@ export function TemplateCustomizerPage() {
             <span className="sm:hidden">ថយក្រោយ</span>
           </button>
 
-          {/* Active Template Badge with authentic font */}
-          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            <span className={templateFont}>គំរូ៖ {activeTemplate.name}</span>
-          </div>
+
         </div>
 
         {/* Center Mobile View Switcher (Visible on Mobile only) */}
@@ -1132,38 +1122,10 @@ export function TemplateCustomizerPage() {
             mobileTab === 'form' ? 'hidden lg:flex' : 'flex'
           }`}
         >
-          {/* Floating Device Switcher Overlay (No horizontal container bar taking up vertical space) */}
-          <div className="absolute top-3 right-3 z-30 flex items-center gap-1 bg-black/65 backdrop-blur-md p-1 rounded-full border border-white/20 font-kantumruy shadow-lg">
-            <button
-              onClick={() => setPreviewDevice('mobile')}
-              className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold transition cursor-pointer ${
-                previewDevice === 'mobile' ? 'bg-amber-600 text-white shadow-xs' : 'text-stone-300 hover:text-white'
-              }`}
-              title="ទិដ្ឋភាពទូរស័ព្ទដៃ"
-            >
-              <Smartphone className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">ទូរស័ព្ទដៃ</span>
-            </button>
-            <button
-              onClick={() => setPreviewDevice('full')}
-              className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold transition cursor-pointer ${
-                previewDevice === 'full' ? 'bg-amber-600 text-white shadow-xs' : 'text-stone-300 hover:text-white'
-              }`}
-              title="ទិដ្ឋភាពកុំព្យូទ័រ"
-            >
-              <Monitor className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">កុំព្យូទ័រ</span>
-            </button>
-          </div>
-
           {/* Preview Viewport Canvas (Does NOT scroll outside - only content inside scrolls) */}
           <div
             onWheel={handleOuterWheel}
-            className={`flex-1 min-h-0 h-full w-full overflow-hidden flex items-center justify-center relative select-auto ${
-              previewDevice === 'mobile'
-                ? 'p-0 sm:p-4 md:p-6 lg:p-6'
-                : 'p-0 sm:p-3'
-            }`}
+            className="flex-1 min-h-0 h-full w-full overflow-hidden flex items-center justify-center relative select-auto p-0"
           >
             {/* Ambient Background Glow of the Template / Chosen Hero Background */}
             <div
@@ -1174,88 +1136,40 @@ export function TemplateCustomizerPage() {
             />
             <div className="absolute inset-0 bg-stone-950/75 pointer-events-none" />
 
-            {previewDevice === 'mobile' ? (
-              /* Mobile Viewport: Centered and responsive for all screen sizes */
+            {/* Computer Viewport: Centered and responsive for all screen sizes */}
+            <div className="w-full max-w-2xl h-full rounded-none border-x border-white/10 overflow-hidden relative flex flex-col shrink-0 mx-auto">
+              {/* Template Main Background Pinned in Computer View */}
               <div
-                className="w-full h-full sm:h-[min(820px,calc(100%-1rem))] sm:max-h-[calc(100%-1rem)] max-w-full sm:max-w-[385px] rounded-none sm:rounded-[42px] border-0 sm:border-[8px] sm:border-stone-800 ring-0 sm:ring-1 sm:ring-white/15 shadow-none sm:shadow-[0_25px_60px_rgba(0,0,0,0.95)] overflow-hidden bg-stone-950 relative flex flex-col transition-all duration-300 shrink-0 my-auto mx-auto"
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700 pointer-events-none scale-105"
+                style={{
+                  backgroundImage: `url(${chosenHeroImage})`
+                }}
+              />
+              <div className="absolute inset-0 bg-black/25 backdrop-blur-[0.5px] pointer-events-none z-0" />
+
+              <div
+                ref={fullScrollRef}
+                className="relative z-10 w-full h-full overflow-y-auto overscroll-contain luxury-scrollbar"
               >
-                {/* Samsung Galaxy Punch Hole Front Camera */}
-                <div className="hidden sm:flex absolute top-3 left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-black rounded-full border border-white/20 z-40 pointer-events-none items-center justify-center shadow-sm">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#111] border border-cyan-500/20" />
-                </div>
-
-                {/* Modern Gesture Bar Home Indicator */}
-                <div className="hidden sm:block absolute bottom-1.5 left-1/2 -translate-x-1/2 w-28 h-1 bg-white/35 rounded-full z-40 pointer-events-none backdrop-blur-xs" />
-
-                {/* Template Main Background Pinned in Mockup View */}
-                <div
-                  className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700 pointer-events-none scale-105"
-                  style={{
-                    backgroundImage: `url(${chosenHeroImage})`
-                  }}
-                />
-                <div className="absolute inset-0 bg-black/25 backdrop-blur-[0.5px] pointer-events-none z-0" />
-
-                {/* Inner Scrollable Template (ONLY this scrolls) */}
-                <div
-                  ref={phoneScrollRef}
-                  className="w-full h-full overflow-y-auto overscroll-contain luxury-scrollbar relative z-10"
-                >
-                  {TemplateComponent ? (
-                    <TemplateComponent
-                      key={currentTemplateId}
-                      data={liveTemplateData}
-                      invitation={liveInvitation}
-                      invitationData={liveInvitation}
-                      activeTemplate={liveActiveTemplate}
-                    />
-                  ) : (
-                    <RoyalGoldTemplate
-                      key={currentTemplateId}
-                      data={liveTemplateData}
-                      invitation={liveInvitation}
-                      invitationData={liveInvitation}
-                      activeTemplate={liveActiveTemplate}
-                    />
-                  )}
-                </div>
+                {TemplateComponent ? (
+                  <TemplateComponent
+                    key={currentTemplateId}
+                    data={liveTemplateData}
+                    invitation={liveInvitation}
+                    invitationData={liveInvitation}
+                    activeTemplate={liveActiveTemplate}
+                  />
+                ) : (
+                  <RoyalGoldTemplate
+                    key={currentTemplateId}
+                    data={liveTemplateData}
+                    invitation={liveInvitation}
+                    invitationData={liveInvitation}
+                    activeTemplate={liveActiveTemplate}
+                  />
+                )}
               </div>
-            ) : (
-              /* Computer Viewport: Centered and responsive for all screen sizes */
-              <div className="w-full max-w-2xl h-full sm:h-[calc(100%-1.5rem)] sm:max-h-[calc(100%-1.5rem)] rounded-none sm:rounded-2xl bg-stone-950 shadow-2xl border-x sm:border border-white/10 overflow-hidden relative flex flex-col shrink-0 my-auto mx-auto">
-                {/* Template Main Background Pinned in Computer View */}
-                <div
-                  className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700 pointer-events-none scale-105"
-                  style={{
-                    backgroundImage: `url(${chosenHeroImage})`
-                  }}
-                />
-                <div className="absolute inset-0 bg-black/25 backdrop-blur-[0.5px] pointer-events-none z-0" />
-
-                <div
-                  ref={fullScrollRef}
-                  className="relative z-10 w-full h-full overflow-y-auto overscroll-contain luxury-scrollbar"
-                >
-                  {TemplateComponent ? (
-                    <TemplateComponent
-                      key={currentTemplateId}
-                      data={liveTemplateData}
-                      invitation={liveInvitation}
-                      invitationData={liveInvitation}
-                      activeTemplate={liveActiveTemplate}
-                    />
-                  ) : (
-                    <RoyalGoldTemplate
-                      key={currentTemplateId}
-                      data={liveTemplateData}
-                      invitation={liveInvitation}
-                      invitationData={liveInvitation}
-                      activeTemplate={liveActiveTemplate}
-                    />
-                  )}
-                </div>
-              </div>
-            )}
+            </div>
           </div>
         </section>
       </div>

@@ -1,3 +1,5 @@
+import TemplateGoogleMap from '../../TemplateGoogleMap';
+import TemplateGratitudeNote from '../../TemplateGratitudeNote';
 import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
@@ -32,13 +34,13 @@ export function AngkorPedimentTemplate({
   const locationName = data.ceremonyLocation || invitation.weddingLocation || activeTemplate?.demoLocation || 'មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)';
   const address = data.locationAddress || data.ceremonyAddress || invitation.locationAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
   const googleMapsUrl = data.googleMapsUrl || invitation.googleMapsUrl || 'https://maps.google.com/?q=The+Premier+Center+Sen+Sok';
-  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/traditional_angkor_pediment_prewedding.jpg';
+  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/traditional_angkor_pediment_prewedding.webp';
 
   // Bank details
   const bankName = data.bankName || invitation.bankName || 'ABA PAY / BAKONG';
   const accountName = data.accountName || invitation.accountName || `${groom} & ${bride}`;
   const accountNumber = data.accountNumber || invitation.accountNumber || '012 345 678';
-  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || null;
+  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || '/images/aba_qr.webp';
 
   // Host contacts
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation.hostPhoneGroom || '012 345 678';
@@ -63,9 +65,9 @@ export function AngkorPedimentTemplate({
     ? data.galleryPhotos
     : (activeTemplate?.galleryPhotos || [
         { id: 1, src: preweddingImg, caption: 'ហោជាងប្រាសាទថ្មមាស' },
-        { id: 2, src: '/images/templates/angkor-heritage/angkor_1.jpg', caption: 'កេរដំណែលប្រាសាទអង្គរវត្ត' },
-        { id: 3, src: '/images/templates/angkor-heritage/angkor_2.jpg', caption: 'មោទនភាពវប្បធម៌ជាតិ' },
-        { id: 4, src: '/images/templates/angkor-ancient-royalty/ancient_1.jpg', caption: 'សិរីមង្គលមហានគរ' }
+        { id: 2, src: '/images/templates/angkor-heritage/angkor_1.webp', caption: 'កេរដំណែលប្រាសាទអង្គរវត្ត' },
+        { id: 3, src: '/images/templates/angkor-heritage/angkor_2.webp', caption: 'មោទនភាពវប្បធម៌ជាតិ' },
+        { id: 4, src: '/images/templates/angkor-ancient-royalty/ancient_1.webp', caption: 'សិរីមង្គលមហានគរ' }
       ]);
 
   const { isPlaying, toggleMusic } = useTemplateAudio();
@@ -253,20 +255,18 @@ export function AngkorPedimentTemplate({
           </div>
         </section>
 
-        {/* Location */}
-        <section className="px-6 py-8 border-t border-[#C59B27]/20 text-center">
-          <h2 className="font-moul text-[#8C6813] text-base mb-2">ទីតាំងប្រារព្ធពិធី</h2>
-          <p className="text-sm font-semibold text-stone-900 mb-1">{locationName}</p>
-          <p className="text-xs text-stone-600 mb-5">{address}</p>
-          <a
-            href={googleMapsUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#8C6813] via-[#FFF9D2] to-[#C59B27] text-stone-900 font-semibold text-xs shadow-md hover:brightness-105 active:scale-95 transition cursor-pointer"
-          >
-            <MapPin className="w-4 h-4" />
-            <span>បើកមើលក្នុង Google Maps</span>
-          </a>
+        {/* Gratitude & Apology (អរគុណ & អធ្យាស្រ័យ) */}
+        <TemplateGratitudeNote isDark={false} accentColor="#8C6813" fontFamily="font-moul" />
+
+        {/* Location (ទីតាំងពិធី & address) */}
+        <section className="px-6 py-6 border-t border-[#C59B27]/20 text-center">
+          <TemplateGoogleMap
+            locationName={locationName}
+            address={address}
+            googleMapsUrl={googleMapsUrl}
+            accentColor="#8C6813"
+            fontFamily="font-moul"
+          />
         </section>
 
         {/* Digital Gift */}

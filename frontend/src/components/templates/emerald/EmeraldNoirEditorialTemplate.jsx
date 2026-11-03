@@ -1,3 +1,4 @@
+import { TemplateGoogleMap } from '../../TemplateGoogleMap';
 import React, { useState, useRef, useEffect } from 'react';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
 import {
@@ -46,7 +47,7 @@ export function EmeraldNoirEditorialTemplate({ data = {}, invitationData = {}, i
   const bankName = data.bankName || invitation?.bankName || 'ABA PAY / BAKONG';
   const accountName = data.accountName || invitation?.accountName || `${groom} & ${bride}`;
   const accountNumber = data.accountNumber || invitation?.accountNumber || '012 999 777';
-  const qrCodeImage = data.qrCodeImage || invitation?.qrCodeImage || null;
+  const qrCodeImage = data.qrCodeImage || invitation?.qrCodeImage || '/images/aba_qr.webp';
 
   // Host Contacts
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation?.hostPhoneGroom || '012 999 777';
@@ -57,11 +58,11 @@ export function EmeraldNoirEditorialTemplate({ data = {}, invitationData = {}, i
   const heroList = (data.heroImages && data.heroImages.length > 0)
     ? data.heroImages
     : [
-        '/images/templates/emerald_noir_prewedding.jpg',
-        '/images/templates/emerald-noir/noir_2.jpg',
-        '/images/templates/emerald-noir/noir_3.jpg',
-        '/images/templates/emerald-noir/noir_4.jpg',
-        '/images/templates/emerald-noir/noir_5.jpg'
+        '/images/templates/emerald_noir_prewedding.webp',
+        '/images/templates/emerald-noir/noir_2.webp',
+        '/images/templates/emerald-noir/noir_3.webp',
+        '/images/templates/emerald-noir/noir_4.webp',
+        '/images/templates/emerald-noir/noir_5.webp'
       ];
 
   const [activeHeroIdx, setActiveHeroIdx] = useState(0);
@@ -115,12 +116,12 @@ export function EmeraldNoirEditorialTemplate({ data = {}, invitationData = {}, i
   const galleryPhotos = (data.galleryPhotos && data.galleryPhotos.length > 0)
     ? data.galleryPhotos
     : [
-        { id: 1, src: '/images/templates/emerald_noir_prewedding.jpg', caption: 'មរកតសូត្រខ្មៅវិចិត្រសាល Haute Couture' },
-        { id: 2, src: '/images/templates/emerald-noir/noir_2.jpg', caption: 'ភាពស្និទ្ធស្នាលនៃសេចក្តីស្រឡាញ់ស្ងប់ស្ងាត់' },
-        { id: 3, src: '/images/templates/emerald-noir/noir_3.jpg', caption: 'រាត្រីរ៉ូមែនទិកលើអគារខ្ពស់នៃរាជធានី' },
-        { id: 4, src: '/images/templates/emerald-noir/noir_4.jpg', caption: 'សម្លៀកបំពាក់កាត់កងបែប Haute Joaillerie' },
-        { id: 5, src: '/images/templates/emerald-noir/noir_5.jpg', caption: 'ចិញ្ចៀនពេជ្រត្បូងមរកតចរណៃ' },
-        { id: 6, src: '/images/templates/emerald_glasshouse_prewedding.jpg', caption: 'អនុស្សាវរីយ៍សិរីមង្គលអមតៈ' }
+        { id: 1, src: '/images/templates/emerald_noir_prewedding.webp', caption: 'មរកតសូត្រខ្មៅវិចិត្រសាល Haute Couture' },
+        { id: 2, src: '/images/templates/emerald-noir/noir_2.webp', caption: 'ភាពស្និទ្ធស្នាលនៃសេចក្តីស្រឡាញ់ស្ងប់ស្ងាត់' },
+        { id: 3, src: '/images/templates/emerald-noir/noir_3.webp', caption: 'រាត្រីរ៉ូមែនទិកលើអគារខ្ពស់នៃរាជធានី' },
+        { id: 4, src: '/images/templates/emerald-noir/noir_4.webp', caption: 'សម្លៀកបំពាក់កាត់កងបែប Haute Joaillerie' },
+        { id: 5, src: '/images/templates/emerald-noir/noir_5.webp', caption: 'ចិញ្ចៀនពេជ្រត្បូងមរកតចរណៃ' },
+        { id: 6, src: '/images/templates/emerald_glasshouse_prewedding.webp', caption: 'អនុស្សាវរីយ៍សិរីមង្គលអមតៈ' }
       ];
 
   // 7 Standard Ceremony Milestones

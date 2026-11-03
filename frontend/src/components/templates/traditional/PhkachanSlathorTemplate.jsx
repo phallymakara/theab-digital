@@ -1,3 +1,5 @@
+import TemplateGoogleMap from '../../TemplateGoogleMap';
+import TemplateGratitudeNote from '../../TemplateGratitudeNote';
 import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { useTemplateAudio } from '../../../utils/useTemplateAudio';
@@ -33,13 +35,13 @@ export function PhkachanSlathorTemplate({
   const locationName = data.ceremonyLocation || invitation.weddingLocation || activeTemplate?.demoLocation || 'មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)';
   const address = data.locationAddress || data.ceremonyAddress || invitation.locationAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
   const googleMapsUrl = data.googleMapsUrl || invitation.googleMapsUrl || 'https://maps.google.com/?q=The+Premier+Center+Sen+Sok';
-  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/traditional_phkachan_slathor_prewedding.jpg';
+  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/traditional_phkachan_slathor_prewedding.webp';
 
   // Bank & Gift
   const bankName = data.bankName || invitation.bankName || 'ABA PAY / BAKONG';
   const accountName = data.accountName || invitation.accountName || `${groom} & ${bride}`;
   const accountNumber = data.accountNumber || invitation.accountNumber || '012 345 678';
-  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || null;
+  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || '/images/aba_qr.webp';
 
   // Host Contacts
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation.hostPhoneGroom || '012 345 678';
@@ -121,11 +123,11 @@ export function PhkachanSlathorTemplate({
     ? data.galleryPhotos
     : (activeTemplate?.galleryPhotos || [
         { id: 1, src: preweddingImg, caption: 'ផ្កាចន្ទន៍ដង្វាយមាស' },
-        { id: 2, src: '/images/templates/angkor-heritage/angkor_1.jpg', caption: 'មង្គលសិរីមាស' },
-        { id: 3, src: '/images/templates/angkor-heritage/angkor_2.jpg', caption: 'ផ្កាស្រស់រ៉ូមែនទិក' },
-        { id: 4, src: '/images/templates/angkor-ancient-royalty/ancient_1.jpg', caption: 'ភាពថ្លៃថ្នូរ' },
-        { id: 5, src: '/images/templates/angkor-ancient-royalty/ancient_2.jpg', caption: 'កេរដំណែលអង្គរ' },
-        { id: 6, src: '/images/templates/traditional_indigo_hol_prewedding.jpg', caption: 'ភាពស៊ីវិល័យ' }
+        { id: 2, src: '/images/templates/angkor-heritage/angkor_1.webp', caption: 'មង្គលសិរីមាស' },
+        { id: 3, src: '/images/templates/angkor-heritage/angkor_2.webp', caption: 'ផ្កាស្រស់រ៉ូមែនទិក' },
+        { id: 4, src: '/images/templates/angkor-ancient-royalty/ancient_1.webp', caption: 'ភាពថ្លៃថ្នូរ' },
+        { id: 5, src: '/images/templates/angkor-ancient-royalty/ancient_2.webp', caption: 'កេរដំណែលអង្គរ' },
+        { id: 6, src: '/images/templates/traditional_indigo_hol_prewedding.webp', caption: 'ភាពស៊ីវិល័យ' }
       ]);
 
   return (
@@ -266,22 +268,18 @@ export function PhkachanSlathorTemplate({
             </div>
           </section>
 
-          {/* Location */}
-          <section className="my-10 text-center">
-            <div className="bg-white/95 backdrop-blur-md border-2 border-[#D4AF37]/80 p-6 rounded-3xl shadow-md">
-              <h4 className="font-moul text-sm text-[#8E6514] mb-1">ទីតាំងប្រារព្ធពិធី</h4>
-              <p className="font-bold text-sm text-stone-900 mt-1 font-moul leading-relaxed">{locationName}</p>
-              <p className="text-xs text-stone-600 mt-1 mb-4">{address}</p>
-              <a
-                href={googleMapsUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#B88926] via-[#FFF6D1] to-[#E5C058] text-stone-900 font-bold text-xs shadow-md hover:brightness-105 active:scale-95 transition"
-              >
-                <MapPin className="w-3.5 h-3.5" />
-                <span>បើកមើលក្នុង Google Maps</span>
-              </a>
-            </div>
+          {/* Gratitude & Apology (អរគុណ & អធ្យាស្រ័យ) */}
+          <TemplateGratitudeNote isDark={false} accentColor="#B88926" fontFamily="font-moul" />
+
+          {/* Location & Map Display (ទីតាំងពិធី & address) */}
+          <section className="my-6 text-center">
+            <TemplateGoogleMap
+              locationName={locationName}
+              address={address}
+              googleMapsUrl={googleMapsUrl}
+              accentColor="#B88926"
+              fontFamily="font-moul"
+            />
           </section>
 
           {/* Gallery */}

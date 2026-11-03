@@ -1,3 +1,5 @@
+import TemplateGoogleMap from '../../TemplateGoogleMap';
+import TemplateGratitudeNote from '../../TemplateGratitudeNote';
 import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { Calendar, Clock, MapPin, Music, Heart, Send, Copy, Check, X, Sparkles, ChevronLeft, ChevronRight, Volume2, VolumeX, Flower2, Phone } from 'lucide-react';
@@ -14,13 +16,13 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
   const locationName = data.ceremonyLocation || invitation.weddingLocation || activeTemplate?.demoLocation || 'សាលមង្គលសួនផ្ការំដួល ឌឹ ព្រេមៀ សែនសុខ (អគារ C)';
   const address = data.locationAddress || data.ceremonyAddress || invitation.locationAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
   const googleMapsUrl = data.googleMapsUrl || invitation.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationName + ' ' + address)}`;
-  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/floral_cambodian_blossom_prewedding.jpg';
+  const preweddingImg = data.preweddingPhoto || data.bgImage || activeTemplate?.bgImage || '/images/templates/floral_cambodian_blossom_prewedding.webp';
 
   // Bank & Gift
   const bankName = data.bankName || invitation.bankName || 'ABA BANK / BAKONG';
   const accountName = data.accountName || invitation.accountName || `${groom} & ${bride}`;
   const accountNumber = data.accountNumber || invitation.accountNumber || '001 888 999';
-  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || null;
+  const qrCodeImage = data.qrCodeImage || invitation.qrCodeImage || '/images/aba_qr.webp';
 
   // Host Contacts
   const phoneGroom = data.hostPhoneGroom || data.phoneGroom || invitation.hostPhoneGroom || '012 345 678';
@@ -39,10 +41,10 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
   const heroList = (data.heroImages && data.heroImages.length > 0)
     ? data.heroImages
     : (activeTemplate?.heroImages || [
-        '/images/templates/floral_cambodian_blossom_prewedding.jpg',
-        '/images/templates/floral-romance/floral_1.jpg',
-        '/images/templates/floral-romance/floral_2.jpg',
-        '/images/templates/floral-romance/floral_3.jpg'
+        '/images/templates/floral_cambodian_blossom_prewedding.webp',
+        '/images/templates/floral-romance/floral_1.webp',
+        '/images/templates/floral-romance/floral_2.webp',
+        '/images/templates/floral-romance/floral_3.webp'
       ]);
 
   const [activeHeroIdx, setActiveHeroIdx] = useState(0);
@@ -142,8 +144,8 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
     ? data.galleryPhotos
     : (activeTemplate?.galleryPhotos || [
         { id: 1, src: preweddingImg, caption: 'មន្តស្នេហ៍ផ្កាម្លិះ និងកុលាបមង្គល' },
-        { id: 2, src: '/images/templates/floral-romance/floral_1.jpg', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
-        { id: 3, src: '/images/templates/floral-romance/floral_3.jpg', caption: 'អនុស្សាវរីយ៍សួនផ្កាអមតៈ' }
+        { id: 2, src: '/images/templates/floral-romance/floral_1.webp', caption: 'ពន្លឺថ្ងៃមាសកក់ក្តៅនៃស្នេហា' },
+        { id: 3, src: '/images/templates/floral-romance/floral_3.webp', caption: 'អនុស្សាវរីយ៍សួនផ្កាអមតៈ' }
       ]);
 
   return (
@@ -444,28 +446,14 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
               6. LOCATION & MAPS
               ========================================================================= */}
           <section className="mt-8">
-            <div className="p-5 rounded-3xl bg-white border border-[#E06D7B]/20 shadow-sm text-center">
-              <div className="w-10 h-10 rounded-full mx-auto bg-rose-50 border border-[#E06D7B]/30 flex items-center justify-center text-[#C84B5B] mb-2">
-                <MapPin className="w-5 h-5" />
-              </div>
-              <h4 className="font-moulpali text-base text-[#2F1117] mb-1">
-                {locationName}
-              </h4>
-              <p className="text-xs text-stone-500 max-w-sm mx-auto mb-4">
-                {address}
-              </p>
-
-              <a
-                href={googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C84B5B] text-white text-xs font-semibold shadow hover:bg-[#A93342] active:scale-95 transition-all cursor-pointer"
-              >
-                <MapPin className="w-3.5 h-3.5 text-amber-200" />
-                <span>បើកមើលទីតាំងលើ Google Maps</span>
-              </a>
-            </div>
-          </section>
+            <TemplateGratitudeNote isDark={false} accentColor="#C84B5B" fontFamily="font-moulpali" />
+            <TemplateGoogleMap
+              locationName={locationName}
+              address={address}
+              googleMapsUrl={googleMapsUrl}
+              accentColor="#C84B5B"
+              fontFamily="font-moulpali"
+            /></section>
 
           {/* =========================================================================
               7. PREWEDDING GALLERY
@@ -522,7 +510,7 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
                 className="max-w-[200px] mx-auto p-3 bg-white rounded-2xl border border-stone-200 shadow-inner mb-3 cursor-pointer hover:border-[#E06D7B] transition-all"
               >
                 <img
-                  src={qrCodeImage || '/images/aba_qr.png'}
+                  src={qrCodeImage || '/images/aba_qr.webp'}
                   alt="QR Code"
                   className="w-full h-auto rounded-lg object-contain"
                   onError={(e) => {
@@ -768,7 +756,7 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
             <h4 className="font-moulpali text-sm text-[#2F1117] mb-1">{bankName}</h4>
             <p className="text-xs text-stone-500 mb-3">{accountName}</p>
             <img
-              src={qrCodeImage || '/images/aba_qr.png'}
+              src={qrCodeImage || '/images/aba_qr.webp'}
               alt="QR Code"
               className="w-full aspect-square object-contain rounded-xl border border-stone-200" decoding="async" loading="lazy" />
             <p className="text-xs font-serifTrad font-bold text-[#C84B5B] mt-3">
