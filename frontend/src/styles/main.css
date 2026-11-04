@@ -59,6 +59,23 @@ html {
 }
 
 /* ==========================================================================
+   MOBILE INPUT AUTO-ZOOM PREVENTION
+   Enforce minimum 16px font-size on mobile viewports to prevent iOS Safari
+   and mobile browsers from triggering disruptive automatic viewport zoom.
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea,
+  .form-input,
+  .form-textarea,
+  .form-select {
+    font-size: 16px !important;
+  }
+}
+
+
+/* ==========================================================================
    DIGITAL THEAB DESIGN SYSTEM & LUXURY KHMER AESTHETICS
    ========================================================================== */
 
@@ -582,7 +599,7 @@ body {
   border: 1px solid #D6D3D1;
   background-color: #FFFFFF;
   font-family: var(--font-kantumruy);
-  font-size: 0.925rem;
+  font-size: 1rem;
   color: #1C1917;
   transition: all 0.2s ease;
 }

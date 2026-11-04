@@ -489,7 +489,7 @@ export function TemplateCustomizerPage() {
           >
             <ArrowLeft className="w-4 h-4 text-amber-700" />
             <span className="hidden sm:inline">ត្រឡប់ទៅជ្រើសរើសគំរូ</span>
-            <span className="sm:hidden">ថយក្រោយ</span>
+            <span className="sm:hidden text-xs">ថយ</span>
           </button>
 
 
@@ -503,8 +503,8 @@ export function TemplateCustomizerPage() {
               mobileTab === 'form' ? 'bg-amber-600 text-white shadow-xs' : 'text-stone-600'
             }`}
           >
-            <Edit3 className="w-3.5 h-3.5" />
-            <span>បំពេញព័ត៌មាន</span>
+            <Edit3 className="w-3.5 h-3.5 shrink-0" />
+            <span className="text-xs">ទម្រង់</span>
           </button>
           <button
             onClick={() => setMobileTab('preview')}
@@ -512,8 +512,8 @@ export function TemplateCustomizerPage() {
               mobileTab === 'preview' ? 'bg-amber-600 text-white shadow-xs' : 'text-stone-600'
             }`}
           >
-            <Eye className="w-3.5 h-3.5" />
-            <span>មើលលទ្ធផល</span>
+            <Eye className="w-3.5 h-3.5 shrink-0" />
+            <span className="text-xs">មើលគំរូ</span>
           </button>
         </div>
 
@@ -529,14 +529,15 @@ export function TemplateCustomizerPage() {
             title={isAudioPlaying ? 'ចុចដើម្បីបិទភ្លេង «ភ្ជាប់និស្ស័យ»' : 'ចុចដើម្បីចាក់ភ្លេង «ភ្ជាប់និស្ស័យ»'}
           >
             <Music className={`w-3.5 h-3.5 ${isAudioPlaying ? 'text-amber-600 animate-pulse' : 'text-stone-400'}`} />
-            <span className="hidden sm:inline">{isAudioPlaying ? 'ភ្លេង «ភ្ជាប់និស្ស័យ»' : 'ចាក់ភ្លេង'}</span>
+            <span className="hidden md:inline">{isAudioPlaying ? 'ភ្លេង «ភ្ជាប់និស្ស័យ»' : 'ចាក់ភ្លេង'}</span>
           </button>
           <button
             onClick={handleSaveAndRent}
             className={`flex items-center gap-1.5 px-4 sm:px-5 py-2 rounded-full ${activeTemplate.primaryGradient || 'bg-theabCrimson hover:bg-rose-900'} active:scale-95 text-white font-bold text-xs sm:text-sm shadow-md shadow-amber-950/20 hover:shadow-lg transition-all cursor-pointer ${templateFont}`}
           >
-            <Share2 className="w-4 h-4 text-amber-200" />
-            <span>រក្សាទុក & ចែករំលែក</span>
+            <Share2 className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-amber-200 shrink-0" />
+            <span className="hidden sm:inline">រក្សាទុក & ចែករំលែក</span>
+            <span className="sm:hidden text-xs">ចែករំលែក</span>
           </button>
         </div>
       </header>
@@ -575,7 +576,7 @@ export function TemplateCustomizerPage() {
                     value={formData.groomName}
                     onChange={(e) => setFormData({ ...formData, groomName: e.target.value })}
                     placeholder="ឧ. សុខ វិបុល"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
                 <div>
@@ -587,7 +588,7 @@ export function TemplateCustomizerPage() {
                     value={formData.brideName}
                     onChange={(e) => setFormData({ ...formData, brideName: e.target.value })}
                     placeholder="ឧ. ជា សុជាតា"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
               </div>
@@ -716,7 +717,7 @@ export function TemplateCustomizerPage() {
                       value={formData.groomFather}
                       onChange={(e) => setFormData({ ...formData, groomFather: e.target.value })}
                       placeholder="ឧ. លោក ចាន់ សុផល"
-                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                     />
                   </div>
                   <div>
@@ -726,7 +727,7 @@ export function TemplateCustomizerPage() {
                       value={formData.groomMother}
                       onChange={(e) => setFormData({ ...formData, groomMother: e.target.value })}
                       placeholder="ឧ. លោកស្រី ម៉ៅ សុខា"
-                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                     />
                   </div>
                 </div>
@@ -737,7 +738,7 @@ export function TemplateCustomizerPage() {
                     value={formData.groomResidence}
                     onChange={(e) => setFormData({ ...formData, groomResidence: e.target.value })}
                     placeholder="ឧ. រាជធានីភ្នំពេញ"
-                    className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
               </div>
@@ -756,7 +757,7 @@ export function TemplateCustomizerPage() {
                       value={formData.brideFather}
                       onChange={(e) => setFormData({ ...formData, brideFather: e.target.value })}
                       placeholder="ឧ. លោក តែ គឹមសុង"
-                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                     />
                   </div>
                   <div>
@@ -766,7 +767,7 @@ export function TemplateCustomizerPage() {
                       value={formData.brideMother}
                       onChange={(e) => setFormData({ ...formData, brideMother: e.target.value })}
                       placeholder="ឧ. លោកស្រី លឹម គន្ធី"
-                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                     />
                   </div>
                 </div>
@@ -777,7 +778,7 @@ export function TemplateCustomizerPage() {
                     value={formData.brideResidence}
                     onChange={(e) => setFormData({ ...formData, brideResidence: e.target.value })}
                     placeholder="ឧ. រាជធានីភ្នំពេញ"
-                    className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
               </div>
@@ -817,7 +818,7 @@ export function TemplateCustomizerPage() {
                     value={formData.ceremonyTime}
                     onChange={(e) => setFormData({ ...formData, ceremonyTime: e.target.value })}
                     placeholder="ឧ. ម៉ោង 05:00 ល្ងាច"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
               </div>
@@ -908,7 +909,7 @@ export function TemplateCustomizerPage() {
                   value={formData.locationName}
                   onChange={(e) => setFormData({ ...formData, locationName: e.target.value })}
                   placeholder="ឧ. សណ្ឋាគារ រ៉ូសវូដ ភ្នំពេញ (Grand Ballroom)"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                 />
               </div>
 
@@ -921,7 +922,7 @@ export function TemplateCustomizerPage() {
                   value={formData.locationAddress}
                   onChange={(e) => setFormData({ ...formData, locationAddress: e.target.value })}
                   placeholder="ឧ. អគារ វឌ្ឍនៈ កាពីតាល់ មហាវិថីព្រះមុនីវង្ស សង្កាត់វត្តភ្នំ រាជធានីភ្នំពេញ"
-                  className="w-full px-3.5 py-2 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all resize-none select-text"
+                  className="w-full px-3.5 py-2 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all resize-none select-text"
                 />
               </div>
 
@@ -1018,7 +1019,7 @@ export function TemplateCustomizerPage() {
                   <select
                     value={formData.bankName}
                     onChange={(e) => setFormData({ ...formData, bankName: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   >
                     <option value="ABA Bank">ABA Bank</option>
                     <option value="ACLEDA Bank">ACLEDA Bank</option>

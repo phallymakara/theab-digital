@@ -658,7 +658,7 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
         style={{ borderColor: themeBorder }}
       >
         {/* Top Floating Control Bar - Inside at Top of Container (Transparent background behind buttons) */}
-        <header className="absolute top-3 inset-x-3 sm:inset-x-4 flex items-center justify-between gap-2 z-50 pointer-events-none">
+        <header className={`absolute top-3 inset-x-3 sm:inset-x-4 flex items-center justify-between gap-1.5 sm:gap-2 z-50 pointer-events-none ${isModal || onClose ? 'pr-11 sm:pr-14' : ''}`}>
           {/* Back button */}
           <div className="pointer-events-auto">
             <button
@@ -680,7 +680,8 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-md border border-white/25 shadow-lg text-xs font-bold transition-all cursor-pointer active:scale-95"
             >
               <ArrowLeft className="w-4 h-4 text-amber-300 shrink-0" />
-              <span>ថយក្រោយ</span>
+              <span className="hidden sm:inline">ថយក្រោយ</span>
+              <span className="sm:hidden text-[11px]">ថយ</span>
             </button>
           </div>
 
@@ -695,9 +696,7 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
                       ? 'bg-amber-600 text-white shadow-xs'
                       : 'text-stone-200 hover:text-white'
                   }`}
-                >
-                  ទម្រង់ដើម HTML
-                </button>
+                ><span className="hidden sm:inline">ទម្រង់ដើម </span>HTML</button>
                 <button
                   onClick={() => setViewMode('smart')}
                   className={`px-2.5 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
@@ -705,9 +704,7 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
                       ? 'bg-amber-600 text-white shadow-xs'
                       : 'text-stone-200 hover:text-white'
                   }`}
-                >
-                  ទម្រង់កម្មវិធី
-                </button>
+                ><span className="hidden sm:inline">ទម្រង់</span>កម្មវិធី</button>
                 <a
                   href={activeTemplate.htmlPreviewUrl}
                   target="_blank"
@@ -748,7 +745,8 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
               className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:brightness-110 text-white backdrop-blur-md border border-amber-300/40 shadow-lg text-xs font-bold transition-all cursor-pointer active:scale-95"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-200 shrink-0" />
-              <span>ជ្រើសរើសគំរូ</span>
+              <span className="hidden sm:inline">ជ្រើសរើសគំរូ</span>
+              <span className="sm:hidden text-xs">ជ្រើសរើស</span>
             </button>
             )}
           </div>

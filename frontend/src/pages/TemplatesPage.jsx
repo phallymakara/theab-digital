@@ -161,8 +161,9 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
               onClick={() => navigate({ to: '/' })}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white border border-stone-200/90 text-stone-700 hover:text-theabCrimson text-xs font-bold transition shadow-2xs cursor-pointer shrink-0"
             >
-              <ArrowLeft className="w-4 h-4 text-theabCrimson" />
-              <span>ត្រឡប់ក្រោយ</span>
+              <ArrowLeft className="w-4 h-4 text-theabCrimson shrink-0" />
+              <span className="hidden sm:inline">ត្រឡប់ក្រោយ</span>
+              <span className="sm:hidden text-xs">ថយ</span>
             </button>
           </div>
 
