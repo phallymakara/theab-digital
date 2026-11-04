@@ -70,6 +70,36 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
       ? templates
       : templates.filter((t) => t.category === activeCategory);
 
+  // Progressive lazy loading: only load and render visible cards slice
+  const INITIAL_CARD_COUNT = 6;
+  const BATCH_SIZE = 6;
+  const [visibleCount, setVisibleCount] = useState(INITIAL_CARD_COUNT);
+  const loadMoreSentinelRef = useRef(null);
+
+  // Reset visible card count whenever the user switches category or ceremony
+  useEffect(() => {
+    setVisibleCount(INITIAL_CARD_COUNT);
+  }, [activeCategory, ceremonyType]);
+
+  // Infinite scroll observer to seamlessly reveal more cards as user scrolls
+  useEffect(() => {
+    if (!loadMoreSentinelRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0] && entries[0].isIntersecting) {
+          setVisibleCount((prev) => Math.min(prev + BATCH_SIZE, filteredTemplates.length));
+        }
+      },
+      { rootMargin: '250px' }
+    );
+    observer.observe(loadMoreSentinelRef.current);
+    return () => observer.disconnect();
+  }, [filteredTemplates.length]);
+
+  const displayedTemplates = useMemo(() => {
+    return filteredTemplates.slice(0, visibleCount);
+  }, [filteredTemplates, visibleCount]);
+
   const handleSelectTemplate = (template) => {
     setSelectedTemplate(template);
     setCurrentTheme(template.themeColor || 'crimson');
@@ -841,6 +871,18 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
                   </div>
                 );
               })}
+              {/* Progressive Lazy Load Sentinel & Manual Button */}
+              {visibleCount < filteredTemplates.length && (
+                <div ref={loadMoreSentinelRef} className="col-span-full py-4 sm:py-6 flex flex-col items-center justify-center">
+                  <button
+                    onClick={() => setVisibleCount((prev) => Math.min(prev + BATCH_SIZE, filteredTemplates.length))}
+                    className="px-6 py-2.5 rounded-full bg-white/95 border border-stone-200 text-stone-700 hover:text-theabCrimson hover:border-theabCrimson/50 text-xs font-bold transition-all shadow-2xs hover:shadow-xs active:scale-95 cursor-pointer flex items-center gap-2"
+                  >
+                    <span>បង្ហាញគំរូធៀបបន្ថែមទៀត ({displayedTemplates.length} ក្នុងចំណោម {filteredTemplates.length})</span>
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>
