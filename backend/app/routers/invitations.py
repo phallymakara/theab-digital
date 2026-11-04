@@ -1,14 +1,16 @@
 import io
 import qrcode
-from typing import List
+from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status, Response, Request
 from sqlalchemy.orm import Session
 
-from app.db.database import get_db
+from app.routers.deps import get_db, get_optional_current_user
+from app.models.user import User
 from app.schemas.invitation import (
     InvitationCreate,
     InvitationUpdate,
     InvitationResponse,
+    InvitationListItem,
 )
 from app.services.invitation_service import InvitationService
 
@@ -16,8 +18,14 @@ router = APIRouter(prefix="/invitations", tags=["Invitations"])
 
 
 @router.get("", response_model=List[InvitationResponse])
-def list_invitations(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return InvitationService.list_all(db, skip=skip, limit=limit)
+def list_invitations(
+    skip: int = 0,
+    limit: int = 100,
+    current_user: Optional[User] = Depends(get_optional_current_user),
+    db: Session = Depends(get_db)
+):
+    user_id = current_user.id if current_user else None
+    return InvitationService.list_all(db, user_id=user_id, skip=skip, limit=limit)
 
 
 @router.get("/seed", response_model=InvitationResponse)
@@ -26,8 +34,13 @@ def get_or_seed_default(db: Session = Depends(get_db)):
 
 
 @router.post("", response_model=InvitationResponse, status_code=status.HTTP_201_CREATED)
-def create_invitation(data: InvitationCreate, db: Session = Depends(get_db)):
-    return InvitationService.create(db, data)
+def create_invitation(
+    data: InvitationCreate,
+    current_user: Optional[User] = Depends(get_optional_current_user),
+    db: Session = Depends(get_db)
+):
+    user_id = current_user.id if current_user else None
+    return InvitationService.create(db, data, user_id=user_id)
 
 
 @router.get("/slug/{slug}", response_model=InvitationResponse)
@@ -80,9 +93,7 @@ def generate_invitation_qr(invitation_id: int, request: Request, db: Session = D
     if not invitation:
         raise HTTPException(status_code=404, detail="Invitation not found")
 
-    # Target invitation URL
     base_url = str(request.base_url).rstrip("/")
-    # Using public link or host URL
     target_url = f"{base_url}/invitation/{invitation.slug}"
 
     qr = qrcode.QRCode(

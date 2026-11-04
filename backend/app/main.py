@@ -4,9 +4,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
 from app.db.database import engine, Base, SessionLocal
-from app.models import Invitation, GuestRSVP  # Ensure models are loaded
+from app.models import User, Invitation, GuestRSVP  # Ensure models are loaded
 from app.services.invitation_service import InvitationService
-from app.routers import invitations_router, rsvps_router, stats_router
+from app.routers import auth_router, invitations_router, rsvps_router, stats_router
 
 
 @asynccontextmanager
@@ -40,6 +40,7 @@ app.add_middleware(
 )
 
 # Include Routers
+app.include_router(auth_router, prefix=settings.API_V1_STR)
 app.include_router(invitations_router, prefix=settings.API_V1_STR)
 app.include_router(rsvps_router, prefix=settings.API_V1_STR)
 app.include_router(stats_router, prefix=settings.API_V1_STR)

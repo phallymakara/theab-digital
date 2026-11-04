@@ -5,14 +5,17 @@ description = "Digital Theab (ធៀបឌីជីថល) - FastAPI Backend for
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "fastapi>=0.143.3",
-    "numpy>=2.5.4",
-    "pillow>=13.0.0",
-    "pydantic>=2.14.1",
-    "pydantic-settings>=2.16.0",
-    "qrcode>=8.2",
-    "sqlalchemy>=2.1.5",
-    "uvicorn[standard]>=0.54.0",
+    "alembic>=1.14.0",
+    "bcrypt>=4.0.1",
+    "fastapi>=0.141.0",
+    "numpy>=2.0.0",
+    "pillow>=12.0.0",
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.7.0",
+    "python-jose[cryptography]>=3.3.0",
+    "qrcode>=8.0",
+    "sqlalchemy>=2.0.0",
+    "uvicorn[standard]>=0.34.0",
 ]
 
 [project.scripts]
