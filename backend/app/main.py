@@ -1,16 +1,25 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.core.config import settings
 from app.db.database import engine, Base, SessionLocal
 from app.models import User, Invitation, GuestRSVP  # Ensure models are loaded
 from app.services.invitation_service import InvitationService
-from app.routers import auth_router, invitations_router, rsvps_router, stats_router
+from app.routers import (
+    auth_router,
+    invitations_router,
+    rsvps_router,
+    stats_router,
+    media_router
+)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Ensure upload directory exists for local fallback
+    settings.UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
     # Create tables if not present
     Base.metadata.create_all(bind=engine)
     # Seed default invitation for immediate testing
@@ -44,6 +53,11 @@ app.include_router(auth_router, prefix=settings.API_V1_STR)
 app.include_router(invitations_router, prefix=settings.API_V1_STR)
 app.include_router(rsvps_router, prefix=settings.API_V1_STR)
 app.include_router(stats_router, prefix=settings.API_V1_STR)
+app.include_router(media_router, prefix=settings.API_V1_STR)
+
+# Mount local uploads directory for development fallback
+settings.UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=str(settings.UPLOAD_DIR)), name="uploads")
 
 
 @app.get("/")

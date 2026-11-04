@@ -29,6 +29,7 @@ from app.schemas.rsvp import (
     GuestRSVPResponse
 )
 from app.schemas.stats import DashboardStatsResponse
+from app.schemas.media import MediaUploadResponse
 
 __all__ = [
     "UserBase",
@@ -53,6 +54,8 @@ __all__ = [
     "InvitationListItem",
     "GuestRSVPBase",
     "GuestRSVPCreate",
+    "GuestRSVPUpdate",
     "GuestRSVPResponse",
     "DashboardStatsResponse",
+    "MediaUploadResponse",
 ]

@@ -1,10 +1,11 @@
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent.parent
 DEFAULT_DB_PATH = BACKEND_DIR / "digital_theab.db"
 DEFAULT_DB_URL = f"sqlite:///{DEFAULT_DB_PATH.as_posix()}"
+DEFAULT_UPLOAD_DIR = BACKEND_DIR / "uploads"
 
 
 class Settings(BaseSettings):
@@ -16,6 +17,18 @@ class Settings(BaseSettings):
     SECRET_KEY: str = "digital-theab-khmer-invitation-super-secret-key-2026"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
+
+    # Cloudflare R2 Storage (S3 Compatible)
+    R2_ACCOUNT_ID: Optional[str] = None
+    R2_ACCESS_KEY_ID: Optional[str] = None
+    R2_SECRET_ACCESS_KEY: Optional[str] = None
+    R2_BUCKET_NAME: str = "theab-digital-media"
+    R2_PUBLIC_URL: Optional[str] = None  # e.g., https://media.theabdigital.com or https://pub-xxx.r2.dev
+
+    # Local Storage Fallback
+    UPLOAD_DIR: Path = DEFAULT_UPLOAD_DIR
+    MAX_IMAGE_SIZE_BYTES: int = 15 * 1024 * 1024  # 15 MB
+    MAX_AUDIO_SIZE_BYTES: int = 15 * 1024 * 1024  # 15 MB
 
     CORS_ORIGINS: List[str] = [
         "http://localhost:5173",

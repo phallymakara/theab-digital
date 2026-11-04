@@ -24,3 +24,4 @@ class User(Base):
 
     # Relationships
     invitations = relationship("Invitation", back_populates="owner", cascade="all, delete-orphan")
+
