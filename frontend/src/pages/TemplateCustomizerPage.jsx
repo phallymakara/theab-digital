@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { useParams, useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
+import { apiService } from '../services/apiService';
+import { slugify } from '../utils/slugify';
 import { CEREMONY_DATA } from '../data/templates';
 import { TRADITIONAL_TEMPLATES, RoyalGoldTemplate } from '../components/templates/traditional';
 import { FLORAL_TEMPLATES } from '../components/templates/floral';
@@ -157,6 +160,11 @@ export function TemplateCustomizerPage() {
   const params = useParams({ strict: false });
   const navigate = useNavigate();
   const { selectedTemplate, setSelectedTemplate, addToast, isAudioPlaying, toggleAudio, playAudio, stopAudio } = useApp();
+  const { user, isAuthenticated, openAuthModal } = useAuth();
+  const [isSaving, setIsSaving] = useState(false);
+  const [savedSlug, setSavedSlug] = useState('');
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+  const [isUploadingQr, setIsUploadingQr] = useState(false);
 
   // TemplateComponent manages its own isolated audio. Ensure AppContext audio is stopped so only one sound plays
   useEffect(() => {
@@ -294,7 +302,7 @@ export function TemplateCustomizerPage() {
   };
 
   // Upload Gallery Photos (Max 12)
-  const handleGalleryUpload = (e) => {
+  const handleGalleryUpload = async (e) => {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
 
@@ -305,18 +313,34 @@ export function TemplateCustomizerPage() {
     }
 
     const filesToUpload = files.slice(0, remainingSlots);
-    const newItems = filesToUpload.map((file, idx) => ({
-      id: Date.now() + idx,
-      src: URL.createObjectURL(file),
-      caption: `រូបភាពអនុស្សាវរីយ៍ទី ${formData.galleryPhotos.length + idx + 1}`
-    }));
+    setIsUploadingPhoto(true);
 
-    setFormData((prev) => ({
-      ...prev,
-      galleryPhotos: [...prev.galleryPhotos, ...newItems].slice(0, 12)
-    }));
+    try {
+      const uploadedItems = [];
+      for (let i = 0; i < filesToUpload.length; i++) {
+        const file = filesToUpload[i];
+        let finalSrc = '';
+        try {
+          const res = await apiService.uploadMedia(file, 'gallery');
+          finalSrc = res.url;
+        } catch {
+          finalSrc = URL.createObjectURL(file);
+        }
+        uploadedItems.push({
+          id: Date.now() + i,
+          src: finalSrc,
+          caption: `រូបភាពអនុស្សាវរីយ៍ទី ${formData.galleryPhotos.length + i + 1}`
+        });
+      }
 
-    addToast(`បានបញ្ចូលរូបភាពអនុស្សាវរីយ៍ ${filesToUpload.length} សន្លឹកជោគជ័យ!`, 'success');
+      setFormData((prev) => ({
+        ...prev,
+        galleryPhotos: [...prev.galleryPhotos, ...uploadedItems].slice(0, 12)
+      }));
+      addToast(`បានបញ្ចូលរូបភាពអនុស្សាវរីយ៍ ${uploadedItems.length} សន្លឹកជោគជ័យ!`, 'success');
+    } finally {
+      setIsUploadingPhoto(false);
+    }
   };
 
   const removeGalleryPhoto = (idToRemove) => {
@@ -327,16 +351,28 @@ export function TemplateCustomizerPage() {
   };
 
   // Upload Bank QR Code Image
-  const handleQrUpload = (e) => {
+  const handleQrUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const objectUrl = URL.createObjectURL(file);
-    setFormData((prev) => ({
-      ...prev,
-      qrCodeImage: objectUrl
-    }));
-    addToast('បានបញ្ចូលរូបភាព QR Code ធនាគារជោគជ័យ!', 'success');
+    setIsUploadingQr(true);
+    try {
+      let finalUrl = '';
+      try {
+        const res = await apiService.uploadMedia(file, 'khqr');
+        finalUrl = res.url;
+      } catch {
+        finalUrl = URL.createObjectURL(file);
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        qrCodeImage: finalUrl
+      }));
+      addToast('បានបញ្ចូលរូបភាព QR Code ធនាគារជោគជ័យ!', 'success');
+    } finally {
+      setIsUploadingQr(false);
+    }
   };
 
   // Program milestones update
@@ -373,13 +409,95 @@ export function TemplateCustomizerPage() {
   // Save / Rent celebration handler
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+  const executeSave = async (activeUser) => {
+    setIsSaving(true);
+    try {
+      const rawGroom = slugify(formData.groomName);
+      const rawBride = slugify(formData.brideName);
+      const targetSlug = `${rawGroom}-${rawBride}`;
+
+      const payload = {
+        slug: targetSlug,
+        template_id: currentTemplateId,
+        event_type: 'wedding',
+        title_kh: 'សិរីសួស្តី អាពាហ៍ពិពាហ៍',
+
+        groom_name: formData.groomName,
+        groom_title: formData.groomTitle || 'កូនប្រុសនាម',
+        bride_name: formData.brideName,
+        bride_title: formData.brideTitle || 'កូនស្រីនាម',
+
+        groom_father: formData.groomFather,
+        groom_mother: formData.groomMother,
+        groom_residence: formData.groomResidence,
+        bride_father: formData.brideFather,
+        bride_mother: formData.brideMother,
+        bride_residence: formData.brideResidence,
+
+        phone_groom: formData.phoneGroom,
+        phone_bride: formData.phoneBride,
+        telegram_link: formData.telegramLink,
+        telegram_username: formData.telegramUsername,
+
+        event_date_raw: formData.weddingDateRaw,
+        ceremony_date_kh: formData.ceremonyDateKh,
+        ceremony_time: formData.ceremonyTime,
+        location_name: formData.locationName,
+        location_address: formData.locationAddress,
+        google_maps_url: formData.googleMapsUrl,
+
+        welcome_quote: formData.welcomeQuote || '',
+        theme_color: activeTemplate.themeColor || 'gold',
+        font_family: activeTemplate.font || 'font-komutt-a',
+        audio_url: formData.audioUrl || '/audio/nisai_wedding_song.mp3',
+        bg_image_url: chosenHeroImage || '',
+        hero_images: activeHeroImagesList,
+        is_published: true,
+
+        agendas: formData.programs.map((p, idx) => ({
+          time_text: p.time,
+          title_kh: p.title,
+          description_kh: p.desc,
+          order_index: idx + 1
+        })),
+        galleries: formData.galleryPhotos.map((g, idx) => ({
+          image_url: g.src,
+          caption: g.caption,
+          order_index: idx + 1
+        })),
+        bank_accounts: formData.accountNumber ? [{
+          bank_name: formData.bankName,
+          account_name: formData.accountName,
+          account_number: formData.accountNumber,
+          qr_code_url: formData.qrCodeImage,
+          is_primary: true
+        }] : []
+      };
+
+      const saved = await apiService.createInvitation(payload);
+      setSavedSlug(saved.slug || targetSlug);
+      confetti({
+        particleCount: 120,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+      setShowSuccessModal(true);
+      addToast('បានរក្សាទុកធៀបឌីជីថលជោគជ័យ!', 'success');
+    } catch (err) {
+      addToast(err.message || 'រក្សាទុកមិនជោគជ័យ សូមព្យាយាមម្តងទៀត', 'error');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const handleSaveAndRent = () => {
-    confetti({
-      particleCount: 120,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
-    setShowSuccessModal(true);
+    if (!isAuthenticated) {
+      openAuthModal((activeUser) => {
+        executeSave(activeUser);
+      });
+    } else {
+      executeSave(user);
+    }
   };
 
   // Resolve template component dynamically with bulletproof fallbacks
@@ -1244,32 +1362,33 @@ export function TemplateCustomizerPage() {
 
       {/* Save & Rent Success Celebration Modal */}
       {showSuccessModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-fade font-kantumruy">
-          <div className="max-w-md w-full rounded-3xl bg-white border border-amber-300 p-6 sm:p-8 text-center space-y-4 shadow-2xl relative">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
-              <CheckCircle2 className="w-9 h-9" />
+        <div className="fixed inset-0 z-50 bg-black/75 flex items-center justify-center p-4 animate-fade font-kantumruy">
+          <div className="max-w-md w-full rounded-2xl bg-white border border-stone-200 p-6 sm:p-8 text-center space-y-4 relative">
+            <div className="w-14 h-14 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto border border-emerald-200">
+              <CheckCircle2 className="w-8 h-8" />
             </div>
 
-            <h3 className={`${templateFont} text-2xl text-stone-900 font-bold`}>
+            <h3 className={`${templateFont} text-xl sm:text-2xl text-stone-900 font-bold`}>
               ព័ត៌មានធៀបត្រូវបានរក្សាទុករួចរាល់!
             </h3>
 
             <p className="font-kantumruy text-xs text-stone-600 leading-relaxed">
-              សូមអរគុណដែលបានជ្រើសរើសជួលសេវាកម្មធៀបមង្គលការឌីជីថល <span className="font-bold text-amber-800">Theab Digital</span>។ លោកអ្នកអាចចម្លងតំណភ្ជាប់ធៀបនេះដើម្បីផ្ញើទៅកាន់ភ្ញៀវកិត្តិយស ឬទាញយកបានភ្លាមៗ។
+              សូមអរគុណដែលបានជ្រើសរើសសេវាកម្មធៀបមង្គលការឌីជីថល <span className="font-bold text-amber-800">Theab Digital</span>។ លោកអ្នកអាចចម្លងតំណភ្ជាប់ធៀបនេះដើម្បីផ្ញើទៅកាន់ភ្ញៀវកិត្តិយស ឬទាញយកបានភ្លាមៗ។
             </p>
 
-            <div className="p-3 rounded-2xl bg-stone-50 border border-stone-200 text-left space-y-1 text-xs">
+            <div className="p-3.5 rounded-xl bg-stone-50 border border-stone-200 text-left space-y-1.5 text-xs">
               <p className="font-kantumruy text-[11px] text-stone-500 font-bold uppercase">តំណភ្ជាប់ធៀបរបស់អ្នក (Your Live Link)</p>
               <div className="flex items-center justify-between gap-2">
-                <span className="font-mono text-amber-800 truncate text-xs">
-                  {window.location.origin}/{currentTemplateId}/preview
+                <span className="font-mono text-amber-800 truncate text-xs select-all">
+                  {`${window.location.origin}/guest/wedding/${savedSlug || currentTemplateId}`}
                 </span>
                 <button
                   onClick={() => {
-                    navigator.clipboard?.writeText(`${window.location.origin}/${currentTemplateId}/preview`);
+                    const link = `${window.location.origin}/guest/wedding/${savedSlug || currentTemplateId}`;
+                    navigator.clipboard?.writeText(link);
                     addToast('បានចម្លងតំណភ្ជាប់ធៀបរួចរាល់!', 'success');
                   }}
-                  className="px-3 py-1 rounded-lg bg-amber-600 text-white font-bold text-[11px] shrink-0 active:scale-95 font-kantumruy"
+                  className="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-bold text-[11px] shrink-0 active:scale-95 font-kantumruy transition cursor-pointer"
                 >
                   ចម្លង
                 </button>
@@ -1279,15 +1398,15 @@ export function TemplateCustomizerPage() {
             <div className="flex gap-2 pt-2">
               <button
                 onClick={() => setShowSuccessModal(false)}
-                className="flex-1 py-2.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition cursor-pointer font-kantumruy"
+                className="flex-1 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition cursor-pointer font-kantumruy"
               >
                 កែសម្រួលបន្ត
               </button>
               <a
-                href={`/${currentTemplateId}/preview`}
+                href={`/guest/wedding/${savedSlug || currentTemplateId}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 py-2.5 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md hover:brightness-110 active:scale-95 transition font-kantumruy"
+                className="flex-1 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 active:scale-95 transition font-kantumruy"
               >
                 <span>បើកមើលធៀប</span>
                 <ExternalLink className="w-3.5 h-3.5" />

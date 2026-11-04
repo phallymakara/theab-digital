@@ -48,3 +48,4 @@ def generate_guests_csv(rsvps: List[GuestRSVP]) -> bytes:
     csv_data = output.getvalue()
     # Prepend UTF-8 BOM
     return codecs.BOM_UTF8 + csv_data.encode("utf-8")
+

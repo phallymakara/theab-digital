@@ -2,6 +2,7 @@ import TemplateGoogleMap from '../components/TemplateGoogleMap';
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { useParams, useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
+import { apiService } from '../services/apiService';
 import { CEREMONY_DATA } from '../data/templates';
 import { TRADITIONAL_TEMPLATES } from '../components/templates/traditional';
 import { FLORAL_TEMPLATES } from '../components/templates/floral';
@@ -227,23 +228,40 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
     MODERN_TEMPLATES[activeTemplate.cardStyle];
   const hasHtml = !!activeTemplate.htmlPreviewUrl;
   const [viewMode, setViewMode] = useState(hasHtml ? 'html' : 'smart');
+  const [serverInvitation, setServerInvitation] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    async function fetchServerData() {
+      try {
+        const data = await apiService.getPublicInvitation(decodedId);
+        if (isMounted && data) {
+          setServerInvitation(data);
+        }
+      } catch {
+        // Fallback to static demo data
+      }
+    }
+    fetchServerData();
+    return () => { isMounted = false; };
+  }, [decodedId]);
 
   // Independent template data: each template preserves its own demo content unless viewing the customized template
-  const groomName = activeTemplate.demoGroom || (isAngkorAncient ? 'កែវ វិបុលរាជ' : (isCustomized ? 'សុខ វិបុល' : 'សុខ វិបុល'));
-  const brideName = activeTemplate.demoBride || (isAngkorAncient ? 'ទេព ធីតាសួគ៌' : (isCustomized ? 'ជា សុជាតា' : 'ជា សុជាតា'));
-  const weddingDate = activeTemplate.demoDate || (isAngkorAncient ? 'ថ្ងៃអាទិត្យ ទី១៤ ខែកុម្ភៈ ឆ្នាំ២០២៧' : (isCustomized ? 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦' : 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦'));
-  const weddingLocation = activeTemplate.demoLocation || (isAngkorAncient ? 'ពិធីសិរីមង្គលបុរាណប្រារព្ធនៅ សាលប្រាសាទមាស សែនសុខ រាជធានីភ្នំពេញ' : 'ពិធីនេះរៀបចំឡើងនៅសាលមង្គល ឌឹ ព្រេមៀ សែនសុខ (អគារ A) រាជធានីភ្នំពេញ');
+  const groomName = serverInvitation?.groom_name || activeTemplate.demoGroom || (isAngkorAncient ? 'កែវ វិបុលរាជ' : (isCustomized ? 'សុខ វិបុល' : 'សុខ វិបុល'));
+  const brideName = serverInvitation?.bride_name || activeTemplate.demoBride || (isAngkorAncient ? 'ទេព ធីតាសួគ៌' : (isCustomized ? 'ជា សុជាតា' : 'ជា សុជាតា'));
+  const weddingDate = serverInvitation?.ceremony_date_kh || activeTemplate.demoDate || (isAngkorAncient ? 'ថ្ងៃអាទិត្យ ទី១៤ ខែកុម្ភៈ ឆ្នាំ២០២៧' : (isCustomized ? 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦' : 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦'));
+  const weddingLocation = serverInvitation?.location_name || activeTemplate.demoLocation || (isAngkorAncient ? 'ពិធីសិរីមង្គលបុរាណប្រារព្ធនៅ សាលប្រាសាទមាស សែនសុខ រាជធានីភ្នំពេញ' : 'ពិធីនេះរៀបចំឡើងនៅសាលមង្គល ឌឹ ព្រេមៀ សែនសុខ (អគារ A) រាជធានីភ្នំពេញ');
 
-  const groomFather = activeTemplate.demoGroomParents?.split?.(' និង ')?.[0] || (isAngkorAncient
+  const groomFather = serverInvitation?.groom_father || activeTemplate.demoGroomParents?.split?.(' និង ')?.[0] || (isAngkorAncient
     ? 'លោក កែវ សម្បត្តិវិបុល'
     : isCustomized ? 'លោក សុខ ជា' : 'លោក ស៊ុន ហេង');
-  const groomMother = activeTemplate.demoGroomParents?.split?.(' និង ')?.[1] || (isAngkorAncient
+  const groomMother = serverInvitation?.groom_mother || activeTemplate.demoGroomParents?.split?.(' និង ')?.[1] || (isAngkorAncient
     ? 'លោកស្រី ជា ចរិយា'
     : isCustomized ? 'លោកស្រី កែវ ផល្លី' : 'អ្នកស្រី គីម ស្រ៊ុន');
-  const brideFather = activeTemplate.demoBrideParents?.split?.(' និង ')?.[0] || (isAngkorAncient
+  const brideFather = serverInvitation?.bride_father || activeTemplate.demoBrideParents?.split?.(' និង ')?.[0] || (isAngkorAncient
     ? 'លោក ទេព វរវង្ស'
     : isCustomized ? 'លោក ជា វណ្ណា' : 'លោក ជា សម្បត្តិ');
-  const brideMother = activeTemplate.demoBrideParents?.split?.(' និង ')?.[1] || (isAngkorAncient
+  const brideMother = serverInvitation?.bride_mother || activeTemplate.demoBrideParents?.split?.(' និង ')?.[1] || (isAngkorAncient
     ? 'អ្នកស្រី ម៉ៅ សុវណ្ណមាលា'
     : isCustomized ? 'លោកស្រី ហែម ស៊ីវន' : 'អ្នកស្រី អ៊ុក ផល្លី');
 
@@ -532,13 +550,46 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
 
   const [rsvpList, setRsvpList] = useState([]);
 
-  const handleRsvpSubmit = (e) => {
+  // Best Wishes State
+  const [wishForm, setWishForm] = useState({
+    name: '',
+    message: ''
+  });
+
+  const [wishesList, setWishesList] = useState([]);
+
+  // Fetch initial public wishes feed from backend
+  useEffect(() => {
+    let isMounted = true;
+    async function loadPublicWishes() {
+      try {
+        const wishes = await apiService.getPublicWishes(decodedId);
+        if (isMounted && wishes && wishes.length > 0) {
+          setWishesList(
+            wishes.map((w) => ({
+              id: w.id,
+              name: w.guest_name,
+              message: w.wishes,
+              date: new Date(w.created_at).toLocaleDateString('km-KH')
+            }))
+          );
+        }
+      } catch {
+        // Fallback to local state
+      }
+    }
+    loadPublicWishes();
+    return () => { isMounted = false; };
+  }, [decodedId]);
+
+  const handleRsvpSubmit = async (e) => {
     e.preventDefault();
     if (!rsvpForm.name.trim()) {
       addToast('សូមបញ្ចូលឈ្មោះរបស់អ្នក', 'warning');
       return;
     }
 
+    const countNum = parseInt(rsvpForm.guestCount) || 1;
     const newRsvp = {
       id: Date.now(),
       name: rsvpForm.name,
@@ -548,7 +599,20 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
     };
 
     setRsvpList([newRsvp, ...rsvpList]);
+    const submittedName = rsvpForm.name;
+    const submittedStatus = rsvpForm.status === 'attending' ? 'attending' : 'declined';
     setRsvpForm({ name: '', status: 'attending', guestCount: '1 នាក់' });
+
+    try {
+      await apiService.submitPublicRSVP(decodedId, {
+        guest_name: submittedName,
+        attendance_status: submittedStatus,
+        guest_count: countNum,
+        source: 'direct'
+      });
+    } catch {
+      // Local optimistic record remains
+    }
 
     try {
       confetti({
@@ -562,15 +626,7 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
     addToast('សូមអរគុណ! ការឆ្លើយតបរបស់អ្នកត្រូវបានកត់ត្រាជោគជ័យ', 'success');
   };
 
-  // Best Wishes State
-  const [wishForm, setWishForm] = useState({
-    name: '',
-    message: ''
-  });
-
-  const [wishesList, setWishesList] = useState([]);
-
-  const handleWishSubmit = (e) => {
+  const handleWishSubmit = async (e) => {
     e.preventDefault();
     if (!wishForm.name.trim() || !wishForm.message.trim()) {
       addToast('សូមបញ្ចូលឈ្មោះ និងសារជូនពររបស់អ្នក', 'warning');
@@ -588,7 +644,21 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
     };
 
     setWishesList([newWish, ...wishesList]);
+    const submittedName = wishForm.name;
+    const submittedMessage = wishForm.message;
     setWishForm({ name: '', message: '' });
+
+    try {
+      await apiService.submitPublicRSVP(decodedId, {
+        guest_name: submittedName,
+        wishes: submittedMessage,
+        attendance_status: 'attending',
+        guest_count: 1,
+        source: 'direct'
+      });
+    } catch {
+      // Local optimistic record remains
+    }
 
     try {
       confetti({
