@@ -47,6 +47,29 @@ export class IsolatedAudioPlayer {
     this.subscribers = new Set();
     this.userMuted = false;
     this.gestureHandler = null;
+    this.wasPlayingBeforeHidden = false;
+
+    // Smart background battery management (sleep DSP when phone screen is locked or tab is hidden)
+    if (typeof document !== 'undefined') {
+      this.visibilityHandler = () => {
+        if (document.hidden) {
+          if (this.audio && !this.audio.paused) {
+            this.wasPlayingBeforeHidden = true;
+            try {
+              this.audio.pause();
+            } catch (_) {}
+          }
+        } else {
+          if (this.wasPlayingBeforeHidden && !this.userMuted && this.audio) {
+            this.wasPlayingBeforeHidden = false;
+            try {
+              this.audio.play().catch(() => {});
+            } catch (_) {}
+          }
+        }
+      };
+      document.addEventListener('visibilitychange', this.visibilityHandler);
+    }
   }
 
   getAudio() {
@@ -161,6 +184,10 @@ export class IsolatedAudioPlayer {
 
   destroy() {
     this.removeGestureListener();
+    if (this.visibilityHandler && typeof document !== 'undefined') {
+      document.removeEventListener('visibilitychange', this.visibilityHandler);
+      this.visibilityHandler = null;
+    }
     if (this.audio) {
       try {
         this.audio.pause();

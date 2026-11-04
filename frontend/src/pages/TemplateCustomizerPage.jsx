@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { useParams, useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
 import { CEREMONY_DATA } from '../data/templates';
@@ -1203,24 +1203,38 @@ export function TemplateCustomizerPage() {
 
               <div
                 ref={fullScrollRef}
-                className="relative z-10 w-full h-full overflow-y-auto overscroll-contain luxury-scrollbar"
+                className="relative z-10 w-full h-full min-h-0 overflow-y-auto overscroll-contain scroll-smooth smooth-scroll-container luxury-scrollbar scrollbar-none [touch-action:pan-y] [-webkit-overflow-scrolling:touch]"
               >
                 {TemplateComponent ? (
-                  <TemplateComponent
-                    key={currentTemplateId}
-                    data={liveTemplateData}
-                    invitation={liveInvitation}
-                    invitationData={liveInvitation}
-                    activeTemplate={liveActiveTemplate}
-                  />
+                  <Suspense fallback={
+                    <div className="flex flex-col items-center justify-center min-h-[400px] text-stone-400 p-8 space-y-3">
+                      <div className="w-10 h-10 border-2 border-theabGold/30 border-t-theabGold rounded-full animate-spin" />
+                      <span className="font-komutt text-sm text-stone-400">កំពុងទាញយកគំរូធៀប...</span>
+                    </div>
+                  }>
+                    <TemplateComponent
+                      key={currentTemplateId}
+                      data={liveTemplateData}
+                      invitation={liveInvitation}
+                      invitationData={liveInvitation}
+                      activeTemplate={liveActiveTemplate}
+                    />
+                  </Suspense>
                 ) : (
-                  <RoyalGoldTemplate
-                    key={currentTemplateId}
-                    data={liveTemplateData}
-                    invitation={liveInvitation}
-                    invitationData={liveInvitation}
-                    activeTemplate={liveActiveTemplate}
-                  />
+                  <Suspense fallback={
+                    <div className="flex flex-col items-center justify-center min-h-[400px] text-stone-400 p-8 space-y-3">
+                      <div className="w-10 h-10 border-2 border-theabGold/30 border-t-theabGold rounded-full animate-spin" />
+                      <span className="font-komutt text-sm text-stone-400">កំពុងទាញយកគំរូធៀប...</span>
+                    </div>
+                  }>
+                    <RoyalGoldTemplate
+                      key={currentTemplateId}
+                      data={liveTemplateData}
+                      invitation={liveInvitation}
+                      invitationData={liveInvitation}
+                      activeTemplate={liveActiveTemplate}
+                    />
+                  </Suspense>
                 )}
               </div>
             </div>

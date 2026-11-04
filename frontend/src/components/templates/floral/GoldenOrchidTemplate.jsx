@@ -170,7 +170,37 @@ export default function GoldenOrchidTemplate({
       });
     }
 
-    const render = () => {
+    let lastTime = 0;
+    const fpsInterval = 1000 / 30; // 30 FPS throttling for mobile efficiency
+    let isVisible = true;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry && entry.isIntersecting;
+      if (isVisible && !document.hidden && !animationFrameId) {
+        lastTime = performance.now();
+        animationFrameId = requestAnimationFrame(render);
+      }
+    }, { threshold: 0.05 });
+    observer.observe(canvas);
+
+    const onVisChange = () => {
+      if (!document.hidden && isVisible && !animationFrameId) {
+        lastTime = performance.now();
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+    document.addEventListener('visibilitychange', onVisChange);
+
+    const render = (currentTime = performance.now()) => {
+      if (!isVisible || document.hidden) {
+        animationFrameId = null;
+        return;
+      }
+      animationFrameId = requestAnimationFrame(render);
+      const elapsed = currentTime - lastTime;
+      if (elapsed < fpsInterval) return;
+      lastTime = currentTime - (elapsed % fpsInterval);
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Render ambient shimmers
@@ -180,8 +210,7 @@ export default function GoldenOrchidTemplate({
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
         ctx.globalAlpha = p.alpha;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 6;
+        
         ctx.fill();
         ctx.restore();
 
@@ -212,8 +241,7 @@ export default function GoldenOrchidTemplate({
             ctx.fillStyle = '#D4AF37';
             ctx.beginPath();
             ctx.arc(0, 0, p.size, 0, Math.PI * 2);
-            ctx.shadowColor = '#D4AF37';
-            ctx.shadowBlur = 8;
+            
             ctx.fill();
           }
           ctx.restore();
@@ -266,6 +294,8 @@ export default function GoldenOrchidTemplate({
     return () => {
       window.removeEventListener('resize', resize);
       window.removeEventListener('click', handleScreenClick);
+      document.removeEventListener('visibilitychange', onVisChange);
+      observer.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
   }, []);

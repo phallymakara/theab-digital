@@ -157,10 +157,10 @@ function KhmerRoyalHeart({ size = 32, id = 'rh1', className = '' }) {
  */
 function FlyingRomanticHeart({ size = 24, variant = 0 }) {
   const styles = [
-    'text-rose-400 fill-rose-300/40 drop-shadow-[0_2px_8px_rgba(244,63,94,0.35)]',
-    'text-amber-300 fill-amber-200/35 drop-shadow-[0_2px_8px_rgba(245,158,11,0.3)]',
-    'text-pink-400 fill-pink-300/40 drop-shadow-[0_2px_8px_rgba(236,72,153,0.35)]',
-    'text-red-400 fill-rose-400/35 drop-shadow-[0_2px_8px_rgba(225,29,72,0.3)]',
+    'text-rose-400 fill-rose-300/40',
+    'text-amber-300 fill-amber-200/35',
+    'text-pink-400 fill-pink-300/40',
+    'text-red-400 fill-rose-400/35',
   ];
   const colorClass = styles[variant % styles.length];
 
@@ -192,8 +192,15 @@ const HEART_FLY_ANIMATIONS = [
  * intermixed with flying hearts that float and fly upwards smoothly outside the container page.
  */
 export function KhmerFloatingBackground({ count = 32 }) {
+  // Mobile-adaptive particle count to prevent mobile GPU thermal load & battery drain
+  const effectiveCount = useMemo(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 640) {
+      return Math.min(6, count);
+    }
+    return count;
+  }, [count]);
   const particles = useMemo(() => {
-    return Array.from({ length: count }, (_, idx) => {
+    return Array.from({ length: effectiveCount }, (_, idx) => {
       // 50% Flowers, 50% Flying Hearts
       const isHeart = idx % 2 === 1;
 
@@ -269,20 +276,20 @@ export function KhmerFloatingBackground({ count = 32 }) {
         let content;
         if (p.isHeart) {
           if (p.heartType === 'royalheart') {
-            content = <KhmerRoyalHeart size={p.size} id={p.id} className="drop-shadow-xs" />;
+            content = <KhmerRoyalHeart size={p.size} id={p.id} />;
           } else {
             content = <FlyingRomanticHeart size={p.size} variant={parseInt(p.id.replace(/\D/g, '') || '0', 10)} />;
           }
         } else {
           // Translucent Khmer flowers
           if (p.flowerType === 'rumduol') {
-            content = <KhmerRumduol size={p.size} id={p.id} className="drop-shadow-xs" />;
+            content = <KhmerRumduol size={p.size} id={p.id} />;
           } else if (p.flowerType === 'pkachan') {
-            content = <KhmerPkaChan size={p.size} id={p.id} className="drop-shadow-xs" />;
+            content = <KhmerPkaChan size={p.size} id={p.id} />;
           } else if (p.flowerType === 'lotus') {
-            content = <KhmerLotusBloom size={p.size} id={p.id} className="drop-shadow-xs" />;
+            content = <KhmerLotusBloom size={p.size} id={p.id} />;
           } else {
-            content = <KhmerJasminePetal size={Math.round(p.size * 0.75)} id={p.id} className="drop-shadow-xs" />;
+            content = <KhmerJasminePetal size={Math.round(p.size * 0.75)} id={p.id} />;
           }
         }
 

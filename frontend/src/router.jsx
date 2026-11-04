@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import {
   createRootRoute,
   createRoute,
@@ -8,24 +8,55 @@ import {
 import { Header } from './components/Header';
 import { ToastContainer } from './components/ToastContainer';
 import { QrModal } from './components/QrModal';
-import { CeremonySelectionPage } from './pages/CeremonySelectionPage';
-import { TemplatesPage } from './pages/TemplatesPage';
-import { InvitationPreviewPage } from './pages/InvitationPreviewPage';
-import { DashboardPage } from './pages/DashboardPage';
-import { TemplateDetailPage } from './pages/TemplateDetailPage';
-import { TemplateCustomizerPage } from './pages/TemplateCustomizerPage';
 
-// Root Route layout
-const rootRoute = createRootRoute({
-  component: () => (
+// Route-Level Lazy Loading: Load each page on-demand only when requested by user
+const CeremonySelectionPage = React.lazy(() => import('./pages/CeremonySelectionPage').then(m => ({ default: m.CeremonySelectionPage })));
+const TemplatesPage = React.lazy(() => import('./pages/TemplatesPage').then(m => ({ default: m.TemplatesPage })));
+const InvitationPreviewPage = React.lazy(() => import('./pages/InvitationPreviewPage').then(m => ({ default: m.InvitationPreviewPage })));
+const DashboardPage = React.lazy(() => import('./pages/DashboardPage').then(m => ({ default: m.DashboardPage })));
+const TemplateDetailPage = React.lazy(() => import('./pages/TemplateDetailPage').then(m => ({ default: m.TemplateDetailPage })));
+const TemplateCustomizerPage = React.lazy(() => import('./pages/TemplateCustomizerPage').then(m => ({ default: m.TemplateCustomizerPage })));
+
+// Minimal luxury fallback during route transitions
+function RouteLoadingFallback() {
+  return (
+    <div className="flex-1 flex flex-col items-center justify-center min-h-[50vh] p-8 text-stone-500">
+      <div className="w-9 h-9 border-2 border-theabCrimson/30 border-t-theabCrimson rounded-full animate-spin mb-3" />
+      <span className="font-komutt text-xs text-stone-500">កំពុងដំណើរការ...</span>
+    </div>
+  );
+}
+
+// Root Layout Component with Page Visibility Lifecycle Manager
+function RootLayout() {
+  React.useEffect(() => {
+    const handleVisibility = () => {
+      if (document.hidden) {
+        document.documentElement.classList.add('app-idle-paused');
+      } else {
+        document.documentElement.classList.remove('app-idle-paused');
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, []);
+
+  return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1 flex flex-col">
-        <Outlet />
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <Outlet />
+        </Suspense>
       </main>
       <ToastContainer />
       <QrModal />
     </div>
-  ),
+  );
+}
+
+// Root Route layout
+const rootRoute = createRootRoute({
+  component: RootLayout,
 });
 
 // Route: / (Ceremony Selection)
@@ -128,8 +159,8 @@ const routeTree = rootRoute.addChildren([
   customizeRoute,
 ]);
 
-// Create TanStack Router instance
+// Create TanStack Router instance (defaultPreload: false prevents eager background downloading)
 export const router = createRouter({
   routeTree,
-  defaultPreload: 'intent',
+  defaultPreload: false,
 });

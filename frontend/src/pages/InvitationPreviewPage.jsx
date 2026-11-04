@@ -181,9 +181,9 @@ export function InvitationPreviewPage() {
   return (
     <div className={`w-full min-h-screen ${bgClass} py-6 md:py-10 relative overflow-hidden animate-fade`}>
       {/* Decorative Ambient Background Glow Elements */}
-      <div className="absolute top-0 left-1/3 w-96 h-96 rounded-full bg-theabGold/10 blur-3xl pointer-events-none animate-ambient-glow"></div>
-      <div className="absolute top-1/2 -right-20 w-80 h-80 rounded-full bg-rose-500/5 blur-3xl pointer-events-none animate-ambient-glow" style={{ animationDelay: '3s' }}></div>
-      <div className="absolute bottom-10 left-10 w-96 h-96 rounded-full bg-amber-400/10 blur-3xl pointer-events-none animate-ambient-glow" style={{ animationDelay: '5s' }}></div>
+      <div className="absolute top-0 left-1/3 w-96 h-96 rounded-full bg-theabGold/10 blur-3xl pointer-events-none"></div>
+      <div className="absolute top-1/2 -right-20 w-80 h-80 rounded-full bg-rose-500/5 blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-10 left-10 w-96 h-96 rounded-full bg-amber-400/10 blur-3xl pointer-events-none"></div>
 
       <section className="container-max max-w-3xl mx-auto relative z-10">
         {/* Top Toolbar for host */}

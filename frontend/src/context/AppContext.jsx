@@ -111,7 +111,7 @@ export function AppProvider({ children }) {
       };
       pendingGestureRef.current = enableOnGesture;
       window.addEventListener('click', enableOnGesture, { once: true });
-      window.addEventListener('touchstart', enableOnGesture, { once: true });
+      window.addEventListener('touchstart', enableOnGesture, { once: true, passive: true });
     });
   };
 
@@ -159,7 +159,7 @@ export function AppProvider({ children }) {
       };
       pendingGestureRef.current = enableOnGesture;
       window.addEventListener('click', enableOnGesture, { once: true });
-      window.addEventListener('touchstart', enableOnGesture, { once: true });
+      window.addEventListener('touchstart', enableOnGesture, { once: true, passive: true });
     });
   };
 

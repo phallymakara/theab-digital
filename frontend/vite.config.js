@@ -32,18 +32,6 @@ export default defineConfig({
           if (id.includes('node_modules/canvas-confetti/')) {
             return 'vendor-confetti';
           }
-          if (id.includes('/components/templates/traditional/')) {
-            return 'templates-traditional';
-          }
-          if (id.includes('/components/templates/floral/')) {
-            return 'templates-floral';
-          }
-          if (id.includes('/components/templates/emerald/')) {
-            return 'templates-emerald';
-          }
-          if (id.includes('/components/templates/modern/')) {
-            return 'templates-modern';
-          }
         },
       },
     },

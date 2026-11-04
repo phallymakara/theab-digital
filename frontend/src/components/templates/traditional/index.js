@@ -1,13 +1,15 @@
-import { RoyalGoldTemplate } from './RoyalGoldTemplate';
-import { AngkorHeritageTemplate } from './AngkorHeritageTemplate';
-import { IvoryParchmentTemplate } from './IvoryParchmentTemplate';
-import { RoyalPavilionTemplate } from './RoyalPavilionTemplate';
-import { AngkorPedimentTemplate } from './AngkorPedimentTemplate';
-import { IndigoHolTemplate } from './IndigoHolTemplate';
-import { PhkachanSlathorTemplate } from './PhkachanSlathorTemplate';
-import { RoyalLacquerTemplate } from './RoyalLacquerTemplate';
-import { CrimsonAngkoreachTemplate } from './CrimsonAngkoreachTemplate';
+import React from 'react';
 import { TraditionalBadgeComponent } from './TraditionalBadgeComponent';
+
+const RoyalGoldTemplate = React.lazy(() => import('./RoyalGoldTemplate').then(m => ({ default: m.RoyalGoldTemplate || m.default })));
+const AngkorHeritageTemplate = React.lazy(() => import('./AngkorHeritageTemplate').then(m => ({ default: m.AngkorHeritageTemplate || m.default })));
+const IvoryParchmentTemplate = React.lazy(() => import('./IvoryParchmentTemplate').then(m => ({ default: m.IvoryParchmentTemplate || m.default })));
+const RoyalPavilionTemplate = React.lazy(() => import('./RoyalPavilionTemplate').then(m => ({ default: m.RoyalPavilionTemplate || m.default })));
+const AngkorPedimentTemplate = React.lazy(() => import('./AngkorPedimentTemplate').then(m => ({ default: m.AngkorPedimentTemplate || m.default })));
+const IndigoHolTemplate = React.lazy(() => import('./IndigoHolTemplate').then(m => ({ default: m.IndigoHolTemplate || m.default })));
+const PhkachanSlathorTemplate = React.lazy(() => import('./PhkachanSlathorTemplate').then(m => ({ default: m.PhkachanSlathorTemplate || m.default })));
+const RoyalLacquerTemplate = React.lazy(() => import('./RoyalLacquerTemplate').then(m => ({ default: m.RoyalLacquerTemplate || m.default })));
+const CrimsonAngkoreachTemplate = React.lazy(() => import('./CrimsonAngkoreachTemplate').then(m => ({ default: m.CrimsonAngkoreachTemplate || m.default })));
 
 export {
   RoyalGoldTemplate,

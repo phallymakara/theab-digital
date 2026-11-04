@@ -55,6 +55,25 @@ export function TemplateGoogleMap({
   const embedUrl = `https://maps.google.com/maps?q=${resolvedLat},${resolvedLng}&hl=km&z=16&t=m&output=embed`;
   const directMapsUrl = googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${resolvedLat},${resolvedLng}`;
 
+  // Defer heavy Google Maps iframe until user scrolls within proximity (saves 30MB-50MB RAM on initial load)
+  const [isNearViewport, setIsNearViewport] = React.useState(false);
+  const containerRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry && entry.isIntersecting) {
+          setIsNearViewport(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '350px' }
+    );
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className={`w-full max-w-full my-6 text-center ${className}`}>
       {/* 1. Header with Pin Icon */}
@@ -68,17 +87,38 @@ export function TemplateGoogleMap({
       <div className={`w-full rounded-2xl p-4 sm:p-5 border transition-all text-left ${
         isDark ? 'bg-slate-950/90 border-white/15 text-white' : 'bg-white/95 border-stone-200 text-stone-900'
       }`}>
-        {/* 2. Embedded Google Maps Display Centered on Phnom Penh, Cambodia */}
-        <div className={`w-full h-56 sm:h-72 rounded-xl overflow-hidden border mb-4 ${
-          isDark ? 'border-white/10 bg-slate-900' : 'border-stone-200 bg-stone-100'
-        }`}>
-          <iframe
-            title={`Google Map - ${locationName}`}
-            src={embedUrl}
-            className="w-full h-full border-0 filter contrast-105"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+        {/* 2. Embedded Google Maps Display Centered on Phnom Penh, Cambodia with Lazy Viewport Injection */}
+        <div
+          ref={containerRef}
+          className={`w-full h-56 sm:h-72 rounded-xl overflow-hidden border mb-4 relative ${
+            isDark ? 'border-white/10 bg-slate-900' : 'border-stone-200 bg-stone-100'
+          }`}
+        >
+          {isNearViewport ? (
+            <iframe
+              title={`Google Map - ${locationName}`}
+              src={embedUrl}
+              className="w-full h-full border-0 filter contrast-105 animate-fade"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center text-center p-4">
+              <div
+                className="w-11 h-11 rounded-full border flex items-center justify-center mb-2 animate-pulse"
+                style={{
+                  borderColor: `${accentColor}40`,
+                  backgroundColor: isDark ? `${accentColor}15` : `${accentColor}10`,
+                  color: accentColor
+                }}
+              >
+                <MapPin className="w-5 h-5" />
+              </div>
+              <span className={`text-xs ${isDark ? 'text-slate-400' : 'text-stone-500'}`}>
+                កំពុងរៀបចំផែនទី Google Maps...
+              </span>
+            </div>
+          )}
         </div>
 
         {/* 3. Venue & Address Text Display (Directly below Google Map) */}

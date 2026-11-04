@@ -1402,10 +1402,23 @@ button:active:not(:disabled) {
   height: 0 !important;
 }
 
-/* Custom sleek hidden scrollbar for Template Components Scroll Container (Zero Gutter) */
+/* Custom sleek hidden scrollbar with native inertial smooth physics */
 .luxury-scrollbar {
   -ms-overflow-style: none !important;
   scrollbar-width: none !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-behavior: smooth !important;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+}
+
+#template-components-scroll-container,
+#template-customizer-scroll-container,
+.smooth-scroll-container {
+  -webkit-overflow-scrolling: touch !important;
+  scroll-behavior: smooth !important;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
 }
 
 .luxury-scrollbar::-webkit-scrollbar {
@@ -1625,4 +1638,28 @@ button:active:not(:disabled) {
   animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
   animation-iteration-count: infinite;
   will-change: transform, opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Page Visibility Optimization: freeze animations when tab is hidden or screen is locked */
+.app-idle-paused *,
+.app-idle-paused *::before,
+.app-idle-paused *::after {
+  animation-play-state: paused !important;
+}
+
+/* CSS Native Rendering Isolation & Containment for Card Grids */
+.performance-card-contain {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 400px;
+  contain: layout paint style;
 }

@@ -1,15 +1,17 @@
-import { TemplateDetailPage } from './TemplateDetailPage';
-import React, { useState, useEffect, useRef } from 'react';
+// Lazy load detail/preview page chunk on-demand
+const TemplateDetailPage = React.lazy(() => import('./TemplateDetailPage').then(m => ({ default: m.TemplateDetailPage || m.default })));
+import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
 import { CEREMONY_DATA, TEMPLATE_CATEGORIES } from '../data/templates';
 import { FlyingHeartsAndFlowers } from '../components/FlyingHeartsAndFlowers';
 import { KhmerFloatingBackground } from '../components/KhmerBackgroundFlowers';
-import { TraditionalBadgeComponent } from '../components/templates/traditional';
+import { TraditionalBadgeComponent } from '../components/templates/traditional/TraditionalBadgeComponent';
 import {
   ArrowLeft,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   Maximize2,
   CheckCircle,
   ExternalLink,
@@ -131,12 +133,12 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
   return (
     <div className={`w-full h-screen h-[100dvh] flex flex-col ${bgClass} relative overflow-hidden animate-fade`}>
       {/* Decorative Ambient Background Glow Elements */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-theabGold/10 blur-3xl pointer-events-none animate-ambient-glow"></div>
-      <div className="absolute top-1/3 -right-20 w-80 h-80 rounded-full bg-rose-500/5 blur-3xl pointer-events-none animate-ambient-glow" style={{ animationDelay: '3s' }}></div>
-      <div className="absolute bottom-10 left-10 w-96 h-96 rounded-full bg-amber-400/10 blur-3xl pointer-events-none animate-ambient-glow" style={{ animationDelay: '5s' }}></div>
+      <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-theabGold/10 blur-3xl pointer-events-none"></div>
+      <div className="absolute top-1/3 -right-20 w-80 h-80 rounded-full bg-rose-500/5 blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-10 left-10 w-96 h-96 rounded-full bg-amber-400/10 blur-3xl pointer-events-none"></div>
 
       {/* Decorative Traditional Corner Watermark Motifs */}
-      <div className="absolute -top-10 -left-10 w-64 h-64 text-theabGold/15 pointer-events-none select-none animate-float-slow">
+      <div className="absolute -top-10 -left-10 w-64 h-64 text-theabGold/15 pointer-events-none select-none">
         <svg viewBox="0 0 200 200" fill="currentColor" className="w-full h-full transform -rotate-12">
           <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" />
           <path d="M100 20 C120 70 180 100 180 100 C180 100 120 130 100 180 C80 130 20 100 20 100 C20 100 80 70 100 20 Z" fill="currentColor" opacity="0.35" />
@@ -144,7 +146,7 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
         </svg>
       </div>
 
-      <div className="absolute -bottom-16 -right-16 w-72 h-72 text-theabGold/15 pointer-events-none select-none animate-float-slow" style={{ animationDelay: '3.5s' }}>
+      <div className="absolute -bottom-16 -right-16 w-72 h-72 text-theabGold/15 pointer-events-none select-none">
         <svg viewBox="0 0 200 200" fill="currentColor" className="w-full h-full transform rotate-45">
           <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" />
           <path d="M100 20 C120 70 180 100 180 100 C180 100 120 130 100 180 C80 130 20 100 20 100 C20 100 80 70 100 20 Z" fill="currentColor" opacity="0.35" />
@@ -249,7 +251,7 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-5xl mx-auto">
-              {filteredTemplates.map((tpl, idx) => {
+              {displayedTemplates.map((tpl, idx) => {
                 const cardGroom = tpl.demoGroom || invitationData.groomName || ceremonyInfo.defaultGroom;
                 const cardBride = tpl.demoBride || invitationData.brideName || ceremonyInfo.defaultBride;
                 const cardDate = tpl.demoDate || invitationData.ceremonyDate || ceremonyInfo.defaultDate;
@@ -257,7 +259,7 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
                 return (
                   <div
                     key={tpl.id}
-                    className="animate-card-enter group bg-white rounded-[32px] overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 border-2 flex flex-col min-h-[390px] sm:min-h-[410px]"
+                    className="performance-card-contain animate-card-enter group bg-white rounded-[32px] overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 border-2 flex flex-col min-h-[390px] sm:min-h-[410px]"
                     style={{ borderColor: tpl.borderColor, animationDelay: `${idx * 65}ms` }}
                   >
                     {/* Edge-to-Edge Couple & Photo Body (Full Bleed from Top of Card) */}

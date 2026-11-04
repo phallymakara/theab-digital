@@ -1,5 +1,5 @@
 import TemplateGoogleMap from '../components/TemplateGoogleMap';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { useParams, useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
 import { CEREMONY_DATA } from '../data/templates';
@@ -761,12 +761,20 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
           /* UNIFIED SCROLLABLE INVITATION CONTAINER FOR STANDALONE TEMPLATES (Exact same container as royal-gold) */
           <div
             id="template-components-scroll-container"
-            className="relative z-10 flex-1 w-full h-full min-h-0 overflow-y-auto overscroll-contain scroll-smooth luxury-scrollbar scrollbar-none"
+            className="relative z-10 flex-1 w-full h-full min-h-0 overflow-y-auto overscroll-contain scroll-smooth smooth-scroll-container luxury-scrollbar scrollbar-none [touch-action:pan-y] [-webkit-overflow-scrolling:touch]"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            <TraditionalComponent
-              key={activeTemplate.id}
-              data={{
+            <Suspense
+              fallback={
+                <div className="flex flex-col items-center justify-center min-h-[400px] text-stone-400 p-8 space-y-3">
+                  <div className="w-10 h-10 border-2 border-theabGold/30 border-t-theabGold rounded-full animate-spin" />
+                  <span className="font-komutt text-sm text-stone-400">កំពុងទាញយកគំរូធៀប...</span>
+                </div>
+              }
+            >
+              <TraditionalComponent
+                key={activeTemplate.id}
+                data={{
                 groomName,
                 brideName,
                 groomFather,
@@ -786,7 +794,8 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
                 galleryPhotos: activeTemplate.galleryPhotos
               }}
               activeTemplate={activeTemplate}
-            />
+              />
+            </Suspense>
           </div>
         ) : (
           <>
@@ -834,7 +843,7 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
               {/* 6. UNIFIED SCROLLABLE INVITATION CONTAINER (HERO COVER + ALL 10 WEDDING COMPONENTS) */}
               <div
                 id="template-components-scroll-container"
-                className="relative z-10 flex-1 w-full h-full min-h-0 overflow-y-auto overscroll-contain scroll-smooth luxury-scrollbar scrollbar-none"
+                className="relative z-10 flex-1 w-full h-full min-h-0 overflow-y-auto overscroll-contain scroll-smooth smooth-scroll-container luxury-scrollbar scrollbar-none [touch-action:pan-y] [-webkit-overflow-scrolling:touch]"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               >
                 {/* 1. HERO COVER & COUPLE TITLE (Fits width of container edge-to-edge) */}

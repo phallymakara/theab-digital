@@ -148,7 +148,37 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
       petals.push(new Petal());
     }
 
-    const animate = () => {
+    let lastTime = 0;
+    const fpsInterval = 1000 / 30; // 30 FPS throttling for mobile efficiency
+    let isVisible = true;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry && entry.isIntersecting;
+      if (isVisible && !document.hidden && !animationFrameId) {
+        lastTime = performance.now();
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    }, { threshold: 0.05 });
+    observer.observe(canvas);
+
+    const onVisChange = () => {
+      if (!document.hidden && isVisible && !animationFrameId) {
+        lastTime = performance.now();
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
+    document.addEventListener('visibilitychange', onVisChange);
+
+    const animate = (currentTime = performance.now()) => {
+      if (!isVisible || document.hidden) {
+        animationFrameId = null;
+        return;
+      }
+      animationFrameId = requestAnimationFrame(animate);
+      const elapsed = currentTime - lastTime;
+      if (elapsed < fpsInterval) return;
+      lastTime = currentTime - (elapsed % fpsInterval);
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       petals.forEach((p) => {
         p.update();
@@ -160,6 +190,8 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
 
     return () => {
       window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', onVisChange);
+      observer.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
   }, []);

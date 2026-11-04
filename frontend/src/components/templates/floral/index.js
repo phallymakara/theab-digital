@@ -1,9 +1,11 @@
-import RomdoulMoonlightTemplate from './RomdoulMoonlightTemplate';
-import { BotanicalGlasshouseTemplate } from './BotanicalGlasshouseTemplate';
-import { EditorialMagazineTemplate } from './EditorialMagazineTemplate';
-import { FloralRomanceTemplate } from './FloralRomanceTemplate';
-import GoldenOrchidTemplate from './GoldenOrchidTemplate';
-import { KhmerBlossomTemplate } from './KhmerBlossomTemplate';
+import React from 'react';
+
+const RomdoulMoonlightTemplate = React.lazy(() => import('./RomdoulMoonlightTemplate').then(m => ({ default: m.RomdoulMoonlightTemplate || m.default })));
+const BotanicalGlasshouseTemplate = React.lazy(() => import('./BotanicalGlasshouseTemplate').then(m => ({ default: m.BotanicalGlasshouseTemplate || m.default })));
+const EditorialMagazineTemplate = React.lazy(() => import('./EditorialMagazineTemplate').then(m => ({ default: m.EditorialMagazineTemplate || m.default })));
+const FloralRomanceTemplate = React.lazy(() => import('./FloralRomanceTemplate').then(m => ({ default: m.FloralRomanceTemplate || m.default })));
+const GoldenOrchidTemplate = React.lazy(() => import('./GoldenOrchidTemplate').then(m => ({ default: m.GoldenOrchidTemplate || m.default })));
+const KhmerBlossomTemplate = React.lazy(() => import('./KhmerBlossomTemplate').then(m => ({ default: m.KhmerBlossomTemplate || m.default })));
 
 export {
   RomdoulMoonlightTemplate,

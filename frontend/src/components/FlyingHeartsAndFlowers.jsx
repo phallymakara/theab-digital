@@ -2,19 +2,19 @@ import React, { useMemo } from 'react';
 import { Heart, Flower2 } from 'lucide-react';
 
 const HEART_COLORS = [
-  'text-amber-200 fill-amber-400 drop-shadow-xs',
-  'text-yellow-100 fill-amber-300 drop-shadow-xs',
-  'text-amber-300 fill-yellow-500 drop-shadow-xs',
-  'text-amber-100 fill-amber-400 drop-shadow-xs',
-  'text-yellow-200 fill-amber-500 drop-shadow-xs',
+  'text-amber-200 fill-amber-400',
+  'text-yellow-100 fill-amber-300',
+  'text-amber-300 fill-yellow-500',
+  'text-amber-100 fill-amber-400',
+  'text-yellow-200 fill-amber-500',
 ];
 
 const FLOWER_COLORS = [
-  'text-amber-100 fill-amber-300 drop-shadow-xs',
-  'text-yellow-200 fill-amber-400 drop-shadow-xs',
-  'text-amber-200 fill-yellow-400 drop-shadow-xs',
-  'text-yellow-100 fill-amber-200 drop-shadow-xs',
-  'text-amber-300 fill-amber-500 drop-shadow-xs',
+  'text-amber-100 fill-amber-300',
+  'text-yellow-200 fill-amber-400',
+  'text-amber-200 fill-yellow-400',
+  'text-yellow-100 fill-amber-200',
+  'text-amber-300 fill-amber-500',
 ];
 
 // Multi-directional smooth flight animation classes
@@ -28,15 +28,21 @@ const SMOOTH_TRAJECTORIES = [
 ];
 
 export function FlyingHeartsAndFlowers({ count = 8 }) {
+  const effectiveCount = useMemo(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 640) {
+      return Math.min(2, count);
+    }
+    return count;
+  }, [count]);
   // Generate a randomized, smooth, 3D multi-directional mix of hearts and flowers
   const particles = useMemo(() => {
-    return Array.from({ length: count }, (_, idx) => {
+    return Array.from({ length: effectiveCount }, (_, idx) => {
       // Guaranteed 50/50 mix: even = heart, odd = flower
       const isHeart = idx % 2 === 0;
       const type = isHeart ? 'heart' : 'flower';
 
       // Random position across BOTH horizontal and vertical axes (not just bottom)
-      const baseLeft = (idx / count) * 82 + 8;
+      const baseLeft = (idx / effectiveCount) * 82 + 8;
       const jitterX = (Math.random() - 0.5) * 12;
       const left = Math.min(92, Math.max(6, baseLeft + jitterX)).toFixed(1);
 
@@ -72,7 +78,7 @@ export function FlyingHeartsAndFlowers({ count = 8 }) {
         animClass,
       };
     });
-  }, [count]);
+  }, [effectiveCount]);
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden z-10 select-none opacity-70 transform-gpu">
