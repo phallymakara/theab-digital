@@ -484,25 +484,15 @@ export default function GoldenOrchidTemplate({
             </span>
           </div>
 
-          {/* Location & Map Link */}
-          <div className="p-5 rounded-2xl bg-stone-50 border border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-xs font-bold text-stone-900">
-                <MapPin className="w-4 h-4 text-rose-600 shrink-0" />
-                <span>{weddingLocation}</span>
-              </div>
-              <p className="text-[11px] text-stone-500 pl-6">{locationAddress}</p>
-            </div>
-            <a
-              href={googleMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-stone-900 text-amber-100 font-semibold text-xs hover:bg-stone-800 transition shadow-md shrink-0"
-            >
-              <Navigation className="w-3.5 h-3.5" />
-              <span>បើកមើលផែនទី Google Maps</span>
-            </a>
-          </div>
+          {/* Location & Google Map Display */}
+          <TemplateGoogleMap
+            locationName={weddingLocation}
+            address={locationAddress}
+            googleMapsUrl={googleMapsUrl}
+            isDark={false}
+            accentColor="#D97706"
+            fontFamily="font-koulen"
+          />
         </div>
 
         {/* Pre-wedding Gallery Section */}

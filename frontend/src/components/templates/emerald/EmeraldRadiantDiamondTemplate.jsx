@@ -551,33 +551,14 @@ export function EmeraldRadiantDiamondTemplate({ data = {}, invitationData = {}, 
           6. ទីតាំងពិធី (HAUTE JOAILLERIE VENUE SHOWCASE)
           ========================================================================= */}
       <section className="px-5 py-6">
-        <div
-          style={emeraldCutStyle}
-          className="p-6 bg-gradient-to-b from-[#07354A] via-[#032130] to-[#021824] border-2 border-cyan-400/50 shadow-2xl text-center w-full"
-        >
-          <div className="w-12 h-12 mx-auto mb-2 rotate-45 bg-cyan-950/90 border border-amber-300 flex items-center justify-center shadow-lg">
-            <MapPin className="-rotate-45 w-6 h-6 text-amber-300" />
-          </div>
-          <h2 className="font-komutt text-base sm:text-lg text-amber-300 mb-1 mt-1">
-            ទីតាំងពិធី
-          </h2>
-          <p className="font-komutt text-sm sm:text-base text-white mt-2 leading-relaxed">
-            {locationStr}
-          </p>
-          <p className="font-suwannaphum text-xs text-cyan-200/90 mt-1 mb-4 leading-relaxed">
-            {addressStr}
-          </p>
-
-          <a
-            href={mapsUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl bg-gradient-to-r from-cyan-600 via-sky-600 to-cyan-600 text-white font-komutt text-xs font-bold shadow-md hover:brightness-110 active:scale-95 transition-all border border-amber-300/60"
-          >
-            <ExternalLink className="w-4 h-4 text-amber-200" />
-            <span>Link ទៅកាន់ Google Maps</span>
-          </a>
-        </div>
+        <TemplateGoogleMap
+          locationName={locationStr}
+          address={addressStr}
+          googleMapsUrl={mapsUrl}
+          isDark={true}
+          accentColor="#06B6D4"
+          fontFamily="font-komutt"
+        />
       </section>
 
       {/* =========================================================================

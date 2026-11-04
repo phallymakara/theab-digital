@@ -515,34 +515,14 @@ export function EmeraldGlasshouseMoonlightTemplate({ data = {}, invitationData =
           6. ទីតាំងពិធី (CEREMONY LOCATION & MAP NAVIGATION)
           ========================================================================= */}
       <section className="px-4 py-6">
-        <div className="w-full rounded-t-[44px] rounded-b-3xl bg-gradient-to-b from-[#083D34]/90 via-[#052923]/95 to-[#021815]/98 border border-amber-300/40 ring-1 ring-emerald-400/30 p-6 text-center shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
-          <div className="w-10 h-10 rounded-full bg-emerald-950/80 border border-amber-300/60 flex items-center justify-center text-amber-300 mx-auto mb-3 shadow-[0_0_12px_rgba(245,158,11,0.5)]">
-            <MapPin className="w-5 h-5 text-amber-300" />
-          </div>
-
-          <h2 className="font-komutt text-base sm:text-lg text-amber-300 mb-2">
-            ទីតាំងប្រារព្ធពិធីមង្គល
-          </h2>
-
-          <div className="p-4 rounded-2xl bg-black/40 border border-emerald-400/30 max-w-sm mx-auto mb-4">
-            <p className="font-komutt text-sm sm:text-base text-white mb-1.5 leading-relaxed">
-              {locationStr}
-            </p>
-            <p className="text-xs text-emerald-200/80 font-suwannaphum leading-relaxed">
-              {addressStr}
-            </p>
-          </div>
-
-          <a
-            href={mapsUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-emerald-600 via-amber-500 to-emerald-600 text-white font-bold text-xs shadow-lg hover:brightness-110 active:scale-95 transition-all"
-          >
-            <ExternalLink className="w-4 h-4" />
-            <span>បង្ហាញទីតាំងលើ Google Maps</span>
-          </a>
-        </div>
+        <TemplateGoogleMap
+          locationName={locationStr}
+          address={addressStr}
+          googleMapsUrl={mapsUrl}
+          isDark={true}
+          accentColor="#34D399"
+          fontFamily="font-komutt"
+        />
       </section>
 
       {/* =========================================================================

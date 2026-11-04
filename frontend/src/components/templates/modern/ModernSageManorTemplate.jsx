@@ -50,7 +50,7 @@ export function ModernSageManorTemplate({
   const weddingDate = data?.ceremonyDate || invitation?.weddingDate || activeTemplate?.demoDate || 'ថ្ងៃអាទិត្យ ទី១៤ ខែកុម្ភៈ ឆ្នាំ២០២៧';
   const weddingTime = invitation?.weddingTime || 'ម៉ោង ៥:០០ ល្ងាច';
   const weddingLocation = data?.ceremonyLocation || invitation?.weddingLocation || activeTemplate?.demoLocation || 'សណ្ឋាគារ ហៃយ៉ាត់ រីជិនស៊ី ភ្នំពេញ (Hyatt Regency - Regency Ballroom)';
-  const locationAddress = invitation?.locationAddress || 'ផ្លូវលេខ ៥៥ ភូមិ ១ សង្កាត់ជ័យជំនះ ខណ្ឌដូនពេញ រាជធានីភ្នំពេញ';
+  const locationAddress = (data?.locationAddress && data?.locationAddress !== weddingLocation) ? data.locationAddress : (data?.ceremonyAddress || invitation?.locationAddress || 'ផ្លូវលេខ ៥៥ ភូមិ ១ សង្កាត់ជ័យជំនះ ខណ្ឌដូនពេញ រាជធានីភ្នំពេញ');
   const googleMapsUrl = invitation?.googleMapsUrl || 'https://maps.google.com/?q=Hyatt+Regency+Phnom+Penh';
 
   // Bank Info & Host Contacts

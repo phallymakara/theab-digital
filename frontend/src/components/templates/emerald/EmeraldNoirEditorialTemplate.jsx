@@ -545,39 +545,14 @@ export function EmeraldNoirEditorialTemplate({ data = {}, invitationData = {}, i
           6. ទីតាំងពិធី (CEREMONY VENUE & MAP)
           ========================================================================= */}
       <section className="px-4 py-6">
-        <div className="w-full rounded-2xl bg-gradient-to-b from-[#061F16]/95 via-[#041610]/98 to-[#020C08] border border-[#E2C375]/40 p-6 text-center shadow-[0_16px_50px_rgba(0,0,0,0.8)] relative">
-          <span className="absolute -top-2.5 -left-2 text-[#E2C375] text-sm font-mono font-bold">+</span>
-          <span className="absolute -top-2.5 -right-2 text-[#E2C375] text-sm font-mono font-bold">+</span>
-          <span className="absolute -bottom-2.5 -left-2 text-[#E2C375] text-sm font-mono font-bold">+</span>
-          <span className="absolute -bottom-2.5 -right-2 text-[#E2C375] text-sm font-mono font-bold">+</span>
-
-          <div className="w-9 h-9 rounded-md bg-black/80 border border-[#E2C375]/60 flex items-center justify-center text-[#E2C375] mx-auto mb-3 shadow-[0_0_12px_rgba(226,195,117,0.4)]">
-            <MapPin className="w-5 h-5 text-[#E2C375]" />
-          </div>
-
-          <h2 className="font-komutt text-base sm:text-lg text-[#E2C375] mb-2">
-            ទីតាំងប្រារព្ធពិធីមង្គល
-          </h2>
-
-          <div className="p-4 rounded-xl bg-black/50 border border-emerald-500/20 max-w-sm mx-auto mb-4">
-            <p className="font-komutt text-sm sm:text-base text-white mb-1.5 leading-relaxed">
-              {locationStr}
-            </p>
-            <p className="text-xs text-emerald-200/80 font-suwannaphum leading-relaxed">
-              {addressStr}
-            </p>
-          </div>
-
-          <a
-            href={mapsUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-emerald-600 via-[#E2C375] to-emerald-600 text-black font-bold text-xs shadow-lg hover:brightness-110 active:scale-95 transition-all"
-          >
-            <ExternalLink className="w-4 h-4 text-black" />
-            <span>បង្ហាញទីតាំងលើ Google Maps</span>
-          </a>
-        </div>
+        <TemplateGoogleMap
+          locationName={locationStr}
+          address={addressStr}
+          googleMapsUrl={mapsUrl}
+          isDark={true}
+          accentColor="#E2C375"
+          fontFamily="font-komutt"
+        />
       </section>
 
       {/* =========================================================================

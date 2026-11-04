@@ -71,7 +71,7 @@ export function AngkorHeritageTemplate({
   const dateStr = data.ceremonyDate || invitation.weddingDate || invitationData.ceremonyDate || activeTemplate?.demoDate || 'ថ្ងៃអាទិត្យ ទី១០ ខែមករា ឆ្នាំ២០២៧';
   const timeStr = data.ceremonyTime || invitation.weddingTime || 'វេលាម៉ោង ៥:០០ ល្ងាច តទៅ';
   const locationName = data.ceremonyLocation || invitation.weddingLocation || activeTemplate?.demoLocation || 'សាលមង្គលប្រាសាទបុរាណ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)';
-  const address = data.locationAddress || data.ceremonyAddress || invitation.locationAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
+  const address = (data.locationAddress && data.locationAddress !== locationName) ? data.locationAddress : (data.ceremonyAddress || invitation.locationAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ');
   const googleMapsUrl = data.googleMapsUrl || invitation.googleMapsUrl || 'https://maps.app.goo.gl/gmxb8VaN78xgkFiu5';
 
   // 2. Hero Images
@@ -448,24 +448,21 @@ export function AngkorHeritageTemplate({
           </div>
         </section>
 
-        {/* 5. VENUE & MAPS */}
-        <section className="py-2 text-center">
-          <div className="flex items-center justify-center gap-1.5">
-            <MapPin className="w-4 h-4 text-[#8C6F19]" />
-            <h3 className="font-phalluch text-base sm:text-lg text-[#8C6F19] tracking-wide">
-              ទីតាំងប្រារព្ធពិធីមង្គល
-            </h3>
-          </div>
-          <AngkorHeritageDivider />
-
+        {/* 5. GRATITUDE & APOLOGY NOTE (អរគុណ & អធ្យាស្រ័យ) */}
+        <section className="py-4 text-center">
           <TemplateGratitudeNote isDark={false} accentColor="#8C6F19" fontFamily="font-phalluch" />
+        </section>
+
+        {/* 6. VENUE & GOOGLE MAPS DISPLAY (ទីតាំងពិធី & address text below) */}
+        <section className="py-2 text-center">
           <TemplateGoogleMap
             locationName={locationName}
             address={address}
             googleMapsUrl={googleMapsUrl}
             accentColor="#8C6F19"
             fontFamily="font-phalluch"
-          /></section>
+          />
+        </section>
 
         {/* 6. PHOTO GALLERY */}
         <section className="py-2 text-center">

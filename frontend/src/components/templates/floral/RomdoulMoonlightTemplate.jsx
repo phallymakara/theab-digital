@@ -77,7 +77,9 @@ export default function RomdoulMoonlightTemplate({
   const weddingDate = data?.ceremonyDate || invitation?.weddingDate || activeTemplate?.demoDate || 'ថ្ងៃសៅរ៍ ទី១៩ ខែធ្នូ ឆ្នាំ២០២៦';
   const weddingTime = data?.ceremonyTime || invitation?.weddingTime || 'ម៉ោង ៥:០០ ល្ងាច';
   const weddingLocation = data?.ceremonyLocation || invitation?.weddingLocation || activeTemplate?.demoLocation || 'សណ្ឋាគារ សូហ្វីតែល ភ្នំពេញ ភូគីត្រា (Sofitel Phnom Penh Phokeethra)';
-  const locationAddress = data?.locationAddress || data?.ceremonyAddress || invitation?.locationAddress || 'សង្កាត់ទន្លេបាសាក់ ខណ្ឌចំការមន រាជធានីភ្នំពេញ';
+  const locationAddress = (data?.locationAddress && data?.locationAddress !== weddingLocation)
+    ? data.locationAddress
+    : (data?.ceremonyAddress || invitation?.locationAddress || 'សង្កាត់ទន្លេបាសាក់ ខណ្ឌចំការមន រាជធានីភ្នំពេញ');
   const googleMapsUrl = data?.googleMapsUrl || invitation?.googleMapsUrl || 'https://maps.google.com/?q=Sofitel+Phnom+Penh+Phokeethra';
 
   // Bank & Gift
@@ -811,31 +813,14 @@ export default function RomdoulMoonlightTemplate({
           7. VENUE LOCATION & GOOGLE MAPS
           ========================================================================= */}
       <section className="relative z-20 max-w-2xl mx-auto px-4 py-8">
-        <div className="rounded-3xl p-6 sm:p-8 bg-slate-900/80 border border-slate-800 backdrop-blur-xl space-y-6">
-          <div className="text-center space-y-1">
-            <span className="text-xs text-amber-300 uppercase tracking-widest font-serifTrad">Venue & Directions</span>
-            <h2 className="font-komutt-a text-2xl font-bold text-white">ទីតាំងប្រារព្ធពិធី</h2>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-amber-400/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-xs text-amber-300 font-semibold">
-                <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>{weddingLocation}</span>
-              </div>
-              <p className="text-[11px] text-slate-400 pl-6">{locationAddress}</p>
-            </div>
-            <a
-              href={googleMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-amber-400 text-slate-950 font-semibold text-xs hover:bg-amber-300 transition duration-300 shadow-lg shadow-amber-400/20 shrink-0"
-            >
-              <Navigation className="w-3.5 h-3.5" />
-              <span>បើកមើលផែនទី Google Maps</span>
-            </a>
-          </div>
-        </div>
+        <TemplateGoogleMap
+          locationName={weddingLocation}
+          address={locationAddress}
+          googleMapsUrl={googleMapsUrl}
+          isDark={true}
+          accentColor="#fbbf24"
+          fontFamily="font-komutt-a"
+        />
       </section>
 
       {/* =========================================================================

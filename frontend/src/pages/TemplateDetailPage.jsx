@@ -781,7 +781,9 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
                 ceremonyDate: weddingDate,
                 ceremonyTime: activeTemplate.defaultTime || 'វេលាម៉ោង ៥:០០ ល្ងាច តទៅ',
                 ceremonyLocation: weddingLocation,
-                locationAddress: activeTemplate.defaultAddress || weddingLocation,
+                locationAddress: activeTemplate.demoAddress || activeTemplate.defaultAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ',
+                latitude: activeTemplate.latitude,
+                longitude: activeTemplate.longitude,
                 preweddingPhoto: activeTemplate.bgImage,
                 heroImages: activeTemplate.heroImages,
                 galleryPhotos: activeTemplate.galleryPhotos

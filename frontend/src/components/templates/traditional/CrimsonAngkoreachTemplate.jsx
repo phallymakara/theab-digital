@@ -14,7 +14,7 @@ export function CrimsonAngkoreachTemplate({ data = {} }) {
   const dateStr = data.ceremonyDate || 'ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦';
   const timeStr = data.ceremonyTime || 'វេលាម៉ោង ៥:០០ ល្ងាច តទៅ';
   const locationName = data.ceremonyLocation || 'មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)';
-  const address = data.locationAddress || data.ceremonyAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ';
+  const address = (data.locationAddress && data.locationAddress !== locationName) ? data.locationAddress : (data.ceremonyAddress || 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ');
   const googleMapsUrl = data.googleMapsUrl || 'https://maps.google.com';
   const preweddingImg = data.preweddingPhoto || data.bgImage || '/images/templates/traditional_crimson_angkoreach_prewedding.webp';
 

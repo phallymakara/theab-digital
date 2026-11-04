@@ -511,34 +511,14 @@ export function EmeraldMalachiteSealTemplate({ data = {}, invitationData = {}, i
           6. ទីតាំងពិធី (CEREMONY LOCATION & MAP)
           ========================================================================= */}
       <section className="px-4 py-6">
-        <div className="w-full rounded-3xl bg-gradient-to-b from-[#083E2F]/95 via-[#052A20]/98 to-[#021A13] border-2 border-amber-400/60 ring-1 ring-emerald-500/30 p-6 text-center shadow-[0_16px_50px_rgba(0,0,0,0.85)] relative pt-9">
-          <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-yellow-200 border border-amber-100 flex items-center justify-center shadow-[0_4px_12px_rgba(245,158,11,0.7)] text-emerald-950 font-black text-xs z-10 ring-4 ring-[#042017]">
-            <MapPin className="w-4 h-4 text-emerald-950" />
-          </div>
-
-          <h2 className="font-komutt text-base sm:text-lg text-amber-300 mb-2">
-            ទីតាំងប្រារព្ធពិធីមង្គល
-          </h2>
-
-          <div className="p-4 rounded-2xl bg-black/45 border border-amber-300/30 max-w-sm mx-auto mb-4">
-            <p className="font-komutt text-sm sm:text-base text-white mb-1.5 leading-relaxed">
-              {locationStr}
-            </p>
-            <p className="text-xs text-emerald-200/80 font-suwannaphum leading-relaxed">
-              {addressStr}
-            </p>
-          </div>
-
-          <a
-            href={mapsUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-emerald-600 via-amber-500 to-emerald-600 text-white font-bold text-xs shadow-lg hover:brightness-110 active:scale-95 transition-all"
-          >
-            <ExternalLink className="w-4 h-4 text-white" />
-            <span>បង្ហាញទីតាំងលើ Google Maps</span>
-          </a>
-        </div>
+        <TemplateGoogleMap
+          locationName={locationStr}
+          address={addressStr}
+          googleMapsUrl={mapsUrl}
+          isDark={true}
+          accentColor="#F59E0B"
+          fontFamily="font-komutt"
+        />
       </section>
 
       {/* =========================================================================

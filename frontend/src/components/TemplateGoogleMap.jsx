@@ -2,24 +2,58 @@ import React from 'react';
 import { MapPin, Navigation, ExternalLink } from 'lucide-react';
 
 /**
+ * Cambodia & Phnom Penh Venue Coordinates Directory
+ */
+const CAMBODIA_PHNOM_PENH_VENUES = [
+  { match: /សែនសុខ|sen sok|premier/i, lat: 11.59365, lng: 104.88149 },
+  { match: /សូហ្វីតែល|sofitel/i, lat: 11.54783, lng: 104.93513 },
+  { match: /រ៉ូសវូដ|rosewood|វឌ្ឍនៈ|vattanac/i, lat: 11.57292, lng: 104.91978 },
+  { match: /ហៃយ៉ាត់|hyatt/i, lat: 11.56583, lng: 104.93122 },
+  { match: /កោះពេជ្រ|koh pich|diamond island/i, lat: 11.54920, lng: 104.93950 },
+  { match: /ណាហ្គា|naga/i, lat: 11.55280, lng: 104.93850 },
+  { match: /ទន្លេបាសាក់|bassac|ចំការមន|chamkarmon/i, lat: 11.54783, lng: 104.93513 },
+  { match: /ដូនពេញ|daun penh/i, lat: 11.56583, lng: 104.93122 },
+  { match: /ភ្នំពេញថ្មី|phnom penh thmey/i, lat: 11.59365, lng: 104.88149 }
+];
+
+// Phnom Penh Capital Center default coordinates (Cambodia)
+const PHNOM_PENH_DEFAULT = { lat: 11.5564, lng: 104.9282 };
+
+/**
  * Reusable Google Map Display Section for all Invitation Templates.
- * Renders an embedded interactive Google Map, with the full venue address
- * cleanly displayed as text directly below the map, along with a direct button
- * to open the location in Google Maps.
+ * Centered on Cambodia / Phnom Penh latitude and longitude.
+ * Displays embedded interactive Google Map, exact address below, and navigation button.
  */
 export function TemplateGoogleMap({
   locationName = 'មជ្ឈមណ្ឌលសន្និបាត និងពិព័រណ៍ ឌឹ ព្រេមៀ សែនសុខ (អគារ A)',
   address = 'ផ្លូវឧកញ៉ាម៉ុងឫទ្ធី សង្កាត់ភ្នំពេញថ្មី ខណ្ឌសែនសុខ រាជធានីភ្នំពេញ',
+  latitude,
+  longitude,
   googleMapsUrl,
   isDark = false,
   accentColor = '#D4AF37',
   fontFamily = 'font-komutt',
   className = ''
 }) {
-  // Construct search query from venue and address
-  const searchQuery = [locationName, address].filter(Boolean).join(', ') || 'The Premier Centre Sen Sok, Phnom Penh';
-  const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(searchQuery)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-  const directMapsUrl = googleMapsUrl || `https://maps.google.com/?q=${encodeURIComponent(searchQuery)}`;
+  // Resolve Cambodia / Phnom Penh latitude and longitude
+  let resolvedLat = latitude;
+  let resolvedLng = longitude;
+
+  if (!resolvedLat || !resolvedLng) {
+    const combined = `${locationName} ${address}`;
+    const found = CAMBODIA_PHNOM_PENH_VENUES.find(v => v.match.test(combined));
+    if (found) {
+      resolvedLat = found.lat;
+      resolvedLng = found.lng;
+    } else {
+      resolvedLat = PHNOM_PENH_DEFAULT.lat;
+      resolvedLng = PHNOM_PENH_DEFAULT.lng;
+    }
+  }
+
+  // Google Maps embed URL centered on Cambodia / Phnom Penh Lat/Lng
+  const embedUrl = `https://maps.google.com/maps?q=${resolvedLat},${resolvedLng}&hl=km&z=16&t=m&output=embed`;
+  const directMapsUrl = googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${resolvedLat},${resolvedLng}`;
 
   return (
     <section className={`w-full max-w-full my-6 text-center ${className}`}>
@@ -34,7 +68,7 @@ export function TemplateGoogleMap({
       <div className={`w-full rounded-2xl p-4 sm:p-5 border transition-all text-left ${
         isDark ? 'bg-slate-950/90 border-white/15 text-white' : 'bg-white/95 border-stone-200 text-stone-900'
       }`}>
-        {/* 2. Embedded Google Maps Display */}
+        {/* 2. Embedded Google Maps Display Centered on Phnom Penh, Cambodia */}
         <div className={`w-full h-56 sm:h-72 rounded-xl overflow-hidden border mb-4 ${
           isDark ? 'border-white/10 bg-slate-900' : 'border-stone-200 bg-stone-100'
         }`}>

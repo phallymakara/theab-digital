@@ -60,7 +60,7 @@ export function ModernNoirDiamondTemplate({
   const weddingDate = data?.ceremonyDate || invitation?.weddingDate || activeTemplate?.demoDate || 'ថ្ងៃអាទិត្យ ទី១០ ខែមករា ឆ្នាំ២០២៧';
   const weddingTime = invitation?.weddingTime || 'ម៉ោង ៥:៣០ ល្ងាច';
   const weddingLocation = data?.ceremonyLocation || invitation?.weddingLocation || activeTemplate?.demoLocation || 'សណ្ឋាគារ រ៉ូសវូដ ភ្នំពេញ (Rosewood Phnom Penh - Grand Ballroom)';
-  const locationAddress = invitation?.locationAddress || 'ជាន់ទី ៣៦ អគារវឌ្ឍនៈកាពីតាល មហាវិថីព្រះមុនីវង្ស រាជធានីភ្នំពេញ';
+  const locationAddress = (data?.locationAddress && data?.locationAddress !== weddingLocation) ? data.locationAddress : (data?.ceremonyAddress || invitation?.locationAddress || 'ជាន់ទី ៣៦ អគារវឌ្ឍនៈកាពីតាល មហាវិថីព្រះមុនីវង្ស រាជធានីភ្នំពេញ');
   const googleMapsUrl = invitation?.googleMapsUrl || 'https://maps.google.com/?q=Rosewood+Phnom+Penh';
 
   // Bank Info & Host Contacts
@@ -617,31 +617,14 @@ export function ModernNoirDiamondTemplate({
           7. VENUE LOCATION & GOOGLE MAPS
           ========================================================================= */}
       <section className="relative z-20 max-w-2xl mx-auto px-4 py-8">
-        <div className="rounded-3xl p-6 sm:p-8 bg-slate-900/90 border border-slate-800 shadow-2xl space-y-6">
-          <div className="text-center space-y-1">
-            <span className="text-xs text-cyan-300 uppercase tracking-widest font-serifTrad">Venue & Directions</span>
-            <h2 className="font-komutt text-2xl font-bold text-white">ទីតាំងប្រារព្ធពិធី</h2>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-xs text-cyan-300 font-semibold">
-                <MapPin className="w-4 h-4 text-cyan-400 shrink-0" />
-                <span>{weddingLocation}</span>
-              </div>
-              <p className="text-[11px] text-slate-400 pl-6">{locationAddress}</p>
-            </div>
-            <a
-              href={googleMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-semibold text-xs hover:bg-cyan-400 transition duration-300 shadow-md shadow-cyan-500/20 shrink-0"
-            >
-              <Navigation className="w-3.5 h-3.5" />
-              <span>បើកមើលផែនទី Google Maps</span>
-            </a>
-          </div>
-        </div>
+        <TemplateGoogleMap
+          locationName={weddingLocation}
+          address={locationAddress}
+          googleMapsUrl={googleMapsUrl}
+          isDark={true}
+          accentColor="#06B6D4"
+          fontFamily="font-komutt"
+        />
       </section>
 
       {/* =========================================================================
