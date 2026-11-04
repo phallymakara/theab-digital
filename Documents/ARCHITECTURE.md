@@ -438,3 +438,4 @@ Frontend (Vercel)            FastAPI (Render / Railway)      Postgres (Neon / Su
 2. **Object Storage**: **Cloudflare R2** with 10GB free storage and $0 egress bandwidth charges.
 3. **Backend**: Containerized FastAPI service running on **Render.com** or **Railway.app** with automated Alembic migrations on startup.
 4. **Frontend**: Static SPA hosted globally on **Vercel CDN Edge**, communicating via HTTPS with the cloud backend.
+

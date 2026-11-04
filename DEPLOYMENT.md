@@ -130,3 +130,4 @@ curl http://localhost:8000/health
 - **Security Headers**: `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, and `Strict-Transport-Security`.
 - **XSS Sanitization**: Strips `<script>`, `<style>`, and raw HTML from all guest wishes and RSVPs.
 - **Khmer Excel Compatibility**: Automatic UTF-8 BOM byte injection (`\xef\xbb\xbf`) on CSV downloads for Microsoft Excel.
+

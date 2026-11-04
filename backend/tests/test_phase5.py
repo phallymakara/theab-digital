@@ -83,3 +83,4 @@ def test_rate_limiting_abuse_prevention(client):
             break
 
     assert rate_limited is True, "Rate limiter should have triggered HTTP 429 for rapid burst requests"
+
