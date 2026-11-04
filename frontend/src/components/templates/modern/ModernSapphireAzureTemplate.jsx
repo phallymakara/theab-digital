@@ -317,19 +317,19 @@ export function ModernSapphireAzureTemplate({
           <div className="grid grid-cols-4 gap-2 text-center">
             <div className="p-2 rounded-xl bg-black/40 border border-sky-500/20">
               <span className="font-komutt text-2xl text-sky-200 block">{timeLeft.days}</span>
-              <span className="text-[10px] text-sky-300/80 uppercase tracking-wider">ថ្ងៃ</span>
+              <span className="text-[10px] text-sky-300/80 ">ថ្ងៃ</span>
             </div>
             <div className="p-2 rounded-xl bg-black/40 border border-sky-500/20">
               <span className="font-komutt text-2xl text-sky-200 block">{timeLeft.hours}</span>
-              <span className="text-[10px] text-sky-300/80 uppercase tracking-wider">ម៉ោង</span>
+              <span className="text-[10px] text-sky-300/80 ">ម៉ោង</span>
             </div>
             <div className="p-2 rounded-xl bg-black/40 border border-sky-500/20">
               <span className="font-komutt text-2xl text-sky-200 block">{timeLeft.minutes}</span>
-              <span className="text-[10px] text-sky-300/80 uppercase tracking-wider">នាទី</span>
+              <span className="text-[10px] text-sky-300/80 ">នាទី</span>
             </div>
             <div className="p-2 rounded-xl bg-black/40 border border-sky-500/20">
               <span className="font-komutt text-2xl text-sky-200 block animate-pulse">{timeLeft.seconds}</span>
-              <span className="text-[10px] text-sky-300/80 uppercase tracking-wider">វិនាទី</span>
+              <span className="text-[10px] text-sky-300/80 ">វិនាទី</span>
             </div>
           </div>
         </div>
@@ -347,7 +347,7 @@ export function ModernSapphireAzureTemplate({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
           <div className="p-5 rounded-2xl bg-[#0E162E]/80 border border-sky-500/20 backdrop-blur-sm">
-            <p className="text-[11px] font-semibold text-sky-300 tracking-wider uppercase mb-2">មាតាបិតាខាងកូនប្រុស</p>
+            <p className="text-[11px] font-semibold text-sky-300 mb-2">មាតាបិតាខាងកូនប្រុស</p>
             <p className="font-komutt text-base text-white font-bold">{groomFather}</p>
             <p className="font-komutt text-base text-white font-bold">{groomMother}</p>
             <div className="mt-3 pt-3 border-t border-sky-500/20">
@@ -355,7 +355,7 @@ export function ModernSapphireAzureTemplate({
             </div>
           </div>
           <div className="p-5 rounded-2xl bg-[#0E162E]/80 border border-sky-500/20 backdrop-blur-sm">
-            <p className="text-[11px] font-semibold text-sky-300 tracking-wider uppercase mb-2">មាតាបិតាខាងកូនស្រី</p>
+            <p className="text-[11px] font-semibold text-sky-300 mb-2">មាតាបិតាខាងកូនស្រី</p>
             <p className="font-komutt text-base text-white font-bold">{brideFather}</p>
             <p className="font-komutt text-base text-white font-bold">{brideMother}</p>
             <div className="mt-3 pt-3 border-t border-sky-500/20">

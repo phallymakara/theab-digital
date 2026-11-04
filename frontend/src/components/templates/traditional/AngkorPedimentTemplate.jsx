@@ -157,7 +157,7 @@ export function AngkorPedimentTemplate({
             style={{ clipPath: 'polygon(50% 0%, 100% 8%, 100% 100%, 0% 100%, 0% 8%)' }}
           >
             <div className="text-[#C59B27] text-2xl pt-2 mb-2">❖ ❖ ❖</div>
-            <p className="text-xs tracking-widest text-[#8C6813] uppercase mb-1 font-semibold">សិរីសួស្តី អាពាហ៍ពិពាហ៍</p>
+            <p className="text-xs text-[#8C6813] mb-1 font-semibold">សិរីសួស្តី អាពាហ៍ពិពាហ៍</p>
             <h1 className="font-moul text-2xl sm:text-3xl text-[#8C6813] leading-relaxed tracking-wider mb-2">
               សិរីមង្គលអាពាហ៍ពិពាហ៍
             </h1>
@@ -166,7 +166,7 @@ export function AngkorPedimentTemplate({
             {/* Couple Names */}
             <div className="my-4 py-4 px-3 rounded-xl bg-[#FAF7F2] border border-[#C59B27]/30 shadow-xs">
               <div className="text-2xl sm:text-3xl font-moul text-stone-900 tracking-wide mb-1">{groom}</div>
-              <div className="my-2 text-[#C59B27] font-semibold text-xs tracking-widest font-moul">✦ ជួបប្រសព្វនឹង ✦</div>
+              <div className="my-2 text-[#C59B27] font-semibold text-xs font-moul">✦ ជួបប្រសព្វនឹង ✦</div>
               <div className="text-2xl sm:text-3xl font-moul text-stone-900 tracking-wide">{bride}</div>
             </div>
           </div>

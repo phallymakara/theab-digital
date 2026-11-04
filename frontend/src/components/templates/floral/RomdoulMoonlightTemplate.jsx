@@ -547,7 +547,7 @@ export default function RomdoulMoonlightTemplate({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-center border-t border-slate-800 pt-6">
             {/* Groom's Parents */}
             <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800/80">
-              <span className="text-[11px] text-amber-300/80 font-serifTrad uppercase tracking-wider block mb-1">
+              <span className="text-[11px] text-amber-300/80 font-serifTrad  block mb-1">
                 ខាងកូនប្រុស
               </span>
               <p className="font-komutt-a text-sm sm:text-base font-semibold text-slate-100">{groomFather}</p>
@@ -556,7 +556,7 @@ export default function RomdoulMoonlightTemplate({
 
             {/* Bride's Parents */}
             <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800/80">
-              <span className="text-[11px] text-amber-300/80 font-serifTrad uppercase tracking-wider block mb-1">
+              <span className="text-[11px] text-amber-300/80 font-serifTrad  block mb-1">
                 ខាងកូនស្រី
               </span>
               <p className="font-komutt-a text-sm sm:text-base font-semibold text-slate-100">{brideFather}</p>
@@ -610,25 +610,25 @@ export default function RomdoulMoonlightTemplate({
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-200">
                 {timeLeft.days}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt-a">ថ្ងៃ</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-komutt-a">ថ្ងៃ</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-amber-400/30">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-200">
                 {timeLeft.hours}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt-a">ម៉ោង</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-komutt-a">ម៉ោង</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-amber-400/30">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-200">
                 {timeLeft.minutes}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt-a">នាទី</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-komutt-a">នាទី</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-amber-400/30">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-400 animate-pulse">
                 {timeLeft.seconds}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt-a">វិនាទី</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-komutt-a">វិនាទី</span>
             </div>
           </div>
 
@@ -1083,7 +1083,7 @@ export default function RomdoulMoonlightTemplate({
 
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider hover:opacity-90 transition shadow-xl shadow-amber-400/25 cursor-pointer"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-slate-950 font-bold text-xs  hover:opacity-90 transition shadow-xl shadow-amber-400/25 cursor-pointer"
               >
                 ផ្ញើការឆ្លើយតប RSVP
               </button>
@@ -1127,7 +1127,7 @@ export default function RomdoulMoonlightTemplate({
             <button
               type="submit"
               disabled={isReleasing}
-              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-slate-950 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:opacity-90 transition shadow-xl shadow-amber-400/25 cursor-pointer disabled:opacity-50"
+              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 text-slate-950 font-bold text-xs  flex items-center justify-center gap-2 hover:opacity-90 transition shadow-xl shadow-amber-400/25 cursor-pointer disabled:opacity-50"
             >
               {isReleasing ? (
                 <>
@@ -1145,7 +1145,7 @@ export default function RomdoulMoonlightTemplate({
 
           {/* Live Released Lanterns Feed */}
           <div className="space-y-3">
-            <h4 className="text-xs font-semibold text-amber-200/90 uppercase tracking-wider font-serifTrad flex items-center gap-2">
+            <h4 className="text-xs font-semibold text-amber-200/90  font-serifTrad flex items-center gap-2">
               <Stars className="w-3.5 h-3.5 text-amber-300" />
               <span>គោមជូនពរដែលបានបង្ហោះរួច ({releasedLanterns.length})</span>
             </h4>

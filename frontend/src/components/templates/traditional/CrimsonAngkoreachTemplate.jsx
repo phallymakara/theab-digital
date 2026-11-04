@@ -147,7 +147,7 @@ export function CrimsonAngkoreachTemplate({ data = {} }) {
         {/* Header */}
         <header className="text-center pt-8 pb-8 px-6 relative">
           <div className="text-[#BE123C] text-xl mb-2">❖ ❖ ❖</div>
-          <p className="text-xs tracking-widest text-[#881337] uppercase mb-1 font-semibold">សិរីសួស្តី អាពាហ៍ពិពាហ៍</p>
+          <p className="text-xs text-[#881337] mb-1 font-semibold">សិរីសួស្តី អាពាហ៍ពិពាហ៍</p>
           <h1 className="font-kouteok text-2xl sm:text-3xl text-[#881337] leading-relaxed tracking-wider mb-2">
             សិរីមង្គលអាពាហ៍ពិពាហ៍
           </h1>
@@ -156,7 +156,7 @@ export function CrimsonAngkoreachTemplate({ data = {} }) {
           {/* Couple Frame */}
           <div className="my-6 p-6 rounded-2xl bg-white/90 backdrop-blur-md border-2 border-[#BE123C]/35 shadow-md">
             <div className="text-2xl sm:text-3xl font-kouteok text-stone-900 tracking-wide mb-1">{groom}</div>
-            <div className="my-2 text-[#BE123C] font-semibold text-xs tracking-widest font-kouteok">✦ ជួបប្រសព្វនឹង ✦</div>
+            <div className="my-2 text-[#BE123C] font-semibold text-xs font-kouteok">✦ ជួបប្រសព្វនឹង ✦</div>
             <div className="text-2xl sm:text-3xl font-kouteok text-stone-900 tracking-wide">{bride}</div>
           </div>
 
@@ -283,7 +283,7 @@ export function CrimsonAngkoreachTemplate({ data = {} }) {
             )}
 
             <div>
-              <p className="text-xs text-[#BE123C] uppercase tracking-wider font-bold mb-1">{bankName}</p>
+              <p className="text-xs text-[#BE123C]  font-bold mb-1">{bankName}</p>
               <p className="font-bold text-sm text-stone-900 uppercase">{accountName}</p>
               <p className="text-lg font-mono tracking-widest text-[#BE123C] font-bold my-2">{accountNumber}</p>
             </div>

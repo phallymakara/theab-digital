@@ -38,14 +38,24 @@
   --font-kantumruy: 'Kantumruy Pro', sans-serif;
   --font-battambang: Battambang, sans-serif;
   --font-koulen: 'Koulen', cursive, sans-serif;
-  --font-serifTrad: Cinzel, serif;
+  --font-serifTrad: Cinzel, 'Kantumruy Pro', 'Suwannaphum', serif;
 }
 
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: auto;
+}
+
+:lang(km), [lang="km"],
+.font-komutt, .font-komutt-a, .font-komuttA, .font-phalluch, .font-kouteok,
+.font-momo, .font-mokha, .font-toathmor, .font-moul, .font-moulpali,
+.font-suwannaphum, .font-kantumruy, .font-battambang, .font-koulen, .font-angkor, .font-preahvihear {
+  letter-spacing: normal !important;
+  font-synthesis: none !important;
+  -webkit-font-synthesis: none !important;
+  text-rendering: auto !important;
 }
 
 /* ==========================================================================

@@ -173,7 +173,7 @@ export function RoyalPavilionTemplate({
           className="px-4 py-2 rounded-full bg-white/90 backdrop-blur-md border border-[#E5BE53] text-[#B45309] flex items-center gap-2 shadow-md hover:scale-105 active:scale-95 transition-all text-xs font-semibold cursor-pointer"
         >
           <Music className={`w-3.5 h-3.5 text-[#B45309] ${isPlaying ? 'animate-bounce' : ''}`} />
-          <span className="tracking-wider">{isPlaying ? 'ភ្លេងការ (កំពុងចាក់)' : 'តន្ត្រីភ្លេងការ'}</span>
+          <span>{isPlaying ? 'ភ្លេងការ (កំពុងចាក់)' : 'តន្ត្រីភ្លេងការ'}</span>
         </button>
       </aside>
 
@@ -241,7 +241,7 @@ export function RoyalPavilionTemplate({
                 <h2 className="font-moul text-lg sm:text-xl text-stone-900 mt-2 tracking-wide leading-relaxed">
                   {groom}
                 </h2>
-                <div className="mt-2 text-[10px] text-stone-500 uppercase tracking-wider">Groom</div>
+                <div className="mt-2 text-[10px] text-stone-500 ">Groom</div>
               </div>
 
               {/* Knot Center */}
@@ -268,7 +268,7 @@ export function RoyalPavilionTemplate({
                 <h2 className="font-moul text-lg sm:text-xl text-stone-900 mt-2 tracking-wide leading-relaxed">
                   {bride}
                 </h2>
-                <div className="mt-2 text-[10px] text-stone-500 uppercase tracking-wider">Bride</div>
+                <div className="mt-2 text-[10px] text-stone-500 ">Bride</div>
               </div>
             </div>
           </div>

@@ -405,7 +405,7 @@ export function ModernNoirDiamondTemplate({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-center border-t border-slate-800 pt-6">
             {/* Groom's Parents */}
             <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800">
-              <span className="text-[11px] text-cyan-300 font-serifTrad uppercase tracking-wider block mb-1">
+              <span className="text-[11px] text-cyan-300 font-serifTrad  block mb-1">
                 ខាងកូនប្រុស
               </span>
               <p className="font-komutt text-sm sm:text-base font-semibold text-slate-100">{groomFather}</p>
@@ -414,7 +414,7 @@ export function ModernNoirDiamondTemplate({
 
             {/* Bride's Parents */}
             <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800">
-              <span className="text-[11px] text-cyan-300 font-serifTrad uppercase tracking-wider block mb-1">
+              <span className="text-[11px] text-cyan-300 font-serifTrad  block mb-1">
                 ខាងកូនស្រី
               </span>
               <p className="font-komutt text-sm sm:text-base font-semibold text-slate-100">{brideFather}</p>
@@ -468,25 +468,25 @@ export function ModernNoirDiamondTemplate({
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-slate-100">
                 {timeLeft.days}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt">ថ្ងៃ</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-komutt">ថ្ងៃ</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-slate-100">
                 {timeLeft.hours}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt">ម៉ោង</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-komutt">ម៉ោង</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-slate-100">
                 {timeLeft.minutes}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt">នាទី</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-komutt">នាទី</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-cyan-400 animate-pulse">
                 {timeLeft.seconds}
               </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-komutt">វិនាទី</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-komutt">វិនាទី</span>
             </div>
           </div>
 
@@ -890,7 +890,7 @@ export function ModernNoirDiamondTemplate({
 
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-cyan-400 to-cyan-500 text-slate-950 font-bold text-xs uppercase tracking-wider hover:opacity-90 transition shadow-lg shadow-cyan-500/20 cursor-pointer"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-cyan-400 to-cyan-500 text-slate-950 font-bold text-xs  hover:opacity-90 transition shadow-lg shadow-cyan-500/20 cursor-pointer"
               >
                 ផ្ញើការឆ្លើយតប RSVP
               </button>
@@ -929,7 +929,7 @@ export function ModernNoirDiamondTemplate({
             />
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs uppercase tracking-wider hover:bg-cyan-400 transition flex items-center justify-center gap-2 cursor-pointer shadow-md"
+              className="w-full py-3 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs  hover:bg-cyan-400 transition flex items-center justify-center gap-2 cursor-pointer shadow-md"
             >
               <Send className="w-4 h-4" />
               <span>ផ្ញើសារជូនពរ</span>

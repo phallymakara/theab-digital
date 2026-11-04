@@ -147,7 +147,7 @@ export function RoyalLacquerTemplate({ data = {}, onBack }) {
         <div id="traditional-ceremony-content">
           <header className="text-center pt-8 pb-6 px-6 relative">
             <div className="text-[#B38728] text-2xl mb-2 tracking-widest">❖ ❖ ❖</div>
-            <p className="text-xs tracking-widest text-[#8C6813] uppercase mb-1 font-semibold">សិរីសួស្តី អាពាហ៍ពិពាហ៍</p>
+            <p className="text-xs text-[#8C6813] mb-1 font-semibold">សិរីសួស្តី អាពាហ៍ពិពាហ៍</p>
             <h1 className="font-momo text-2xl sm:text-3xl text-[#8C6813] leading-relaxed tracking-wider mb-2">
               សិរីមង្គលអាពាហ៍ពិពាហ៍
             </h1>
@@ -286,7 +286,7 @@ export function RoyalLacquerTemplate({ data = {}, onBack }) {
               )}
 
               <div>
-                <p className="text-xs text-[#8C6813] uppercase tracking-wider font-bold mb-1">{bankName}</p>
+                <p className="text-xs text-[#8C6813]  font-bold mb-1">{bankName}</p>
                 <p className="font-bold text-sm text-stone-900 uppercase">{accountName}</p>
                 <p className="text-lg font-mono tracking-widest text-[#B38728] font-bold my-2">{accountNumber}</p>
               </div>

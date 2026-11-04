@@ -405,7 +405,7 @@ export function ModernChampagneSilkTemplate({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-center border-t border-amber-100 pt-6">
             {/* Groom's Parents */}
             <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-amber-200/50">
-              <span className="text-[11px] text-amber-800 font-serifTrad uppercase tracking-wider block mb-1">
+              <span className="text-[11px] text-amber-800 font-serifTrad  block mb-1">
                 ខាងកូនប្រុស
               </span>
               <p className="font-komutt text-sm sm:text-base font-semibold text-stone-900">{groomFather}</p>
@@ -414,7 +414,7 @@ export function ModernChampagneSilkTemplate({
 
             {/* Bride's Parents */}
             <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-amber-200/50">
-              <span className="text-[11px] text-amber-800 font-serifTrad uppercase tracking-wider block mb-1">
+              <span className="text-[11px] text-amber-800 font-serifTrad  block mb-1">
                 ខាងកូនស្រី
               </span>
               <p className="font-komutt text-sm sm:text-base font-semibold text-stone-900">{brideFather}</p>
@@ -468,25 +468,25 @@ export function ModernChampagneSilkTemplate({
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-800">
                 {timeLeft.days}
               </span>
-              <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider font-komutt">ថ្ងៃ</span>
+              <span className="text-[10px] sm:text-xs text-stone-500 font-komutt">ថ្ងៃ</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-amber-200/60 shadow-xs">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-800">
                 {timeLeft.hours}
               </span>
-              <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider font-komutt">ម៉ោង</span>
+              <span className="text-[10px] sm:text-xs text-stone-500 font-komutt">ម៉ោង</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-amber-200/60 shadow-xs">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-800">
                 {timeLeft.minutes}
               </span>
-              <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider font-komutt">នាទី</span>
+              <span className="text-[10px] sm:text-xs text-stone-500 font-komutt">នាទី</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-amber-200/60 shadow-xs">
               <span className="block text-2xl sm:text-3xl font-bold font-serifTrad text-amber-600 animate-pulse">
                 {timeLeft.seconds}
               </span>
-              <span className="text-[10px] sm:text-xs text-stone-500 uppercase tracking-wider font-komutt">វិនាទី</span>
+              <span className="text-[10px] sm:text-xs text-stone-500 font-komutt">វិនាទី</span>
             </div>
           </div>
 
@@ -878,7 +878,7 @@ export function ModernChampagneSilkTemplate({
 
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-white font-bold text-xs uppercase tracking-wider hover:opacity-90 transition shadow-lg shadow-amber-600/20 cursor-pointer"
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-white font-bold text-xs  hover:opacity-90 transition shadow-lg shadow-amber-600/20 cursor-pointer"
               >
                 ផ្ញើការឆ្លើយតប RSVP
               </button>
@@ -917,7 +917,7 @@ export function ModernChampagneSilkTemplate({
             />
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-stone-900 text-amber-300 font-bold text-xs uppercase tracking-wider hover:bg-stone-800 transition flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3 rounded-xl bg-stone-900 text-amber-300 font-bold text-xs  hover:bg-stone-800 transition flex items-center justify-center gap-2 cursor-pointer"
             >
               <Send className="w-4 h-4" />
               <span>ផ្ញើសារជូនពរ</span>

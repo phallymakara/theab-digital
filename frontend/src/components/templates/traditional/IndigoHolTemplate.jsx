@@ -155,7 +155,7 @@ export function IndigoHolTemplate({
           <div className="w-12 h-12 mx-auto mb-3 rounded-full flex items-center justify-center bg-white border border-[#E3BA55] shadow-xs">
             <span className="font-moul text-lg text-[#1A2A5E]">ឧ</span>
           </div>
-          <p className="text-xs tracking-widest text-[#1D4ED8] uppercase mb-1 font-semibold">សិរីសួស្តី អាពាហ៍ពិពាហ៍</p>
+          <p className="text-xs text-[#1D4ED8] mb-1 font-semibold">សិរីសួស្តី អាពាហ៍ពិពាហ៍</p>
           <h1 className="font-moul text-2xl sm:text-3xl text-[#1A2A5E] leading-relaxed tracking-wider mb-2">
             សិរីមង្គលអាពាហ៍ពិពាហ៍
           </h1>
@@ -164,7 +164,7 @@ export function IndigoHolTemplate({
           {/* Couple Box */}
           <div className="my-6 p-6 rounded-2xl bg-white/90 backdrop-blur-md border border-[#E3BA55]/60 shadow-md relative">
             <div className="text-2xl sm:text-3xl font-moul text-[#1A2A5E] tracking-wide mb-1">{groom}</div>
-            <div className="my-2 text-[#E3BA55] font-semibold text-xs tracking-widest font-moul">✦ ជួបប្រសព្វនឹង ✦</div>
+            <div className="my-2 text-[#E3BA55] font-semibold text-xs font-moul">✦ ជួបប្រសព្វនឹង ✦</div>
             <div className="text-2xl sm:text-3xl font-moul text-[#1A2A5E] tracking-wide">{bride}</div>
           </div>
 
