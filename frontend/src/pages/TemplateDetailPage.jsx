@@ -688,7 +688,7 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
           {/* Center / Right controls: HTML toggle, ✨, Share */}
           <div className="flex items-center gap-2 pointer-events-auto">
             {hasHtml && (
-              <div className="flex items-center bg-black/50 backdrop-blur-md p-0.5 rounded-full border border-white/25 shadow-lg">
+              <div className="flex items-center bg-black/50 backdrop-blur-md p-0.5 rounded-full border border-white/25">
                 <button
                   onClick={() => setViewMode('html')}
                   className={`px-2.5 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
@@ -720,7 +720,7 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
             {/* ✨ (Re-trigger Flying Golden Wedding Petals) */}
             <button
               onClick={generateGoldParticles}
-              className="w-8 h-8 rounded-full flex items-center justify-center bg-black/50 hover:bg-black/70 text-amber-300 backdrop-blur-md border border-white/25 shadow-lg text-sm font-bold transition-all active:scale-95 cursor-pointer"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center bg-black/50 hover:bg-black/70 text-amber-300 backdrop-blur-md border border-white/25 text-xs sm:text-sm font-bold transition-all active:scale-95 cursor-pointer shrink-0"
               title="ចុចដើម្បីបង្ហោះផ្កាមាសឡើងវិញ"
             >
               <span>✨</span>
@@ -742,7 +742,7 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
                 setSelectedTemplate(activeTemplate);
                 navigate({ to: `/customize/${activeTemplate.id}` });
               }}
-              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:brightness-110 text-white backdrop-blur-md border border-amber-300/40 shadow-lg text-xs font-bold transition-all cursor-pointer active:scale-95"
+              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:brightness-110 text-white backdrop-blur-md border border-amber-300/40 text-xs font-bold transition-all cursor-pointer active:scale-95 shrink-0"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-200 shrink-0" />
               <span className="hidden sm:inline">ជ្រើសរើសគំរូ</span>

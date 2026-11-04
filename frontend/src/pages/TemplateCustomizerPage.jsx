@@ -495,25 +495,29 @@ export function TemplateCustomizerPage() {
 
         </div>
 
-        {/* Center Mobile View Switcher (Visible on Mobile only) */}
-        <div className="flex lg:hidden bg-stone-100 p-1 rounded-full border border-stone-200 text-xs font-kantumruy">
+        {/* Center Mobile View Switcher (Icon-only, compact & scaled smaller for mobile phones) */}
+        <div className="flex lg:hidden bg-stone-100 p-0.5 rounded-full border border-stone-200 shrink-0">
           <button
+            type="button"
             onClick={() => setMobileTab('form')}
-            className={`px-3 py-1 rounded-full font-bold flex items-center gap-1 transition ${
-              mobileTab === 'form' ? 'bg-amber-600 text-white shadow-xs' : 'text-stone-600'
+            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+              mobileTab === 'form' ? 'bg-amber-600 text-white' : 'text-stone-600 hover:text-stone-900'
             }`}
+            title="បំពេញព័ត៌មាន (Edit)"
+            aria-label="បំពេញព័ត៌មាន"
           >
             <Edit3 className="w-3.5 h-3.5 shrink-0" />
-            <span className="text-xs">ទម្រង់</span>
           </button>
           <button
+            type="button"
             onClick={() => setMobileTab('preview')}
-            className={`px-3 py-1 rounded-full font-bold flex items-center gap-1 transition ${
-              mobileTab === 'preview' ? 'bg-amber-600 text-white shadow-xs' : 'text-stone-600'
+            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+              mobileTab === 'preview' ? 'bg-amber-600 text-white' : 'text-stone-600 hover:text-stone-900'
             }`}
+            title="មើលគំរូ (View)"
+            aria-label="មើលគំរូ"
           >
             <Eye className="w-3.5 h-3.5 shrink-0" />
-            <span className="text-xs">មើលគំរូ</span>
           </button>
         </div>
 
@@ -555,7 +559,7 @@ export function TemplateCustomizerPage() {
         >
 
           {/* 01. ឈ្មោះកូនកំលោះនិងកូនក្រមុំ & Hero Images (Max 5) */}
-          <div className="rounded-2xl bg-white border border-stone-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
+          <div className="rounded-none bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 1.
@@ -576,7 +580,7 @@ export function TemplateCustomizerPage() {
                     value={formData.groomName}
                     onChange={(e) => setFormData({ ...formData, groomName: e.target.value })}
                     placeholder="ឧ. សុខ វិបុល"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3.5 py-2.5 rounded-none border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
                 <div>
@@ -588,7 +592,7 @@ export function TemplateCustomizerPage() {
                     value={formData.brideName}
                     onChange={(e) => setFormData({ ...formData, brideName: e.target.value })}
                     placeholder="ឧ. ជា សុជាតា"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3.5 py-2.5 rounded-none border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
               </div>
@@ -601,7 +605,7 @@ export function TemplateCustomizerPage() {
                     <span>រូបភាព Hero (អតិបរមា 5 សន្លឹក)</span>
                   </label>
                   {formData.heroImages.length < 5 && (
-                    <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100/80 text-amber-900 border border-amber-300/80 font-kantumruy text-xs font-bold transition shadow-2xs cursor-pointer active:scale-95 select-none">
+                    <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-none bg-amber-50 hover:bg-amber-100/80 text-amber-900 border border-amber-300/80 font-kantumruy text-xs font-bold transition  cursor-pointer active:scale-95 select-none">
                       <Plus className="w-3.5 h-3.5 text-amber-600" />
                       <span>បន្ថែមរូបភាព Hero</span>
                       <input
@@ -615,39 +619,52 @@ export function TemplateCustomizerPage() {
                   )}
                 </div>
 
-                {/* Hero Thumbnails */}
-                {formData.heroImages.length > 0 && (
-                  <div className="grid grid-cols-5 gap-2">
-                    {formData.heroImages.slice(0, 5).map((imgSrc, idx) => {
-                      const isSelected = selectedHeroIndex === idx;
-                      return (
-                        <button
-                          key={idx}
-                          type="button"
-                          onClick={() => setSelectedHeroIndex(idx)}
-                          className={`group relative aspect-[3/4] rounded-xl overflow-hidden border-2 text-left transition-all cursor-pointer shadow-2xs focus:outline-none ${
-                            isSelected
-                              ? 'border-amber-500 ring-2 ring-amber-400/60 shadow-md scale-[1.03]'
-                              : 'border-stone-200 hover:border-amber-400 bg-stone-100 opacity-80 hover:opacity-100'
-                          }`}
+                {/* Hero Thumbnails Grid with Proper Upload Slot */}
+                <div className="grid grid-cols-5 gap-2">
+                  {formData.heroImages.slice(0, 5).map((imgSrc, idx) => {
+                    const isSelected = selectedHeroIndex === idx;
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setSelectedHeroIndex(idx)}
+                        className={`group relative aspect-[3/4] overflow-hidden border-2 text-left transition-all cursor-pointer focus:outline-none ${
+                          isSelected
+                            ? 'border-amber-600 ring-2 ring-amber-400/60 scale-[1.02]'
+                            : 'border-stone-200 hover:border-amber-400 bg-stone-100 opacity-85 hover:opacity-100'
+                        }`}
+                      >
+                        <img src={imgSrc} alt={`Hero ${idx + 1}`} className="w-full h-full object-cover" decoding="async" />
+                        <span
+                          role="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeHeroImage(idx);
+                          }}
+                          className="absolute top-1 right-1 p-1 bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 cursor-pointer z-10"
+                          title="លុបរូបភាពនេះ"
                         >
-                          <img src={imgSrc} alt={`Hero ${idx + 1}`} className="w-full h-full object-cover" decoding="async" />
-                          <span
-                            role="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              removeHeroImage(idx);
-                            }}
-                            className="absolute top-1 right-1 p-1 rounded-full bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 cursor-pointer z-10"
-                            title="លុបរូបភាពនេះ"
-                          >
-                            <Trash2 className="w-2.5 h-2.5" />
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
+                          <Trash2 className="w-2.5 h-2.5" />
+                        </span>
+                      </button>
+                    );
+                  })}
+
+                  {formData.heroImages.length < 5 && (
+                    <label className="group relative aspect-[3/4] border-2 border-dashed border-amber-400 hover:border-amber-600 bg-amber-50/50 hover:bg-amber-100/60 flex flex-col items-center justify-center cursor-pointer transition-all text-center p-1">
+                      <Upload className="w-5 h-5 text-amber-700 mb-1 group-hover:scale-110 transition-transform" />
+                      <span className="text-[10px] font-bold text-amber-950 leading-tight">បញ្ចូលរូប</span>
+                      <span className="text-[9px] text-amber-700 font-mono">Hero</span>
+                      <input
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        onChange={handleHeroUpload}
+                        className="hidden"
+                      />
+                    </label>
+                  )}
+                </div>
               </div>
 
               {/* Button Below Add Hero Image Section: "រូបភាពផ្ទៃខាងក្រោយ (Background)" */}
@@ -658,7 +675,7 @@ export function TemplateCustomizerPage() {
                     <span>ផ្ទៃខាងក្រោយ</span>
                   </label>
 
-                  <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-kantumruy text-xs font-bold transition shadow-xs cursor-pointer active:scale-95 select-none">
+                  <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-none bg-amber-500 hover:bg-amber-600 text-white font-kantumruy text-xs font-bold transition  cursor-pointer active:scale-95 select-none">
                     <Plus className="w-3.5 h-3.5" />
                     <span>រូបភាពផ្ទៃខាងក្រោយ (Background)</span>
                     <input
@@ -672,7 +689,7 @@ export function TemplateCustomizerPage() {
 
                 {/* Custom Background Image Preview */}
                 {formData.bgImage && (
-                  <div className="relative aspect-[16/9] w-full max-w-[220px] rounded-xl overflow-hidden border-2 border-amber-500 shadow-xs group">
+                  <div className="relative aspect-[16/9] w-full max-w-[220px] rounded-none overflow-hidden border-2 border-amber-500  group">
                     <img src={formData.bgImage} alt="Background" className="w-full h-full object-cover" decoding="async" />
                     <div className="absolute inset-x-0 bottom-0 bg-black/60 py-0.5 text-center">
                       <span className="text-[10px] text-amber-200 font-kantumruy font-bold">ផ្ទៃខាងក្រោយកំពុងប្រើ</span>
@@ -680,7 +697,7 @@ export function TemplateCustomizerPage() {
                     <button
                       type="button"
                       onClick={() => setFormData((prev) => ({ ...prev, bgImage: '' }))}
-                      className="absolute top-1 right-1 p-1 rounded-full bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 cursor-pointer"
+                      className="absolute top-1 right-1 p-1 rounded-none bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 cursor-pointer"
                       title="លុបផ្ទៃខាងក្រោយ"
                     >
                       <Trash2 className="w-2.5 h-2.5" />
@@ -692,7 +709,7 @@ export function TemplateCustomizerPage() {
           </div>
 
           {/* 02. ឪពុកម្ដាយកូនកំលោះ & ឪពុកម្ដាយកូនក្រមុំ */}
-          <div className="rounded-2xl bg-white border border-stone-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
+          <div className="rounded-none bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 2.
@@ -704,7 +721,7 @@ export function TemplateCustomizerPage() {
 
             <div className="space-y-4">
               {/* Groom Parents */}
-              <div className="p-3.5 rounded-xl bg-stone-50/70 border border-stone-200/80 space-y-3">
+              <div className="p-3.5 rounded-none bg-stone-50/70 border border-stone-200/80 space-y-3">
                 <p className="font-kantumruy text-xs font-bold text-stone-800 flex items-center gap-1.5 select-text">
                   <Users className="w-3.5 h-3.5 text-blue-600" />
                   <span>មាតាបិតាខាងកូនប្រុស</span>
@@ -717,7 +734,7 @@ export function TemplateCustomizerPage() {
                       value={formData.groomFather}
                       onChange={(e) => setFormData({ ...formData, groomFather: e.target.value })}
                       placeholder="ឧ. លោក ចាន់ សុផល"
-                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                      className="w-full px-3 py-2 rounded-none border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                     />
                   </div>
                   <div>
@@ -727,7 +744,7 @@ export function TemplateCustomizerPage() {
                       value={formData.groomMother}
                       onChange={(e) => setFormData({ ...formData, groomMother: e.target.value })}
                       placeholder="ឧ. លោកស្រី ម៉ៅ សុខា"
-                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                      className="w-full px-3 py-2 rounded-none border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                     />
                   </div>
                 </div>
@@ -738,13 +755,13 @@ export function TemplateCustomizerPage() {
                     value={formData.groomResidence}
                     onChange={(e) => setFormData({ ...formData, groomResidence: e.target.value })}
                     placeholder="ឧ. រាជធានីភ្នំពេញ"
-                    className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3 py-2 rounded-none border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
               </div>
 
               {/* Bride Parents */}
-              <div className="p-3.5 rounded-xl bg-stone-50/70 border border-stone-200/80 space-y-3">
+              <div className="p-3.5 rounded-none bg-stone-50/70 border border-stone-200/80 space-y-3">
                 <p className="font-kantumruy text-xs font-bold text-stone-800 flex items-center gap-1.5 select-text">
                   <Users className="w-3.5 h-3.5 text-rose-600" />
                   <span>មាតាបិតាខាងកូនស្រី</span>
@@ -757,7 +774,7 @@ export function TemplateCustomizerPage() {
                       value={formData.brideFather}
                       onChange={(e) => setFormData({ ...formData, brideFather: e.target.value })}
                       placeholder="ឧ. លោក តែ គឹមសុង"
-                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                      className="w-full px-3 py-2 rounded-none border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                     />
                   </div>
                   <div>
@@ -767,7 +784,7 @@ export function TemplateCustomizerPage() {
                       value={formData.brideMother}
                       onChange={(e) => setFormData({ ...formData, brideMother: e.target.value })}
                       placeholder="ឧ. លោកស្រី លឹម គន្ធី"
-                      className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                      className="w-full px-3 py-2 rounded-none border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                     />
                   </div>
                 </div>
@@ -778,7 +795,7 @@ export function TemplateCustomizerPage() {
                     value={formData.brideResidence}
                     onChange={(e) => setFormData({ ...formData, brideResidence: e.target.value })}
                     placeholder="ឧ. រាជធានីភ្នំពេញ"
-                    className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3 py-2 rounded-none border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
               </div>
@@ -786,7 +803,7 @@ export function TemplateCustomizerPage() {
           </div>
 
           {/* 03. ប្រតិទិន & កាលបរិច្ឆេទ (Date & Calendar Picker) */}
-          <div className="rounded-2xl bg-white border border-stone-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
+          <div className="rounded-none bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 3.
@@ -806,7 +823,7 @@ export function TemplateCustomizerPage() {
                     type="date"
                     value={formData.weddingDateRaw}
                     onChange={handleDateChange}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all cursor-pointer select-text"
+                    className="w-full px-3.5 py-2.5 rounded-none border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all cursor-pointer select-text"
                   />
                 </div>
                 <div>
@@ -818,7 +835,7 @@ export function TemplateCustomizerPage() {
                     value={formData.ceremonyTime}
                     onChange={(e) => setFormData({ ...formData, ceremonyTime: e.target.value })}
                     placeholder="ឧ. ម៉ោង 05:00 ល្ងាច"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3.5 py-2.5 rounded-none border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
               </div>
@@ -826,7 +843,7 @@ export function TemplateCustomizerPage() {
           </div>
 
           {/* 04. កម្មពិធីសិរីសួស្ដី (Ceremony Schedule) */}
-          <div className="rounded-2xl bg-white border border-stone-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
+          <div className="rounded-none bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 4.
@@ -838,10 +855,10 @@ export function TemplateCustomizerPage() {
 
             <div className="space-y-3">
               {formData.programs.map((item, idx) => (
-                <div key={idx} className="p-3.5 rounded-xl bg-stone-50/70 border border-stone-200/80 relative group hover:border-amber-300 transition-all">
+                <div key={idx} className="p-3.5 rounded-none bg-stone-50/70 border border-stone-200/80 relative group hover:border-amber-300 transition-all">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <span className="w-6 h-6 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 text-white font-mono text-xs font-bold flex items-center justify-center shadow-2xs">
+                      <span className="w-6 h-6 rounded-none bg-gradient-to-br from-amber-600 to-amber-700 text-white font-mono text-xs font-bold flex items-center justify-center ">
                         {idx + 1}
                       </span>
                       <input
@@ -849,12 +866,12 @@ export function TemplateCustomizerPage() {
                         value={item.time}
                         onChange={(e) => handleProgramChange(idx, 'time', e.target.value)}
                         placeholder="ម៉ោង..."
-                        className="px-2.5 py-1 rounded-lg bg-white border border-stone-200 font-kantumruy text-xs font-bold text-amber-900 w-32 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
+                        className="px-2.5 py-1 rounded-none bg-white border border-stone-200 font-kantumruy text-xs font-bold text-amber-900 w-32 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
                       />
                     </div>
                     <button
                       onClick={() => removeProgramMilestone(idx)}
-                      className="text-stone-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition cursor-pointer"
+                      className="text-stone-400 hover:text-red-600 p-1.5 rounded-none hover:bg-red-50 transition cursor-pointer"
                       title="លុបកម្មវិធីនេះ"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -866,21 +883,21 @@ export function TemplateCustomizerPage() {
                     value={item.title}
                     onChange={(e) => handleProgramChange(idx, 'title', e.target.value)}
                     placeholder="ចំណងជើងពិធី..."
-                    className="w-full px-3 py-1.5 rounded-lg bg-white border border-stone-200 font-kantumruy text-xs font-bold text-stone-800 mb-1.5 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
+                    className="w-full px-3 py-1.5 rounded-none bg-white border border-stone-200 font-kantumruy text-xs font-bold text-stone-800 mb-1.5 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
                   />
                   <textarea
                     rows={2}
                     value={item.desc}
                     onChange={(e) => handleProgramChange(idx, 'desc', e.target.value)}
                     placeholder="ការរៀបរាប់សង្ខេប..."
-                    className="w-full px-3 py-1.5 rounded-lg bg-white border border-stone-200 font-kantumruy text-[11px] text-stone-600 resize-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
+                    className="w-full px-3 py-1.5 rounded-none bg-white border border-stone-200 font-kantumruy text-[11px] text-stone-600 resize-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
                   />
                 </div>
               ))}
 
               <button
                 onClick={addProgramMilestone}
-                className="w-full py-2.5 rounded-xl border-2 border-dashed border-stone-300 hover:border-amber-500 text-amber-800 font-kantumruy text-xs font-bold flex items-center justify-center gap-1.5 bg-stone-50/50 hover:bg-amber-50/40 transition cursor-pointer"
+                className="w-full py-2.5 rounded-none border-2 border-dashed border-stone-300 hover:border-amber-500 text-amber-800 font-kantumruy text-xs font-bold flex items-center justify-center gap-1.5 bg-stone-50/50 hover:bg-amber-50/40 transition cursor-pointer"
               >
                 <Plus className="w-4 h-4 text-amber-600" />
                 <span>បន្ថែមកម្មវិធីពិធីការថ្មី</span>
@@ -889,7 +906,7 @@ export function TemplateCustomizerPage() {
           </div>
 
           {/* 05. ទីតាំងពិធី (Venue & Location) */}
-          <div className="rounded-2xl bg-white border border-stone-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
+          <div className="rounded-none bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 5.
@@ -909,7 +926,7 @@ export function TemplateCustomizerPage() {
                   value={formData.locationName}
                   onChange={(e) => setFormData({ ...formData, locationName: e.target.value })}
                   placeholder="ឧ. សណ្ឋាគារ រ៉ូសវូដ ភ្នំពេញ (Grand Ballroom)"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                  className="w-full px-3.5 py-2.5 rounded-none border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                 />
               </div>
 
@@ -922,7 +939,7 @@ export function TemplateCustomizerPage() {
                   value={formData.locationAddress}
                   onChange={(e) => setFormData({ ...formData, locationAddress: e.target.value })}
                   placeholder="ឧ. អគារ វឌ្ឍនៈ កាពីតាល់ មហាវិថីព្រះមុនីវង្ស សង្កាត់វត្តភ្នំ រាជធានីភ្នំពេញ"
-                  className="w-full px-3.5 py-2 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all resize-none select-text"
+                  className="w-full px-3.5 py-2 rounded-none border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all resize-none select-text"
                 />
               </div>
 
@@ -935,14 +952,14 @@ export function TemplateCustomizerPage() {
                   value={formData.googleMapsUrl}
                   onChange={(e) => setFormData({ ...formData, googleMapsUrl: e.target.value })}
                   placeholder="https://maps.google.com/..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                  className="w-full px-3.5 py-2.5 rounded-none border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                 />
               </div>
             </div>
           </div>
 
           {/* 06. រូបថតអនុស្សារីយ៍ (Pre-wedding Gallery - max 12 pics) */}
-          <div className="rounded-2xl bg-white border border-stone-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
+          <div className="rounded-none bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 6.
@@ -955,7 +972,7 @@ export function TemplateCustomizerPage() {
             <div className="space-y-3.5">
               <div className="flex items-center justify-between">
                 <span className="font-kantumruy text-xs font-semibold text-stone-700 select-text">រូបថតក្នុង Gallery</span>
-                <span className="font-mono text-[11px] font-semibold text-indigo-900 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200/80 shadow-2xs">
+                <span className="font-mono text-[11px] font-semibold text-indigo-900 bg-indigo-50 px-2.5 py-0.5 rounded-none border border-indigo-200/80 ">
                   {Math.min(12, formData.galleryPhotos.length)} / 12 Photos
                 </span>
               </div>
@@ -965,12 +982,12 @@ export function TemplateCustomizerPage() {
                 {formData.galleryPhotos.slice(0, 12).map((photo, idx) => (
                   <div
                     key={photo.id || idx}
-                    className="group relative aspect-square rounded-xl overflow-hidden border border-stone-200 bg-stone-100 shadow-2xs"
+                    className="group relative aspect-square rounded-none overflow-hidden border border-stone-200 bg-stone-100 "
                   >
                     <img src={photo.src} alt="Gallery" className="w-full h-full object-cover" decoding="async" loading="lazy" />
                     <button
                       onClick={() => removeGalleryPhoto(photo.id)}
-                      className="absolute top-1 right-1 p-1 rounded-full bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 cursor-pointer"
+                      className="absolute top-1 right-1 p-1 rounded-none bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 cursor-pointer"
                       title="លុប"
                     >
                       <Trash2 className="w-2.5 h-2.5" />
@@ -981,7 +998,7 @@ export function TemplateCustomizerPage() {
 
               {/* Upload Button */}
               {formData.galleryPhotos.length < 12 && (
-                <label className="flex flex-col items-center justify-center p-3.5 border-2 border-dashed border-indigo-300 hover:border-indigo-500 rounded-xl bg-indigo-50/40 hover:bg-indigo-50 text-center cursor-pointer transition select-none">
+                <label className="flex flex-col items-center justify-center p-3.5 border-2 border-dashed border-indigo-300 hover:border-indigo-500 rounded-none bg-indigo-50/40 hover:bg-indigo-50 text-center cursor-pointer transition select-none">
                   <Upload className="w-5 h-5 text-indigo-600 mb-1" />
                   <span className="font-kantumruy text-xs font-bold text-indigo-900">
                     បញ្ចូលរូបថតអនុស្សារីយ៍បន្ថែម (ជ្រើសរើសបានច្រើនសន្លឹក)
@@ -1000,7 +1017,7 @@ export function TemplateCustomizerPage() {
           </div>
 
           {/* 07. ជូនចំណងដៃ (Bank QR Upload) */}
-          <div className="rounded-2xl bg-white border border-stone-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
+          <div className="bg-white border border-stone-200 hover:border-amber-300 transition-all p-4 sm:p-5 space-y-4 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 7.
@@ -1019,7 +1036,7 @@ export function TemplateCustomizerPage() {
                   <select
                     value={formData.bankName}
                     onChange={(e) => setFormData({ ...formData, bankName: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3.5 py-2.5 border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-1 focus:ring-amber-500 focus:border-amber-500 focus:outline-none transition-all select-text"
                   >
                     <option value="ABA Bank">ABA Bank</option>
                     <option value="ACLEDA Bank">ACLEDA Bank</option>
@@ -1037,7 +1054,7 @@ export function TemplateCustomizerPage() {
                     value={formData.accountNumber}
                     onChange={(e) => setFormData({ ...formData, accountNumber: e.target.value })}
                     placeholder="000 987 654"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3.5 py-2.5 border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-1 focus:ring-amber-500 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
               </div>
@@ -1051,14 +1068,50 @@ export function TemplateCustomizerPage() {
                   value={formData.accountName}
                   onChange={(e) => setFormData({ ...formData, accountName: e.target.value })}
                   placeholder="CHAN RITHISAK & TEA PICHCHINDA"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                  className="w-full px-3.5 py-2.5 border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-1 focus:ring-amber-500 focus:border-amber-500 focus:outline-none transition-all select-text"
                 />
+              </div>
+
+              {/* Proper QR Code Upload Button & Preview */}
+              <div className="pt-2 border-t border-stone-100 space-y-2">
+                <label className="block font-kantumruy text-xs font-semibold text-stone-700 select-text">
+                  រូបភាព QR Code ធនាគារ (KHQR Code)
+                </label>
+                <div className="flex items-center gap-3">
+                  {formData.qrCodeImage && (
+                    <div className="relative w-24 h-24 border-2 border-amber-500 overflow-hidden bg-white p-1 shrink-0">
+                      <img src={formData.qrCodeImage} alt="QR Code" className="w-full h-full object-contain" />
+                      <button
+                        type="button"
+                        onClick={() => setFormData((prev) => ({ ...prev, qrCodeImage: '' }))}
+                        className="absolute top-0.5 right-0.5 p-0.5 bg-red-600 text-white hover:bg-red-700 cursor-pointer"
+                        title="លុប QR Code"
+                      >
+                        <Trash2 className="w-2.5 h-2.5" />
+                      </button>
+                    </div>
+                  )}
+
+                  <label className="flex-1 flex flex-col items-center justify-center p-3 border-2 border-dashed border-amber-300 hover:border-amber-500 bg-amber-50/40 hover:bg-amber-50 text-center cursor-pointer transition select-none">
+                    <Upload className="w-5 h-5 text-amber-700 mb-1" />
+                    <span className="font-kantumruy text-xs font-bold text-amber-950">
+                      {formData.qrCodeImage ? 'ប្ដូររូបភាព QR Code ថ្មី' : 'បញ្ចូលរូបភាព QR Code'}
+                    </span>
+                    <span className="font-mono text-[10px] text-stone-500 mt-0.5">JPG, PNG, WebP (KHQR)</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleQrUpload}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
               </div>
             </div>
           </div>
 
           {/* 08. លេខទូរស័ព្ទនិងតេលេក្រាមម្ចាស់កម្មវិធី */}
-          <div className="rounded-2xl bg-white border border-stone-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 mb-6 select-text">
+          <div className="rounded-none bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 mb-6 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 8.
@@ -1080,7 +1133,7 @@ export function TemplateCustomizerPage() {
                     value={formData.phoneGroom}
                     onChange={(e) => setFormData({ ...formData, phoneGroom: e.target.value })}
                     placeholder="012 345 678"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3.5 py-2.5 rounded-none border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
                 <div>
@@ -1093,7 +1146,7 @@ export function TemplateCustomizerPage() {
                     value={formData.phoneBride}
                     onChange={(e) => setFormData({ ...formData, phoneBride: e.target.value })}
                     placeholder="098 765 432"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                    className="w-full px-3.5 py-2.5 rounded-none border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
               </div>
@@ -1108,7 +1161,7 @@ export function TemplateCustomizerPage() {
                   value={formData.telegramLink}
                   onChange={(e) => setFormData({ ...formData, telegramLink: e.target.value })}
                   placeholder="https://t.me/username ឬ @username"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
+                  className="w-full px-3.5 py-2.5 rounded-none border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                 />
               </div>
             </div>
