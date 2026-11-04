@@ -632,11 +632,13 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
     <div className={`w-full h-screen h-[100dvh] ${currentBg.bgClass} ${currentBg.textColor} relative selection:bg-rose-900 selection:text-white flex flex-col p-0 overflow-hidden`}>
 
       {/* Modern Khmer Flowers & Royal Hearts Background with Smooth Floating Animations (Outside the Modal/Card) */}
-      <KhmerFloatingBackground count={26} />
+      <div className="hidden sm:block">
+        <KhmerFloatingBackground count={26} />
+      </div>
 
       {/* Decorative Subtle Ambient Stage Lighting matching the template's color identity */}
-      <div className={`fixed -top-16 -left-16 w-80 h-80 rounded-full blur-3xl pointer-events-none select-none z-0 ${currentBg.glowTop}`} />
-      <div className={`fixed -bottom-16 -right-16 w-80 h-80 rounded-full blur-3xl pointer-events-none select-none z-0 ${currentBg.glowBottom}`} />
+      <div className={`hidden sm:block fixed -top-16 -left-16 w-80 h-80 rounded-full blur-3xl pointer-events-none select-none z-0 ${currentBg.glowTop}`} />
+      <div className={`hidden sm:block fixed -bottom-16 -right-16 w-80 h-80 rounded-full blur-3xl pointer-events-none select-none z-0 ${currentBg.glowBottom}`} />
 
       {/* Floating Audio Play/Pause Button - ONLY for fallback templates that do not have their own isolated audio */}
       {!TraditionalComponent && (

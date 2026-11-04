@@ -1663,3 +1663,20 @@ button:active:not(:disabled) {
   contain-intrinsic-size: auto 400px;
   contain: layout paint style;
 }
+
+/* Mobile GPU Thermal Optimization: Disabling heavy backdrop blur shaders on mobile viewports */
+@media (max-width: 768px) {
+  .backdrop-blur,
+  .backdrop-blur-none,
+  .backdrop-blur-xs,
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl,
+  .backdrop-blur-3xl,
+  [class*="backdrop-blur"] {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
