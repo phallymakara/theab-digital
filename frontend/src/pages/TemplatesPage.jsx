@@ -1,5 +1,3 @@
-// Lazy load detail/preview page chunk on-demand
-const TemplateDetailPage = React.lazy(() => import('./TemplateDetailPage').then(m => ({ default: m.TemplateDetailPage || m.default })));
 import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
@@ -42,11 +40,12 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
 
   const activeCategory = selectedCategory || 'all';
   const setActiveCategory = setSelectedCategory;
-  const [previewTemplate, setPreviewTemplate] = useState(null);
   const categoryScrollRef = useRef(null);
 
   const openPreview = (tpl) => {
-    setPreviewTemplate(tpl);
+    const ceremony = ceremonyType || 'wedding';
+    const targetPath = isGuest ? `/guest/${ceremony}/${tpl.id}` : `/${ceremony}/${tpl.id}`;
+    navigate({ to: targetPath });
   };
 
   const scrollCategories = (direction) => {
@@ -888,38 +887,6 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
         </div>
       </main>
 
-      {/* Live Full Preview Modal - Direct Live Template View */}
-      {previewTemplate && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-0 bg-black/85 backdrop-blur-md animate-fade overflow-hidden"
-          onClick={() => setPreviewTemplate(null)}
-        >
-          {/* Modern Khmer Flowers & Hearts Floating Smoothly Outside the Modal Frame */}
-          <KhmerFloatingBackground count={16} />
-
-          {/* Floating Close Button */}
-          <button
-            onClick={() => setPreviewTemplate(null)}
-            className="fixed top-3 right-3 sm:top-5 sm:right-5 z-50 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/70 hover:bg-black/90 text-white backdrop-blur-md border border-white/20 shadow-xl flex items-center justify-center cursor-pointer transition-all active:scale-95 group"
-            title="បិទផ្ទាំង"
-          >
-            <X className="w-5 h-5 text-stone-200 group-hover:text-white" />
-          </button>
-
-                    {/* Modal Container: Wraps entire height of the page */}
-          <div
-            className="relative w-full max-w-2xl h-screen h-[100dvh] shadow-2xl overflow-hidden bg-stone-950 border-x border-stone-800/80 flex flex-col animate-scaleUp z-10"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Direct Live Template View Component (Zero-latency, No Iframe, No 404) */}
-            <TemplateDetailPage
-              templateId={previewTemplate.id}
-              isModal={true}
-              onClose={() => setPreviewTemplate(null)}
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

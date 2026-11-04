@@ -181,11 +181,26 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
     setCurrentTheme
   } = useApp();
 
-  // Find matching template or fallback to royal-gold
-  const weddingTemplates = CEREMONY_DATA.wedding.templates || [];
+  // Detect ceremony type from URL
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+  const ceremonyType = pathname.includes('/engagement')
+    ? 'engagement'
+    : pathname.includes('/housewarming')
+    ? 'housewarming'
+    : 'wedding';
+
+  // Find matching template across all ceremonies by template id or name, or fallback to royal-gold
+  const allTemplates = [
+    ...(CEREMONY_DATA.wedding?.templates || []),
+    ...(CEREMONY_DATA.engagement?.templates || []),
+    ...(CEREMONY_DATA.housewarming?.templates || [])
+  ];
+  const decodedId = decodeURIComponent(templateId).toLowerCase().trim();
   const activeTemplate =
-    weddingTemplates.find((t) => t.id === templateId) ||
-    weddingTemplates[0];
+    allTemplates.find((t) => t.id.toLowerCase() === decodedId) ||
+    allTemplates.find((t) => t.name.toLowerCase() === decodedId) ||
+    allTemplates.find((t) => t.id === 'royal-gold') ||
+    allTemplates[0];
 
   // Check if this is the customized template (royal-gold) vs other standalone templates
   const isCustomized = activeTemplate.id === 'royal-gold';

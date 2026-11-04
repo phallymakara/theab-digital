@@ -108,6 +108,34 @@ const dashboardRoute = createRoute({
   component: DashboardPage,
 });
 
+// Route: /wedding/$templateId (Dedicated Wedding Template Route)
+const weddingTemplateRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/wedding/$templateId',
+  component: TemplateDetailPage,
+});
+
+// Route: /guest/wedding/$templateId (Dedicated Guest View Wedding Template Route)
+const guestWeddingTemplateRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/guest/wedding/$templateId',
+  component: TemplateDetailPage,
+});
+
+// Route: /engagement/$templateId
+const engagementTemplateRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/engagement/$templateId',
+  component: TemplateDetailPage,
+});
+
+// Route: /housewarming/$templateId
+const housewarmingTemplateRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/housewarming/$templateId',
+  component: TemplateDetailPage,
+});
+
 // Route: /$templateId/preview (Template Detail & Preview by Card ID)
 const templatePreviewRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -148,8 +176,12 @@ const routeTree = rootRoute.addChildren([
   indexRoute,
   weddingRoute,
   guestWeddingRoute,
+  weddingTemplateRoute,
+  guestWeddingTemplateRoute,
   engagementRoute,
+  engagementTemplateRoute,
   housewarmingRoute,
+  housewarmingTemplateRoute,
   invitationRoute,
   dashboardRoute,
   templatePreviewRoute,
