@@ -1,16 +1,19 @@
-from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException, status
+from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException, Request, status
 from typing import Optional
 
 from app.schemas.media import MediaUploadResponse
 from app.services.media_service import media_service
 from app.routers.deps import get_optional_current_user
 from app.models.user import User
+from app.core.limiter import limiter
 
 router = APIRouter(prefix="/media", tags=["Media"])
 
 
 @router.post("/upload", response_model=MediaUploadResponse, status_code=status.HTTP_201_CREATED)
+@limiter.limit("20/minute")
 def upload_media_file(
+    request: Request,
     file: UploadFile = File(...),
     category: str = Form("gallery"),
     current_user: Optional[User] = Depends(get_optional_current_user)
@@ -19,6 +22,7 @@ def upload_media_file(
     Upload and optimize media files:
     - Images: Automatically auto-orients, downscales to <=1920px (or 800px for avatar/KHQR), converts to WebP.
     - Music: Validates audio/mp3 format and streams inline.
+    - Rate limited to 20 uploads per minute per IP.
     """
     return media_service.upload(file=file, category=category)
 

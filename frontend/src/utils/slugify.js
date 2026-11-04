@@ -9,3 +9,4 @@ export function slugify(text) {
     .replace(/^-+|-+$/g, '');
   return cleaned || 'wedding';
 }
+

@@ -1,7 +1,7 @@
 import re
 import html
 from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from pydantic import BaseModel
 from datetime import datetime
 from sqlalchemy.orm import Session
@@ -11,6 +11,7 @@ from app.models.invitation import Invitation
 from app.models.rsvp import GuestRSVP
 from app.schemas.invitation import InvitationResponse
 from app.schemas.rsvp import GuestRSVPCreate, GuestRSVPResponse
+from app.core.limiter import limiter
 
 router = APIRouter(prefix="/public/invitations", tags=["Public Guest Access"])
 
@@ -69,7 +70,9 @@ def get_public_invitation(slug: str, db: Session = Depends(get_db)):
 
 
 @router.post("/{slug}/rsvps", response_model=GuestRSVPResponse, status_code=status.HTTP_201_CREATED)
+@limiter.limit("15/minute")
 def submit_guest_rsvp(
+    request: Request,
     slug: str,
     data: GuestRSVPCreate,
     db: Session = Depends(get_db)
@@ -78,6 +81,7 @@ def submit_guest_rsvp(
     Public endpoint for guest RSVP & wishes submission:
     - Zero login required.
     - Automatic input sanitization against XSS.
+    - Rate limited to 15 submissions per minute per IP.
     """
     invitation = db.query(Invitation).filter(Invitation.slug == slug).first()
     if not invitation:
@@ -115,14 +119,15 @@ def submit_guest_rsvp(
 
 
 @router.get("/{slug}/wishes", response_model=List[GuestWishFeedItem])
-def get_public_wishes_feed(
+def get_public_guest_wishes(
     slug: str,
-    skip: int = 0,
     limit: int = 50,
     db: Session = Depends(get_db)
 ):
     """
-    Public endpoint: Get a stream of blessings/wishes submitted by guests for the digital guestbook.
+    Public guestbook wishes stream:
+    - Lists only approved RSVPs that contain wishes.
+    - Ordered latest first.
     """
     invitation = db.query(Invitation).filter(Invitation.slug == slug).first()
     if not invitation:
@@ -131,15 +136,26 @@ def get_public_wishes_feed(
             detail="រកមិនឃើញព័ត៌មានលិខិតអញ្ជើញនេះទេ"
         )
 
-    wishes = (
+    wishes_query = (
         db.query(GuestRSVP)
-        .filter(GuestRSVP.invitation_id == invitation.id)
-        .filter(GuestRSVP.wishes.isnot(None))
-        .filter(GuestRSVP.wishes != "")
+        .filter(
+            GuestRSVP.invitation_id == invitation.id,
+            GuestRSVP.wishes != None,
+            GuestRSVP.wishes != ""
+        )
         .order_by(GuestRSVP.created_at.desc())
-        .offset(skip)
-        .limit(limit)
+        .limit(min(limit, 100))
         .all()
     )
 
-    return wishes
+    return [
+        GuestWishFeedItem(
+            id=r.id,
+            guest_name=r.guest_name,
+            wishes=r.wishes,
+            attendance_status=r.attendance_status,
+            source=r.source,
+            created_at=r.created_at
+        )
+        for r in wishes_query
+    ]

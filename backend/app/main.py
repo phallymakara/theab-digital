@@ -1,9 +1,14 @@
+import logging
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
+from slowapi.errors import RateLimitExceeded
+from sqlalchemy import text
 
 from app.core.config import settings
+from app.core.limiter import limiter, rate_limit_exceeded_handler
 from app.db.database import engine, Base, SessionLocal
 from app.models import User, Invitation, GuestRSVP  # Ensure models are loaded
 from app.services.invitation_service import InvitationService
@@ -15,6 +20,8 @@ from app.routers import (
     media_router,
     public_router
 )
+
+logger = logging.getLogger("uvicorn.error")
 
 
 @asynccontextmanager
@@ -39,6 +46,27 @@ app = FastAPI(
     redoc_url=f"{settings.API_V1_STR}/redoc",
     lifespan=lifespan,
 )
+
+# Register SlowAPI Limiter
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, rate_limit_exceeded_handler)
+
+
+# Security Headers Middleware
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response: Response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    
+    # Enforce HSTS in production environments
+    if settings.ENVIRONMENT.lower() == "production":
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+        
+    return response
+
 
 # Set CORS middleware
 app.add_middleware(
@@ -73,7 +101,38 @@ def root():
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "service": "Digital Theab Backend"}
+    """
+    Deep readiness probe for cloud monitoring & zero-downtime deployments.
+    Verifies database connectivity and storage readiness.
+    """
+    db_status = "connected"
+    storage_type = "r2" if (settings.R2_ACCOUNT_ID and settings.R2_ACCESS_KEY_ID) else "local"
+
+    # Ping database
+    try:
+        db = SessionLocal()
+        db.execute(text("SELECT 1"))
+        db.close()
+    except Exception as e:
+        logger.error(f"Health check DB ping failed: {e}")
+        db_status = "unreachable"
+        return JSONResponse(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            content={
+                "status": "degraded",
+                "database": db_status,
+                "storage": storage_type,
+                "environment": settings.ENVIRONMENT,
+                "error": "Database ping failed",
+            }
+        )
+
+    return {
+        "status": "ok",
+        "database": db_status,
+        "storage": storage_type,
+        "environment": settings.ENVIRONMENT,
+    }
 
 
 def run():

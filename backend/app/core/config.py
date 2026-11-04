@@ -1,5 +1,6 @@
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Union
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent.parent
@@ -12,6 +13,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "Digital Theab API (ប្រព័ន្ធធៀបឌីជីថល)"
     API_V1_STR: str = "/api/v1"
     DATABASE_URL: str = DEFAULT_DB_URL
+    ENVIRONMENT: str = "development"  # "development", "staging", "production"
     
     # JWT Security
     SECRET_KEY: str = "digital-theab-khmer-invitation-super-secret-key-2026"
@@ -30,7 +32,7 @@ class Settings(BaseSettings):
     MAX_IMAGE_SIZE_BYTES: int = 15 * 1024 * 1024  # 15 MB
     MAX_AUDIO_SIZE_BYTES: int = 15 * 1024 * 1024  # 15 MB
 
-    CORS_ORIGINS: List[str] = [
+    CORS_ORIGINS: Union[List[str], str] = [
         "http://localhost:5173",
         "http://127.0.0.1:5173",
         "http://localhost:5174",
@@ -40,6 +42,22 @@ class Settings(BaseSettings):
         "https://theab-digital.vercel.app",
         "*",
     ]
+
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def normalize_db_url(cls, v: str) -> str:
+        """Normalize legacy postgres:// to modern postgresql:// required by SQLAlchemy."""
+        if isinstance(v, str) and v.startswith("postgres://"):
+            return v.replace("postgres://", "postgresql://", 1)
+        return v
+
+    @field_validator("CORS_ORIGINS", mode="before")
+    @classmethod
+    def parse_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
+        """Support comma-separated CORS origins string from environment variables."""
+        if isinstance(v, str):
+            return [origin.strip() for origin in v.split(",") if origin.strip()]
+        return v
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore", case_sensitive=True)
 

@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: theab-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: theab_user
+      POSTGRES_PASSWORD: theab_secret_password
+      POSTGRES_DB: theab_digital
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U theab_user -d theab_digital"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: theab-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://theab_user:theab_secret_password@db:5432/theab_digital
+      SECRET_KEY: dev-super-secret-jwt-key-change-in-production
+      ENVIRONMENT: development
+      PORT: 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - backend_uploads:/app/uploads
+
+volumes:
+  postgres_data:
+  backend_uploads:
