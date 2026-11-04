@@ -1,13 +1,18 @@
 import math
+from typing import Optional
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from app.models.invitation import Invitation
 from app.models.rsvp import GuestRSVP
 from app.schemas.stats import DashboardStatsResponse
 
 
 class StatsService:
     @staticmethod
-    def get_dashboard_stats(db: Session, invitation_id: int) -> DashboardStatsResponse:
+    def get_dashboard_stats(db: Session, invitation_id: int) -> Optional[DashboardStatsResponse]:
+        invitation = db.query(Invitation).filter(Invitation.id == invitation_id).first()
+        if not invitation:
+            return None
+
         rsvps = db.query(GuestRSVP).filter(GuestRSVP.invitation_id == invitation_id).all()
 
         total_responses = len(rsvps)
@@ -22,6 +27,7 @@ class StatsService:
 
         return DashboardStatsResponse(
             invitation_id=invitation_id,
+            views_count=invitation.views_count or 0,
             total_responses=total_responses,
             total_attending_guests=total_attending_guests,
             attending_parties=attending_parties,

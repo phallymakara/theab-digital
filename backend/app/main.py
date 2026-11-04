@@ -12,7 +12,8 @@ from app.routers import (
     invitations_router,
     rsvps_router,
     stats_router,
-    media_router
+    media_router,
+    public_router
 )
 
 
@@ -49,6 +50,7 @@ app.add_middleware(
 )
 
 # Include Routers
+app.include_router(public_router, prefix=settings.API_V1_STR)
 app.include_router(auth_router, prefix=settings.API_V1_STR)
 app.include_router(invitations_router, prefix=settings.API_V1_STR)
 app.include_router(rsvps_router, prefix=settings.API_V1_STR)
