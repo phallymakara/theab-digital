@@ -680,8 +680,7 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-md border border-white/25 shadow-lg text-xs font-bold transition-all cursor-pointer active:scale-95"
             >
               <ArrowLeft className="w-4 h-4 text-amber-300 shrink-0" />
-              <span className="hidden sm:inline">ថយក្រោយ</span>
-              <span className="sm:hidden text-[11px]">ថយ</span>
+              <span>ថយក្រោយ</span>
             </button>
           </div>
 
