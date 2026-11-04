@@ -559,7 +559,7 @@ export function TemplateCustomizerPage() {
         >
 
           {/* 01. ឈ្មោះកូនកំលោះនិងកូនក្រមុំ & Hero Images (Max 5) */}
-          <div className="rounded-none bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
+          <div className="rounded-2xl bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 1.
@@ -605,7 +605,7 @@ export function TemplateCustomizerPage() {
                     <span>រូបភាព Hero (អតិបរមា 5 សន្លឹក)</span>
                   </label>
                   {formData.heroImages.length < 5 && (
-                    <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-none bg-amber-50 hover:bg-amber-100/80 text-amber-900 border border-amber-300/80 font-kantumruy text-xs font-bold transition  cursor-pointer active:scale-95 select-none">
+                    <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100/80 text-amber-900 border border-amber-300/80 font-kantumruy text-xs font-bold transition  cursor-pointer active:scale-95 select-none">
                       <Plus className="w-3.5 h-3.5 text-amber-600" />
                       <span>បន្ថែមរូបភាព Hero</span>
                       <input
@@ -651,7 +651,7 @@ export function TemplateCustomizerPage() {
                   })}
 
                   {formData.heroImages.length < 5 && (
-                    <label className="group relative aspect-[3/4] rounded-none border-2 border-dashed border-amber-400 hover:border-amber-600 bg-amber-50/50 hover:bg-amber-100/60 flex flex-col items-center justify-center cursor-pointer transition-all text-center p-1">
+                    <label className="group relative aspect-[3/4] rounded-xl border-2 border-dashed border-amber-400 hover:border-amber-600 bg-amber-50/50 hover:bg-amber-100/60 flex flex-col items-center justify-center cursor-pointer transition-all text-center p-1">
                       <Upload className="w-5 h-5 text-amber-700 mb-1 group-hover:scale-110 transition-transform" />
                       <span className="text-[10px] font-bold text-amber-950 leading-tight">បញ្ចូលរូប</span>
                       <span className="text-[9px] text-amber-700 font-mono">Hero</span>
@@ -675,7 +675,7 @@ export function TemplateCustomizerPage() {
                     <span>ផ្ទៃខាងក្រោយ</span>
                   </label>
 
-                  <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-none bg-amber-500 hover:bg-amber-600 text-white font-kantumruy text-xs font-bold transition  cursor-pointer active:scale-95 select-none">
+                  <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-kantumruy text-xs font-bold transition  cursor-pointer active:scale-95 select-none">
                     <Plus className="w-3.5 h-3.5" />
                     <span>រូបភាពផ្ទៃខាងក្រោយ (Background)</span>
                     <input
@@ -697,7 +697,7 @@ export function TemplateCustomizerPage() {
                     <button
                       type="button"
                       onClick={() => setFormData((prev) => ({ ...prev, bgImage: '' }))}
-                      className="absolute top-1 right-1 p-1 rounded-none bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 cursor-pointer"
+                      className="absolute top-1 right-1 p-1 rounded-full bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 cursor-pointer"
                       title="លុបផ្ទៃខាងក្រោយ"
                     >
                       <Trash2 className="w-2.5 h-2.5" />
@@ -709,7 +709,7 @@ export function TemplateCustomizerPage() {
           </div>
 
           {/* 02. ឪពុកម្ដាយកូនកំលោះ & ឪពុកម្ដាយកូនក្រមុំ */}
-          <div className="rounded-none bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
+          <div className="rounded-2xl bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 2.
@@ -803,7 +803,7 @@ export function TemplateCustomizerPage() {
           </div>
 
           {/* 03. ប្រតិទិន & កាលបរិច្ឆេទ (Date & Calendar Picker) */}
-          <div className="rounded-none bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
+          <div className="rounded-2xl bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 3.
@@ -843,7 +843,7 @@ export function TemplateCustomizerPage() {
           </div>
 
           {/* 04. កម្មពិធីសិរីសួស្ដី (Ceremony Schedule) */}
-          <div className="rounded-none bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
+          <div className="rounded-2xl bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 4.
@@ -858,7 +858,7 @@ export function TemplateCustomizerPage() {
                 <div key={idx} className="p-3.5 rounded-xl bg-stone-50/70 border border-stone-200/80 relative group hover:border-amber-300 transition-all">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <span className="w-6 h-6 rounded-none bg-gradient-to-br from-amber-600 to-amber-700 text-white font-mono text-xs font-bold flex items-center justify-center ">
+                      <span className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 text-white font-mono text-xs font-bold flex items-center justify-center ">
                         {idx + 1}
                       </span>
                       <input
@@ -866,12 +866,12 @@ export function TemplateCustomizerPage() {
                         value={item.time}
                         onChange={(e) => handleProgramChange(idx, 'time', e.target.value)}
                         placeholder="ម៉ោង..."
-                        className="px-2.5 py-1 rounded-none bg-white border border-stone-200 font-kantumruy text-xs font-bold text-amber-900 w-32 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
+                        className="px-2.5 py-1 rounded-xl bg-white border border-stone-200 font-kantumruy text-xs font-bold text-amber-900 w-32 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
                       />
                     </div>
                     <button
                       onClick={() => removeProgramMilestone(idx)}
-                      className="text-stone-400 hover:text-red-600 p-1.5 rounded-none hover:bg-red-50 transition cursor-pointer"
+                      className="text-stone-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition cursor-pointer"
                       title="លុបកម្មវិធីនេះ"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -883,14 +883,14 @@ export function TemplateCustomizerPage() {
                     value={item.title}
                     onChange={(e) => handleProgramChange(idx, 'title', e.target.value)}
                     placeholder="ចំណងជើងពិធី..."
-                    className="w-full px-3 py-1.5 rounded-none bg-white border border-stone-200 font-kantumruy text-xs font-bold text-stone-800 mb-1.5 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
+                    className="w-full px-3 py-1.5 rounded-xl bg-white border border-stone-200 font-kantumruy text-xs font-bold text-stone-800 mb-1.5 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
                   />
                   <textarea
                     rows={2}
                     value={item.desc}
                     onChange={(e) => handleProgramChange(idx, 'desc', e.target.value)}
                     placeholder="ការរៀបរាប់សង្ខេប..."
-                    className="w-full px-3 py-1.5 rounded-none bg-white border border-stone-200 font-kantumruy text-[11px] text-stone-600 resize-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
+                    className="w-full px-3 py-1.5 rounded-xl bg-white border border-stone-200 font-kantumruy text-[11px] text-stone-600 resize-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
                   />
                 </div>
               ))}
@@ -906,7 +906,7 @@ export function TemplateCustomizerPage() {
           </div>
 
           {/* 05. ទីតាំងពិធី (Venue & Location) */}
-          <div className="rounded-none bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
+          <div className="rounded-2xl bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 5.
@@ -959,7 +959,7 @@ export function TemplateCustomizerPage() {
           </div>
 
           {/* 06. រូបថតអនុស្សារីយ៍ (Pre-wedding Gallery - max 12 pics) */}
-          <div className="rounded-none bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
+          <div className="rounded-2xl bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 6.
@@ -972,7 +972,7 @@ export function TemplateCustomizerPage() {
             <div className="space-y-3.5">
               <div className="flex items-center justify-between">
                 <span className="font-kantumruy text-xs font-semibold text-stone-700 select-text">រូបថតក្នុង Gallery</span>
-                <span className="font-mono text-[11px] font-semibold text-indigo-900 bg-indigo-50 px-2.5 py-0.5 rounded-none border border-indigo-200/80 ">
+                <span className="font-mono text-[11px] font-semibold text-indigo-900 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200/80 ">
                   {Math.min(12, formData.galleryPhotos.length)} / 12 Photos
                 </span>
               </div>
@@ -987,7 +987,7 @@ export function TemplateCustomizerPage() {
                     <img src={photo.src} alt="Gallery" className="w-full h-full object-cover" decoding="async" loading="lazy" />
                     <button
                       onClick={() => removeGalleryPhoto(photo.id)}
-                      className="absolute top-1 right-1 p-1 rounded-none bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 cursor-pointer"
+                      className="absolute top-1 right-1 p-1 rounded-full bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:scale-110 cursor-pointer"
                       title="លុប"
                     >
                       <Trash2 className="w-2.5 h-2.5" />
@@ -998,7 +998,7 @@ export function TemplateCustomizerPage() {
 
               {/* Upload Button */}
               {formData.galleryPhotos.length < 12 && (
-                <label className="flex flex-col items-center justify-center p-3.5 border-2 border-dashed border-indigo-300 hover:border-indigo-500 rounded-none bg-indigo-50/40 hover:bg-indigo-50 text-center cursor-pointer transition select-none">
+                <label className="flex flex-col items-center justify-center p-3.5 border-2 border-dashed border-indigo-300 hover:border-indigo-500 rounded-xl bg-indigo-50/40 hover:bg-indigo-50 text-center cursor-pointer transition select-none">
                   <Upload className="w-5 h-5 text-indigo-600 mb-1" />
                   <span className="font-kantumruy text-xs font-bold text-indigo-900">
                     បញ្ចូលរូបថតអនុស្សារីយ៍បន្ថែម (ជ្រើសរើសបានច្រើនសន្លឹក)
@@ -1084,7 +1084,7 @@ export function TemplateCustomizerPage() {
                       <button
                         type="button"
                         onClick={() => setFormData((prev) => ({ ...prev, qrCodeImage: '' }))}
-                        className="absolute top-0.5 right-0.5 p-0.5 bg-red-600 text-white hover:bg-red-700 cursor-pointer"
+                        className="absolute top-0.5 right-0.5 p-0.5 rounded-full bg-red-600 text-white hover:bg-red-700 cursor-pointer"
                         title="លុប QR Code"
                       >
                         <Trash2 className="w-2.5 h-2.5" />
@@ -1092,7 +1092,7 @@ export function TemplateCustomizerPage() {
                     </div>
                   )}
 
-                  <label className="flex-1 flex flex-col items-center justify-center p-3 rounded-none border-2 border-dashed border-amber-300 hover:border-amber-500 bg-amber-50/40 hover:bg-amber-50 text-center cursor-pointer transition select-none">
+                  <label className="flex-1 flex flex-col items-center justify-center p-3 rounded-xl border-2 border-dashed border-amber-300 hover:border-amber-500 bg-amber-50/40 hover:bg-amber-50 text-center cursor-pointer transition select-none">
                     <Upload className="w-5 h-5 text-amber-700 mb-1" />
                     <span className="font-kantumruy text-xs font-bold text-amber-950">
                       {formData.qrCodeImage ? 'ប្ដូររូបភាព QR Code ថ្មី' : 'បញ្ចូលរូបភាព QR Code'}
@@ -1111,7 +1111,7 @@ export function TemplateCustomizerPage() {
           </div>
 
           {/* 08. លេខទូរស័ព្ទនិងតេលេក្រាមម្ចាស់កម្មវិធី */}
-          <div className="rounded-none bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 mb-6 select-text">
+          <div className="rounded-2xl bg-white border border-stone-200/90  hover:border-amber-200/90 transition-all p-4 sm:p-5 space-y-4 mb-6 select-text">
             <div className="pb-3 border-b border-stone-100 flex items-center gap-2">
               <span className="font-mono text-sm sm:text-base font-bold text-amber-700 shrink-0">
                 8.
@@ -1191,7 +1191,7 @@ export function TemplateCustomizerPage() {
             <div className="absolute inset-0 bg-stone-950/75 pointer-events-none" />
 
             {/* Computer Viewport: Centered and responsive for all screen sizes */}
-            <div className="w-full max-w-2xl h-full rounded-none border-x border-white/10 overflow-hidden relative flex flex-col shrink-0 mx-auto">
+            <div className="w-full max-w-2xl h-full border-x border-white/10 overflow-hidden relative flex flex-col shrink-0 mx-auto">
               {/* Template Main Background Pinned in Computer View */}
               <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700 pointer-events-none scale-105"
