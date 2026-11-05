@@ -9,13 +9,36 @@ import { Header } from './components/Header';
 import { ToastContainer } from './components/ToastContainer';
 import { QrModal } from './components/QrModal';
 
-// Route-Level Lazy Loading: Load each page on-demand only when requested by user
-const CeremonySelectionPage = React.lazy(() => import('./pages/CeremonySelectionPage').then(m => ({ default: m.CeremonySelectionPage })));
-const TemplatesPage = React.lazy(() => import('./pages/TemplatesPage').then(m => ({ default: m.TemplatesPage })));
-const InvitationPreviewPage = React.lazy(() => import('./pages/InvitationPreviewPage').then(m => ({ default: m.InvitationPreviewPage })));
-const DashboardPage = React.lazy(() => import('./pages/DashboardPage').then(m => ({ default: m.DashboardPage })));
-const TemplateDetailPage = React.lazy(() => import('./pages/TemplateDetailPage').then(m => ({ default: m.TemplateDetailPage })));
-const TemplateCustomizerPage = React.lazy(() => import('./pages/TemplateCustomizerPage').then(m => ({ default: m.TemplateCustomizerPage })));
+// Lazy load helper that self-heals when a new deployment updates chunk hashes
+function lazyWithRetry(importFn) {
+  return React.lazy(async () => {
+    try {
+      return await importFn();
+    } catch (error) {
+      const isChunkError =
+        error?.message?.includes('dynamically imported module') ||
+        error?.message?.includes('Failed to fetch') ||
+        error?.name === 'TypeError';
+
+      const hasReloaded = window.sessionStorage.getItem('vite-chunk-reload');
+      if (isChunkError && !hasReloaded) {
+        window.sessionStorage.setItem('vite-chunk-reload', 'true');
+        window.location.reload();
+        return new Promise(() => {});
+      }
+      window.sessionStorage.removeItem('vite-chunk-reload');
+      throw error;
+    }
+  });
+}
+
+// Route-Level Lazy Loading: Load each page on-demand with automatic reload protection
+const CeremonySelectionPage = lazyWithRetry(() => import('./pages/CeremonySelectionPage').then(m => ({ default: m.CeremonySelectionPage })));
+const TemplatesPage = lazyWithRetry(() => import('./pages/TemplatesPage').then(m => ({ default: m.TemplatesPage })));
+const InvitationPreviewPage = lazyWithRetry(() => import('./pages/InvitationPreviewPage').then(m => ({ default: m.InvitationPreviewPage })));
+const DashboardPage = lazyWithRetry(() => import('./pages/DashboardPage').then(m => ({ default: m.DashboardPage })));
+const TemplateDetailPage = lazyWithRetry(() => import('./pages/TemplateDetailPage').then(m => ({ default: m.TemplateDetailPage })));
+const TemplateCustomizerPage = lazyWithRetry(() => import('./pages/TemplateCustomizerPage').then(m => ({ default: m.TemplateCustomizerPage })));
 
 // Minimal luxury fallback during route transitions
 function RouteLoadingFallback() {
