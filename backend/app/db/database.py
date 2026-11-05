@@ -5,7 +5,12 @@ from app.core.config import settings
 # Configure engine with pooling and resilience
 engine_kwargs = {"echo": False}
 
-if "sqlite" in settings.DATABASE_URL:
+# Normalize URL for SQLAlchemy compatibility (handle postgres:// -> postgresql://)
+db_url = settings.DATABASE_URL
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+if "sqlite" in db_url:
     engine_kwargs["connect_args"] = {"check_same_thread": False}
 else:
     # PostgreSQL / Cloud DB connection resiliency
@@ -16,7 +21,7 @@ else:
         "max_overflow": 20,
     })
 
-engine = create_engine(settings.DATABASE_URL, **engine_kwargs)
+engine = create_engine(db_url, **engine_kwargs)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
