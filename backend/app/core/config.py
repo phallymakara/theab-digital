@@ -59,7 +59,11 @@ class Settings(BaseSettings):
             return [origin.strip() for origin in v.split(",") if origin.strip()]
         return v
 
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore", case_sensitive=True)
+    model_config = SettingsConfigDict(
+        env_file=BACKEND_DIR / ".env",
+        extra="ignore",
+        case_sensitive=True
+    )
 
 
 settings = Settings()
