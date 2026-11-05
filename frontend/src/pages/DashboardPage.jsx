@@ -15,7 +15,7 @@ import {
 
 export function DashboardPage() {
   const navigate = useNavigate();
-  const { invitationData, setIsQrModalOpen, addToast, ceremonyType, stopAudio } = useApp();
+  const { invitationData, setIsQrModalOpen, addToast, ceremonyType, stopAudio, selectedTemplate } = useApp();
 
   useEffect(() => {
     stopAudio?.();
@@ -108,8 +108,20 @@ export function DashboardPage() {
     addToast('បានលុបទិន្នន័យភ្ញៀវដោយជោគជ័យ', 'info');
   };
 
+  const getTargetTemplateId = () => {
+    return invitationData?.template_id || invitationData?.templateId || selectedTemplate?.id || 'romdoul-moonlight';
+  };
+
+  const handleViewTheab = () => {
+    const templateId = getTargetTemplateId();
+    const ceremony = ceremonyType || 'wedding';
+    navigate({ to: `/${ceremony}/${templateId}` });
+  };
+
   const handleCopyLink = () => {
-    const url = `${window.location.origin}/invitation/${invitationData.slug || 'vibol-sovanndy'}`;
+    const templateId = getTargetTemplateId();
+    const ceremony = ceremonyType || 'wedding';
+    const url = `${window.location.origin}/guest/${ceremony}/${templateId}`;
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true);
       addToast('បានចម្លង Link ធៀប!', 'success');
@@ -135,7 +147,7 @@ export function DashboardPage() {
 
         <div className="flex items-center gap-2">
           <button
-            onClick={() => navigate({ to: '/invitation' })}
+            onClick={handleViewTheab}
             className="btn-secondary !py-2 !px-3.5 text-xs flex items-center gap-1.5 cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-stone-600" />

@@ -117,11 +117,11 @@ const housewarmingRoute = createRoute({
   component: () => <TemplatesPage ceremonyType="housewarming" />,
 });
 
-// Route: /invitation (Live Theab & RSVP)
+// Route: /invitation (Direct to Luxury Template)
 const invitationRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/invitation',
-  component: InvitationPreviewPage,
+  component: TemplateDetailPage,
 });
 
 // Route: /dashboard (Guest RSVP Dashboard)

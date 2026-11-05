@@ -3,14 +3,15 @@ import { useApp } from '../context/AppContext';
 import { X, Copy, Download, Check } from 'lucide-react';
 
 export function QrModal() {
-  const { isQrModalOpen, setIsQrModalOpen, invitationData, addToast } = useApp();
+  const { isQrModalOpen, setIsQrModalOpen, invitationData, selectedTemplate, ceremonyType, addToast } = useApp();
   const [copied, setCopied] = useState(false);
 
   if (!isQrModalOpen) return null;
 
-  const slug = invitationData?.slug || 'vibol-sovanndy';
+  const templateId = invitationData?.template_id || invitationData?.templateId || selectedTemplate?.id || 'romdoul-moonlight';
+  const ceremony = ceremonyType || 'wedding';
+  const shareUrl = `${window.location.origin}/guest/${ceremony}/${templateId}`;
   const invitationId = invitationData?.id || 1;
-  const shareUrl = `${window.location.origin}/invitation/${slug}`;
   const qrSrc = `/api/v1/invitations/${invitationId}/qr`;
   const fallbackQr = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(shareUrl)}`;
 
