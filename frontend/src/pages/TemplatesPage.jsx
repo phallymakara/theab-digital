@@ -113,30 +113,6 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
     stopAudio?.();
   }, [ceremonyType]);
 
-  // Handle iframe message events (back/close or select) from the template preview inside modal
-  useEffect(() => {
-    const handleMessage = (e) => {
-      if (e.data?.type === 'CLOSE_PREVIEW_MODAL') {
-        setPreviewTemplate(null);
-      } else if (e.data?.type === 'SELECT_TEMPLATE') {
-        const targetId = e.data.templateId;
-        const t = templates.find((item) => item.id === targetId) || previewTemplate;
-        setPreviewTemplate(null);
-        if (t) {
-          handleSelectTemplate(t);
-        }
-      }
-    };
-    window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
-  }, [previewTemplate, templates]);
-
-  // When preview modal is open, stop parent audio so the template iframe plays its own soundtrack cleanly
-  useEffect(() => {
-    if (previewTemplate) {
-      stopAudio?.();
-    }
-  }, [previewTemplate]);
 
   const groomName = invitationData.groomName || ceremonyInfo.defaultGroom;
   const brideName = invitationData.brideName || ceremonyInfo.defaultBride;
