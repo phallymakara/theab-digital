@@ -2,7 +2,7 @@ import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from slowapi.errors import RateLimitExceeded
 from sqlalchemy import text
@@ -97,6 +97,21 @@ def root():
         "version": "1.0.0",
         "docs": f"{settings.API_V1_STR}/docs",
     }
+
+
+@app.get("/docs", include_in_schema=False)
+def redirect_to_docs():
+    return RedirectResponse(url=f"{settings.API_V1_STR}/docs")
+
+
+@app.get("/swagger", include_in_schema=False)
+def redirect_to_swagger():
+    return RedirectResponse(url=f"{settings.API_V1_STR}/docs")
+
+
+@app.get("/redoc", include_in_schema=False)
+def redirect_to_redoc():
+    return RedirectResponse(url=f"{settings.API_V1_STR}/redoc")
 
 
 @app.get("/health")
