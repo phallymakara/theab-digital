@@ -3,10 +3,6 @@ import { useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
 import { apiService } from '../services/apiService';
 import {
-  Users,
-  UserCheck,
-  UserX,
-  Utensils,
   Search,
   Plus,
   Trash2,
@@ -132,18 +128,9 @@ export function DashboardPage() {
       {/* Dashboard Top Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider">
-              Live Host Dashboard
-            </span>
-          </div>
           <h1 className="font-moul text-xl md:text-2xl text-rose-950">
             ផ្ទាំងគ្រប់គ្រងភ្ញៀវ និងស្ថិតិឆ្លើយតប
           </h1>
-          <p className="text-xs text-stone-500 mt-1">
-            តាមដានស្ថិតិភ្ញៀវចូលរួម គណនាចំនួនតុ និងគ្រប់គ្រងបញ្ជីឈ្មោះជាក់ស្តែង
-          </p>
         </div>
 
         <div className="flex items-center gap-2">
@@ -184,62 +171,42 @@ export function DashboardPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div
           style={{ animationDelay: '0ms' }}
-          className="animate-card-enter bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center gap-4 hover:-translate-y-1 hover:shadow-md transition-all duration-300"
+          className="animate-card-enter bg-white p-5 rounded-2xl border border-stone-200 hover:border-stone-300 transition-colors"
         >
-          <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-            <Users className="w-6 h-6" />
+          <div className="text-2xl font-bold font-moul text-stone-800">
+            {totalResponses}
           </div>
-          <div>
-            <div className="text-2xl font-bold font-moul text-stone-800">
-              {totalResponses}
-            </div>
-            <div className="text-xs text-stone-500 font-medium">ការឆ្លើយតបសរុប</div>
-          </div>
+          <div className="text-xs text-stone-500 font-medium mt-1">ការឆ្លើយតបសរុប</div>
         </div>
 
         <div
           style={{ animationDelay: '70ms' }}
-          className="animate-card-enter bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center gap-4 hover:-translate-y-1 hover:shadow-md transition-all duration-300"
+          className="animate-card-enter bg-white p-5 rounded-2xl border border-stone-200 hover:border-stone-300 transition-colors"
         >
-          <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-            <UserCheck className="w-6 h-6" />
+          <div className="text-2xl font-bold font-moul text-emerald-700">
+            {totalAttendingGuests}
           </div>
-          <div>
-            <div className="text-2xl font-bold font-moul text-emerald-700">
-              {totalAttendingGuests}
-            </div>
-            <div className="text-xs text-stone-500 font-medium">ភ្ញៀវចូលរួមជាក់ស្តែង (នាក់)</div>
-          </div>
+          <div className="text-xs text-stone-500 font-medium mt-1">ភ្ញៀវចូលរួមជាក់ស្តែង (នាក់)</div>
         </div>
 
         <div
           style={{ animationDelay: '140ms' }}
-          className="animate-card-enter bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center gap-4 hover:-translate-y-1 hover:shadow-md transition-all duration-300"
+          className="animate-card-enter bg-white p-5 rounded-2xl border border-stone-200 hover:border-stone-300 transition-colors"
         >
-          <div className="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
-            <UserX className="w-6 h-6" />
+          <div className="text-2xl font-bold font-moul text-rose-800">
+            {declinedParties}
           </div>
-          <div>
-            <div className="text-2xl font-bold font-moul text-rose-800">
-              {declinedParties}
-            </div>
-            <div className="text-xs text-stone-500 font-medium">មិនអាចចូលរួម (ភាគី)</div>
-          </div>
+          <div className="text-xs text-stone-500 font-medium mt-1">មិនអាចចូលរួម (ភាគី)</div>
         </div>
 
         <div
           style={{ animationDelay: '210ms' }}
-          className="animate-card-enter bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center gap-4 hover:-translate-y-1 hover:shadow-md transition-all duration-300"
+          className="animate-card-enter bg-white p-5 rounded-2xl border border-stone-200 hover:border-stone-300 transition-colors"
         >
-          <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-            <Utensils className="w-6 h-6" />
+          <div className="text-2xl font-bold font-moul text-blue-700">
+            ~{estimatedTables}
           </div>
-          <div>
-            <div className="text-2xl font-bold font-moul text-blue-700">
-              ~{estimatedTables}
-            </div>
-            <div className="text-xs text-stone-500 font-medium">តុប៉ាន់ស្មាន (១០នាក់/តុ)</div>
-          </div>
+          <div className="text-xs text-stone-500 font-medium mt-1">តុប៉ាន់ស្មាន (១០នាក់/តុ)</div>
         </div>
       </div>
 
