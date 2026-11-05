@@ -4,13 +4,11 @@ import { useApp } from '../context/AppContext';
 import { apiService } from '../services/apiService';
 import {
   Search,
-  Plus,
   Trash2,
   Copy,
   QrCode,
   ArrowLeft,
-  Check,
-  Sparkles
+  Check
 } from 'lucide-react';
 
 export function DashboardPage() {
@@ -64,7 +62,7 @@ export function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [copied, setCopied] = useState(false);
 
-  // Load from API if available
+  // Load from API if available with null-safe handling
   useEffect(() => {
     if (invitationData?.id) {
       apiService.getRSVPs(invitationData.id)
@@ -77,17 +75,18 @@ export function DashboardPage() {
     }
   }, [invitationData?.id]);
 
-  // Derived statistics
-  const totalResponses = rsvps.length;
-  const attendingParties = rsvps.filter((r) => r.attendance_status === 'attending').length;
-  const declinedParties = rsvps.filter((r) => r.attendance_status === 'declined').length;
-  const totalAttendingGuests = rsvps
-    .filter((r) => r.attendance_status === 'attending')
-    .reduce((sum, r) => sum + (Number(r.guest_count) || 1), 0);
+  // Derived statistics (null-safe)
+  const totalResponses = (rsvps || []).length;
+  const attendingParties = (rsvps || []).filter((r) => r?.attendance_status === 'attending').length;
+  const declinedParties = (rsvps || []).filter((r) => r?.attendance_status === 'declined').length;
+  const totalAttendingGuests = (rsvps || [])
+    .filter((r) => r?.attendance_status === 'attending')
+    .reduce((sum, r) => sum + (Number(r?.guest_count) || 1), 0);
   const estimatedTables = Math.ceil(totalAttendingGuests / 10);
 
-  // Filtered list
-  const filteredRsvps = rsvps.filter((r) => {
+  // Filtered list (null-safe)
+  const filteredRsvps = (rsvps || []).filter((r) => {
+    if (!r) return false;
     const matchesFilter =
       activeFilter === 'all'
         ? true
@@ -95,16 +94,18 @@ export function DashboardPage() {
         ? r.attendance_status === 'attending'
         : r.attendance_status === 'declined';
 
+    const guestName = (r.guest_name || '').toLowerCase();
+    const query = (searchQuery || '').toLowerCase().trim();
     const matchesSearch =
-      !searchQuery.trim() ||
-      r.guest_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (r.phone && r.phone.includes(searchQuery));
+      !query ||
+      guestName.includes(query) ||
+      (r.phone && String(r.phone).includes(query));
 
     return matchesFilter && matchesSearch;
   });
 
   const handleDelete = (id) => {
-    setRsvps((prev) => prev.filter((r) => r.id !== id));
+    setRsvps((prev) => (prev || []).filter((r) => r?.id !== id));
     addToast('បានលុបទិន្នន័យភ្ញៀវដោយជោគជ័យ', 'info');
   };
 
@@ -119,119 +120,155 @@ export function DashboardPage() {
   };
 
   const handleCopyLink = () => {
-    const templateId = getTargetTemplateId();
-    const ceremony = ceremonyType || 'wedding';
-    const url = `${window.location.origin}/guest/${ceremony}/${templateId}`;
-    navigator.clipboard.writeText(url).then(() => {
+    try {
+      const templateId = getTargetTemplateId();
+      const ceremony = ceremonyType || 'wedding';
+      const url = `${window.location.origin}/guest/${ceremony}/${templateId}`;
+      if (navigator?.clipboard?.writeText) {
+        navigator.clipboard.writeText(url)
+          .then(() => {
+            setCopied(true);
+            addToast('បានចម្លង Link ធៀប!', 'success');
+            setTimeout(() => setCopied(false), 2000);
+          })
+          .catch(() => fallbackCopy(url));
+      } else {
+        fallbackCopy(url);
+      }
+    } catch (_) {
+      addToast('មិនអាចចម្លង Link បានទេ', 'warning');
+    }
+  };
+
+  const fallbackCopy = (text) => {
+    try {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
       setCopied(true);
       addToast('បានចម្លង Link ធៀប!', 'success');
       setTimeout(() => setCopied(false), 2000);
-    });
-  };
-
-  const getCeremonyRoute = () => {
-    if (ceremonyType === 'engagement') return '/engagement';
-    if (ceremonyType === 'housewarming') return '/housewarming';
-    return '/wedding';
+    } catch (_) {
+      addToast('មិនអាចចម្លង Link បានទេ', 'warning');
+    }
   };
 
   return (
-    <section className="container-max py-6 md:py-8 animate-fade">
+    <section className="container-max py-4 sm:py-6 md:py-8 animate-fade">
       {/* Dashboard Top Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-6 sm:mb-8">
         <div>
-          <h1 className="font-moul text-xl md:text-2xl text-rose-950">
+          <h1 className="font-moul text-lg sm:text-xl md:text-2xl text-rose-950 leading-normal">
             ផ្ទាំងគ្រប់គ្រងភ្ញៀវ និងស្ថិតិឆ្លើយតប
           </h1>
+          <p className="text-xs text-stone-500 mt-0.5">
+            តាមដានវត្តមានភ្ញៀវ និងគណនាចំនួនតុជាក់ស្តែង
+          </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="grid grid-cols-3 sm:flex items-center gap-2 w-full sm:w-auto">
           <button
             onClick={handleViewTheab}
-            className="btn-secondary !py-2 !px-3.5 text-xs flex items-center gap-1.5 cursor-pointer"
+            className="btn-secondary !py-2 !px-2.5 sm:!px-3.5 text-xs flex items-center justify-center gap-1.5 cursor-pointer truncate"
+            title="មើលធៀបឌីជីថល"
           >
-            <ArrowLeft className="w-4 h-4 text-stone-600" />
-            <span>មើលធៀបឌីជីថល</span>
+            <ArrowLeft className="w-3.5 h-3.5 shrink-0 text-stone-600" />
+            <span className="truncate">មើលធៀប</span>
           </button>
           <button
             onClick={handleCopyLink}
-            className="btn-secondary !py-2 !px-3.5 text-xs flex items-center gap-1.5 text-rose-900 cursor-pointer"
+            className="btn-secondary !py-2 !px-2.5 sm:!px-3.5 text-xs flex items-center justify-center gap-1.5 text-rose-900 cursor-pointer truncate"
+            title="ចម្លង Link ធៀប"
           >
             {copied ? (
               <>
-                <Check className="w-4 h-4 text-emerald-600" />
-                <span className="text-emerald-700 font-bold">បានចម្លង!</span>
+                <Check className="w-3.5 h-3.5 shrink-0 text-emerald-600" />
+                <span className="text-emerald-700 font-bold truncate">បានចម្លង</span>
               </>
             ) : (
               <>
-                <Copy className="w-4 h-4" />
-                <span>ចម្លង Link ធៀប</span>
+                <Copy className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">ចម្លង Link</span>
               </>
             )}
           </button>
           <button
             onClick={() => setIsQrModalOpen(true)}
-            className="btn-primary !py-2 !px-3.5 text-xs flex items-center gap-1.5 text-white cursor-pointer"
+            className="btn-primary !py-2 !px-2.5 sm:!px-3.5 text-xs flex items-center justify-center gap-1.5 text-white cursor-pointer truncate"
+            title="QR Code"
           >
-            <QrCode className="w-4 h-4" />
-            <span>QR Code</span>
+            <QrCode className="w-3.5 h-3.5 shrink-0" />
+            <span className="truncate">QR Code</span>
           </button>
         </div>
       </div>
 
       {/* KPI Stats Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         <div
           style={{ animationDelay: '0ms' }}
-          className="animate-card-enter bg-white p-5 rounded-2xl border border-stone-200 hover:border-stone-300 transition-colors"
+          className="animate-card-enter bg-white p-3.5 sm:p-5 rounded-2xl border border-stone-200 transition-colors"
         >
-          <div className="text-2xl font-bold font-moul text-stone-800">
+          <div className="text-xl sm:text-2xl font-bold font-moul text-stone-800">
             {totalResponses}
           </div>
-          <div className="text-xs text-stone-500 font-medium mt-1">ការឆ្លើយតបសរុប</div>
+          <div className="text-[11px] sm:text-xs text-stone-500 font-medium mt-1 leading-snug">
+            ការឆ្លើយតបសរុប
+          </div>
         </div>
 
         <div
           style={{ animationDelay: '70ms' }}
-          className="animate-card-enter bg-white p-5 rounded-2xl border border-stone-200 hover:border-stone-300 transition-colors"
+          className="animate-card-enter bg-white p-3.5 sm:p-5 rounded-2xl border border-stone-200 transition-colors"
         >
-          <div className="text-2xl font-bold font-moul text-emerald-700">
+          <div className="text-xl sm:text-2xl font-bold font-moul text-emerald-700">
             {totalAttendingGuests}
           </div>
-          <div className="text-xs text-stone-500 font-medium mt-1">ភ្ញៀវចូលរួមជាក់ស្តែង (នាក់)</div>
+          <div className="text-[11px] sm:text-xs text-stone-500 font-medium mt-1 leading-snug">
+            ភ្ញៀវចូលរួមជាក់ស្តែង (នាក់)
+          </div>
         </div>
 
         <div
           style={{ animationDelay: '140ms' }}
-          className="animate-card-enter bg-white p-5 rounded-2xl border border-stone-200 hover:border-stone-300 transition-colors"
+          className="animate-card-enter bg-white p-3.5 sm:p-5 rounded-2xl border border-stone-200 transition-colors"
         >
-          <div className="text-2xl font-bold font-moul text-rose-800">
+          <div className="text-xl sm:text-2xl font-bold font-moul text-rose-800">
             {declinedParties}
           </div>
-          <div className="text-xs text-stone-500 font-medium mt-1">មិនអាចចូលរួម (ភាគី)</div>
+          <div className="text-[11px] sm:text-xs text-stone-500 font-medium mt-1 leading-snug">
+            មិនអាចចូលរួម (ភាគី)
+          </div>
         </div>
 
         <div
           style={{ animationDelay: '210ms' }}
-          className="animate-card-enter bg-white p-5 rounded-2xl border border-stone-200 hover:border-stone-300 transition-colors"
+          className="animate-card-enter bg-white p-3.5 sm:p-5 rounded-2xl border border-stone-200 transition-colors"
         >
-          <div className="text-2xl font-bold font-moul text-blue-700">
+          <div className="text-xl sm:text-2xl font-bold font-moul text-blue-700">
             ~{estimatedTables}
           </div>
-          <div className="text-xs text-stone-500 font-medium mt-1">តុប៉ាន់ស្មាន (១០នាក់/តុ)</div>
+          <div className="text-[11px] sm:text-xs text-stone-500 font-medium mt-1 leading-snug">
+            តុប៉ាន់ស្មាន (១០នាក់/តុ)
+          </div>
         </div>
       </div>
 
-      {/* Guest Table Card */}
-      <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden mb-8">
+      {/* Guest List / Table Container */}
+      <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden mb-8">
         {/* Table Filter Toolbar */}
-        <div className="p-4 border-b border-stone-200 flex flex-wrap items-center justify-between gap-4 bg-stone-50/50">
-          <div className="flex items-center gap-2">
+        <div className="p-3 sm:p-4 border-b border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-stone-50/50">
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-0.5">
             <button
               onClick={() => setActiveFilter('all')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer whitespace-nowrap shrink-0 ${
                 activeFilter === 'all'
-                  ? 'bg-rose-900 text-white shadow-xs'
+                  ? 'bg-rose-900 text-white'
                   : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
               }`}
             >
@@ -239,9 +276,9 @@ export function DashboardPage() {
             </button>
             <button
               onClick={() => setActiveFilter('attending')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer whitespace-nowrap shrink-0 ${
                 activeFilter === 'attending'
-                  ? 'bg-emerald-700 text-white shadow-xs'
+                  ? 'bg-emerald-700 text-white'
                   : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
               }`}
             >
@@ -249,9 +286,9 @@ export function DashboardPage() {
             </button>
             <button
               onClick={() => setActiveFilter('declined')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer whitespace-nowrap shrink-0 ${
                 activeFilter === 'declined'
-                  ? 'bg-rose-800 text-white shadow-xs'
+                  ? 'bg-rose-800 text-white'
                   : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
               }`}
             >
@@ -259,7 +296,7 @@ export function DashboardPage() {
             </button>
           </div>
 
-          <div className="relative min-w-[220px]">
+          <div className="relative w-full sm:w-auto sm:min-w-[220px]">
             <Search className="w-4 h-4 text-stone-400 absolute left-3 top-2.5" />
             <input
               type="text"
@@ -271,8 +308,72 @@ export function DashboardPage() {
           </div>
         </div>
 
-        {/* Responsive Table */}
-        <div className="overflow-x-auto">
+        {/* Mobile View: Dedicated Guest Cards (Phones) */}
+        <div className="md:hidden divide-y divide-stone-100">
+          {filteredRsvps.length === 0 ? (
+            <div className="text-center py-8 text-stone-400 text-xs">
+              មិនមានទិន្នន័យត្រូវគ្នានឹងការស្វែងរកឡើយ
+            </div>
+          ) : (
+            filteredRsvps.map((rsvp) => {
+              const isAttending = rsvp?.attendance_status === 'attending';
+              return (
+                <div key={rsvp.id} className="p-3.5 space-y-2">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <div className="font-bold text-sm text-stone-800 truncate">
+                        {rsvp.guest_name}
+                      </div>
+                      {rsvp.phone && (
+                        <div className="text-[11px] text-stone-400 mt-0.5">
+                          {rsvp.phone}
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      {isAttending ? (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>
+                          ចូលរួម ({rsvp.guest_count} នាក់)
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-rose-100 text-rose-800">
+                          <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5"></span>
+                          មិនអាចចូលរួម
+                        </span>
+                      )}
+                      <button
+                        onClick={() => handleDelete(rsvp.id)}
+                        className="text-stone-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition cursor-pointer"
+                        title="លុបទិន្នន័យ"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-[11px] text-stone-500">
+                    <span className="inline-block px-2 py-0.5 rounded bg-stone-100 text-stone-600 font-medium capitalize">
+                      ប្រភព: {rsvp.source || 'Direct'}
+                    </span>
+                    <span className="font-medium">
+                      {isAttending ? `ភ្ញៀវ: ${rsvp.guest_count} នាក់` : 'អវត្តមាន'}
+                    </span>
+                  </div>
+
+                  {rsvp.wishes && (
+                    <div className="text-xs text-stone-600 bg-stone-50 rounded-lg p-2.5 border border-stone-100 italic leading-relaxed">
+                      "{rsvp.wishes}"
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          )}
+        </div>
+
+        {/* Desktop View: Full Responsive Table (Tablets & Desktops) */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
               <tr className="bg-stone-100/70 border-b border-stone-200 text-stone-600 font-bold">
@@ -293,7 +394,7 @@ export function DashboardPage() {
                 </tr>
               ) : (
                 filteredRsvps.map((rsvp) => {
-                  const isAttending = rsvp.attendance_status === 'attending';
+                  const isAttending = rsvp?.attendance_status === 'attending';
                   return (
                     <tr key={rsvp.id} className="hover:bg-amber-50/20 transition">
                       <td className="py-3 px-4 font-bold text-stone-800">
