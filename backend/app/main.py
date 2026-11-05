@@ -91,6 +91,7 @@ app.mount("/uploads", StaticFiles(directory=str(settings.UPLOAD_DIR)), name="upl
 
 
 @app.get("/")
+@app.head("/")
 def root():
     return {
         "message": "សូមស្វាគមន៍មកកាន់ Digital Theab API (ប្រព័ន្ធធៀបឌីជីថល)",

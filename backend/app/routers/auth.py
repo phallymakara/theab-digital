@@ -11,7 +11,8 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
 @router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
-@limiter.limit("5/minute")
+@router.post("/register/", response_model=Token, status_code=status.HTTP_201_CREATED, include_in_schema=False)
+@limiter.limit("10/minute")
 def register_user(request: Request, data: UserRegister, db: Session = Depends(get_db)):
     """Register a new user account and return JWT access token."""
     # Check if user already exists
@@ -45,7 +46,8 @@ def register_user(request: Request, data: UserRegister, db: Session = Depends(ge
 
 
 @router.post("/login", response_model=Token)
-@limiter.limit("10/minute")
+@router.post("/login/", response_model=Token, include_in_schema=False)
+@limiter.limit("15/minute")
 def login_user(request: Request, data: UserLogin, db: Session = Depends(get_db)):
     """Authenticate user with email and password, returning JWT access token."""
     user = db.query(User).filter(User.email == data.email.lower().strip()).first()
@@ -71,6 +73,7 @@ def login_user(request: Request, data: UserLogin, db: Session = Depends(get_db))
 
 
 @router.get("/me", response_model=UserResponse)
+@router.get("/me/", response_model=UserResponse, include_in_schema=False)
 def get_authenticated_user_profile(current_user: User = Depends(get_current_user)):
     """Get currently logged-in user profile."""
     return current_user

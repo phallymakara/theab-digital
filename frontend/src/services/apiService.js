@@ -3,8 +3,19 @@
  * Handles communication with the FastAPI backend
  */
 
-const RAW_URL = import.meta.env.VITE_API_URL || '/api/v1';
-const BASE_URL = RAW_URL.endsWith('/') ? RAW_URL.slice(0, -1) : RAW_URL;
+const RAW_URL = import.meta.env.VITE_API_URL || 'https://theab-digital-api.onrender.com/api/v1';
+
+function resolveBaseUrl(raw) {
+  if (!raw) return 'https://theab-digital-api.onrender.com/api/v1';
+  let url = raw.trim();
+  if (url.endsWith('/')) url = url.slice(0, -1);
+  if (!url.endsWith('/api/v1') && !url.endsWith('/api')) {
+    url = `${url}/api/v1`;
+  }
+  return url;
+}
+
+const BASE_URL = resolveBaseUrl(RAW_URL);
 
 class ApiService {
   getToken() {
