@@ -172,7 +172,7 @@ export class Step4DashboardView extends BaseView {
 
               <div class="relative w-full sm:w-64">
                 <i data-lucide="search" class="w-4 h-4 text-stone-400 absolute left-3 top-2.5"></i>
-                <input type="text" id="dash-search-input" value="${searchQuery}" class="form-input !py-1.5 !pl-9 !text-xs" placeholder="ស្វែងរកតាមឈ្មោះភ្ញៀវ..." />
+                <input type="text" id="dash-search-input" value="${searchQuery}" class="form-input !py-1.5 !pl-9 !text-xs" placeholder="ស្វែងរកតាមឈ្មោះភ្ញៀវ ឬលេខទូរស័ព្ទ..." />
               </div>
             </div>
 

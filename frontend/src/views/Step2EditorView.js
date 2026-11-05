@@ -95,11 +95,11 @@ export class Step2EditorView extends BaseView {
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div class="form-group">
                   <label class="form-label">ឈ្មោះកូនកំលោះ / ម្ចាស់ពិធី (ស្វាមី)</label>
-                  <input type="text" id="input-groom" class="form-input" value="${data.groomName || ''}" placeholder="ឧ. សុខ វិបុល" />
+                  <input type="text" id="input-groom" class="form-input" value="${data.groomName || ''}" placeholder="បញ្ចូលឈ្មោះកូនកំលោះ" />
                 </div>
                 <div class="form-group">
                   <label class="form-label">ឈ្មោះកូនក្រមុំ / ម្ចាស់ពិធី (ភរិយា)</label>
-                  <input type="text" id="input-bride" class="form-input" value="${data.brideName || ''}" placeholder="ឧ. ជា សុជាតា" />
+                  <input type="text" id="input-bride" class="form-input" value="${data.brideName || ''}" placeholder="បញ្ចូលឈ្មោះកូនក្រមុំ" />
                 </div>
               </div>
 
@@ -107,11 +107,11 @@ export class Step2EditorView extends BaseView {
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div class="form-group">
                   <label class="form-label">មាតាបិតាខាងប្រុស</label>
-                  <input type="text" id="input-groom-parents" class="form-input" value="${data.groomParents || ''}" placeholder="លោក... និង លោកស្រី..." />
+                  <input type="text" id="input-groom-parents" class="form-input" value="${data.groomParents || ''}" placeholder="បញ្ចូលឈ្មោះឪពុក និងម្តាយ" />
                 </div>
                 <div class="form-group">
                   <label class="form-label">មាតាបិតាខាងស្រី</label>
-                  <input type="text" id="input-bride-parents" class="form-input" value="${data.brideParents || ''}" placeholder="លោក... និង លោកស្រី..." />
+                  <input type="text" id="input-bride-parents" class="form-input" value="${data.brideParents || ''}" placeholder="បញ្ចូលឈ្មោះឪពុក និងម្តាយ" />
                 </div>
               </div>
 
@@ -119,23 +119,23 @@ export class Step2EditorView extends BaseView {
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div class="form-group">
                   <label class="form-label">កាលបរិច្ឆេទកម្មវិធី</label>
-                  <input type="text" id="input-date" class="form-input" value="${data.ceremonyDate || ''}" placeholder="ឧ. ថ្ងៃអាទិត្យ ទី១៥ ខែវិច្ឆិកា ឆ្នាំ២០២៦" />
+                  <input type="text" id="input-date" class="form-input" value="${data.ceremonyDate || ''}" placeholder="បញ្ចូលកាលបរិច្ឆេទកម្មវិធី" />
                 </div>
                 <div class="form-group">
                   <label class="form-label">ពេលវេលាកម្មវិធី</label>
-                  <input type="text" id="input-time" class="form-input" value="${data.ceremonyTime || ''}" placeholder="ឧ. វេលាម៉ោង ៥:០០ ល្ងាច តទៅ" />
+                  <input type="text" id="input-time" class="form-input" value="${data.ceremonyTime || ''}" placeholder="បញ្ចូលពេលវេលាកម្មវិធី" />
                 </div>
               </div>
 
               <!-- Location Section -->
               <div class="form-group mb-4">
                 <label class="form-label">ឈ្មោះទីតាំងកម្មវិធី / មជ្ឈមណ្ឌល</label>
-                <input type="text" id="input-location" class="form-input" value="${data.locationName || ''}" placeholder="ឧ. មជ្ឈមណ្ឌលសន្និបាត ឌឹ ព្រេមៀ សែនសុខ (អគារ A)" />
+                <input type="text" id="input-location" class="form-input" value="${data.locationName || ''}" placeholder="បញ្ចូលឈ្មោះទីតាំងរៀបចំកម្មវិធី" />
               </div>
 
               <div class="form-group mb-4">
                 <label class="form-label">តំណភ្ជាប់ Google Maps URL</label>
-                <input type="url" id="input-maps-url" class="form-input" value="${data.googleMapsUrl || ''}" placeholder="https://maps.google.com/..." />
+                <input type="url" id="input-maps-url" class="form-input" value="${data.googleMapsUrl || ''}" placeholder="បញ្ចូលតំណភ្ជាប់ Google Maps" />
               </div>
 
               <!-- Welcome Quote -->

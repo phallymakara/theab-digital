@@ -595,7 +595,7 @@ export default function GoldenOrchidTemplate({
                   type="text"
                   value={rsvpName}
                   onChange={(e) => setRsvpName(e.target.value)}
-                  placeholder="ឧ. លោក ឈួន សម្បត្តិ & ភរិយា"
+                  placeholder="បញ្ចូលឈ្មោះភ្ញៀវកិត្តិយស"
                   className="w-full px-4 py-3 rounded-xl border border-stone-300 text-xs focus:outline-none focus:border-amber-500 transition bg-stone-50"
                   required
                 />
@@ -640,7 +640,7 @@ export default function GoldenOrchidTemplate({
                 <textarea
                   value={rsvpMessage}
                   onChange={(e) => setRsvpMessage(e.target.value)}
-                  placeholder="ជូនពរគូស្វាមីភរិយាថ្មី ឬប្រាប់ពីតម្រូវការអាហារពិសេស..."
+                  placeholder="សរសេរពាក្យជូនពរ ឬតម្រូវការពិសេស"
                   rows={2}
                   className="w-full px-4 py-3 rounded-xl border border-stone-300 text-xs focus:outline-none focus:border-amber-500 transition bg-stone-50 resize-none"
                 />

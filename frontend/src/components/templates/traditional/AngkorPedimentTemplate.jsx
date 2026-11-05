@@ -380,7 +380,7 @@ export function AngkorPedimentTemplate({
               required
               value={wish.name}
               onChange={(e) => setWish({ ...wish, name: e.target.value })}
-              placeholder="ឈ្មោះរបស់អ្នក"
+              placeholder="បញ្ចូលឈ្មោះរបស់អ្នក"
               className="w-full bg-white border border-[#C59B27]/40 rounded-lg px-3 py-2 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-[#C59B27]"
             />
             <textarea

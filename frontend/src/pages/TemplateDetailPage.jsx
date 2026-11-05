@@ -1477,7 +1477,7 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
                           </label>
                           <input
                             type="text"
-                            placeholder="សូមបញ្ចូលឈ្មោះ..."
+                            placeholder="បញ្ចូលឈ្មោះភ្ញៀវកិត្តិយស"
                             value={rsvpForm.name}
                             onChange={(e) => setRsvpForm({ ...rsvpForm, name: e.target.value })}
                             className="w-full px-3.5 py-2 rounded-xl border border-stone-200/80 focus:ring-2 focus:ring-amber-200/50 text-xs sm:text-sm bg-white/85 backdrop-blur-xs transition focus:bg-white"
@@ -1602,7 +1602,7 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
                           </label>
                           <input
                             type="text"
-                            placeholder="សូមបញ្ចូលឈ្មោះ..."
+                            placeholder="បញ្ចូលឈ្មោះភ្ញៀវកិត្តិយស"
                             value={wishForm.name}
                             onChange={(e) => setWishForm({ ...wishForm, name: e.target.value })}
                             className="w-full px-3.5 py-2 rounded-xl border border-stone-200/80 text-xs sm:text-sm bg-white/85 backdrop-blur-xs transition focus:bg-white"
@@ -1616,7 +1616,7 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
                           </label>
                           <textarea
                             rows={2}
-                            placeholder="សូមសរសេរសារជូនពរ..."
+                            placeholder="សរសេរពាក្យជូនពរនៅទីនេះ..."
                             value={wishForm.message}
                             onChange={(e) => setWishForm({ ...wishForm, message: e.target.value })}
                             className="w-full px-3.5 py-2 rounded-xl border border-stone-200/80 text-xs sm:text-sm bg-white/85 backdrop-blur-xs transition focus:bg-white"

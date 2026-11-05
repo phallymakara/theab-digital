@@ -693,7 +693,7 @@ export function EmeraldRadiantDiamondTemplate({ data = {}, invitationData = {}, 
                 required
                 value={rsvpName}
                 onChange={(e) => setRsvpName(e.target.value)}
-                placeholder="សូមបញ្ចូលឈ្មោះ..."
+                placeholder="បញ្ចូលឈ្មោះភ្ញៀវកិត្តិយស"
                 className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-cyan-400/40 text-xs text-white placeholder-cyan-300/40 focus:outline-none focus:border-amber-300 font-suwannaphum"
               />
             </div>
@@ -779,7 +779,7 @@ export function EmeraldRadiantDiamondTemplate({ data = {}, invitationData = {}, 
               required
               value={guestName}
               onChange={(e) => setGuestName(e.target.value)}
-              placeholder="ឈ្មោះរបស់អ្នក..."
+              placeholder="បញ្ចូលឈ្មោះរបស់អ្នក"
               className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-cyan-400/40 text-xs text-white placeholder-cyan-300/40 focus:outline-none focus:border-amber-300 font-suwannaphum"
             />
             <textarea
@@ -787,7 +787,7 @@ export function EmeraldRadiantDiamondTemplate({ data = {}, invitationData = {}, 
               rows={3}
               value={guestMessage}
               onChange={(e) => setGuestMessage(e.target.value)}
-              placeholder="សរសេរពាក្យជូនពររបស់អ្នក..."
+              placeholder="សរសេរពាក្យជូនពរនៅទីនេះ..."
               className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-cyan-400/40 text-xs text-white placeholder-cyan-300/40 focus:outline-none focus:border-amber-300 font-suwannaphum resize-none"
             />
             <button

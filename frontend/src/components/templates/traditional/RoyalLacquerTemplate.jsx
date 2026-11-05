@@ -397,14 +397,14 @@ export function RoyalLacquerTemplate({ data = {}, onBack }) {
             <form onSubmit={handleWish} className="space-y-3 max-w-sm mx-auto mb-6">
               <input
                 type="text"
-                placeholder="ឈ្មោះរបស់អ្នក"
+                placeholder="បញ្ចូលឈ្មោះរបស់អ្នក"
                 value={wish.name}
                 onChange={(e) => setWish({ ...wish, name: e.target.value })}
                 className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-800 focus:outline-none focus:border-[#B38728]"
               />
               <textarea
                 rows="2"
-                placeholder="សារជូនពរ..."
+                placeholder="សរសេរពាក្យជូនពរនៅទីនេះ..."
                 value={wish.text}
                 onChange={(e) => setWish({ ...wish, text: e.target.value })}
                 className="w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-800 focus:outline-none focus:border-[#B38728]"

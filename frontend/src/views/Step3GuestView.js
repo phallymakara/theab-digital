@@ -174,12 +174,12 @@ export class Step3GuestView extends BaseView {
               <form id="rsvp-form" class="space-y-4">
                 <div class="form-group">
                   <label class="form-label text-xs">ឈ្មោះភ្ញៀវកិត្តិយស (Full Name) *</label>
-                  <input type="text" id="rsvp-name" class="form-input" placeholder="ឧ. ឯកឧត្តម... / លោក... / អ្នកនាង..." required />
+                  <input type="text" id="rsvp-name" class="form-input" placeholder="បញ្ចូលឈ្មោះភ្ញៀវកិត្តិយស" required />
                 </div>
 
                 <div class="form-group">
                   <label class="form-label text-xs">លេខទូរស័ព្ទ ឬ Telegram (Optional)</label>
-                  <input type="tel" id="rsvp-phone" class="form-input" placeholder="012 345 678" />
+                  <input type="tel" id="rsvp-phone" class="form-input" placeholder="បញ្ចូលលេខទូរស័ព្ទទំនាក់ទំនង" />
                 </div>
 
                 <div class="form-group">
@@ -216,7 +216,7 @@ export class Step3GuestView extends BaseView {
 
                 <div class="form-group">
                   <label class="form-label text-xs">ពាក្យជូនពរដល់ម្ចាស់កម្មវិធី (Blessings & Wishes)</label>
-                  <textarea id="rsvp-wishes" class="form-textarea" rows="3" placeholder="សូមប្រសិទ្ធពរជ័យ សិរីសួស្តី ជ័យមង្គល..."></textarea>
+                  <textarea id="rsvp-wishes" class="form-textarea" rows="3" placeholder="សរសេរពាក្យជូនពរនៅទីនេះ..."></textarea>
                 </div>
 
                 <button type="submit" id="rsvp-submit-btn" class="w-full btn-primary !py-3 font-bold text-sm shadow-lg flex items-center justify-center gap-2">

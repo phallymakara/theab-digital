@@ -614,7 +614,7 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
                       required
                       value={rsvp.name}
                       onChange={(e) => setRsvp({ ...rsvp, name: e.target.value })}
-                      placeholder="សូមបញ្ចូលឈ្មោះរបស់អ្នក"
+                      placeholder="បញ្ចូលឈ្មោះភ្ញៀវកិត្តិយស"
                       className="w-full px-3.5 py-2.5 rounded-xl border border-stone-300 focus:border-[#C84B5B] focus:outline-none text-xs bg-stone-50"
                     />
                   </div>
@@ -666,14 +666,14 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
                     type="text"
                     value={wish.name}
                     onChange={(e) => setWish({ ...wish, name: e.target.value })}
-                    placeholder="ឈ្មោះរបស់អ្នក"
+                    placeholder="បញ្ចូលឈ្មោះរបស់អ្នក"
                     className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-stone-50 focus:outline-none"
                   />
                   <textarea
                     rows={2}
                     value={wish.text}
                     onChange={(e) => setWish({ ...wish, text: e.target.value })}
-                    placeholder="សរសេរពាក្យជូនពរ..."
+                    placeholder="សរសេរពាក្យជូនពរនៅទីនេះ..."
                     className="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-stone-50 focus:outline-none resize-none"
                   ></textarea>
                   <button

@@ -382,7 +382,7 @@ export function InvitationPreviewPage() {
                   value={formData.guest_name}
                   onChange={(e) => setFormData({ ...formData, guest_name: e.target.value })}
                   className="form-input text-xs sm:text-sm"
-                  placeholder="ឧ. ឯកឧត្តម... / លោក... / អ្នកនាង..."
+                  placeholder="បញ្ចូលឈ្មោះភ្ញៀវកិត្តិយស"
                   required
                 />
               </div>
@@ -394,7 +394,7 @@ export function InvitationPreviewPage() {
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="form-input text-xs sm:text-sm"
-                  placeholder="012 345 678"
+                  placeholder="បញ្ចូលលេខទូរស័ព្ទទំនាក់ទំនង"
                 />
               </div>
 

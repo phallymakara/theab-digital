@@ -372,7 +372,7 @@ export function IvoryParchmentTemplate({
               required
               value={wish.name}
               onChange={(e) => setWish({ ...wish, name: e.target.value })}
-              placeholder="ឈ្មោះរបស់អ្នក"
+              placeholder="បញ្ចូលឈ្មោះរបស់អ្នក"
               className="w-full bg-white border border-[#D6B778] rounded-lg px-3 py-2 text-sm text-[#3C2E29] placeholder-[#9C8276] focus:outline-none focus:border-[#54141E]"
             />
             <textarea

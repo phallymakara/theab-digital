@@ -627,7 +627,7 @@ export function ModernSapphireAzureTemplate({
                   required
                   value={rsvpState.name}
                   onChange={(e) => setRsvpState({ ...rsvpState, name: e.target.value })}
-                  placeholder="ឧ. ហេង វិសាល"
+                  placeholder="បញ្ចូលឈ្មោះភ្ញៀវកិត្តិយស"
                   className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-sky-500/30 text-white text-xs focus:outline-none focus:border-sky-400"
                 />
               </div>
@@ -638,7 +638,7 @@ export function ModernSapphireAzureTemplate({
                     type="tel"
                     value={rsvpState.phone}
                     onChange={(e) => setRsvpState({ ...rsvpState, phone: e.target.value })}
-                    placeholder="012 345 678"
+                    placeholder="បញ្ចូលលេខទូរស័ព្ទទំនាក់ទំនង"
                     className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-sky-500/30 text-white text-xs focus:outline-none focus:border-sky-400"
                   />
                 </div>
@@ -701,7 +701,7 @@ export function ModernSapphireAzureTemplate({
           <input
             type="text"
             required
-            placeholder="ឈ្មោះរបស់អ្នក"
+            placeholder="បញ្ចូលឈ្មោះរបស់អ្នក"
             value={newWish.name}
             onChange={(e) => setNewWish({ ...newWish, name: e.target.value })}
             className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-sky-500/30 text-white text-xs focus:outline-none focus:border-sky-400"
@@ -709,7 +709,7 @@ export function ModernSapphireAzureTemplate({
           <textarea
             required
             rows={3}
-            placeholder="សរសេរពាក្យជូនពរ..."
+            placeholder="សរសេរពាក្យជូនពរនៅទីនេះ..."
             value={newWish.text}
             onChange={(e) => setNewWish({ ...newWish, text: e.target.value })}
             className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-sky-500/30 text-white text-xs focus:outline-none focus:border-sky-400 resize-none"

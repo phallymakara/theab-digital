@@ -576,7 +576,7 @@ export function FloralRomanceTemplate({
                     required
                     value={rsvp.name}
                     onChange={(e) => setRsvp({ ...rsvp, name: e.target.value })}
-                    placeholder="សូមបញ្ចូលឈ្មោះរបស់អ្នក..."
+                    placeholder="បញ្ចូលឈ្មោះភ្ញៀវកិត្តិយស"
                     className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-stone-50/50 text-xs text-stone-800 focus:bg-white focus:border-rose-500 focus:outline-none"
                   />
                 </div>
@@ -636,7 +636,7 @@ export function FloralRomanceTemplate({
                 required
                 value={wish.name}
                 onChange={(e) => setWish({ ...wish, name: e.target.value })}
-                placeholder="ឈ្មោះរបស់អ្នក..."
+                placeholder="បញ្ចូលឈ្មោះរបស់អ្នក"
                 className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-stone-50/50 text-xs text-stone-800 focus:bg-white focus:border-rose-500 focus:outline-none"
               />
               <textarea
@@ -644,7 +644,7 @@ export function FloralRomanceTemplate({
                 required
                 value={wish.text}
                 onChange={(e) => setWish({ ...wish, text: e.target.value })}
-                placeholder="សរសេរពាក្យជូនពរ..."
+                placeholder="សរសេរពាក្យជូនពរនៅទីនេះ..."
                 className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-stone-50/50 text-xs text-stone-800 focus:bg-white focus:border-rose-500 focus:outline-none resize-none"
               />
               <button

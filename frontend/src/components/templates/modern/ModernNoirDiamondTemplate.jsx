@@ -790,7 +790,7 @@ export function ModernNoirDiamondTemplate({
                   type="text"
                   value={rsvpName}
                   onChange={(e) => setRsvpName(e.target.value)}
-                  placeholder="ឧ. លោក ស៊ុំ វឌ្ឍនៈ និងភរិយា"
+                  placeholder="បញ្ចូលឈ្មោះភ្ញៀវកិត្តិយស"
                   required
                   className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-700 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400 transition"
                 />
@@ -853,7 +853,7 @@ export function ModernNoirDiamondTemplate({
                   type="tel"
                   value={rsvpPhone}
                   onChange={(e) => setRsvpPhone(e.target.value)}
-                  placeholder="012 345 678"
+                  placeholder="បញ្ចូលលេខទូរស័ព្ទទំនាក់ទំនង"
                   className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-700 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400 transition"
                 />
               </div>
@@ -898,7 +898,7 @@ export function ModernNoirDiamondTemplate({
               type="text"
               value={guestName}
               onChange={(e) => setGuestName(e.target.value)}
-              placeholder="ឈ្មោះរបស់អ្នក (ឧ. សុខ ពិសិដ្ឋ)"
+              placeholder="បញ្ចូលឈ្មោះរបស់អ្នក"
               required
               className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-700 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400 transition"
             />

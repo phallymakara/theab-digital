@@ -31,7 +31,7 @@ export class DashboardController {
     const guestName = prompt('សូមបញ្ចូលឈ្មោះភ្ញៀវថ្មី៖');
     if (!guestName || !guestName.trim()) return;
 
-    const countStr = prompt('សូមបញ្ចូលចំនួនអ្នកចូលរួម (ឧ. 1, 2)៖', '1');
+    const countStr = prompt('សូមបញ្ចូលចំនួនអ្នកចូលរួម (ចំនួនភ្ញៀវ)៖', '1');
     const guestCount = parseInt(countStr || '1', 10) || 1;
 
     const wishes = prompt('ពាក្យជូនពរ (បើមាន)៖', '');

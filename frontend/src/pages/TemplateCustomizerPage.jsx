@@ -697,7 +697,7 @@ export function TemplateCustomizerPage() {
                     type="text"
                     value={formData.groomName}
                     onChange={(e) => setFormData({ ...formData, groomName: e.target.value })}
-                    placeholder="ឧ. សុខ វិបុល"
+                    placeholder="បញ្ចូលឈ្មោះកូនកំលោះ"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
@@ -709,7 +709,7 @@ export function TemplateCustomizerPage() {
                     type="text"
                     value={formData.brideName}
                     onChange={(e) => setFormData({ ...formData, brideName: e.target.value })}
-                    placeholder="ឧ. ជា សុជាតា"
+                    placeholder="បញ្ចូលឈ្មោះកូនក្រមុំ"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
@@ -851,7 +851,7 @@ export function TemplateCustomizerPage() {
                       type="text"
                       value={formData.groomFather}
                       onChange={(e) => setFormData({ ...formData, groomFather: e.target.value })}
-                      placeholder="ឧ. លោក ចាន់ សុផល"
+                      placeholder="បញ្ចូលឈ្មោះឪពុកកូនកំលោះ"
                       className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                     />
                   </div>
@@ -861,7 +861,7 @@ export function TemplateCustomizerPage() {
                       type="text"
                       value={formData.groomMother}
                       onChange={(e) => setFormData({ ...formData, groomMother: e.target.value })}
-                      placeholder="ឧ. លោកស្រី ម៉ៅ សុខា"
+                      placeholder="បញ្ចូលឈ្មោះម្តាយកូនកំលោះ"
                       className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                     />
                   </div>
@@ -872,7 +872,7 @@ export function TemplateCustomizerPage() {
                     type="text"
                     value={formData.groomResidence}
                     onChange={(e) => setFormData({ ...formData, groomResidence: e.target.value })}
-                    placeholder="ឧ. រាជធានីភ្នំពេញ"
+                    placeholder="បញ្ចូលស្រុកកំណើត ឬទីលំនៅ"
                     className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
@@ -891,7 +891,7 @@ export function TemplateCustomizerPage() {
                       type="text"
                       value={formData.brideFather}
                       onChange={(e) => setFormData({ ...formData, brideFather: e.target.value })}
-                      placeholder="ឧ. លោក តែ គឹមសុង"
+                      placeholder="បញ្ចូលឈ្មោះឪពុកកូនក្រមុំ"
                       className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                     />
                   </div>
@@ -901,7 +901,7 @@ export function TemplateCustomizerPage() {
                       type="text"
                       value={formData.brideMother}
                       onChange={(e) => setFormData({ ...formData, brideMother: e.target.value })}
-                      placeholder="ឧ. លោកស្រី លឹម គន្ធី"
+                      placeholder="បញ្ចូលឈ្មោះម្តាយកូនក្រមុំ"
                       className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                     />
                   </div>
@@ -912,7 +912,7 @@ export function TemplateCustomizerPage() {
                     type="text"
                     value={formData.brideResidence}
                     onChange={(e) => setFormData({ ...formData, brideResidence: e.target.value })}
-                    placeholder="ឧ. រាជធានីភ្នំពេញ"
+                    placeholder="បញ្ចូលស្រុកកំណើត ឬទីលំនៅ"
                     className="w-full px-3 py-2 rounded-xl border border-stone-200 bg-white font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
@@ -952,7 +952,7 @@ export function TemplateCustomizerPage() {
                     type="text"
                     value={formData.ceremonyTime}
                     onChange={(e) => setFormData({ ...formData, ceremonyTime: e.target.value })}
-                    placeholder="ឧ. ម៉ោង 05:00 ល្ងាច"
+                    placeholder="បញ្ចូលពេលវេលាទទួលភ្ញៀវ"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
@@ -983,7 +983,7 @@ export function TemplateCustomizerPage() {
                         type="text"
                         value={item.time}
                         onChange={(e) => handleProgramChange(idx, 'time', e.target.value)}
-                        placeholder="ម៉ោង..."
+                        placeholder="បញ្ចូលម៉ោងកម្មវិធី"
                         className="px-2.5 py-1 rounded-xl bg-white border border-stone-200 font-kantumruy text-xs font-bold text-amber-900 w-32 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
                       />
                     </div>
@@ -1000,14 +1000,14 @@ export function TemplateCustomizerPage() {
                     type="text"
                     value={item.title}
                     onChange={(e) => handleProgramChange(idx, 'title', e.target.value)}
-                    placeholder="ចំណងជើងពិធី..."
+                    placeholder="បញ្ចូលឈ្មោះពិធី ឬកម្មវិធី"
                     className="w-full px-3 py-1.5 rounded-xl bg-white border border-stone-200 font-kantumruy text-xs font-bold text-stone-800 mb-1.5 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
                   />
                   <textarea
                     rows={2}
                     value={item.desc}
                     onChange={(e) => handleProgramChange(idx, 'desc', e.target.value)}
-                    placeholder="ការរៀបរាប់សង្ខេប..."
+                    placeholder="បញ្ចូលការរៀបរាប់កម្មវិធី"
                     className="w-full px-3 py-1.5 rounded-xl bg-white border border-stone-200 font-kantumruy text-[11px] text-stone-600 resize-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none select-text"
                   />
                 </div>
@@ -1043,7 +1043,7 @@ export function TemplateCustomizerPage() {
                   type="text"
                   value={formData.locationName}
                   onChange={(e) => setFormData({ ...formData, locationName: e.target.value })}
-                  placeholder="ឧ. សណ្ឋាគារ រ៉ូសវូដ ភ្នំពេញ (Grand Ballroom)"
+                  placeholder="បញ្ចូលឈ្មោះទីតាំង ឬអគាររៀបចំកម្មវិធី"
                   className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                 />
               </div>
@@ -1056,7 +1056,7 @@ export function TemplateCustomizerPage() {
                   rows={2}
                   value={formData.locationAddress}
                   onChange={(e) => setFormData({ ...formData, locationAddress: e.target.value })}
-                  placeholder="ឧ. អគារ វឌ្ឍនៈ កាពីតាល់ មហាវិថីព្រះមុនីវង្ស សង្កាត់វត្តភ្នំ រាជធានីភ្នំពេញ"
+                  placeholder="បញ្ចូលអាសយដ្ឋានលម្អិតនៃទីតាំង"
                   className="w-full px-3.5 py-2 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-kantumruy text-base sm:text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all resize-none select-text"
                 />
               </div>
@@ -1069,7 +1069,7 @@ export function TemplateCustomizerPage() {
                   type="url"
                   value={formData.googleMapsUrl}
                   onChange={(e) => setFormData({ ...formData, googleMapsUrl: e.target.value })}
-                  placeholder="https://maps.google.com/..."
+                  placeholder="បញ្ចូលតំណភ្ជាប់ Google Maps"
                   className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                 />
               </div>
@@ -1171,7 +1171,7 @@ export function TemplateCustomizerPage() {
                     type="text"
                     value={formData.accountNumber}
                     onChange={(e) => setFormData({ ...formData, accountNumber: e.target.value })}
-                    placeholder="000 987 654"
+                    placeholder="បញ្ចូលលេខគណនីធនាគារ"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-1 focus:ring-amber-500 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
@@ -1185,7 +1185,7 @@ export function TemplateCustomizerPage() {
                   type="text"
                   value={formData.accountName}
                   onChange={(e) => setFormData({ ...formData, accountName: e.target.value })}
-                  placeholder="CHAN RITHISAK & TEA PICHCHINDA"
+                  placeholder="បញ្ចូលឈ្មោះម្ចាស់គណនី"
                   className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-1 focus:ring-amber-500 focus:border-amber-500 focus:outline-none transition-all select-text"
                 />
               </div>
@@ -1250,7 +1250,7 @@ export function TemplateCustomizerPage() {
                     type="tel"
                     value={formData.phoneGroom}
                     onChange={(e) => setFormData({ ...formData, phoneGroom: e.target.value })}
-                    placeholder="012 345 678"
+                    placeholder="បញ្ចូលលេខទូរស័ព្ទទំនាក់ទំនង"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
@@ -1263,7 +1263,7 @@ export function TemplateCustomizerPage() {
                     type="tel"
                     value={formData.phoneBride}
                     onChange={(e) => setFormData({ ...formData, phoneBride: e.target.value })}
-                    placeholder="098 765 432"
+                    placeholder="បញ្ចូលលេខទូរស័ព្ទកូនក្រមុំ"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                   />
                 </div>
@@ -1278,7 +1278,7 @@ export function TemplateCustomizerPage() {
                   type="text"
                   value={formData.telegramLink}
                   onChange={(e) => setFormData({ ...formData, telegramLink: e.target.value })}
-                  placeholder="https://t.me/username ឬ @username"
+                  placeholder="បញ្ចូលតំណភ្ជាប់ ឬឈ្មោះគណនី Telegram"
                   className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 bg-stone-50/50 hover:bg-white focus:bg-white text-stone-800 font-mono text-xs focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 focus:outline-none transition-all select-text"
                 />
               </div>

@@ -795,7 +795,7 @@ export function ModernChampagneSilkTemplate({
                   type="text"
                   value={rsvpName}
                   onChange={(e) => setRsvpName(e.target.value)}
-                  placeholder="ឧ. លោក សុខ ចិន្តា និងភរិយា"
+                  placeholder="បញ្ចូលឈ្មោះភ្ញៀវកិត្តិយស"
                   required
                   className="w-full px-4 py-3 rounded-xl bg-[#FAF8F5] border border-stone-300 text-stone-900 placeholder-stone-400 text-xs focus:outline-none focus:border-amber-500 transition"
                 />
@@ -858,7 +858,7 @@ export function ModernChampagneSilkTemplate({
                   type="tel"
                   value={rsvpPhone}
                   onChange={(e) => setRsvpPhone(e.target.value)}
-                  placeholder="012 345 678"
+                  placeholder="បញ្ចូលលេខទូរស័ព្ទទំនាក់ទំនង"
                   className="w-full px-4 py-3 rounded-xl bg-[#FAF8F5] border border-stone-300 text-stone-900 placeholder-stone-400 text-xs focus:outline-none focus:border-amber-500 transition"
                 />
               </div>
@@ -903,7 +903,7 @@ export function ModernChampagneSilkTemplate({
               type="text"
               value={guestName}
               onChange={(e) => setGuestName(e.target.value)}
-              placeholder="ឈ្មោះរបស់អ្នក (ឧ. កែវ សម្បត្តិ)"
+              placeholder="បញ្ចូលឈ្មោះរបស់អ្នក"
               required
               className="w-full px-4 py-3 rounded-xl bg-[#FAF8F5] border border-stone-300 text-stone-900 placeholder-stone-400 text-xs focus:outline-none focus:border-amber-500 transition"
             />

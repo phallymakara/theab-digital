@@ -98,7 +98,7 @@ export function AuthModal() {
         </div>
 
         {/* Tab Switcher */}
-        <div className="grid grid-cols-2 p-1.5 bg-stone-100/80 mx-6 mt-4 rounded-xl border border-stone-200/60">
+        <div className="flex border-b border-stone-200 mx-6 mt-4">
           <button
             type="button"
             onClick={() => {
@@ -106,10 +106,10 @@ export function AuthModal() {
               setErrors({});
               setGeneralError('');
             }}
-            className={`py-2 text-xs font-semibold rounded-lg transition-all ${
+            className={`flex-1 pb-3 text-xs sm:text-sm font-semibold transition-all border-b-2 cursor-pointer ${
               mode === 'login'
-                ? 'bg-white text-stone-900 border border-stone-200/60'
-                : 'text-stone-500 hover:text-stone-800'
+                ? 'border-theabCrimson text-theabCrimson font-bold'
+                : 'border-transparent text-stone-500 hover:text-stone-800'
             }`}
           >
             ចូលគណនី (Sign In)
@@ -121,10 +121,10 @@ export function AuthModal() {
               setErrors({});
               setGeneralError('');
             }}
-            className={`py-2 text-xs font-semibold rounded-lg transition-all ${
+            className={`flex-1 pb-3 text-xs sm:text-sm font-semibold transition-all border-b-2 cursor-pointer ${
               mode === 'register'
-                ? 'bg-white text-stone-900 border border-stone-200/60'
-                : 'text-stone-500 hover:text-stone-800'
+                ? 'border-theabCrimson text-theabCrimson font-bold'
+                : 'border-transparent text-stone-500 hover:text-stone-800'
             }`}
           >
             ចុះឈ្មោះ (Sign Up)
@@ -146,6 +146,7 @@ export function AuthModal() {
                 <User className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
+                  placeholder="បញ្ចូលឈ្មោះពេញរបស់អ្នក"
                   value={formData.full_name}
                   onChange={(e) => handleChange('full_name', e.target.value)}
                   className={`w-full pl-9 pr-3.5 py-2.5 rounded-xl border text-sm sm:text-base transition outline-none ${
@@ -169,6 +170,7 @@ export function AuthModal() {
               <Mail className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="email"
+                placeholder="បញ្ចូលអាសយដ្ឋានអ៊ីមែល"
                 value={formData.email}
                 onChange={(e) => handleChange('email', e.target.value)}
                 className={`w-full pl-9 pr-3.5 py-2.5 rounded-xl border text-sm sm:text-base transition outline-none ${
@@ -192,6 +194,7 @@ export function AuthModal() {
                 <Phone className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="tel"
+                  placeholder="បញ្ចូលលេខទូរស័ព្ទទំនាក់ទំនង (ស្រេចចិត្ត)"
                   value={formData.phone}
                   onChange={(e) => handleChange('phone', e.target.value)}
                   className="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-stone-200 focus:border-amber-600 text-sm sm:text-base transition outline-none"
@@ -208,6 +211,7 @@ export function AuthModal() {
               <Lock className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="password"
+                placeholder="បញ្ចូលពាក្យសម្ងាត់"
                 value={formData.password}
                 onChange={(e) => handleChange('password', e.target.value)}
                 className={`w-full pl-9 pr-3.5 py-2.5 rounded-xl border text-sm sm:text-base transition outline-none ${

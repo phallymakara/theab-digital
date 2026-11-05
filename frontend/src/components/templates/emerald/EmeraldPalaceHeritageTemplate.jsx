@@ -645,7 +645,7 @@ export function EmeraldPalaceHeritageTemplate({ data = {}, invitationData = {}, 
                 required
                 value={rsvpName}
                 onChange={(e) => setRsvpName(e.target.value)}
-                placeholder="សូមបញ្ចូលឈ្មោះ..."
+                placeholder="បញ្ចូលឈ្មោះភ្ញៀវកិត្តិយស"
                 className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-emerald-400/40 text-xs text-white placeholder-emerald-300/40 focus:outline-none focus:border-amber-300"
               />
             </div>
@@ -752,7 +752,7 @@ export function EmeraldPalaceHeritageTemplate({ data = {}, invitationData = {}, 
               <input
                 type="text"
                 required
-                placeholder="ឈ្មោះរបស់អ្នក..."
+                placeholder="បញ្ចូលឈ្មោះរបស់អ្នក"
                 value={guestName}
                 onChange={(e) => setGuestName(e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-emerald-400/40 text-xs text-white placeholder-emerald-300/40 focus:outline-none focus:border-amber-300"
@@ -766,7 +766,7 @@ export function EmeraldPalaceHeritageTemplate({ data = {}, invitationData = {}, 
               <textarea
                 rows={2}
                 required
-                placeholder="សារជូនពរ..."
+                placeholder="សរសេរពាក្យជូនពរនៅទីនេះ..."
                 value={guestMessage}
                 onChange={(e) => setGuestMessage(e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-emerald-400/40 text-xs text-white placeholder-emerald-300/40 focus:outline-none focus:border-amber-300 resize-none"

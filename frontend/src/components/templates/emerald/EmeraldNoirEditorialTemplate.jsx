@@ -706,7 +706,7 @@ export function EmeraldNoirEditorialTemplate({ data = {}, invitationData = {}, i
               <input
                 type="text"
                 required
-                placeholder="សូមបញ្ចូលឈ្មោះរបស់អ្នក..."
+                placeholder="បញ្ចូលឈ្មោះភ្ញៀវកិត្តិយស"
                 value={rsvpName}
                 onChange={(e) => setRsvpName(e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-lg bg-black/60 border border-emerald-500/30 text-xs text-white placeholder-emerald-300/40 focus:outline-none focus:border-[#E2C375]"
@@ -828,7 +828,7 @@ export function EmeraldNoirEditorialTemplate({ data = {}, invitationData = {}, i
               <input
                 type="text"
                 required
-                placeholder="ឈ្មោះរបស់អ្នក..."
+                placeholder="បញ្ចូលឈ្មោះរបស់អ្នក"
                 value={guestName}
                 onChange={(e) => setGuestName(e.target.value)}
                 className="w-full px-3.5 py-2 rounded-lg bg-black/60 border border-emerald-500/30 text-xs text-white placeholder-emerald-300/40 focus:outline-none focus:border-[#E2C375]"
@@ -842,7 +842,7 @@ export function EmeraldNoirEditorialTemplate({ data = {}, invitationData = {}, i
               <textarea
                 rows={2}
                 required
-                placeholder="សូមសរសេរសារជូនពរ..."
+                placeholder="សរសេរពាក្យជូនពរនៅទីនេះ..."
                 value={guestMessage}
                 onChange={(e) => setGuestMessage(e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-lg bg-black/60 border border-emerald-500/30 text-xs text-white placeholder-emerald-300/40 focus:outline-none focus:border-[#E2C375] resize-none"
