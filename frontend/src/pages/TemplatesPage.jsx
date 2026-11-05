@@ -18,10 +18,14 @@ import {
   MapPin,
   Clock,
   Heart,
-  Flower2
+  Flower2,
+  User,
+  LayoutDashboard
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false }) {
+  const { user, isAuthenticated, openAuthModal } = useAuth();
   const isGuest = isGuestMode || (typeof window !== 'undefined' && window.location.pathname.startsWith('/guest'));
   const navigate = useNavigate();
   const {
@@ -162,7 +166,7 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
       {/* Locked Header Section with Soft Gradient Fade Behind Buttons */}
       <header className={`shrink-0 z-30 w-full pt-4 sm:pt-6 pb-3 bg-gradient-to-b ${bgGradFrom} relative`}>
         <div className="container-max">
-          {/* Back Button Row */}
+          {/* Back Button & Auth Button Row */}
           <div className="flex items-center justify-between mb-2">
             <button
               onClick={() => navigate({ to: '/' })}
@@ -171,6 +175,24 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
               <ArrowLeft className="w-4 h-4 text-theabCrimson shrink-0" />
               <span>ថយក្រោយ</span>
             </button>
+
+            {isAuthenticated ? (
+              <button
+                onClick={() => navigate({ to: '/dashboard' })}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white border border-stone-200/90 text-stone-700 hover:text-theabCrimson text-xs font-bold transition cursor-pointer shrink-0"
+              >
+                <LayoutDashboard className="w-3.5 h-3.5 text-theabCrimson" />
+                <span>ផ្ទាំងគ្រប់គ្រង</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => openAuthModal()}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white border border-stone-200/90 text-stone-700 hover:text-theabCrimson text-xs font-bold transition cursor-pointer shrink-0"
+              >
+                <User className="w-3.5 h-3.5 text-theabCrimson" />
+                <span>ចូលគណនី / ចុះឈ្មោះ</span>
+              </button>
+            )}
           </div>
 
           {/* Title Row (Moved below back button to prevent truncation and height clipping) */}

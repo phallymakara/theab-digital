@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
-import { Flower2, HeartHandshake, Gem, Building2, ArrowRight } from 'lucide-react';
+import { Flower2, HeartHandshake, Gem, Building2, ArrowRight, User, LayoutDashboard, LogOut } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export function CeremonySelectionPage() {
   const navigate = useNavigate();
   const { selectCeremony, stopAudio } = useApp();
+  const { user, isAuthenticated, openAuthModal, logout } = useAuth();
 
   useEffect(() => {
     stopAudio?.();
@@ -18,6 +20,35 @@ export function CeremonySelectionPage() {
 
   return (
     <section className="w-full flex-1 min-h-screen flex flex-col justify-center items-center text-center py-6 sm:py-10 px-3.5 sm:px-6 animate-fade dot-bg-luxury relative overflow-hidden">
+      {/* Top Header: Auth & Dashboard Quick Access */}
+      <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+        {isAuthenticated ? (
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => navigate({ to: '/dashboard' })}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-stone-200 bg-white/90 backdrop-blur-xs hover:bg-white text-stone-700 hover:text-theabCrimson text-xs font-bold transition cursor-pointer"
+            >
+              <LayoutDashboard className="w-3.5 h-3.5 text-theabCrimson" />
+              <span>{user?.full_name?.split(' ')[0] || 'ផ្ទាំងគ្រប់គ្រង'}</span>
+            </button>
+            <button
+              onClick={logout}
+              className="p-1.5 rounded-full border border-stone-200 bg-white/90 backdrop-blur-xs hover:bg-white text-stone-400 hover:text-rose-600 transition cursor-pointer"
+              title="ចាកចេញ"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => openAuthModal()}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-stone-200 bg-white/90 backdrop-blur-xs hover:bg-white text-stone-700 hover:text-theabCrimson text-xs font-bold transition cursor-pointer"
+          >
+            <User className="w-3.5 h-3.5 text-theabCrimson" />
+            <span>ចូលគណនី / ចុះឈ្មោះ</span>
+          </button>
+        )}
+      </div>
       <div className="w-full max-w-lg mx-auto flex flex-col items-center relative z-10">
         
         {/* Official Logo with Background Removed (Scales responsively) */}

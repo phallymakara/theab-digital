@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
+import { apiService } from '../services/apiService';
 import {
   Users,
   UserCheck,
@@ -69,18 +70,16 @@ export function DashboardPage() {
 
   // Load from API if available
   useEffect(() => {
-    fetch(`/api/v1/invitations/${invitationData.id || 1}/rsvps`)
-      .then((res) => {
-        if (res.ok) return res.json();
-        throw new Error('Not found');
-      })
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setRsvps(data);
-        }
-      })
-      .catch(() => {});
-  }, [invitationData.id]);
+    if (invitationData?.id) {
+      apiService.getRSVPs(invitationData.id)
+        .then((data) => {
+          if (Array.isArray(data) && data.length > 0) {
+            setRsvps(data);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [invitationData?.id]);
 
   // Derived statistics
   const totalResponses = rsvps.length;

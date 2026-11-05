@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
+import { apiService } from '../services/apiService';
 import { CEREMONY_DATA } from '../data/templates';
 import confetti from 'canvas-confetti';
 import { FlyingHeartsAndFlowers } from '../components/FlyingHeartsAndFlowers';
@@ -92,18 +93,13 @@ export function InvitationPreviewPage() {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch(`/api/v1/invitations/${data.id || 1}/rsvps`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+      try {
+        await apiService.submitPublicRSVP(data.slug || 'vibol-sovanndy', {
           ...formData,
           source: 'direct_link',
-        }),
-      });
-
-      if (!response.ok) {
-        // Fallback for demo if backend isn't ready
-        console.warn('Backend responded with error, falling back locally');
+        });
+      } catch (backendErr) {
+        console.warn('Backend RSVP failed, falling back locally:', backendErr.message);
       }
 
       setIsSubmitted(true);
