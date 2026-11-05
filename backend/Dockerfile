@@ -13,8 +13,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install python dependencies
-COPY pyproject.toml .
+# Copy package metadata and source code for building
+COPY pyproject.toml README.md* ./
+COPY app ./app
+
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir .
 
@@ -57,4 +59,3 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD curl -f http://localhost:${PORT}/health || exit 1
 
 ENTRYPOINT ["/app/entrypoint.sh"]
-
