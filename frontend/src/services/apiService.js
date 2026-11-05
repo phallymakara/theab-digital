@@ -3,7 +3,8 @@
  * Handles communication with the FastAPI backend
  */
 
-const BASE_URL = import.meta.env.VITE_API_URL || '/api/v1';
+const RAW_URL = import.meta.env.VITE_API_URL || '/api/v1';
+const BASE_URL = RAW_URL.endsWith('/') ? RAW_URL.slice(0, -1) : RAW_URL;
 
 class ApiService {
   getToken() {
