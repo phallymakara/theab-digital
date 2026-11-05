@@ -298,8 +298,6 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
                         </>
                       )}
 
-                      {/* Flying Hearts & Flying Flowers Animation Layer for All Card Containers */}
-                      <FlyingHeartsAndFlowers count={3} />
 
                       {/* Couple Names - Modern Khmer Typographic Text Directly Floating on Photo */}
                       {tpl.cardStyle === 'floral-romdoul-moonlight' ? (

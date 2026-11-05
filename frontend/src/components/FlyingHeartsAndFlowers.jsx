@@ -28,12 +28,18 @@ const SMOOTH_TRAJECTORIES = [
 ];
 
 export function FlyingHeartsAndFlowers({ count = 8 }) {
-  const effectiveCount = useMemo(() => {
-    if (typeof window !== 'undefined' && window.innerWidth < 640) {
-      return Math.min(2, count);
-    }
-    return count;
-  }, [count]);
+  // Mobile thermal & power optimization: Completely disable particle animations on mobile screens
+  // and for users requesting reduced motion.
+  const isMobileOrReducedMotion = useMemo(() => {
+    if (typeof window === 'undefined') return true;
+    const isMobile = window.innerWidth < 768 || ('ontouchstart' in window && window.innerWidth < 1024);
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    return isMobile || prefersReducedMotion;
+  }, []);
+
+  if (isMobileOrReducedMotion) return null;
+
+  const effectiveCount = Math.min(count, 8);
   // Generate a randomized, smooth, 3D multi-directional mix of hearts and flowers
   const particles = useMemo(() => {
     return Array.from({ length: effectiveCount }, (_, idx) => {

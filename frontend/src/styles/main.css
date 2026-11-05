@@ -1664,7 +1664,13 @@ button:active:not(:disabled) {
   contain: layout paint style;
 }
 
-/* Mobile GPU Thermal Optimization: Disabling heavy backdrop blur shaders on mobile viewports */
+/* ==========================================================================
+   MOBILE THERMAL & GPU POWER OPTIMIZATIONS
+   1. Disables heavy backdrop-filter blur shaders.
+   2. Disables non-essential infinite ambient animations on mobile screens.
+   3. Releases GPU texture compositing layers (will-change: auto).
+   4. Enforces prefers-reduced-motion for battery saving.
+   ========================================================================== */
 @media (max-width: 768px) {
   .backdrop-blur,
   .backdrop-blur-none,
@@ -1678,5 +1684,48 @@ button:active:not(:disabled) {
   [class*="backdrop-blur"] {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
+  }
+
+  /* Suspend infinite GPU particle animations on mobile phones */
+  [class*="animate-khmer-"],
+  [class*="animate-smooth-"],
+  .animate-float-slow,
+  .animate-ambient-pulse,
+  .animate-petal-fall-1,
+  .animate-petal-fall-2,
+  .animate-petal-fall-3,
+  .animate-romdoul-breeze-1,
+  .animate-romdoul-breeze-2,
+  .animate-romdoul-breeze-3,
+  .animate-heart-float-1,
+  .animate-heart-float-2,
+  .animate-heart-float-3,
+  .animate-emerald-lotus-1,
+  .animate-emerald-lotus-2,
+  .animate-emerald-lotus-3 {
+    animation: none !important;
+    will-change: auto !important;
+    transform: none !important;
+  }
+
+  /* Prevent infinite compositing layer allocation */
+  .will-change-transform {
+    will-change: auto !important;
+  }
+}
+
+/* Pause all animations when app is hidden or phone screen is locked */
+.app-idle-paused *,
+.app-idle-paused *::before,
+.app-idle-paused *::after {
+  animation-play-state: paused !important;
+}
+
+/* Battery Saver / Reduced Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

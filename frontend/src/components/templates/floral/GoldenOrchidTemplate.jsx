@@ -146,6 +146,8 @@ export default function GoldenOrchidTemplate({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    // Mobile thermal optimization: Completely disable canvas loop on mobile screens or reduced motion
+    if (typeof window !== 'undefined' && (window.innerWidth < 768 || window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches)) return;
     const ctx = canvas.getContext('2d');
     let animationFrameId;
 
@@ -196,7 +198,6 @@ export default function GoldenOrchidTemplate({
         animationFrameId = null;
         return;
       }
-      animationFrameId = requestAnimationFrame(render);
       const elapsed = currentTime - lastTime;
       if (elapsed < fpsInterval) return;
       lastTime = currentTime - (elapsed % fpsInterval);

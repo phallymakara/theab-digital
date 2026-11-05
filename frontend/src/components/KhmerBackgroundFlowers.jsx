@@ -192,13 +192,19 @@ const HEART_FLY_ANIMATIONS = [
  * intermixed with flying hearts that float and fly upwards smoothly outside the container page.
  */
 export function KhmerFloatingBackground({ count = 32 }) {
-  // Mobile-adaptive particle count to prevent mobile GPU thermal load & battery drain
-  const effectiveCount = useMemo(() => {
-    if (typeof window !== 'undefined' && window.innerWidth < 640) {
-      return Math.min(6, count);
-    }
-    return count;
-  }, [count]);
+  // Mobile thermal & power optimization: Completely disable background floating SVGs on mobile devices.
+  // On mobile screens, the wedding card container occupies full viewport width, making background motifs
+  // invisible or a source of wasteful GPU texture recomposition.
+  const isMobileOrReducedMotion = useMemo(() => {
+    if (typeof window === 'undefined') return true;
+    const isMobile = window.innerWidth < 768 || ('ontouchstart' in window && window.innerWidth < 1024);
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    return isMobile || prefersReducedMotion;
+  }, []);
+
+  if (isMobileOrReducedMotion) return null;
+
+  const effectiveCount = Math.min(count, 24);
   const particles = useMemo(() => {
     return Array.from({ length: effectiveCount }, (_, idx) => {
       // 50% Flowers, 50% Flying Hearts
