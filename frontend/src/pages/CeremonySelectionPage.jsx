@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
-import { Flower2, HeartHandshake, Gem, Building2, ArrowRight, User, LayoutDashboard, LogOut } from 'lucide-react';
+import { Flower2, HeartHandshake, Gem, Building2, ArrowRight, User, LayoutDashboard, LogOut, ShieldCheck } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export function CeremonySelectionPage() {
@@ -24,6 +24,16 @@ export function CeremonySelectionPage() {
       <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
         {isAuthenticated ? (
           <div className="flex items-center gap-2">
+            {(user?.is_superuser || user?.role === 'superadmin') && (
+              <button
+                onClick={() => navigate({ to: '/superadmin' })}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-900 text-xs font-bold transition cursor-pointer"
+                title="Super Admin Console"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-700" />
+                <span>Admin</span>
+              </button>
+            )}
             <button
               onClick={() => navigate({ to: '/dashboard' })}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-stone-200 bg-white/90 backdrop-blur-xs hover:bg-white text-stone-700 hover:text-theabCrimson text-xs font-bold transition cursor-pointer"

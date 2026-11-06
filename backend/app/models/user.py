@@ -15,6 +15,8 @@ class User(Base):
     phone = Column(String(50), nullable=True)
     avatar_url = Column(String(500), nullable=True)
     is_active = Column(Boolean, default=True)
+    is_superuser = Column(Boolean, default=False, nullable=True)
+    role = Column(String(50), default="user", nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = Column(
         DateTime,

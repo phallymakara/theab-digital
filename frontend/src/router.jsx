@@ -51,6 +51,7 @@ const TemplatesPage = lazyWithRetry(() => import('./pages/TemplatesPage').then(m
 const DashboardPage = lazyWithRetry(() => import('./pages/DashboardPage').then(m => ({ default: m.DashboardPage })));
 const TemplateDetailPage = lazyWithRetry(() => import('./pages/TemplateDetailPage').then(m => ({ default: m.TemplateDetailPage })));
 const TemplateCustomizerPage = lazyWithRetry(() => import('./pages/TemplateCustomizerPage').then(m => ({ default: m.TemplateCustomizerPage })));
+const SuperAdminPage = lazyWithRetry(() => import('./pages/SuperAdminPage').then(m => ({ default: m.SuperAdminPage })));
 
 // Stable Route Wrappers to prevent unmounting/remounting on router re-evaluations
 function WeddingRouteComponent() {
@@ -276,6 +277,22 @@ const customizeRoute = createRoute({
   errorComponent: RootErrorComponent,
 });
 
+// Route: /superadmin (Platform Administration & Metrics Console)
+const superAdminRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/superadmin',
+  component: SuperAdminPage,
+  errorComponent: RootErrorComponent,
+});
+
+// Route: /admin (Alias for Superadmin Console)
+const adminRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin',
+  component: SuperAdminPage,
+  errorComponent: RootErrorComponent,
+});
+
 // Build route tree
 const routeTree = rootRoute.addChildren([
   indexRoute,
@@ -294,6 +311,8 @@ const routeTree = rootRoute.addChildren([
   previewRoute,
   customizeTemplateRoute,
   customizeRoute,
+  superAdminRoute,
+  adminRoute,
 ]);
 
 // Create TanStack Router instance (defaultPreload: false prevents eager background downloading)

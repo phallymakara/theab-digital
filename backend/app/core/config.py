@@ -20,6 +20,10 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
 
+    # Superadmin Credentials (Loaded from environment only, never hardcoded in git)
+    SUPERADMIN_EMAIL: Optional[str] = None
+    SUPERADMIN_PASSWORD: Optional[str] = None
+
     # Cloudflare R2 Storage (S3 Compatible)
     R2_ACCOUNT_ID: Optional[str] = None
     R2_ACCESS_KEY_ID: Optional[str] = None

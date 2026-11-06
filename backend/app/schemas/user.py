@@ -22,6 +22,8 @@ class UserLogin(BaseModel):
 class UserResponse(UserBase):
     id: int
     is_active: bool
+    is_superuser: bool = False
+    role: Optional[str] = "user"
     created_at: datetime
 
     class Config:

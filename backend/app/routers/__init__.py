@@ -4,6 +4,7 @@ from app.routers.rsvps import router as rsvps_router
 from app.routers.stats import router as stats_router
 from app.routers.media import router as media_router
 from app.routers.public import router as public_router
+from app.routers.admin import router as admin_router
 
 __all__ = [
     "auth_router",
@@ -11,5 +12,6 @@ __all__ = [
     "rsvps_router",
     "stats_router",
     "media_router",
-    "public_router"
+    "public_router",
+    "admin_router",
 ]

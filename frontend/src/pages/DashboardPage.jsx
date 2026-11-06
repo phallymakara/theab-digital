@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 import { apiService } from '../services/apiService';
 import {
   Search,
@@ -8,11 +9,15 @@ import {
   Copy,
   QrCode,
   ArrowLeft,
-  Check
+  Check,
+  RefreshCw,
+  Heart,
+  Users
 } from 'lucide-react';
 
 export function DashboardPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { invitationData, setIsQrModalOpen, addToast, ceremonyType, stopAudio, selectedTemplate } = useApp();
 
   useEffect(() => {
@@ -28,6 +33,7 @@ export function DashboardPage() {
       guest_count: 2,
       wishes: 'សូមជូនពរឱ្យគូស្វាមីភរិយាថ្មី ស្រឡាញ់គ្នារហូតដល់ចាស់កោងខ្នង!',
       source: 'direct_link',
+      created_at: new Date().toISOString()
     },
     {
       id: 2,
@@ -37,6 +43,7 @@ export function DashboardPage() {
       guest_count: 2,
       wishes: 'ជ័យមង្គល សិរីសួស្តី វិបុលសុខគ្រប់ប្រការ!',
       source: 'qr_code',
+      created_at: new Date().toISOString()
     },
     {
       id: 3,
@@ -46,6 +53,7 @@ export function DashboardPage() {
       guest_count: 0,
       wishes: 'សូមអភ័យទោស ដោយសារជាប់បេសកកម្មក្រៅប្រទេស តែសូមផ្ញើពរជ័យដ៏កក់ក្តៅជូន!',
       source: 'telegram',
+      created_at: new Date().toISOString()
     },
     {
       id: 4,
@@ -55,25 +63,83 @@ export function DashboardPage() {
       guest_count: 1,
       wishes: 'រីករាយថ្ងៃមង្គលការ បងស្រីសម្លាញ់!',
       source: 'direct_link',
+      created_at: new Date().toISOString()
     },
   ]);
 
+  const [activeTab, setActiveTab] = useState('guests'); // 'guests' or 'wishes'
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [currentInvitationId, setCurrentInvitationId] = useState(invitationData?.id || 1);
 
-  // Load from API if available with null-safe handling
-  useEffect(() => {
-    if (invitationData?.id) {
-      apiService.getRSVPs(invitationData.id)
-        .then((data) => {
-          if (Array.isArray(data) && data.length > 0) {
-            setRsvps(data);
+  // Sync with API & localStorage submissions
+  const loadRsvps = useCallback(async (showToast = false) => {
+    setIsRefreshing(true);
+    let targetId = currentInvitationId;
+
+    try {
+      // If user is logged in, attempt to find user's own invitation
+      if (user) {
+        try {
+          const userInvs = await apiService.listInvitations();
+          if (Array.isArray(userInvs) && userInvs.length > 0) {
+            targetId = userInvs[0].id;
+            setCurrentInvitationId(userInvs[0].id);
           }
-        })
-        .catch(() => {});
+        } catch (_) {}
+      }
+
+      // Fetch RSVPs from backend
+      const data = await apiService.getRSVPs(targetId);
+      let combined = Array.isArray(data) ? [...data] : [];
+
+      // Merge locally recorded submissions if present
+      try {
+        const local = JSON.parse(localStorage.getItem('theab_guest_submissions') || '[]');
+        if (Array.isArray(local) && local.length > 0) {
+          local.forEach((loc) => {
+            const exists = combined.some(
+              (c) => c.guest_name === loc.guest_name || c.id === loc.id
+            );
+            if (!exists) {
+              combined.unshift(loc);
+            }
+          });
+        }
+      } catch (_) {}
+
+      if (combined.length > 0) {
+        setRsvps(combined);
+        if (showToast) {
+          addToast('បានធ្វើបច្ចុប្បន្នភាពទិន្នន័យភ្ញៀវរួចរាល់', 'success');
+        }
+      }
+    } catch (_) {
+      // If API request fails, check localStorage fallback
+      try {
+        const local = JSON.parse(localStorage.getItem('theab_guest_submissions') || '[]');
+        if (Array.isArray(local) && local.length > 0) {
+          setRsvps((prev) => {
+            const merged = [...local];
+            prev.forEach((p) => {
+              if (!merged.some((m) => m.guest_name === p.guest_name)) {
+                merged.push(p);
+              }
+            });
+            return merged;
+          });
+        }
+      } catch (_) {}
+    } finally {
+      setIsRefreshing(false);
     }
-  }, [invitationData?.id]);
+  }, [user, currentInvitationId, addToast]);
+
+  useEffect(() => {
+    loadRsvps(false);
+  }, []);
 
   // Derived statistics (null-safe)
   const totalResponses = (rsvps || []).length;
@@ -83,6 +149,9 @@ export function DashboardPage() {
     .filter((r) => r?.attendance_status === 'attending')
     .reduce((sum, r) => sum + (Number(r?.guest_count) || 1), 0);
   const estimatedTables = Math.ceil(totalAttendingGuests / 10);
+
+  // List of guests with wishes
+  const wishesList = (rsvps || []).filter((r) => r?.wishes && r.wishes.trim().length > 0);
 
   // Filtered list (null-safe)
   const filteredRsvps = (rsvps || []).filter((r) => {
@@ -99,13 +168,19 @@ export function DashboardPage() {
     const matchesSearch =
       !query ||
       guestName.includes(query) ||
-      (r.phone && String(r.phone).includes(query));
+      (r.phone && String(r.phone).includes(query)) ||
+      (r.wishes && String(r.wishes).toLowerCase().includes(query));
 
     return matchesFilter && matchesSearch;
   });
 
   const handleDelete = (id) => {
     setRsvps((prev) => (prev || []).filter((r) => r?.id !== id));
+    try {
+      const local = JSON.parse(localStorage.getItem('theab_guest_submissions') || '[]');
+      const updated = local.filter((item) => item.id !== id);
+      localStorage.setItem('theab_guest_submissions', JSON.stringify(updated));
+    } catch (_) {}
     addToast('បានលុបទិន្នន័យភ្ញៀវដោយជោគជ័យ', 'info');
   };
 
@@ -167,11 +242,20 @@ export function DashboardPage() {
             ផ្ទាំងគ្រប់គ្រងភ្ញៀវ និងស្ថិតិឆ្លើយតប
           </h1>
           <p className="text-xs text-stone-500 mt-0.5">
-            តាមដានវត្តមានភ្ញៀវ និងគណនាចំនួនតុជាក់ស្តែង
+            តាមដានវត្តមានភ្ញៀវ ពាក្យជូនពរ និងគណនាចំនួនតុជាក់ស្តែង
           </p>
         </div>
 
-        <div className="grid grid-cols-3 sm:flex items-center gap-2 w-full sm:w-auto">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+          <button
+            onClick={() => loadRsvps(true)}
+            disabled={isRefreshing}
+            className="btn-secondary !py-2 !px-2.5 sm:!px-3.5 text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+            title="ទាញយកទិន្នន័យចុងក្រោយ"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 text-stone-600 ${isRefreshing ? 'animate-spin' : ''}`} />
+            <span>ផ្ទុកឡើងវិញ</span>
+          </button>
           <button
             onClick={handleViewTheab}
             className="btn-secondary !py-2 !px-2.5 sm:!px-3.5 text-xs flex items-center justify-center gap-1.5 cursor-pointer truncate"
@@ -259,177 +343,116 @@ export function DashboardPage() {
         </div>
       </div>
 
-      {/* Guest List / Table Container */}
-      <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden mb-8">
-        {/* Table Filter Toolbar */}
-        <div className="p-3 sm:p-4 border-b border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-stone-50/50">
-          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-0.5">
-            <button
-              onClick={() => setActiveFilter('all')}
-              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer whitespace-nowrap shrink-0 ${
-                activeFilter === 'all'
-                  ? 'bg-rose-900 text-white'
-                  : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
-              }`}
-            >
-              ទាំងអស់ ({rsvps.length})
-            </button>
-            <button
-              onClick={() => setActiveFilter('attending')}
-              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer whitespace-nowrap shrink-0 ${
-                activeFilter === 'attending'
-                  ? 'bg-emerald-700 text-white'
-                  : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
-              }`}
-            >
-              ចូលរួម ({attendingParties})
-            </button>
-            <button
-              onClick={() => setActiveFilter('declined')}
-              className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer whitespace-nowrap shrink-0 ${
-                activeFilter === 'declined'
-                  ? 'bg-rose-800 text-white'
-                  : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
-              }`}
-            >
-              មិនចូលរួម ({declinedParties})
-            </button>
-          </div>
+      {/* Navigation Tabs (Guests Attendance vs Blessings & Wishes) */}
+      <div className="flex items-center gap-2 mb-4 border-b border-stone-200">
+        <button
+          onClick={() => setActiveTab('guests')}
+          className={`flex items-center gap-1.5 pb-2.5 px-3 text-xs sm:text-sm font-bold transition cursor-pointer ${
+            activeTab === 'guests'
+              ? 'border-b-2 border-theabCrimson text-theabCrimson'
+              : 'text-stone-500 hover:text-stone-800'
+          }`}
+        >
+          <Users className="w-4 h-4" />
+          <span>បញ្ជីវត្តមានភ្ញៀវ ({filteredRsvps.length})</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('wishes')}
+          className={`flex items-center gap-1.5 pb-2.5 px-3 text-xs sm:text-sm font-bold transition cursor-pointer ${
+            activeTab === 'wishes'
+              ? 'border-b-2 border-theabCrimson text-theabCrimson'
+              : 'text-stone-500 hover:text-stone-800'
+          }`}
+        >
+          <Heart className="w-4 h-4 text-rose-600" />
+          <span>កម្រងពាក្យជូនពរពីភ្ញៀវ ({wishesList.length})</span>
+        </button>
+      </div>
 
-          <div className="relative w-full sm:w-auto sm:min-w-[220px]">
-            <Search className="w-4 h-4 text-stone-400 absolute left-3 top-2.5" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="ស្វែងរកឈ្មោះ ឬលេខទូរស័ព្ទ..."
-              className="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-stone-200 rounded-lg focus:outline-none focus:border-rose-900"
-            />
-          </div>
-        </div>
-
-        {/* Mobile View: Dedicated Guest Cards (Phones) */}
-        <div className="md:hidden divide-y divide-stone-100">
-          {filteredRsvps.length === 0 ? (
-            <div className="text-center py-8 text-stone-400 text-xs">
-              មិនមានទិន្នន័យត្រូវគ្នានឹងការស្វែងរកឡើយ
+      {/* Main Tab Content */}
+      {activeTab === 'guests' ? (
+        <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden mb-8">
+          {/* Table Filter Toolbar */}
+          <div className="p-3 sm:p-4 border-b border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-stone-50/50">
+            <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-0.5">
+              <button
+                onClick={() => setActiveFilter('all')}
+                className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer whitespace-nowrap shrink-0 ${
+                  activeFilter === 'all'
+                    ? 'bg-rose-900 text-white'
+                    : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
+                }`}
+              >
+                ទាំងអស់ ({rsvps.length})
+              </button>
+              <button
+                onClick={() => setActiveFilter('attending')}
+                className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer whitespace-nowrap shrink-0 ${
+                  activeFilter === 'attending'
+                    ? 'bg-emerald-700 text-white'
+                    : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
+                }`}
+              >
+                ចូលរួម ({attendingParties})
+              </button>
+              <button
+                onClick={() => setActiveFilter('declined')}
+                className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer whitespace-nowrap shrink-0 ${
+                  activeFilter === 'declined'
+                    ? 'bg-rose-800 text-white'
+                    : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
+                }`}
+              >
+                មិនចូលរួម ({declinedParties})
+              </button>
             </div>
-          ) : (
-            filteredRsvps.map((rsvp) => {
-              const isAttending = rsvp?.attendance_status === 'attending';
-              return (
-                <div key={rsvp.id} className="p-3.5 space-y-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1 min-w-0">
-                      <div className="font-bold text-sm text-stone-800 truncate">
-                        {rsvp.guest_name}
-                      </div>
-                      {rsvp.phone && (
-                        <div className="text-[11px] text-stone-400 mt-0.5">
-                          {rsvp.phone}
+
+            <div className="relative w-full sm:w-auto sm:min-w-[220px]">
+              <Search className="w-4 h-4 text-stone-400 absolute left-3 top-2.5" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="ស្វែងរកឈ្មោះ ឬលេខទូរស័ព្ទ..."
+                className="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-stone-200 rounded-lg focus:outline-none focus:border-rose-900"
+              />
+            </div>
+          </div>
+
+          {/* Mobile View: Dedicated Guest Cards (Phones) */}
+          <div className="md:hidden divide-y divide-stone-100">
+            {filteredRsvps.length === 0 ? (
+              <div className="text-center py-8 text-stone-400 text-xs">
+                មិនមានទិន្នន័យត្រូវគ្នានឹងការស្វែងរកឡើយ
+              </div>
+            ) : (
+              filteredRsvps.map((rsvp) => {
+                const isAttending = rsvp?.attendance_status === 'attending';
+                return (
+                  <div key={rsvp.id} className="p-3.5 space-y-2">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="font-bold text-sm text-stone-800 truncate">
+                          {rsvp.guest_name}
                         </div>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-1.5 shrink-0">
-                      {isAttending ? (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>
-                          ចូលរួម ({rsvp.guest_count} នាក់)
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-rose-100 text-rose-800">
-                          <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5"></span>
-                          មិនអាចចូលរួម
-                        </span>
-                      )}
-                      <button
-                        onClick={() => handleDelete(rsvp.id)}
-                        className="text-stone-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition cursor-pointer"
-                        title="លុបទិន្នន័យ"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between text-[11px] text-stone-500">
-                    <span className="inline-block px-2 py-0.5 rounded bg-stone-100 text-stone-600 font-medium capitalize">
-                      ប្រភព: {rsvp.source || 'Direct'}
-                    </span>
-                    <span className="font-medium">
-                      {isAttending ? `ភ្ញៀវ: ${rsvp.guest_count} នាក់` : 'អវត្តមាន'}
-                    </span>
-                  </div>
-
-                  {rsvp.wishes && (
-                    <div className="text-xs text-stone-600 bg-stone-50 rounded-lg p-2.5 border border-stone-100 italic leading-relaxed">
-                      "{rsvp.wishes}"
-                    </div>
-                  )}
-                </div>
-              );
-            })
-          )}
-        </div>
-
-        {/* Desktop View: Full Responsive Table (Tablets & Desktops) */}
-        <div className="hidden md:block overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs">
-            <thead>
-              <tr className="bg-stone-100/70 border-b border-stone-200 text-stone-600 font-bold">
-                <th className="py-3 px-4">ឈ្មោះភ្ញៀវកិត្តិយស</th>
-                <th className="py-3 px-4">ប្រភព</th>
-                <th className="py-3 px-4 text-center">ចំនួនភ្ញៀវ</th>
-                <th className="py-3 px-4 text-center">ស្ថានភាព</th>
-                <th className="py-3 px-4">ពាក្យជូនពរ</th>
-                <th className="py-3 px-4 text-right">សកម្មភាព</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-stone-100">
-              {filteredRsvps.length === 0 ? (
-                <tr>
-                  <td colSpan="6" className="text-center py-8 text-stone-400 text-xs">
-                    មិនមានទិន្នន័យត្រូវគ្នានឹងការស្វែងរកឡើយ
-                  </td>
-                </tr>
-              ) : (
-                filteredRsvps.map((rsvp) => {
-                  const isAttending = rsvp?.attendance_status === 'attending';
-                  return (
-                    <tr key={rsvp.id} className="hover:bg-amber-50/20 transition">
-                      <td className="py-3 px-4 font-bold text-stone-800">
-                        {rsvp.guest_name}
                         {rsvp.phone && (
-                          <span className="block text-[11px] font-normal text-stone-400">
+                          <div className="text-[11px] text-stone-400 mt-0.5">
                             {rsvp.phone}
-                          </span>
+                          </div>
                         )}
-                      </td>
-                      <td className="py-3 px-4">
-                        <span className="text-[11px] text-stone-500 font-medium capitalize">
-                          {rsvp.source || 'Direct'}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4 text-center font-bold text-stone-700">
-                        {isAttending ? `${rsvp.guest_count} នាក់` : '0'}
-                      </td>
-                      <td className="py-3 px-4 text-center">
+                      </div>
+                      <div className="flex items-center gap-1.5 shrink-0">
                         {isAttending ? (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>
                             ចូលរួម ({rsvp.guest_count} នាក់)
                           </span>
                         ) : (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-rose-100 text-rose-800">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-rose-100 text-rose-800">
                             <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5"></span>
-                            មិនអាចចូលរួម
+                            មិនចូលរួម
                           </span>
                         )}
-                      </td>
-                      <td className="py-3 px-4 text-stone-600 max-w-xs truncate italic">
-                        {rsvp.wishes || <span className="text-stone-300">-</span>}
-                      </td>
-                      <td className="py-3 px-4 text-right">
                         <button
                           onClick={() => handleDelete(rsvp.id)}
                           className="text-stone-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition cursor-pointer"
@@ -437,15 +460,149 @@ export function DashboardPage() {
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
-            </tbody>
-          </table>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between text-[11px] text-stone-500">
+                      <span className="inline-block px-2 py-0.5 rounded bg-stone-100 text-stone-600 font-medium capitalize">
+                        ប្រភព: {rsvp.source || 'Direct'}
+                      </span>
+                      <span className="font-medium">
+                        {isAttending ? `ភ្ញៀវ: ${rsvp.guest_count} នាក់` : 'អវត្តមាន'}
+                      </span>
+                    </div>
+
+                    {rsvp.wishes && (
+                      <div className="text-xs text-stone-600 bg-stone-50 rounded-lg p-2.5 border border-stone-100 italic leading-relaxed">
+                        "{rsvp.wishes}"
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+          {/* Desktop View: Full Responsive Table (Tablets & Desktops) */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr className="bg-stone-100/70 border-b border-stone-200 text-stone-600 font-bold">
+                  <th className="py-3 px-4">ឈ្មោះភ្ញៀវកិត្តិយស</th>
+                  <th className="py-3 px-4">ប្រភព</th>
+                  <th className="py-3 px-4 text-center">ចំនួនភ្ញៀវ</th>
+                  <th className="py-3 px-4 text-center">ស្ថានភាព</th>
+                  <th className="py-3 px-4">ពាក្យជូនពរ</th>
+                  <th className="py-3 px-4 text-right">សកម្មភាព</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-stone-100">
+                {filteredRsvps.length === 0 ? (
+                  <tr>
+                    <td colSpan="6" className="text-center py-8 text-stone-400 text-xs">
+                      មិនមានទិន្នន័យត្រូវគ្នានឹងការស្វែងរកឡើយ
+                    </td>
+                  </tr>
+                ) : (
+                  filteredRsvps.map((rsvp) => {
+                    const isAttending = rsvp?.attendance_status === 'attending';
+                    return (
+                      <tr key={rsvp.id} className="hover:bg-amber-50/20 transition">
+                        <td className="py-3 px-4 font-bold text-stone-800">
+                          {rsvp.guest_name}
+                          {rsvp.phone && (
+                            <span className="block text-[11px] font-normal text-stone-400">
+                              {rsvp.phone}
+                            </span>
+                          )}
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className="text-[11px] text-stone-500 font-medium capitalize">
+                            {rsvp.source || 'Direct'}
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 text-center font-bold text-stone-700">
+                          {isAttending ? `${rsvp.guest_count} នាក់` : '0'}
+                        </td>
+                        <td className="py-3 px-4 text-center">
+                          {isAttending ? (
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>
+                              ចូលរួម ({rsvp.guest_count} នាក់)
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-rose-100 text-rose-800">
+                              <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5"></span>
+                              មិនអាចចូលរួម
+                            </span>
+                          )}
+                        </td>
+                        <td className="py-3 px-4 text-stone-600 max-w-xs truncate italic">
+                          {rsvp.wishes || <span className="text-stone-300">-</span>}
+                        </td>
+                        <td className="py-3 px-4 text-right">
+                          <button
+                            onClick={() => handleDelete(rsvp.id)}
+                            className="text-stone-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition cursor-pointer"
+                            title="លុបទិន្នន័យ"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      ) : (
+        /* Guest Blessings & Wishes Feed Tab */
+        <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden mb-8 p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="font-moul text-sm sm:text-base text-rose-950">
+                កម្រងពាក្យជូនពរ និងប្រសិទ្ធពរជ័យ
+              </h3>
+              <p className="text-xs text-stone-500 mt-0.5">
+                សារពរជ័យដ៏កក់ក្តៅពីភ្ញៀវកិត្តិយសទាំងអស់
+              </p>
+            </div>
+            <span className="px-3 py-1 rounded-full bg-rose-50 border border-rose-100 text-xs font-bold text-rose-900">
+              {wishesList.length} សារជូនពរ
+            </span>
+          </div>
+
+          {wishesList.length === 0 ? (
+            <div className="text-center py-12 text-stone-400 text-xs">
+              <Heart className="w-8 h-8 text-stone-300 mx-auto mb-2" />
+              មិនទាន់មានពាក្យជូនពរនៅឡើយទេ
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+              {wishesList.map((item) => (
+                <div
+                  key={item.id}
+                  className="p-4 rounded-xl border border-stone-100 bg-stone-50/60 hover:bg-stone-50 transition"
+                >
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span className="font-bold text-xs sm:text-sm text-stone-800">
+                      {item.guest_name}
+                    </span>
+                    <span className="text-[11px] text-stone-400">
+                      {item.created_at ? new Date(item.created_at).toLocaleDateString('km-KH') : 'ទើបតែផ្ញើ'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-stone-600 leading-relaxed italic">
+                    "{item.wishes}"
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </section>
   );
 }

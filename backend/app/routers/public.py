@@ -40,7 +40,35 @@ def sanitize_text(text: Optional[str]) -> Optional[str]:
     return html.escape(cleaned.strip())
 
 
+def find_public_invitation(db: Session, slug: str) -> Optional[Invitation]:
+    """Find invitation by slug, template_id, numeric id, or default fallback."""
+    if not slug:
+        return db.query(Invitation).first()
+    # 1. Exact match by slug
+    invitation = db.query(Invitation).filter(Invitation.slug == slug).first()
+    if invitation:
+        return invitation
+
+    # 2. Match by template_id
+    invitation = db.query(Invitation).filter(Invitation.template_id == slug).first()
+    if invitation:
+        return invitation
+
+    # 3. Match by ID if numeric
+    if slug.isdigit():
+        invitation = db.query(Invitation).filter(Invitation.id == int(slug)).first()
+        if invitation:
+            return invitation
+
+    # 4. Fallback to default or first active invitation
+    return (
+        db.query(Invitation).filter(Invitation.slug == "vibol-sovanndy").first()
+        or db.query(Invitation).first()
+    )
+
+
 @router.get("/{slug}", response_model=InvitationResponse)
+@router.get("/{slug}/", response_model=InvitationResponse, include_in_schema=False)
 def get_public_invitation(slug: str, db: Session = Depends(get_db)):
     """
     Public endpoint for wedding guests:
@@ -48,7 +76,7 @@ def get_public_invitation(slug: str, db: Session = Depends(get_db)):
     - Loads all ceremony metadata, couple profiles, schedules, photo galleries, and KHQR info.
     - Atomically increments views_count.
     """
-    invitation = db.query(Invitation).filter(Invitation.slug == slug).first()
+    invitation = find_public_invitation(db, slug)
     if not invitation:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -70,7 +98,8 @@ def get_public_invitation(slug: str, db: Session = Depends(get_db)):
 
 
 @router.post("/{slug}/rsvps", response_model=GuestRSVPResponse, status_code=status.HTTP_201_CREATED)
-@limiter.limit("15/minute")
+@router.post("/{slug}/rsvps/", response_model=GuestRSVPResponse, status_code=status.HTTP_201_CREATED, include_in_schema=False)
+@limiter.limit("30/minute")
 def submit_guest_rsvp(
     request: Request,
     slug: str,
@@ -81,9 +110,9 @@ def submit_guest_rsvp(
     Public endpoint for guest RSVP & wishes submission:
     - Zero login required.
     - Automatic input sanitization against XSS.
-    - Rate limited to 15 submissions per minute per IP.
+    - Rate limited to 30 submissions per minute per IP.
     """
-    invitation = db.query(Invitation).filter(Invitation.slug == slug).first()
+    invitation = find_public_invitation(db, slug)
     if not invitation:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -119,6 +148,7 @@ def submit_guest_rsvp(
 
 
 @router.get("/{slug}/wishes", response_model=List[GuestWishFeedItem])
+@router.get("/{slug}/wishes/", response_model=List[GuestWishFeedItem], include_in_schema=False)
 def get_public_guest_wishes(
     slug: str,
     limit: int = 50,
@@ -129,7 +159,7 @@ def get_public_guest_wishes(
     - Lists only approved RSVPs that contain wishes.
     - Ordered latest first.
     """
-    invitation = db.query(Invitation).filter(Invitation.slug == slug).first()
+    invitation = find_public_invitation(db, slug)
     if not invitation:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

@@ -226,6 +226,31 @@ class ApiService {
   getQrCodeUrl(invitationId) {
     return `${BASE_URL}/invitations/${invitationId}/qr`;
   }
+
+  // ---------------------------------------------------------
+  // Super Admin Endpoints
+  // ---------------------------------------------------------
+  async getAdminMetrics() {
+    return await this.request('/admin/metrics');
+  }
+
+  async getAdminUsers(search = '', skip = 0, limit = 100) {
+    const params = new URLSearchParams();
+    if (search) params.append('search', search);
+    if (skip) params.append('skip', skip);
+    if (limit) params.append('limit', limit);
+    const query = params.toString() ? `?${params.toString()}` : '';
+    return await this.request(`/admin/users${query}`);
+  }
+
+  async getAdminInvitations(search = '', skip = 0, limit = 100) {
+    const params = new URLSearchParams();
+    if (search) params.append('search', search);
+    if (skip) params.append('skip', skip);
+    if (limit) params.append('limit', limit);
+    const query = params.toString() ? `?${params.toString()}` : '';
+    return await this.request(`/admin/invitations${query}`);
+  }
 }
 
 export const apiService = new ApiService();

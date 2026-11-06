@@ -603,15 +603,31 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
     const submittedStatus = rsvpForm.status === 'attending' ? 'attending' : 'declined';
     setRsvpForm({ name: '', status: 'attending', guestCount: '1 នាក់' });
 
+    const activeSlug = serverInvitation?.slug || invitationData?.slug || decodedId || 'vibol-sovanndy';
+
     try {
-      await apiService.submitPublicRSVP(decodedId, {
+      const existing = JSON.parse(localStorage.getItem('theab_guest_submissions') || '[]');
+      existing.unshift({
+        id: Date.now(),
+        guest_name: submittedName,
+        attendance_status: submittedStatus,
+        guest_count: countNum,
+        wishes: '',
+        source: 'direct',
+        created_at: new Date().toISOString()
+      });
+      localStorage.setItem('theab_guest_submissions', JSON.stringify(existing.slice(0, 50)));
+    } catch (_) {}
+
+    try {
+      await apiService.submitPublicRSVP(activeSlug, {
         guest_name: submittedName,
         attendance_status: submittedStatus,
         guest_count: countNum,
         source: 'direct'
       });
-    } catch {
-      // Local optimistic record remains
+    } catch (err) {
+      console.warn('[RSVP Submit Notice]:', err.message);
     }
 
     try {
@@ -648,16 +664,32 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
     const submittedMessage = wishForm.message;
     setWishForm({ name: '', message: '' });
 
+    const activeSlug = serverInvitation?.slug || invitationData?.slug || decodedId || 'vibol-sovanndy';
+
     try {
-      await apiService.submitPublicRSVP(decodedId, {
+      const existing = JSON.parse(localStorage.getItem('theab_guest_submissions') || '[]');
+      existing.unshift({
+        id: Date.now(),
+        guest_name: submittedName,
+        attendance_status: 'attending',
+        guest_count: 1,
+        wishes: submittedMessage,
+        source: 'direct',
+        created_at: new Date().toISOString()
+      });
+      localStorage.setItem('theab_guest_submissions', JSON.stringify(existing.slice(0, 50)));
+    } catch (_) {}
+
+    try {
+      await apiService.submitPublicRSVP(activeSlug, {
         guest_name: submittedName,
         wishes: submittedMessage,
         attendance_status: 'attending',
         guest_count: 1,
         source: 'direct'
       });
-    } catch {
-      // Local optimistic record remains
+    } catch (err) {
+      console.warn('[Wish Submit Notice]:', err.message);
     }
 
     try {

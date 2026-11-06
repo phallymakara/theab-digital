@@ -12,13 +12,15 @@ from app.core.limiter import limiter, rate_limit_exceeded_handler
 from app.db.database import engine, Base, SessionLocal
 from app.models import User, Invitation, GuestRSVP  # Ensure models are loaded
 from app.services.invitation_service import InvitationService
+from app.services.admin_service import AdminService
 from app.routers import (
     auth_router,
     invitations_router,
     rsvps_router,
     stats_router,
     media_router,
-    public_router
+    public_router,
+    admin_router
 )
 
 logger = logging.getLogger("uvicorn.error")
@@ -30,10 +32,11 @@ async def lifespan(app: FastAPI):
     settings.UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
     # Create tables if not present
     Base.metadata.create_all(bind=engine)
-    # Seed default invitation for immediate testing
+    # Seed default invitation and superadmin for immediate readiness
     db = SessionLocal()
     try:
         InvitationService.seed_default_if_empty(db)
+        AdminService.seed_superadmin_if_configured(db)
     finally:
         db.close()
     yield
@@ -84,6 +87,7 @@ app.include_router(invitations_router, prefix=settings.API_V1_STR)
 app.include_router(rsvps_router, prefix=settings.API_V1_STR)
 app.include_router(stats_router, prefix=settings.API_V1_STR)
 app.include_router(media_router, prefix=settings.API_V1_STR)
+app.include_router(admin_router, prefix=settings.API_V1_STR)
 
 # Mount local uploads directory for development fallback
 settings.UPLOAD_DIR.mkdir(parents=True, exist_ok=True)

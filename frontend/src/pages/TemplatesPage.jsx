@@ -20,7 +20,8 @@ import {
   Heart,
   Flower2,
   User,
-  LayoutDashboard
+  LayoutDashboard,
+  ShieldCheck
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -170,29 +171,42 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
           <div className="flex items-center justify-between mb-2">
             <button
               onClick={() => navigate({ to: '/' })}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white border border-stone-200/90 text-stone-700 hover:text-theabCrimson text-xs font-bold transition shadow-2xs cursor-pointer shrink-0"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white border border-stone-200/90 text-stone-700 hover:text-theabCrimson text-xs font-bold transition cursor-pointer shrink-0"
             >
               <ArrowLeft className="w-4 h-4 text-theabCrimson shrink-0" />
               <span>ថយក្រោយ</span>
             </button>
 
-            {isAuthenticated ? (
-              <button
-                onClick={() => navigate({ to: '/dashboard' })}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white border border-stone-200/90 text-stone-700 hover:text-theabCrimson text-xs font-bold transition cursor-pointer shrink-0"
-              >
-                <LayoutDashboard className="w-3.5 h-3.5 text-theabCrimson" />
-                <span>ផ្ទាំងគ្រប់គ្រង</span>
-              </button>
-            ) : (
-              <button
-                onClick={() => openAuthModal()}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white border border-stone-200/90 text-stone-700 hover:text-theabCrimson text-xs font-bold transition cursor-pointer shrink-0"
-              >
-                <User className="w-3.5 h-3.5 text-theabCrimson" />
-                <span>ចូលគណនី / ចុះឈ្មោះ</span>
-              </button>
-            )}
+            <div className="flex items-center gap-2">
+              {isAuthenticated && (user?.is_superuser || user?.role === 'superadmin') && (
+                <button
+                  onClick={() => navigate({ to: '/superadmin' })}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 text-xs font-bold transition cursor-pointer shrink-0"
+                  title="Super Admin Console"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5 text-amber-700" />
+                  <span>Admin</span>
+                </button>
+              )}
+
+              {isAuthenticated ? (
+                <button
+                  onClick={() => navigate({ to: '/dashboard' })}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white border border-stone-200/90 text-stone-700 hover:text-theabCrimson text-xs font-bold transition cursor-pointer shrink-0"
+                >
+                  <LayoutDashboard className="w-3.5 h-3.5 text-theabCrimson" />
+                  <span>ផ្ទាំងគ្រប់គ្រង</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => openAuthModal()}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 hover:bg-white border border-stone-200/90 text-stone-700 hover:text-theabCrimson text-xs font-bold transition cursor-pointer shrink-0"
+                >
+                  <User className="w-3.5 h-3.5 text-theabCrimson" />
+                  <span>ចូលគណនី / ចុះឈ្មោះ</span>
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Title Row (Moved below back button to prevent truncation and height clipping) */}

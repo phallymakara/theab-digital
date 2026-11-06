@@ -84,3 +84,16 @@ def get_optional_current_user(
     except HTTPException:
         return None
 
+
+def get_current_superadmin(
+    current_user: User = Depends(get_current_user)
+) -> User:
+    """Validate that the current user has superadmin privileges."""
+    is_admin = getattr(current_user, "is_superuser", False) or getattr(current_user, "role", "") == "superadmin"
+    if not is_admin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="អ្នកមិនមានសិទ្ធិចូលដំណើរការផ្នែក Super Admin នេះទេ (Super Admin access required)"
+        )
+    return current_user
+
