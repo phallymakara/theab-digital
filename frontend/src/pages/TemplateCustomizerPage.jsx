@@ -159,7 +159,7 @@ function getInitialFormDataForTemplate(template) {
 export function TemplateCustomizerPage() {
   const params = useParams({ strict: false });
   const navigate = useNavigate();
-  const { selectedTemplate, setSelectedTemplate, addToast, isAudioPlaying, toggleAudio, playAudio, stopAudio } = useApp();
+  const { selectedTemplate, setSelectedTemplate, addToast, isAudioPlaying, toggleAudio, playAudio, stopAudio, userDraft, saveUserDraft } = useApp();
   const { user, isAuthenticated, openAuthModal } = useAuth();
   const [isSaving, setIsSaving] = useState(false);
   const [savedSlug, setSavedSlug] = useState('');
@@ -197,9 +197,45 @@ export function TemplateCustomizerPage() {
      activeTemplate.category === 'modern' ? 'font-komutt' :
      'font-komutt-a');
 
+  const getMergedInitialData = (tpl) => {
+    const base = getInitialFormDataForTemplate(tpl);
+    if (userDraft?.formData) {
+      const u = userDraft.formData;
+      return {
+        ...base,
+        groomName: u.groomName || base.groomName,
+        groomTitle: u.groomTitle || base.groomTitle,
+        brideName: u.brideName || base.brideName,
+        brideTitle: u.brideTitle || base.brideTitle,
+        groomFather: u.groomFather || base.groomFather,
+        groomMother: u.groomMother || base.groomMother,
+        groomResidence: u.groomResidence || base.groomResidence,
+        brideFather: u.brideFather || base.brideFather,
+        brideMother: u.brideMother || base.brideMother,
+        brideResidence: u.brideResidence || base.brideResidence,
+        phoneGroom: u.phoneGroom || base.phoneGroom,
+        phoneBride: u.phoneBride || base.phoneBride,
+        telegramLink: u.telegramLink || base.telegramLink,
+        telegramUsername: u.telegramUsername || base.telegramUsername,
+        weddingDateRaw: u.weddingDateRaw || base.weddingDateRaw,
+        ceremonyDateKh: u.ceremonyDateKh || base.ceremonyDateKh,
+        ceremonyTime: u.ceremonyTime || base.ceremonyTime,
+        locationName: u.locationName || base.locationName,
+        locationAddress: u.locationAddress || base.locationAddress,
+        googleMapsUrl: u.googleMapsUrl || base.googleMapsUrl,
+        welcomeQuote: u.welcomeQuote || base.welcomeQuote,
+        bankName: u.bankName || base.bankName,
+        accountName: u.accountName || base.accountName,
+        accountNumber: u.accountNumber || base.accountNumber,
+        qrCodeImage: u.qrCodeImage || base.qrCodeImage,
+      };
+    }
+    return base;
+  };
+
   // Isolated template form state dictionary: templateId -> formData
   const [templateForms, setTemplateForms] = useState({});
-  const [formData, _setFormData] = useState(() => getInitialFormDataForTemplate(activeTemplate));
+  const [formData, _setFormData] = useState(() => getMergedInitialData(activeTemplate));
 
   const setFormData = (updater) => {
     _setFormData((prev) => {
@@ -218,11 +254,25 @@ export function TemplateCustomizerPage() {
       if (templateForms[currentTemplateId]) {
         return templateForms[currentTemplateId];
       }
-      return getInitialFormDataForTemplate(activeTemplate);
+      return getMergedInitialData(activeTemplate);
     });
     setSelectedHeroIndex(0);
     setHasCustomHeroImages(false);
   }, [currentTemplateId]);
+
+  // Persist draft whenever formData changes
+  useEffect(() => {
+    if (formData && (formData.groomName || formData.brideName)) {
+      saveUserDraft({
+        templateId: currentTemplateId,
+        templateName: activeTemplate.name,
+        category: activeTemplate.category || 'traditional',
+        themeColor: activeTemplate.themeColor || 'gold',
+        formData: formData,
+        updatedAt: new Date().toISOString()
+      });
+    }
+  }, [formData, currentTemplateId, activeTemplate]);
 
   // Mobile Tab state ('form' or 'preview')
   const [mobileTab, setMobileTab] = useState('form');
@@ -599,18 +649,20 @@ export function TemplateCustomizerPage() {
   return (
     <div className="fixed inset-0 w-full h-screen h-[100dvh] flex flex-col overflow-hidden bg-[#FDFBF7] text-stone-900 font-kantumruy z-30">
       {/* Top Fixed Main Navigation Header (Does NOT scroll) */}
-      <header className="shrink-0 h-14 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-xs px-4 flex items-center justify-between z-40">
-        <div className="flex items-center gap-3">
+      <header className="shrink-0 h-14 bg-white/95 backdrop-blur-md border-b border-stone-200 px-4 flex items-center justify-between z-40">
+        <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => navigate({ to: '/wedding' })}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition-all active:scale-95 cursor-pointer font-kantumruy"
           >
             <ArrowLeft className="w-4 h-4 text-amber-700" />
-            <span className="hidden sm:inline">ត្រឡប់ទៅជ្រើសរើសគំរូ</span>
-            <span className="sm:hidden text-xs">ថយក្រោយ</span>
+            <span className="hidden sm:inline">ជ្រើសរើសគំរូផ្សេង</span>
+            <span className="sm:hidden text-xs">ប្តូរគំរូ</span>
           </button>
 
-
+          <span className="hidden md:inline-flex items-center px-2.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-[11px] font-bold text-amber-900">
+            គំរូ៖ {activeTemplate.name}
+          </span>
         </div>
 
         {/* Center Mobile View Switcher (Icon-only, compact & scaled smaller for mobile phones) */}
@@ -645,7 +697,7 @@ export function TemplateCustomizerPage() {
             onClick={toggleAudio}
             className={`flex items-center gap-1.5 px-3 py-2 rounded-full border text-xs font-bold transition-all active:scale-95 cursor-pointer font-kantumruy ${
               isAudioPlaying
-                ? 'bg-amber-500/15 border-amber-400 text-amber-900 shadow-xs'
+                ? 'bg-amber-500/15 border-amber-400 text-amber-900'
                 : 'bg-stone-100 hover:bg-stone-200 border-stone-200 text-stone-600'
             }`}
             title={isAudioPlaying ? 'ចុចដើម្បីបិទភ្លេង «ភ្ជាប់និស្ស័យ»' : 'ចុចដើម្បីចាក់ភ្លេង «ភ្ជាប់និស្ស័យ»'}
@@ -655,7 +707,7 @@ export function TemplateCustomizerPage() {
           </button>
           <button
             onClick={handleSaveAndRent}
-            className={`flex items-center gap-1.5 px-4 sm:px-5 py-2 rounded-full ${activeTemplate.primaryGradient || 'bg-theabCrimson hover:bg-rose-900'} active:scale-95 text-white font-bold text-xs sm:text-sm shadow-md shadow-amber-950/20 hover:shadow-lg transition-all cursor-pointer ${templateFont}`}
+            className={`flex items-center gap-1.5 px-4 sm:px-5 py-2 rounded-full ${activeTemplate.primaryGradient || 'bg-theabCrimson hover:bg-rose-900'} active:scale-95 text-white font-bold text-xs sm:text-sm transition-all cursor-pointer ${templateFont}`}
           >
             <Share2 className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-amber-200 shrink-0" />
             <span className="hidden sm:inline">រក្សាទុក & ចែករំលែក</span>

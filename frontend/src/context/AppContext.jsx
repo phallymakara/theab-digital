@@ -27,6 +27,34 @@ export function AppProvider({ children }) {
     } catch (_) {}
   };
 
+  // User Draft State (Persisted across sessions and logins)
+  const [userDraft, setUserDraft] = useState(() => {
+    try {
+      const saved = localStorage.getItem('theab_user_draft');
+      return saved ? JSON.parse(saved) : null;
+    } catch (_) {
+      return null;
+    }
+  });
+
+  const saveUserDraft = (draft) => {
+    setUserDraft(draft);
+    try {
+      if (draft) {
+        localStorage.setItem('theab_user_draft', JSON.stringify(draft));
+      } else {
+        localStorage.removeItem('theab_user_draft');
+      }
+    } catch (_) {}
+  };
+
+  const clearUserDraft = () => {
+    setUserDraft(null);
+    try {
+      localStorage.removeItem('theab_user_draft');
+    } catch (_) {}
+  };
+
   // Audio reference (Single authentic wedding song: «ភ្ជាប់និស្ស័យ» - NISAI)
   const [audio] = useState(() => {
     const a = new Audio('/audio/nisai_wedding_song.mp3');
@@ -240,6 +268,9 @@ export function AppProvider({ children }) {
         setInvitationData,
         selectedCategory,
         setSelectedCategory,
+        userDraft,
+        saveUserDraft,
+        clearUserDraft,
       }}
     >
       {children}

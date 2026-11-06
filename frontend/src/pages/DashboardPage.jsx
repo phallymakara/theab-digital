@@ -12,13 +12,26 @@ import {
   Check,
   RefreshCw,
   Heart,
-  Users
+  Users,
+  Compass,
+  Edit3,
+  Eye,
+  Sparkles,
+  ArrowRight
 } from 'lucide-react';
 
 export function DashboardPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { invitationData, setIsQrModalOpen, addToast, ceremonyType, stopAudio, selectedTemplate } = useApp();
+  const {
+    invitationData,
+    setIsQrModalOpen,
+    addToast,
+    ceremonyType,
+    stopAudio,
+    selectedTemplate,
+    userDraft
+  } = useApp();
 
   useEffect(() => {
     stopAudio?.();
@@ -67,6 +80,7 @@ export function DashboardPage() {
     },
   ]);
 
+  const [userInvitations, setUserInvitations] = useState([]);
   const [activeTab, setActiveTab] = useState('guests'); // 'guests' or 'wishes'
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -80,22 +94,20 @@ export function DashboardPage() {
     let targetId = currentInvitationId;
 
     try {
-      // If user is logged in, attempt to find user's own invitation
       if (user) {
         try {
           const userInvs = await apiService.listInvitations();
           if (Array.isArray(userInvs) && userInvs.length > 0) {
+            setUserInvitations(userInvs);
             targetId = userInvs[0].id;
             setCurrentInvitationId(userInvs[0].id);
           }
         } catch (_) {}
       }
 
-      // Fetch RSVPs from backend
       const data = await apiService.getRSVPs(targetId);
       let combined = Array.isArray(data) ? [...data] : [];
 
-      // Merge locally recorded submissions if present
       try {
         const local = JSON.parse(localStorage.getItem('theab_guest_submissions') || '[]');
         if (Array.isArray(local) && local.length > 0) {
@@ -113,11 +125,10 @@ export function DashboardPage() {
       if (combined.length > 0) {
         setRsvps(combined);
         if (showToast) {
-          addToast('បានធ្វើបច្ចុប្បន្នភាពទិន្នន័យភ្ញៀវរួចរាល់', 'success');
+          addToast('បានធ្វើបច្ចុប្បន្នភាពទិន្នន័យរួចរាល់', 'success');
         }
       }
     } catch (_) {
-      // If API request fails, check localStorage fallback
       try {
         const local = JSON.parse(localStorage.getItem('theab_guest_submissions') || '[]');
         if (Array.isArray(local) && local.length > 0) {
@@ -153,6 +164,12 @@ export function DashboardPage() {
   // List of guests with wishes
   const wishesList = (rsvps || []).filter((r) => r?.wishes && r.wishes.trim().length > 0);
 
+  // Active Draft or Published Theab
+  const activeTheab =
+    (userInvitations && userInvitations.length > 0 ? userInvitations[0] : null) ||
+    userDraft ||
+    (invitationData?.isCustomized ? invitationData : null);
+
   // Filtered list (null-safe)
   const filteredRsvps = (rsvps || []).filter((r) => {
     if (!r) return false;
@@ -185,7 +202,13 @@ export function DashboardPage() {
   };
 
   const getTargetTemplateId = () => {
-    return invitationData?.template_id || invitationData?.templateId || selectedTemplate?.id || 'romdoul-moonlight';
+    return (
+      activeTheab?.templateId ||
+      activeTheab?.template_id ||
+      invitationData?.template_id ||
+      selectedTemplate?.id ||
+      'royal-gold'
+    );
   };
 
   const handleViewTheab = () => {
@@ -255,6 +278,14 @@ export function DashboardPage() {
           >
             <RefreshCw className={`w-3.5 h-3.5 text-stone-600 ${isRefreshing ? 'animate-spin' : ''}`} />
             <span>ផ្ទុកឡើងវិញ</span>
+          </button>
+          <button
+            onClick={() => navigate({ to: '/wedding' })}
+            className="btn-secondary !py-2 !px-2.5 sm:!px-3.5 text-xs flex items-center justify-center gap-1.5 text-rose-900 cursor-pointer"
+            title="ស្វែងរក និងជ្រើសរើសគំរូធៀបផ្សេងទៀត"
+          >
+            <Compass className="w-3.5 h-3.5 text-rose-800" />
+            <span>ស្វែងរកគំរូ</span>
           </button>
           <button
             onClick={handleViewTheab}
@@ -342,6 +373,147 @@ export function DashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* SECTION: ACTIVE THEAB / DRAFT vs DISCOVERY */}
+      {activeTheab ? (
+        <div className="bg-white rounded-2xl border border-stone-200 p-4 sm:p-5 mb-6 sm:mb-8 transition-colors">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-start gap-3.5">
+              <div className="w-14 h-18 sm:w-16 sm:h-20 rounded-xl bg-stone-100 border border-stone-200 overflow-hidden shrink-0 flex items-center justify-center">
+                {activeTheab.thumbnail || activeTheab.bg_image_url ? (
+                  <img
+                    src={activeTheab.thumbnail || activeTheab.bg_image_url}
+                    alt="Theab Preview"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <Sparkles className="w-6 h-6 text-amber-600" />
+                )}
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold ${
+                    activeTheab.is_published
+                      ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                      : 'bg-amber-100 text-amber-900 border border-amber-200'
+                  }`}>
+                    {activeTheab.is_published ? '✨ បានផ្សព្វផ្សាយ' : '📝 ធៀបព្រាង (Draft)'}
+                  </span>
+                  <span className="text-[11px] text-stone-400 capitalize">
+                    គំរូ៖ {activeTheab.templateName || activeTheab.template_id || 'រាជរដ្ឋមាស'}
+                  </span>
+                </div>
+                <h2 className="font-bold text-sm sm:text-base text-stone-900 font-komutt-a">
+                  {activeTheab.formData?.groomName || activeTheab.groom_name || 'សុខ វិបុល'} ❤️ {activeTheab.formData?.brideName || activeTheab.bride_name || 'ជា សុជាតា'}
+                </h2>
+                <p className="text-xs text-stone-500 mt-0.5 line-clamp-1">
+                  {activeTheab.formData?.ceremonyDateKh || activeTheab.ceremony_date_kh || 'ថ្ងៃអាទិត្យ ទី១០ ខែមករា ឆ្នាំ២០២៧'} • {activeTheab.formData?.locationName || activeTheab.location_name || 'រាជធានីភ្នំពេញ'}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 pt-2 md:pt-0 border-t md:border-t-0 border-stone-100">
+              <button
+                onClick={() => navigate({ to: `/customize/${activeTheab.templateId || activeTheab.template_id || 'royal-gold'}` })}
+                className="btn-primary !py-2 !px-3.5 text-xs flex items-center gap-1.5 text-white cursor-pointer"
+              >
+                <Edit3 className="w-3.5 h-3.5" />
+                <span>កែសម្រួលបន្ត</span>
+              </button>
+              <button
+                onClick={() => navigate({ to: `/${activeTheab.ceremonyType || activeTheab.event_type || 'wedding'}/${activeTheab.templateId || activeTheab.template_id || 'royal-gold'}` })}
+                className="btn-secondary !py-2 !px-3.5 text-xs flex items-center gap-1.5 cursor-pointer"
+              >
+                <Eye className="w-3.5 h-3.5 text-stone-600" />
+                <span>មើលគំរូ</span>
+              </button>
+              <button
+                onClick={() => navigate({ to: '/wedding' })}
+                className="btn-secondary !py-2 !px-3.5 text-xs flex items-center gap-1.5 text-rose-900 cursor-pointer"
+                title="ស្វែងរក និងជ្រើសរើសគំរូធៀបផ្សេងទៀត"
+              >
+                <Compass className="w-3.5 h-3.5 text-rose-800" />
+                <span>ជ្រើសរើសគំរូផ្សេង</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* First-Time User Template Discovery Hero */
+        <div className="bg-white rounded-2xl border border-stone-200 p-5 sm:p-6 mb-6 sm:mb-8 text-center animate-fade">
+          <div className="w-12 h-12 rounded-full bg-rose-50 border border-rose-100 text-theabCrimson flex items-center justify-center mx-auto mb-3">
+            <Sparkles className="w-6 h-6 text-theabCrimson" />
+          </div>
+          <h2 className="font-moul text-base sm:text-lg text-rose-950 mb-1">
+            សូមស្វាគមន៍! អ្នកមិនទាន់បានជ្រើសរើសគំរូធៀបនៅឡើយទេ
+          </h2>
+          <p className="text-xs text-stone-500 max-w-md mx-auto mb-6 leading-relaxed">
+            សូមជ្រើសរើសគំរូដែលលោកអ្នកពេញចិត្តខាងក្រោម ដើម្បីចាប់ផ្តើមរៀបចំ និងកែសម្រួលព័ត៌មានមង្គលការរបស់អ្នក៖
+          </p>
+
+          {/* 3 Quick Highlighted Templates */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 max-w-2xl mx-auto mb-6 text-left">
+            <div
+              onClick={() => navigate({ to: '/customize/royal-gold' })}
+              className="p-3.5 rounded-xl border border-stone-200 hover:border-theabCrimson bg-stone-50 hover:bg-white transition cursor-pointer group"
+            >
+              <div className="text-xs font-bold text-stone-900 group-hover:text-theabCrimson">
+                រាជរដ្ឋមាស (Royal Gold)
+              </div>
+              <div className="text-[11px] text-amber-700 font-medium mt-0.5">ប្រពៃណីបុរាណ</div>
+              <p className="text-[11px] text-stone-500 mt-1 line-clamp-2">
+                រចនាបទហូលផាមួងពណ៌មាសប្រណិត និងផ្កាចានស្លាដក
+              </p>
+              <span className="inline-flex items-center gap-1 mt-2.5 text-[11px] font-bold text-theabCrimson">
+                <span>ជ្រើសរើសគំរូនេះ</span>
+                <ArrowRight className="w-3 h-3" />
+              </span>
+            </div>
+
+            <div
+              onClick={() => navigate({ to: '/customize/floral-romdoul-moonlight' })}
+              className="p-3.5 rounded-xl border border-stone-200 hover:border-theabCrimson bg-stone-50 hover:bg-white transition cursor-pointer group"
+            >
+              <div className="text-xs font-bold text-stone-900 group-hover:text-theabCrimson">
+                រំដួលរាត្រី (Romdoul Moonlight)
+              </div>
+              <div className="text-[11px] text-rose-700 font-medium mt-0.5">ផ្កាស្រស់រ៉ូមែនទិក</div>
+              <p className="text-[11px] text-stone-500 mt-1 line-clamp-2">
+                ផ្ការំដួលពណ៌សក្សី និងពន្លឺចន្ទ្រារ៉ូមែនទិក
+              </p>
+              <span className="inline-flex items-center gap-1 mt-2.5 text-[11px] font-bold text-theabCrimson">
+                <span>ជ្រើសរើសគំរូនេះ</span>
+                <ArrowRight className="w-3 h-3" />
+              </span>
+            </div>
+
+            <div
+              onClick={() => navigate({ to: '/customize/emerald-jade' })}
+              className="p-3.5 rounded-xl border border-stone-200 hover:border-theabCrimson bg-stone-50 hover:bg-white transition cursor-pointer group"
+            >
+              <div className="text-xs font-bold text-stone-900 group-hover:text-theabCrimson">
+                ត្បូងមរកត (Emerald Jade)
+              </div>
+              <div className="text-[11px] text-emerald-700 font-medium mt-0.5">ត្បូងមរតកសិរី</div>
+              <p className="text-[11px] text-stone-500 mt-1 line-clamp-2">
+                ពណ៌បៃតងត្បូងមរកត រំលេចខ្សែលោហធាតុពណ៌មាស
+              </p>
+              <span className="inline-flex items-center gap-1 mt-2.5 text-[11px] font-bold text-theabCrimson">
+                <span>ជ្រើសរើសគំរូនេះ</span>
+                <ArrowRight className="w-3 h-3" />
+              </span>
+            </div>
+          </div>
+
+          <button
+            onClick={() => navigate({ to: '/wedding' })}
+            className="btn-primary !py-2.5 !px-5 text-xs text-white cursor-pointer inline-flex items-center gap-2"
+          >
+            <Compass className="w-4 h-4" />
+            <span>ស្វែងរកគំរូធៀបទាំងអស់ (២៨+ គំរូ)</span>
+          </button>
+        </div>
+      )}
 
       {/* Navigation Tabs (Guests Attendance vs Blessings & Wishes) */}
       <div className="flex items-center gap-2 mb-4 border-b border-stone-200">
@@ -450,7 +622,7 @@ export function DashboardPage() {
                         ) : (
                           <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-rose-100 text-rose-800">
                             <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5"></span>
-                            មិនចូលរួម
+                            មិនអាចចូលរួម
                           </span>
                         )}
                         <button

@@ -475,3 +475,4 @@ export function SuperAdminPage() {
     </section>
   );
 }
+
