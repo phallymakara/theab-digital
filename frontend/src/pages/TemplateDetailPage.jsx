@@ -2,6 +2,7 @@ import TemplateGoogleMap from '../components/TemplateGoogleMap';
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { useParams, useNavigate } from '@tanstack/react-router';
 import { useApp } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 import { apiService } from '../services/apiService';
 import { CEREMONY_DATA } from '../data/templates';
 import { TRADITIONAL_TEMPLATES } from '../components/templates/traditional';
@@ -169,6 +170,19 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
     typeof window !== 'undefined' &&
     (new URLSearchParams(window.location.search).get('mode') === 'guest' ||
       window.location.pathname.startsWith('/guest'));
+
+  const { user } = useAuth();
+
+  // Super Admin cannot browse or discover templates - locked to superadmin console
+  useEffect(() => {
+    if (!isGuestView && !isModal && user && (user.is_superuser || user.role === 'superadmin')) {
+      navigate({ to: '/superadmin', replace: true });
+    }
+  }, [user, isGuestView, isModal, navigate]);
+
+  if (!isGuestView && !isModal && user && (user.is_superuser || user.role === 'superadmin')) {
+    return null;
+  }
 
   const {
     isAudioPlaying,

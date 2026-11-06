@@ -11,12 +11,20 @@ export function CeremonySelectionPage() {
 
   useEffect(() => {
     stopAudio?.();
-  }, []);
+    if (user && (user.is_superuser || user.role === 'superadmin')) {
+      navigate({ to: '/superadmin', replace: true });
+    }
+  }, [user]);
 
   const handleSelect = (type, path) => {
     selectCeremony(type);
     navigate({ to: path });
   };
+
+  // Super Admin is restricted from discovering templates - locked to superadmin console
+  if (user && (user.is_superuser || user.role === 'superadmin')) {
+    return null;
+  }
 
   return (
     <section className="w-full flex-1 min-h-screen flex flex-col justify-center items-center text-center py-6 sm:py-10 px-3.5 sm:px-6 animate-fade dot-bg-luxury relative overflow-hidden">

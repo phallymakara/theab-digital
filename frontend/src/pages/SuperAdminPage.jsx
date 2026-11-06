@@ -16,12 +16,13 @@ import {
   Eye,
   CheckCircle2,
   XCircle,
-  Sparkles
+  Sparkles,
+  LogOut
 } from 'lucide-react';
 
 export function SuperAdminPage() {
   const navigate = useNavigate();
-  const { user, isAuthenticated, openAuthModal } = useAuth();
+  const { user, isAuthenticated, openAuthModal, logout } = useAuth();
 
   const [metrics, setMetrics] = useState({
     total_users: 0,
@@ -176,11 +177,15 @@ export function SuperAdminPage() {
             <span>ផ្ទុកឡើងវិញ</span>
           </button>
           <button
-            onClick={() => navigate({ to: '/' })}
-            className="btn-secondary !py-2 !px-3 text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+            onClick={async () => {
+              await logout();
+              navigate({ to: '/' });
+            }}
+            className="btn-secondary !py-2 !px-3 text-xs flex items-center justify-center gap-1.5 cursor-pointer text-stone-700 hover:text-rose-600"
+            title="ចាកចេញពីគណនី Super Admin"
           >
-            <ArrowLeft className="w-3.5 h-3.5 text-stone-600" />
-            <span>ទំព័រដើម</span>
+            <LogOut className="w-3.5 h-3.5 text-stone-500" />
+            <span>ចាកចេញ</span>
           </button>
         </div>
       </div>

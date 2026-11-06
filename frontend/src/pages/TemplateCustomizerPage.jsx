@@ -166,6 +166,17 @@ export function TemplateCustomizerPage() {
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
   const [isUploadingQr, setIsUploadingQr] = useState(false);
 
+  // Super Admin cannot customize or discover templates - locked to superadmin console
+  useEffect(() => {
+    if (user && (user.is_superuser || user.role === 'superadmin')) {
+      navigate({ to: '/superadmin', replace: true });
+    }
+  }, [user, navigate]);
+
+  if (user && (user.is_superuser || user.role === 'superadmin')) {
+    return null;
+  }
+
   // TemplateComponent manages its own isolated audio. Ensure AppContext audio is stopped so only one sound plays
   useEffect(() => {
     stopAudio?.();

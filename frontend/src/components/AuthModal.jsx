@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 import { useAuth } from '../context/AuthContext';
 import { X, Lock, Mail, User, Phone, Loader2 } from 'lucide-react';
 
 export function AuthModal() {
+  const navigate = useNavigate();
   const { isAuthModalOpen, closeAuthModal, login, register } = useAuth();
   const [mode, setMode] = useState('login'); // 'login' or 'register'
 
@@ -60,7 +62,10 @@ export function AuthModal() {
 
     try {
       if (mode === 'login') {
-        await login(formData.email, formData.password);
+        const res = await login(formData.email, formData.password);
+        if (res?.user?.is_superuser || res?.user?.role === 'superadmin') {
+          navigate({ to: '/superadmin', replace: true });
+        }
       } else {
         await register({
           email: formData.email,

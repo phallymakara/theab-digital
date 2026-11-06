@@ -43,6 +43,17 @@ export function TemplatesPage({ ceremonyType = 'wedding', isGuestMode = false })
     setSelectedCategory
   } = useApp();
 
+  // Super Admin cannot browse or discover templates - locked to superadmin console
+  useEffect(() => {
+    if (user && (user.is_superuser || user.role === 'superadmin')) {
+      navigate({ to: '/superadmin', replace: true });
+    }
+  }, [user, navigate]);
+
+  if (user && (user.is_superuser || user.role === 'superadmin')) {
+    return null;
+  }
+
   const activeCategory = selectedCategory || 'all';
   const setActiveCategory = setSelectedCategory;
   const categoryScrollRef = useRef(null);

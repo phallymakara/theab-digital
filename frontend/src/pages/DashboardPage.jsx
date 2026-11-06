@@ -35,7 +35,14 @@ export function DashboardPage() {
 
   useEffect(() => {
     stopAudio?.();
-  }, []);
+    if (user && (user.is_superuser || user.role === 'superadmin')) {
+      navigate({ to: '/superadmin', replace: true });
+    }
+  }, [user, navigate]);
+
+  if (user && (user.is_superuser || user.role === 'superadmin')) {
+    return null;
+  }
 
   const [rsvps, setRsvps] = useState([
     {
