@@ -79,13 +79,13 @@ export function TraditionalHeroSection({
         {heroList.map((src, idx) => (
           <div key={idx} className="relative w-full min-w-full h-full shrink-0 snap-start snap-always">
             <div
-              className="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-700"
+              className="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-700 brightness-[1.08] contrast-[1.02]"
               style={{
                 backgroundImage: `url(${src})`
               }}
             />
-            {/* Cinematic Balanced Vignette to Highlight Centered Gold Text */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/45 to-black/75" />
+            {/* Balanced Vignette to Highlight Centered Gold Text while keeping photos bright */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/15 to-black/50" />
           </div>
         ))}
       </div>

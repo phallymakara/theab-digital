@@ -294,10 +294,10 @@ export function ModernNoirDiamondTemplate({
               <img
                 src={imgUrl}
                 alt={`Noir Diamond Prewedding ${idx + 1}`}
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-center brightness-[1.08] contrast-[1.02]"
                 loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
               {/* Balanced Dark Vignette for High-Contrast Typography */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050811] via-[#050811]/45 to-black/55 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050811]/80 via-[#050811]/25 to-black/35 pointer-events-none" />
             </div>
           ))}
         </div>

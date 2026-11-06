@@ -369,7 +369,7 @@ export default function GoldenOrchidTemplate({
               <img
                 src={heroImages[currentHeroIdx] || preweddingImage}
                 alt="Cambodian Couple in Golden Orchid Glasshouse"
-                className="w-full h-full object-cover object-center transform hover:scale-102 transition duration-700 ease-out" decoding="async" />
+                className="w-full h-full object-cover object-center transform hover:scale-102 transition duration-700 ease-out brightness-[1.08] contrast-[1.02]" decoding="async" />
               {heroImages.length > 1 && (
                 <>
                   <button
@@ -400,7 +400,7 @@ export default function GoldenOrchidTemplate({
               )}
 
               {/* Bottom Glass Bar Over Image */}
-              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent backdrop-blur-[2px] text-white">
+              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 bg-gradient-to-t from-black/60 via-black/20 to-transparent backdrop-blur-[2px] text-white">
                 <div className="flex items-center gap-2 mb-1.5">
                   <span className="text-amber-300 text-xs">❖</span>
                   <span className="font-koulen text-[11px] sm:text-xs md:text-sm text-amber-300 tracking-wider">

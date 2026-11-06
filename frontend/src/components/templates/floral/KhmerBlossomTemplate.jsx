@@ -211,10 +211,10 @@ export function KhmerBlossomTemplate({ data = {}, invitation = {}, activeTemplat
                 <img
                   src={imgUrl}
                   alt={`Cambodian Wedding ${idx + 1}`}
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-cover object-top brightness-[1.08] contrast-[1.02]"
                   loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
                 {/* Warm Sunset Vignette Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#2F1117]/85 via-black/30 to-black/40 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#2F1117]/65 via-black/15 to-black/25 pointer-events-none"></div>
               </div>
             ))}
           </div>

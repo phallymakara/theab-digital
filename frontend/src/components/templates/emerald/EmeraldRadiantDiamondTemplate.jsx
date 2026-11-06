@@ -228,10 +228,10 @@ export function EmeraldRadiantDiamondTemplate({ data = {}, invitationData = {}, 
               <img
                 src={imgUrl}
                 alt={`Haute Joaillerie Khmer Couple ${idx + 1}`}
-                className="w-full h-full object-cover object-center filter brightness-[0.92] contrast-[1.08]"
+                className="w-full h-full object-cover object-center filter brightness-[1.08] contrast-[1.02]"
                 loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
               {/* Haute Joaillerie Prismatic Sapphire Vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#021824] via-[#021824]/40 to-black/35 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#021824]/80 via-[#021824]/20 to-black/25 pointer-events-none" />
             </div>
           ))}
         </div>

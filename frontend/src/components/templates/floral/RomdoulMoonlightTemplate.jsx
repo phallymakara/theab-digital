@@ -468,10 +468,10 @@ export default function RomdoulMoonlightTemplate({
               <img
                 src={imgUrl}
                 alt={`Khmer Prewedding ${idx + 1}`}
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-center brightness-[1.08] contrast-[1.02]"
                 loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
               {/* Deep Midnight Gradient Overlay for crystal clear typography contrast */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#070B14] via-[#070B14]/45 to-black/50 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#070B14]/80 via-[#070B14]/25 to-black/35 pointer-events-none" />
             </div>
           ))}
         </div>

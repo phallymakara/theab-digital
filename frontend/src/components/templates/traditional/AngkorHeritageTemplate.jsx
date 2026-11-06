@@ -218,10 +218,10 @@ export function AngkorHeritageTemplate({
           {heroImages.map((src, idx) => (
             <div key={idx} className="relative w-full min-w-full h-full shrink-0 snap-start snap-always">
               <div
-                className="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-700"
+                className="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-700 brightness-[1.08] contrast-[1.02]"
                 style={{ backgroundImage: `url(${src})` }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/50 to-black/70" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/20 to-black/55" />
             </div>
           ))}
         </div>

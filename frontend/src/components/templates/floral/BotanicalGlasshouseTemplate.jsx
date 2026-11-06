@@ -189,10 +189,10 @@ export function BotanicalGlasshouseTemplate({
                 <img
                   src={imgUrl}
                   alt={`Prewedding ${idx + 1}`}
-                  className="w-full h-full object-cover object-center"
+                  className="w-full h-full object-cover object-center brightness-[1.08] contrast-[1.02]"
                   loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
                 {/* Dreamy Botanical Light Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1E2E23]/80 via-transparent to-black/25 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1E2E23]/60 via-transparent to-black/15 pointer-events-none"></div>
 
                 {/* Couple Names in Flowing Romantic Preahvihear Script */}
                 <div className="absolute bottom-10 inset-x-4 text-center text-white z-10">

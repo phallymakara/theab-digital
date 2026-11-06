@@ -228,10 +228,10 @@ export function ModernRoseGoldRoyaleTemplate({
           {heroList.map((img, idx) => (
             <div key={idx} className="relative w-full min-w-full h-full shrink-0 snap-start snap-always">
               <div
-                className="w-full h-full bg-cover bg-center transition-transform duration-700"
+                className="w-full h-full bg-cover bg-center transition-transform duration-700 brightness-[1.08] contrast-[1.02]"
                 style={{ backgroundImage: `url(${img})` }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#180E10] via-black/45 to-[#180E10]/80" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#180E10]/80 via-black/20 to-[#180E10]/55" />
             </div>
           ))}
         </div>

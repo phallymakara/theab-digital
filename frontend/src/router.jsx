@@ -221,6 +221,30 @@ const guestWeddingTemplateRoute = createRoute({
   errorComponent: RootErrorComponent,
 });
 
+// Route: /guest/engagement/$templateId (Dedicated Guest View Engagement Template Route)
+const guestEngagementTemplateRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/guest/engagement/$templateId',
+  component: TemplateDetailPage,
+  errorComponent: RootErrorComponent,
+});
+
+// Route: /guest/housewarming/$templateId (Dedicated Guest View Housewarming Template Route)
+const guestHousewarmingTemplateRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/guest/housewarming/$templateId',
+  component: TemplateDetailPage,
+  errorComponent: RootErrorComponent,
+});
+
+// Route: /guest/$templateId (Dedicated Guest View Direct Invitation Route)
+const guestDirectTemplateRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/guest/$templateId',
+  component: TemplateDetailPage,
+  errorComponent: RootErrorComponent,
+});
+
 // Route: /engagement/$templateId
 const engagementTemplateRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -300,6 +324,9 @@ const routeTree = rootRoute.addChildren([
   guestWeddingRoute,
   weddingTemplateRoute,
   guestWeddingTemplateRoute,
+  guestEngagementTemplateRoute,
+  guestHousewarmingTemplateRoute,
+  guestDirectTemplateRoute,
   engagementRoute,
   engagementTemplateRoute,
   housewarmingRoute,

@@ -277,7 +277,7 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
           <img
             src={heroImages[currentHeroIdx] || preweddingImg}
             alt="Editorial Wedding"
-            className="w-full h-full object-cover object-top scale-100 transition-all duration-500" decoding="async" />
+            className="w-full h-full object-cover object-top scale-100 transition-all duration-500 brightness-[1.08] contrast-[1.02]" decoding="async" />
           {heroImages.length > 1 && (
             <>
               <button
@@ -308,7 +308,7 @@ export function EditorialMagazineTemplate({ data = {}, invitation = {}, activeTe
           )}
 
           {/* Vignette Gradients */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-black/30 pointer-events-none"></div>
 
           {/* Top Magazine Masthead & Issue Info */}
           <div className="absolute top-4 inset-x-5 flex items-center justify-between z-10 text-white/90 border-b border-white/20 pb-2">

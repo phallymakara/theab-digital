@@ -223,10 +223,10 @@ export function EmeraldGlasshouseMoonlightTemplate({ data = {}, invitationData =
               <img
                 src={imgUrl}
                 alt={`Prewedding ${idx + 1}`}
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-center brightness-[1.08] contrast-[1.02]"
                 loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
               {/* Moonlit Emerald & Night Sky Vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#021410] via-[#021410]/40 to-black/35 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#021410]/80 via-[#021410]/20 to-black/25 pointer-events-none" />
             </div>
           ))}
         </div>

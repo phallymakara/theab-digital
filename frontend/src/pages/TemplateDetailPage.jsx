@@ -778,34 +778,38 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
       >
         {/* Top Floating Control Bar - Inside at Top of Container (Transparent background behind buttons) */}
         <header className={`absolute top-3 inset-x-3 sm:inset-x-4 flex items-center justify-between gap-1.5 sm:gap-2 z-50 pointer-events-none ${isModal || onClose ? 'pr-11 sm:pr-14' : ''}`}>
-          {/* Back button */}
-          <div className="pointer-events-auto">
-            <button
-              onClick={() => {
-                if (onClose) {
-                  onClose();
-                  return;
-                }
-                if (window.self !== window.top) {
-                  window.parent.postMessage({ type: 'CLOSE_PREVIEW_MODAL' }, '*');
-                  return;
-                }
-                if (window.history.length > 1) {
-                  window.history.back();
-                } else {
-                  navigate({ to: `/${ceremonyType || 'wedding'}` });
-                }
-              }}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-md border border-white/25 shadow-lg text-xs font-bold transition-all cursor-pointer active:scale-95"
-            >
-              <ArrowLeft className="w-4 h-4 text-amber-300 shrink-0" />
-              <span>ថយក្រោយ</span>
-            </button>
-          </div>
+          {/* Back button - Hidden for Guest View so guests can only view their invitation */}
+          {!isGuestView ? (
+            <div className="pointer-events-auto">
+              <button
+                onClick={() => {
+                  if (onClose) {
+                    onClose();
+                    return;
+                  }
+                  if (window.self !== window.top) {
+                    window.parent.postMessage({ type: 'CLOSE_PREVIEW_MODAL' }, '*');
+                    return;
+                  }
+                  if (window.history.length > 1) {
+                    window.history.back();
+                  } else {
+                    navigate({ to: `/${ceremonyType || 'wedding'}` });
+                  }
+                }}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-md border border-white/25 shadow-lg text-xs font-bold transition-all cursor-pointer active:scale-95"
+              >
+                <ArrowLeft className="w-4 h-4 text-amber-300 shrink-0" />
+                <span>ថយក្រោយ</span>
+              </button>
+            </div>
+          ) : (
+            <div />
+          )}
 
           {/* Center / Right controls: HTML toggle, ✨, Share */}
           <div className="flex items-center gap-2 pointer-events-auto">
-            {hasHtml && (
+            {!isGuestView && hasHtml && (
               <div className="flex items-center bg-black/50 backdrop-blur-md p-0.5 rounded-full border border-white/25">
                 <button
                   onClick={() => setViewMode('html')}
@@ -981,16 +985,16 @@ export function TemplateDetailPage({ templateId: propTemplateId, isModal = false
                         key={idx}
                         className="relative w-full min-w-full h-full shrink-0 snap-start snap-always"
                       >
-                        {/* Background Prewedding Photo (Fitted to Container Width) */}
+                        {/* Background Prewedding Photo (Fitted to Container Width with enhanced brightness) */}
                         <div
-                          className="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-700"
+                          className="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-700 brightness-[1.08] contrast-[1.02]"
                           style={{
                             backgroundImage: `url(${imgSrc})`,
                             backgroundSize: '100% 100%'
                           }}
                         />
-                        {/* Cinematic Balanced Vignette to Highlight Centered Text */}
-                        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/65" />
+                        {/* Balanced Vignette to Highlight Centered Text while keeping photo bright */}
+                        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/15 to-black/45" />
                       </div>
                     ))}
                   </div>

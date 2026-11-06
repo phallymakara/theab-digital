@@ -221,10 +221,10 @@ export function EmeraldNoirEditorialTemplate({ data = {}, invitationData = {}, i
               <img
                 src={imgUrl}
                 alt={`Editorial Prewedding ${idx + 1}`}
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-center brightness-[1.08] contrast-[1.02]"
                 loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
               {/* Deep Matte Emerald Noir Vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#030E0A] via-[#030E0A]/40 to-black/35 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#030E0A]/80 via-[#030E0A]/20 to-black/25 pointer-events-none" />
             </div>
           ))}
         </div>

@@ -221,10 +221,10 @@ export function EmeraldMalachiteSealTemplate({ data = {}, invitationData = {}, i
               <img
                 src={imgUrl}
                 alt={`Royal Malachite Prewedding ${idx + 1}`}
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-center brightness-[1.08] contrast-[1.02]"
                 loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
               {/* Rich Malachite & Antique Gold Vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#021A13] via-[#021A13]/40 to-black/35 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#021A13]/80 via-[#021A13]/20 to-black/25 pointer-events-none" />
             </div>
           ))}
         </div>

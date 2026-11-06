@@ -294,10 +294,10 @@ export function ModernChampagneSilkTemplate({
               <img
                 src={imgUrl}
                 alt={`Champagne Silk Prewedding ${idx + 1}`}
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-center brightness-[1.08] contrast-[1.02]"
                 loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
               {/* Balanced Dark Vignette for Crystal Clear Typography */}
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/45 to-black/50 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/25 to-black/35 pointer-events-none" />
             </div>
           ))}
         </div>

@@ -220,10 +220,10 @@ export function EmeraldNatureHeirloomTemplate({ data = {}, invitationData = {}, 
                 <img
                   src={imgUrl}
                   alt={`Prewedding Khmer Couple ${idx + 1}`}
-                  className="w-full h-full object-cover object-center filter brightness-[0.93] contrast-[1.05]"
+                  className="w-full h-full object-cover object-center filter brightness-[1.08] contrast-[1.02]"
                   loading={idx === 0 ? 'eager' : 'lazy'} decoding="async" />
                 {/* Natural Forest Mist & Vignette */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#021B13] via-[#021B13]/40 to-black/30 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#021B13]/80 via-[#021B13]/20 to-black/20 pointer-events-none" />
               </div>
             ))}
           </div>
